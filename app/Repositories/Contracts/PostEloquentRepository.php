@@ -21,7 +21,7 @@ class PostEloquentRepository extends \EloquentRepository implements PostReposito
 
     public function getAllPublished()
     {
-        $result = $this->_model->where('is_published', 1)->get();
+        $result = $this->_model->where('is_published', 1)->get()->toArray();
 
         return $result;
     }

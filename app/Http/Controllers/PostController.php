@@ -18,6 +18,6 @@ class PostController extends Controller
     public function index()
     {
         $posts = $this->postRepository->getAllPublished();
-        var_dump($posts);die;
+        echo '<pre>';var_dump($posts);die;
     }
 }
