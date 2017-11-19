@@ -6,6 +6,7 @@
 
 <!-- bootstrap datepicker -->
 <script src="{{ url ('/assets/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+<script src="{{ url ('/assets/iCheck/icheck.min.js') }}" type="text/javascript"></script>
 {{--<script src="../../bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>--}}
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
@@ -17,6 +18,12 @@
         //Date picker
         $('.datepicker').datepicker({
             autoclose: true
+        })
+
+        //iCheck for checkbox and radio inputs
+        $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+            checkboxClass: 'icheckbox_minimal-blue',
+            radioClass   : 'iradio_minimal-blue'
         })
     });
 

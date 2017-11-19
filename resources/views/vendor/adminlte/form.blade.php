@@ -74,6 +74,20 @@
                                         {!! \App\BaseWidget\Form::date(array('type'=> 'text', 'class' => 'form-control pull-right datepicker')) !!}
                                         <!-- /.input group -->
                                     </div>
+
+                                    <!-- radio -->
+                                    <div class="form-group">
+                                        {!! \App\BaseWidget\Form::radio('Demo', array('name'=> 'r1', 'checked' => 'checked')) !!}
+                                        {!! \App\BaseWidget\Form::radio('Demo2', array('name'=> 'r2')) !!}
+                                        {!! \App\BaseWidget\Form::radio('Demo2', array('name'=> 'r2', 'disabled' => 'disabled')) !!}
+                                    </div>
+
+                                    <!-- checkbox -->
+                                    <div class="form-group">
+                                        {!! \App\BaseWidget\Form::checkbox('Demo', array('name'=> 'r1', 'checked' => 'checked')) !!}
+                                        {!! \App\BaseWidget\Form::checkbox('Demo2', array('name'=> 'r2')) !!}
+                                        {!! \App\BaseWidget\Form::checkbox('Demo2', array('name'=> 'r2', 'disabled' => 'disabled')) !!}
+                                    </div>
                                 </div>
 
                                 <div class="box-footer">

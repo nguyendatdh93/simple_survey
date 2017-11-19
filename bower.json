@@ -15,6 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap-datepicker": "^1.7.1"
+    "bootstrap-datepicker": "^1.7.1",
+    "iCheck": "https://github.com/fronteed/icheck.git#^1.0.2"
   }
 }

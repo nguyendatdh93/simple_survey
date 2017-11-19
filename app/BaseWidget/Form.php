@@ -49,6 +49,10 @@ class Form
         return ob_get_clean();
     }
 
+    /**
+     * @param array $paramAttributes
+     * @return string
+     */
     public static function date($paramAttributes=array())
     {
         ob_start();
@@ -62,6 +66,27 @@ class Form
         return ob_get_clean();
     }
 
+    /**
+     * @param array $paramAttributes
+     * @return string
+     */
+    public static function radio($name, $paramAttributes=array())
+    {
+        ob_start();
+
+        echo '<label><input type="radio" '.self::getAttributes($paramAttributes).' class="minimal"> '.$name.'</label>';
+
+        return ob_get_clean();
+    }
+
+    public static function checkbox($name, $paramAttributes=array())
+    {
+        ob_start();
+
+        echo '<label><input type="checkbox" '.self::getAttributes($paramAttributes).' class="minimal"> '.$name.'</label>';
+
+        return ob_get_clean();
+    }
 
     /**
      * @param array $paramAttributes

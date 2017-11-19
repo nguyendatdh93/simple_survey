@@ -9,6 +9,8 @@
     {{--<link href="{{ asset('/css/select2.min.css') }}" rel="stylesheet" type="text/css" />--}}
     <!-- bootstrap datepicker -->
     <link href="{{ asset('assets/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="{{ asset('assets/iCheck/skins/all.css') }}">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
