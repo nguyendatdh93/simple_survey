@@ -12,11 +12,6 @@ use Illuminate\Support\Facades\View;
 
 class Form
 {
-    protected $type;
-    protected $name;
-    protected $className;
-    protected $value;
-
     /**
      * @param array $paramAttributes
      * @param $name
@@ -30,6 +25,23 @@ class Form
 
         ob_start();
         echo '<button '. self::getAttributes($paramAttributes).' >'.$name.'</button>';
+
+        return ob_get_clean();
+    }
+
+    /**
+     * @param array $paramAttributes
+     * @param $name
+     * @return string|void
+     */
+    public static function link($name, $paramAttributes = array())
+    {
+        if (!Validator::isNullOrEmpty($name)) {
+            return;
+        }
+
+        ob_start();
+        echo '<a '. self::getAttributes($paramAttributes).' >'.$name.'</a>';
 
         return ob_get_clean();
     }
@@ -80,6 +92,11 @@ class Form
         return ob_get_clean();
     }
 
+    /**
+     * @param $name
+     * @param array $paramAttributes
+     * @return string
+     */
     public static function checkbox($name, $paramAttributes=array())
     {
         ob_start();
@@ -142,6 +159,10 @@ class Form
         return $attributes;
     }
 
+    /**
+     * @param array $paramOptions
+     * @return string
+     */
     public static function getOptions($paramOptions = array())
     {
         if (count($paramOptions)) {
