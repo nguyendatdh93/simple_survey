@@ -7,6 +7,9 @@
 <!-- bootstrap datepicker -->
 <script src="{{ url ('/assets/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
 <script src="{{ url ('/assets/iCheck/icheck.min.js') }}" type="text/javascript"></script>
+<!-- DataTables -->
+<script src="{{ url ('/assets/datatables.net/js/jquery.dataTables.min.js') }}" type="text/javascript"></script>
+<script src="{{ url ('/assets/datatables.net-bs/js/dataTables.bootstrap.min.js') }}" type="text/javascript"></script>
 {{--<script src="../../bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>--}}
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
@@ -27,4 +30,18 @@
         })
     });
 
+</script>
+
+<script>
+    $(function () {
+        $('#example1').DataTable()
+        $('#example2').DataTable({
+            'paging'      : true,
+            'lengthChange': false,
+            'searching'   : false,
+            'ordering'    : true,
+            'info'        : true,
+            'autoWidth'   : false
+        })
+    })
 </script>

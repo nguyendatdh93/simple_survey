@@ -11,6 +11,8 @@
     <link href="{{ asset('assets/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- iCheck for checkboxes and radio inputs -->
     <link rel="stylesheet" href="{{ asset('assets/iCheck/skins/all.css') }}">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ asset('assets/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -32,4 +34,7 @@
             echo json_encode($trans);
         @endphp
     </script>
+    <!-- Google Font -->
+    {{--<link rel="stylesheet"--}}
+          {{--href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">--}}
 </head>

@@ -40,4 +40,9 @@ class HomeController extends Controller
     {
         return view('adminlte::form');
     }
+
+    public function table()
+    {
+        return view('adminlte::datatable');
+    }
 }
