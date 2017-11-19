@@ -17,7 +17,9 @@ class PostController extends Controller
 
     public function index()
     {
+        $title = 'Table base';
+        $title_headers = array('ID','Title', 'Context', 'Published');
         $posts = $this->postRepository->getAllPublished();
-        echo '<pre>';var_dump($posts);die;
+        return view('adminlte::datatable', array('title' => $title, 'titleHeaders' => $title_headers, 'datas' => $posts));
     }
 }

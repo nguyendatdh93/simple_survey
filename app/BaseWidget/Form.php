@@ -8,6 +8,7 @@
 namespace App\BaseWidget;
 
 use \App\BaseWidget\Validator;
+use Illuminate\Support\Facades\View;
 
 class Form
 {
@@ -118,6 +119,11 @@ class Form
               </select>';
 
         return ob_get_clean();
+    }
+
+    public static function table($title, $titleHeaders, $datas)
+    {
+        return view('adminlte::layouts.partials.table', array('title' => $title,'titleHeaders'=> $titleHeaders, 'datas' => $datas));
     }
 
     /**
