@@ -25,4 +25,5 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::get('/home', 'HomeController@index');
+Route::get('/form', 'HomeController@form');
 Route::get('/posts', 'PostController@index');

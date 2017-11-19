@@ -1,0 +1,20 @@
+{
+  "name": "blog",
+  "description": "this is base",
+  "main": "",
+  "authors": [
+    "nguyen.van.dat <nguyendatdh93@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/nguyendatdh93/laravel-blog",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-datepicker": "^1.7.1"
+  }
+}

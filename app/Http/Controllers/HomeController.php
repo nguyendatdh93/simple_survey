@@ -35,4 +35,9 @@ class HomeController extends Controller
     {
         return view('adminlte::home');
     }
+
+    public function form()
+    {
+        return view('adminlte::form');
+    }
 }
