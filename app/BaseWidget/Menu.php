@@ -60,4 +60,14 @@ class Menu
     {
         return $this->menus;
     }
+
+    public static function setLogo(Menu $menus)
+    {
+        return view('adminlte::layouts.partials.mainheader', array('logo' => $menus->getLogo()));
+    }
+
+    public function getLogo()
+    {
+        return trans('adminlte_lang::header.logo');
+    }
 }

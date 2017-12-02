@@ -33,7 +33,7 @@ desired effect
 <div id="app" v-cloak>
     <div class="wrapper">
 
-    @include('adminlte::layouts.partials.mainheader')
+    {!! \App\BaseWidget\Menu::setLogo(new \App\BaseWidget\Menu()) !!}
 
     {!! \App\BaseWidget\Menu::setLeftMenu(new \App\BaseWidget\Menu()) !!}
 
