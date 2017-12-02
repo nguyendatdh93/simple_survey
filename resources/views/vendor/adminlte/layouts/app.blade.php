@@ -35,7 +35,7 @@ desired effect
 
     @include('adminlte::layouts.partials.mainheader')
 
-    @include('adminlte::layouts.partials.sidebar')
+    {!! \App\BaseWidget\Menu::setLeftMenu(new \App\BaseWidget\Menu()) !!}
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
