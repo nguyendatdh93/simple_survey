@@ -21,6 +21,6 @@ class PostController extends Controller
         $title = 'Posts';
         $title_headers = array('ID','Title', 'Context', 'Published');
         $posts = $this->postRepository->getAllPublished();
-        return view('adminlte::datatable', array('title' => $title, 'titleHeaders' => $title_headers, 'datas' => $posts));
+        return view('admin::datatable', array('title' => $title, 'titleHeaders' => $title_headers, 'datas' => $posts));
     }
 }

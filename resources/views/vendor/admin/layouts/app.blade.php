@@ -6,7 +6,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <html lang="en">
 
 @section('htmlheader')
-    @include('adminlte::layouts.partials.htmlheader')
+    @include('admin::layouts.partials.htmlheader')
 @show
 
 <!--
@@ -31,16 +31,15 @@ desired effect
 -->
 <body class="skin-blue sidebar-mini">
 <div id="app" v-cloak>
-    <div class="wrapper">
-
     {!! \App\BaseWidget\Menu::setLogo(new \App\BaseWidget\Menu()) !!}
 
     {!! \App\BaseWidget\Menu::setLeftMenu(new \App\BaseWidget\Menu()) !!}
+    <div class="wrapper">
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
 
-        @include('adminlte::layouts.partials.contentheader')
+        @include('admin::layouts.partials.contentheader')
 
         <!-- Main content -->
         <section class="content">
@@ -49,14 +48,14 @@ desired effect
         </section><!-- /.content -->
     </div><!-- /.content-wrapper -->
 
-    @include('adminlte::layouts.partials.controlsidebar')
+    @include('admin::layouts.partials.controlsidebar')
 
-    @include('adminlte::layouts.partials.footer')
+    @include('admin::layouts.partials.footer')
 
 </div><!-- ./wrapper -->
 </div>
 @section('scripts')
-    @include('adminlte::layouts.partials.scripts')
+    @include('admin::layouts.partials.scripts')
 @show
 
 </body>
