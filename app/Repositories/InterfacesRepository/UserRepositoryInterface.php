@@ -5,7 +5,7 @@
  * Date: 04/12/2017
  * Time: 19:32
  */
-namespace App\Respositories\ClassifyRepositoty;
+namespace App\Respositories\InterfacesRepository;
 
 interface UserRepositoryInterface
 {

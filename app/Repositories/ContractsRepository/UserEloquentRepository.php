@@ -5,10 +5,10 @@
  * Date: 04/12/2017
  * Time: 19:33
  */
-namespace App\Repositories\Contracts;
+namespace App\Repositories\ContractsRepository;
 
 use App\Account;
-use App\Respositories\ClassifyRepositoty\UserRepositoryInterface;
+use App\Respositories\InterfacesRepository\UserRepositoryInterface;
 use App\User;
 
 class UserEloquentRepository extends \EloquentRepository implements UserRepositoryInterface

@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\BaseWidget\BaseController;
-use App\Repositories\Contracts\PostEloquentRepository;
-use App\Respositories\ClassifyRepositoty\PostRepositoryInterface;
-use Illuminate\Http\Request;
+use App\Respositories\InterfacesRepository\PostInterfaceRepository;
 
 class PostController extends Controller
 {
     protected $postRepository;
 
-    public function __construct(PostRepositoryInterface $postRepository)
+    public function __construct(PostInterfaceRepository $postRepository)
     {
         $this->postRepository = $postRepository;
     }

@@ -6,12 +6,12 @@
  * Time: 20:27
  */
 
-namespace App\Repositories\Contracts;
+namespace App\Repositories\ContractsRepository;
 
 use App\Post;
-use App\Respositories\ClassifyRepositoty\PostRepositoryInterface;
+use App\Respositories\InterfacesRepository\PostInterfaceRepository;
 
-class PostEloquentRepository extends \EloquentRepository implements PostRepositoryInterface
+class PostEloquentRepository extends \EloquentRepository implements PostInterfaceRepository
 {
 
     public function getModel()

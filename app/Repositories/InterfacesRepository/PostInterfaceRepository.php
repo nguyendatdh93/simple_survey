@@ -5,9 +5,9 @@
  * Date: 16/11/2017
  * Time: 20:23
  */
-namespace App\Respositories\ClassifyRepositoty;
+namespace App\Respositories\InterfacesRepository;
 
-interface PostRepositoryInterface
+interface PostInterfaceRepository
 {
     public function getAllPublished();
 

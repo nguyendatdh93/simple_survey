@@ -1,7 +1,7 @@
 <?php
 namespace App\Repositories;
 
-interface RepositoryInterface {
+interface InterfaceRepository {
 
     /**
      * Get all
