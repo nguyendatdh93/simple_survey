@@ -31,7 +31,7 @@
             radioClass   : 'iradio_minimal-blue'
         })
 
-        $('#base-table').DataTable({
+        $('#users-table').DataTable({
             'paging'      : true,
             'lengthChange': false,
             'searching'   : false,
@@ -39,7 +39,7 @@
             'info'        : true,
             'autoWidth'   : false,
             "columnDefs": [
-                { "orderable": false, "targets": 0 },
+                { "orderable": false, "targets": 0, "visible" : false },
                 { "orderable": true, "targets": 1 },
                 { "orderable": false, "targets": 2 },
             ],

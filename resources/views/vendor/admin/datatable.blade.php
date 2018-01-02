@@ -14,7 +14,7 @@
                 <section class="content">
                     <div class="row">
                         <div class="col-xs-12">
-                            {!! \App\BaseWidget\Form::table($title, $titleHeaders, $datas) !!}
+                            {!! \App\BaseWidget\Form::table($idTable, $title, $titleHeaders, $datas) !!}
                             <!-- /.box -->
                         </div>
                         <!-- /.col -->

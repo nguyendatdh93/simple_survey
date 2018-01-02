@@ -144,9 +144,9 @@ class Form
         return ob_get_clean();
     }
 
-    public static function table($title, $titleHeaders, $datas)
+    public static function table($idTable, $title, $titleHeaders, $datas)
     {
-        return view('admin::layouts.partials.table', array('title' => $title,'titleHeaders'=> $titleHeaders, 'datas' => $datas));
+        return view('admin::layouts.partials.table', array('idTable' => $idTable,'title' => $title,'titleHeaders'=> $titleHeaders, 'datas' => $datas));
     }
 
     /**
