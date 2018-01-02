@@ -22,7 +22,7 @@ class UserController extends Controller
     public function index()
     {
         $title = 'Users';
-        $title_headers = array('Name','Email','Manager','Created at');
+        $title_headers = array('Name','Email','Created at');
         $users = $this->userRepository->getAll();
         return view('admin::datatable', array('title' => $title, 'titleHeaders' => $title_headers, 'datas' => $users));
     }
