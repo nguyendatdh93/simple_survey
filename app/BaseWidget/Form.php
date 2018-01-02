@@ -189,5 +189,15 @@ class Form
         return $options;
     }
 
+    /**
+     * @param array $paramAttributes
+     * @return string
+     */
+    public static function textarea($paramAttributes=array())
+    {
+        ob_start();
+        echo '<textarea '. self::getAttributes($paramAttributes).' rows="10" cols="80"> </textarea>';
 
+        return ob_get_clean();
+    }
 }

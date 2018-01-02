@@ -88,6 +88,16 @@
                                         {!! FormSimple::checkbox('Demo2', array('name'=> 'r2')) !!}
                                         {!! FormSimple::checkbox('Demo2', array('name'=> 'r2', 'disabled' => 'disabled')) !!}
                                     </div>
+
+                                    <!-- textaria -->
+                                    <div class="form-group">
+                                        {!! FormSimple::textarea(array('class'=> 'textarea')) !!}
+                                    </div>
+
+                                    <!-- textaria ckeditor -->
+                                    <div class="form-group">
+                                        {!! FormSimple::textarea(array('id'=>'editor1', 'class'=> 'editor1', 'name'=>'editor1')) !!}
+                                    </div>
                                 </div>
 
                                 <div class="box-footer">
