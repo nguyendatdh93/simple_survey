@@ -30,12 +30,11 @@ desired effect
 |---------------------------------------------------------|
 -->
 <body class="skin-blue sidebar-mini">
-<div id="app" v-cloak>
+<div id="app" v-html>
     {!! \App\BaseWidget\Menu::setLogo(new \App\BaseWidget\Menu()) !!}
 
     {!! \App\BaseWidget\Menu::setLeftMenu(new \App\BaseWidget\Menu()) !!}
     <div class="wrapper">
-
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
 

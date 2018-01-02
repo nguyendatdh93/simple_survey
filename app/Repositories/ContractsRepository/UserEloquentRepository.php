@@ -21,7 +21,7 @@ class UserEloquentRepository extends \EloquentRepository implements UserReposito
 
     public function getAll()
     {
-        $result = $this->_model->select('name','email','created_at')->get()->toArray();
+        $result = $this->_model->select('id','name','email','created_at')->get()->toArray();
 
         return $result;
     }
