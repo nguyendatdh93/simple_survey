@@ -8,7 +8,7 @@
             <thead>
             <tr>
                 @foreach($title_headers as $title)
-                    <th>{{ $title }}</th>
+                    <th style="text-align: center">{{ $title }}</th>
                 @endforeach
             </tr>
             </thead>
@@ -24,7 +24,7 @@
             <tfoot>
             <tr>
                 @foreach($title_headers as $title)
-                    <th>{{ $title }}</th>
+                    <th style="text-align: center">{{ $title }}</th>
                 @endforeach
             </tr>
             </tfoot>
