@@ -96,12 +96,12 @@
 
                                     <!-- textaria ckeditor -->
                                     <div class="form-group">
-                                        {!! FormSimple::textarea(array('id'=>'editor1', 'class'=> 'editor1', 'name'=>'editor1')) !!}
+                                        {!! FormSimple::textarea(array('id'=>'ckeditor1', 'class'=> 'editor1', 'name'=>'editor1')) !!}
                                     </div>
                                 </div>
 
                                 <div class="box-footer">
-                                    {!! \App\BaseWidget\Form::button('Submit', array('type' => 'submit','class' => 'btn btn-primary','icon' => 'fa fa-wifi' )) !!}
+                                    {!! FormSimple::button('Submit', array('type' => 'submit','class' => 'btn btn-primary','icon' => 'fa fa-wifi' )) !!}
                                 </div>
                             </form>
                         </div>
