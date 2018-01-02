@@ -10,7 +10,8 @@
             "columnDefs": [
                 { "orderable": false, "targets": 0, "visible" : false },
                 { "orderable": true, "targets": 1 },
-                { "orderable": false, "targets": 2 },
+                { "orderable": true, "targets": 2 },
+                { "orderable": false, "targets": 3 },
             ],
         });
     });

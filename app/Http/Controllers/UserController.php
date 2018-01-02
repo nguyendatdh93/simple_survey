@@ -25,7 +25,7 @@ class UserController extends Controller
         $title_headers = array('ID','Name','Email','Created at');
         $id_table = "users-table";
         $users = $this->userRepository->getAll();
-        return view('admin::datatable', array('idTable' => $id_table, 'title' => $title, 'titleHeaders' => $title_headers, 'datas' => $users));
+        return view('admin::datatable', array('id_table' => $id_table, 'title' => $title, 'title_headers' => $title_headers, 'datas' => $users));
     }
 
     /**
