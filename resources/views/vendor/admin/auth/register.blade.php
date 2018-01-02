@@ -1,4 +1,4 @@
-@extends('adminlte::layouts.auth')
+@extends('admin::layouts.auth')
 
 @section('htmlheader_title')
     Register
@@ -29,16 +29,16 @@
 
                 <register-form></register-form>
 
-                @include('adminlte::auth.partials.social_login')
+                @include('admin::auth.partials.social_login')
 
                 <a href="{{ url('/login') }}" class="text-center">{{ trans('adminlte_lang::message.membreship') }}</a>
             </div><!-- /.form-box -->
         </div><!-- /.register-box -->
     </div>
 
-    @include('adminlte::layouts.partials.scripts_auth')
+    @include('admin::layouts.partials.scripts_auth')
 
-    @include('adminlte::auth.terms')
+    @include('admin::auth.terms')
 
 </body>
 

@@ -68,6 +68,6 @@ class Menu
 
     public function getLogo()
     {
-        return trans('Simple Survey');
+        return trans('adminlte_lang::header.logo');
     }
 }
