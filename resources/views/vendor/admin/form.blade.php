@@ -104,29 +104,27 @@
                             <div class="box-body">
                                 <div class="form-group">
                                     <div class="col-md-1"></div>
-                                    <div class="col-md-10">
-                                        <div class="form-block">
-                                            <div class="form-group">
-                                                <div class="col-md-8">
-                                                    <div class="form-group">
-                                                        {!! FormSimple::input(array('type'=>'text','class' => 'form-control', 'id'=>'exampleInputEmail1', 'placeholder'=> 'Question', "style" => "border: none;
-                border-bottom: 1px solid #d2d6de;")) !!}
-                                                    </div>
+                                    <div class="col-md-10 form-block">
+                                        <div class="form-group">
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                    {!! FormSimple::input(array('type'=>'text','class' => 'form-control', 'id'=>'exampleInputEmail1', 'placeholder'=> 'Question', "style" => "border: none;
+            border-bottom: 1px solid #d2d6de;")) !!}
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        {!! FormSimple::select(
-                                                         array(
-                                                            'class'=> 'form-control select2',
-                                                            'style' => 'width: 100%;'
-                                                            ),
-                                                         array(
-                                                            'single text'=> array('selected'=>'selected'),
-                                                            'Multi text',
-                                                            'Single choice',
-                                                            'Multi choices'
-                                                            )) !!}
-                                                    </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    {!! FormSimple::select(
+                                                     array(
+                                                        'class'=> 'form-control select2',
+                                                        'style' => 'width: 100%;'
+                                                        ),
+                                                     array(
+                                                        'single text'=> array('selected'=>'selected'),
+                                                        'Multi text',
+                                                        'Single choice',
+                                                        'Multi choices'
+                                                        )) !!}
                                                 </div>
                                             </div>
                                         </div>
