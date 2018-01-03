@@ -12,6 +12,8 @@
 <script src="{{ url ('/assets/datatables.net-bs/js/dataTables.bootstrap.min.js') }}" type="text/javascript"></script>
 {{--<script src="../../bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>--}}
 
+<!-- CK Editor -->
+<script src="{{ url ('/assets/ckeditor/ckeditor.js') }}"></script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
       Both of these plugins are recommended to enhance the
       user experience. Slimscroll is required when using the
@@ -28,14 +30,13 @@
             checkboxClass: 'icheckbox_minimal-blue',
             radioClass   : 'iradio_minimal-blue'
         })
+
+        if($("[id*='ckeditor']").length > 0) {
+            var id_ckeditor = $("[id*='ckeditor']").attr('id');
+            CKEDITOR.replace(id_ckeditor)
+        }
     });
 
 </script>
 
-<script>
-    $(function () {
-        $('#example1').DataTable({
-            filter : true,
-        });
-    })
-</script>
+@include('admin::layouts.partials.script_datatable')

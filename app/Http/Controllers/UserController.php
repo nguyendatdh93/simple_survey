@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Respositories\ClassifyRepositoty\UserRepositoryInterface;
+use App\Respositories\InterfacesRepository\UserRepositoryInterface;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -22,9 +22,10 @@ class UserController extends Controller
     public function index()
     {
         $title = 'Users';
-        $title_headers = array('Name','Email','Manager','Created at');
+        $title_headers = array('ID','Name','Email','Created at');
+        $id_table = "users-table";
         $users = $this->userRepository->getAll();
-        return view('admin::datatable', array('title' => $title, 'titleHeaders' => $title_headers, 'datas' => $users));
+        return view('admin::datatable', array('id_table' => $id_table, 'title' => $title, 'title_headers' => $title_headers, 'datas' => $users));
     }
 
     /**

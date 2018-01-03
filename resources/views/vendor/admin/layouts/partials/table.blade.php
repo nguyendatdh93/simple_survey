@@ -4,11 +4,11 @@
     </div>
     <!-- /.box-header -->
     <div class="box-body">
-        <table id="base-table" class="table table-bordered table-striped">
+        <table id="{{ $id_table }}" class="table table-bordered table-striped" data-setting-searching="false">
             <thead>
             <tr>
-                @foreach($titleHeaders as $title)
-                    <th>{{ $title }}</th>
+                @foreach($title_headers as $title)
+                    <th style="text-align: center">{{ $title }}</th>
                 @endforeach
             </tr>
             </thead>
@@ -23,8 +23,8 @@
             </tbody>
             <tfoot>
             <tr>
-                @foreach($titleHeaders as $title)
-                    <th>{{ $title }}</th>
+                @foreach($title_headers as $title)
+                    <th style="text-align: center">{{ $title }}</th>
                 @endforeach
             </tr>
             </tfoot>
@@ -32,3 +32,4 @@
     </div>
     <!-- /.box-body -->
 </div>
+

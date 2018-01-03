@@ -7,7 +7,7 @@
  */
 use App\Repositories;
 
-abstract class EloquentRepository implements Repositories\RepositoryInterface
+abstract class EloquentRepository implements Repositories\InterfaceRepository
 {
     protected $_model;
 
