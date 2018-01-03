@@ -8,10 +8,10 @@
 namespace App\Repositories\ContractsRepository;
 
 use App\Account;
-use App\Respositories\InterfacesRepository\UserRepositoryInterface;
+use App\Repositories\InterfacesRepository\UserInterfaceRepository;
 use App\User;
 
-class UserEloquentRepository extends \EloquentRepository implements UserRepositoryInterface
+class UserEloquentRepository extends \EloquentRepository implements UserInterfaceRepository
 {
 
     public function getModel()
@@ -26,4 +26,18 @@ class UserEloquentRepository extends \EloquentRepository implements UserReposito
         return $result;
     }
 
+    public function saveUser($email)
+    {
+        $user = new User();
+        $user->email = $email;
+        $user->save();
+
+        return $user;
+    }
+
+    public function getUserInfoByEmail($email)
+    {
+        return User::where('email', $email)
+            ->where('del_flg', 0)->first();
+    }
 }
