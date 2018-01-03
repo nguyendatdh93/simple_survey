@@ -5,9 +5,10 @@
  * Date: 04/12/2017
  * Time: 19:32
  */
-namespace App\Respositories\InterfacesRepository;
+namespace App\Repositories\InterfacesRepository;
 
-interface UserRepositoryInterface
+interface UserInterfaceRepository
 {
     public function getAll();
+    public function saveUser($user_info);
 }

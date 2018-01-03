@@ -13,6 +13,11 @@
 
 Route::get('/', 'HomeController@index');
 
+Route::prefix('auth')->group(function () {
+    Route::get('/google', array('as' => 'auth.google', 'uses' => 'Auth\LoginController@loginWithGoogle'));
+});
+
+
 Route::group(['middleware' => 'auth'], function () {
     //    Route::get('/link1', function ()    {
 //        // Uses Auth Middleware
