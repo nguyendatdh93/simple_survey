@@ -33,7 +33,7 @@ class Menu
         $menus[] = Array(
             "text"  => trans('adminlte_lang::message.multilevel'),
             "icon"  => "fa fa-link",
-            "url"   => '#',
+            "url"   => 'posts',
             'child' => array (
                 array(
                     "text" => trans('adminlte_lang::message.linklevel2'),
@@ -68,6 +68,6 @@ class Menu
 
     public function getLogo()
     {
-        return trans('Simple Survey');
+        return trans('adminlte_lang::header.logo');
     }
 }

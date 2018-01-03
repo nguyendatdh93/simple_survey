@@ -144,9 +144,9 @@ class Form
         return ob_get_clean();
     }
 
-    public static function table($title, $titleHeaders, $datas)
+    public static function table($id_table, $title, $title_headers, $datas)
     {
-        return view('admin::layouts.partials.table', array('title' => $title,'titleHeaders'=> $titleHeaders, 'datas' => $datas));
+        return view('admin::layouts.partials.table', array('id_table' => $id_table,'title' => $title,'title_headers'=> $title_headers, 'datas' => $datas));
     }
 
     /**
@@ -189,5 +189,15 @@ class Form
         return $options;
     }
 
+    /**
+     * @param array $paramAttributes
+     * @return string
+     */
+    public static function textarea($paramAttributes=array())
+    {
+        ob_start();
+        echo '<textarea '. self::getAttributes($paramAttributes).' rows="10" cols="80"> </textarea>';
 
+        return ob_get_clean();
+    }
 }

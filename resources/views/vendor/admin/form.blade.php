@@ -6,19 +6,6 @@
 
 @section('main-content-form')
     <div class="container-fluid spark-screen">
-            <!-- Content Header (Page header) -->
-            <section class="content-header">
-                <h1>
-                    General Form Elements
-                    <small>Preview</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                    <li><a href="#">Forms</a></li>
-                    <li class="active">General Elements</li>
-                </ol>
-            </section>
-
             <!-- Main content -->
             <section class="content">
                 <div class="row">
@@ -88,16 +75,76 @@
                                         {!! FormSimple::checkbox('Demo2', array('name'=> 'r2')) !!}
                                         {!! FormSimple::checkbox('Demo2', array('name'=> 'r2', 'disabled' => 'disabled')) !!}
                                     </div>
+
+                                    <!-- textaria -->
+                                    <div class="form-group">
+                                        {!! FormSimple::textarea(array('class'=> 'textarea')) !!}
+                                    </div>
+
+                                    <!-- textaria ckeditor -->
+                                    <div class="form-group">
+                                        {!! FormSimple::textarea(array('id'=>'ckeditor1', 'class'=> 'editor1', 'name'=>'editor1')) !!}
+                                    </div>
                                 </div>
 
                                 <div class="box-footer">
-                                    {!! \App\BaseWidget\Form::button('Submit', array('type' => 'submit','class' => 'btn btn-primary','icon' => 'fa fa-wifi' )) !!}
+                                    {!! FormSimple::button('Submit', array('type' => 'submit','class' => 'btn btn-primary','icon' => 'fa fa-wifi' )) !!}
                                 </div>
                             </form>
                         </div>
                         <!-- /.box -->
                     </div>
                     <!--/.col (right) -->
+                    <div class="col-md-6">
+                        <!-- general form elements -->
+                        <div class="panel panel-default">
+                            <div class="box-header with-border panel-heading">
+                                <h3 class="box-title">Survey example</h3>
+                            </div>
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-10 form-block">
+                                        <div class="form-group">
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                    {!! FormSimple::input(array('type'=>'text','class' => 'form-control', 'id'=>'exampleInputEmail1', 'placeholder'=> 'Question', "style" => "border: none;
+            border-bottom: 1px solid #d2d6de;")) !!}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    {!! FormSimple::select(
+                                                     array(
+                                                        'class'=> 'form-control select2',
+                                                        'style' => 'width: 100%;'
+                                                        ),
+                                                     array(
+                                                        'single text'=> array('selected'=>'selected'),
+                                                        'Multi text',
+                                                        'Single choice',
+                                                        'Multi choices'
+                                                        )) !!}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                {!! FormSimple::input(array('type'=>'text','class' => 'form-control', 'id'=>'exampleInputEmail1', 'placeholder'=> 'Single line',"style" => "border: none;
+            border-bottom: 1px solid #d2d6de;")) !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                    {{--<label for="exampleInputEmail1">Email address</label>--}}
+                                </div>
+
+                            </div>
+                        </div>
+                        {!! FormSimple::button('Next', array('type' => 'submit','class' => 'btn btn-primary','icon' => 'fa fa-wifi', "style" => "display:block; margin:0px auto" )) !!}
+                        <!-- /.box -->
+                    </div>
                 </div>
                 <!-- /.row -->
             </section>
