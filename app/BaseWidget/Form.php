@@ -24,7 +24,13 @@ class Form
         }
 
         ob_start();
-        echo '<button '. self::getAttributes($paramAttributes).' >'.$name.'</button>';
+        $icon = '';
+        if (isset($paramAttributes['icon'])) {
+            $icon = "<i class='".$paramAttributes['icon']."' style='padding-right: 5px' aria-hidden=\"true\"></i>";
+            unset($paramAttributes['icon']);
+        }
+
+        echo '<button '. self::getAttributes($paramAttributes).' >'.$icon.$name.'</button>';
 
         return ob_get_clean();
     }
@@ -140,7 +146,7 @@ class Form
 
     public static function table($title, $titleHeaders, $datas)
     {
-        return view('adminlte::layouts.partials.table', array('title' => $title,'titleHeaders'=> $titleHeaders, 'datas' => $datas));
+        return view('admin::layouts.partials.table', array('title' => $title,'titleHeaders'=> $titleHeaders, 'datas' => $datas));
     }
 
     /**

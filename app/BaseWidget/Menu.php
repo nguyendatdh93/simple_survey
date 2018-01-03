@@ -53,7 +53,7 @@ class Menu
 
     public static function setLeftMenu(Menu $menus)
     {
-        return view('adminlte::layouts.partials.sidebar', array('menus' => $menus->getLeftMenu()));
+        return view('admin::layouts.partials.sidebar', array('menus' => $menus->getLeftMenu()));
     }
 
     public function getLeftMenu()
@@ -63,11 +63,11 @@ class Menu
 
     public static function setLogo(Menu $menus)
     {
-        return view('adminlte::layouts.partials.mainheader', array('logo' => $menus->getLogo()));
+        return view('admin::layouts.partials.mainheader', array('logo' => $menus->getLogo()));
     }
 
     public function getLogo()
     {
-        return trans('adminlte_lang::header.logo');
+        return trans('Simple Survey');
     }
 }

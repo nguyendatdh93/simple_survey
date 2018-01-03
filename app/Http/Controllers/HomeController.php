@@ -33,16 +33,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('adminlte::home');
+        return view('admin::home');
     }
 
     public function form()
     {
-        return view('adminlte::form');
+        return view('admin::form');
     }
 
     public function table()
     {
-        return view('adminlte::datatable');
+        return view('admin::datatable');
     }
 }
