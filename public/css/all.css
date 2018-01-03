@@ -21178,8 +21178,8 @@ table.text-center th {
  */
 .btn-social {
   position: relative;
-  padding-left: 44px;
-  text-align: left;
+  padding-left: 0px;
+  text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

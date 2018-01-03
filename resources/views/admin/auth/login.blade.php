@@ -24,8 +24,6 @@
         @endif
 
         <div class="login-box-body">
-        <p class="login-box-msg"> {{ trans('adminlte_lang::message.siginsession') }} </p>
-
         @include('admin::auth.partials.social_login')
 
     </div>
