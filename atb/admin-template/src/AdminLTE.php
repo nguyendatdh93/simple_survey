@@ -1,6 +1,6 @@
 <?php
 
-namespace Atb\Corevendor;
+namespace Atb\AdminTemplate;
 
 /**
  * Class AdminLTE.
@@ -175,18 +175,6 @@ class AdminLTE
     {
         return [
             ADMINLTETEMPLATE_PATH.'/resources/lang' => resource_path('lang/vendor/adminlte_lang'),
-        ];
-    }
-
-    /**
-     * Gravatar path.
-     *
-     * @return array
-     */
-    public function gravatar()
-    {
-        return [
-            base_path().'/vendor/creativeorange/gravatar/config/gravatar.php' => config_path('gravatar.php'),
         ];
     }
 

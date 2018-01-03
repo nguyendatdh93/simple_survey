@@ -1,6 +1,6 @@
 <?php
 
-namespace Atb\Corevendor\User;
+namespace Atb\AdminTemplate\User;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;

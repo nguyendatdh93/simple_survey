@@ -1,6 +1,6 @@
 <?php
 
-namespace Atb\Corevendor\User\Http\Middleware;
+namespace Atb\AdminTemplate\User\Http\Middleware;
 
 use Closure;
 
@@ -20,7 +20,7 @@ class GuestUser
     public function handle($request, Closure $next)
     {
         view()->share('signedIn',auth()->check());
-        view()->share('user', auth()->user() ?: new \Atb\Corevendor\User\GuestUser);
+        view()->share('user', auth()->user() ?: new \Atb\AdminTemplate\User\GuestUser);
         return $next($request);
     }
 }

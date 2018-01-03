@@ -24,14 +24,14 @@
     },
     "autoload": {
         "psr-4": {
-            "Atb\\Corevendor\\": "src",
-            "Atb\\Corevendor\\User\\": "user/src"
+            "Atb\\AdminTemplate\\": "atb/admin-template/src",
+            "Atb\\AdminTemplate\\User\\": "atb/admin-template/user/src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Atb\\Corevendor\\": "src",
-            "Atb\\Corevendor\\User\\": "user/src"
+            "Atb\\AdminTemplate\\": "atb/admin-template/src",
+            "Atb\\AdminTemplate\\User\\": "atb/admin-template/user/src"
         }
     },
     "scripts": {
@@ -45,10 +45,10 @@
         },
         "laravel": {
             "providers": [
-                "Atb\\Corevendor\\Providers\\AdminLTETemplateServiceProvider"
+                "Atb\\AdminTemplate\\Providers\\AdminLTETemplateServiceProvider"
             ],
             "aliases": {
-                "AdminLTE" : "Atb\\Corevendor\\AdminLTE"
+                "AdminLTE" : "Atb\\AdminTemplate\\AdminLTE"
             }
         }
     },
