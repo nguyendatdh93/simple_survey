@@ -6,7 +6,6 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
-        "atb/corevendor": "dev-master",
         "fideloper/proxy": "~3.3",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
@@ -26,7 +25,9 @@
             "app/Repositories"
         ],
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Atb\\Corevendor\\": "atb/corevendor/src",
+            "Atb\\Corevendor\\User\\": "atb/corevendor/user/src"
         }
     },
     "autoload-dev": {
