@@ -5,13 +5,13 @@
  * Date: 04/12/2017
  * Time: 19:33
  */
-namespace App\Repositories\ContractsRepository;
+namespace App\Repositories\Eloquents;
 
 use App\Account;
-use App\Repositories\InterfacesRepository\UserInterfaceRepository;
+use App\Repositories\Contracts\UserRepositoryInterface;
 use App\User;
 
-class UserEloquentRepository extends \EloquentRepository implements UserInterfaceRepository
+class UserRepository extends \EloquentRepository implements UserRepositoryInterface
 {
 
     public function getModel()

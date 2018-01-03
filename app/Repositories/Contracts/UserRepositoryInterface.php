@@ -5,9 +5,9 @@
  * Date: 04/12/2017
  * Time: 19:32
  */
-namespace App\Repositories\InterfacesRepository;
+namespace App\Repositories\Contracts;
 
-interface UserInterfaceRepository
+interface UserRepositoryInterface
 {
     public function getAll();
     public function saveUser($user_info);

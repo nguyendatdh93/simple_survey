@@ -2,10 +2,8 @@
 
 namespace App\Providers;
 
-use App\Repositories\ContractsRepository\PostEloquentRepository;
-use App\Repositories\ContractsRepository\UserEloquentRepository;
-use App\Repositories\InterfacesRepository\PostInterfaceRepository;
-use App\Repositories\InterfacesRepository\UserInterfaceRepository;
+use App\Repositories\Contracts\UserRepositoryInterface;
+use App\Repositories\Eloquents\UserRepository;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Dusk\DuskServiceProvider;
 use Illuminate\Support\Facades\Schema;
@@ -34,8 +32,8 @@ class AppServiceProvider extends ServiceProvider
         }
 
         $this->app->singleton(
-            UserInterfaceRepository::class,
-            UserEloquentRepository::class
+            UserRepositoryInterface::class,
+            UserRepository::class
         );
     }
 }
