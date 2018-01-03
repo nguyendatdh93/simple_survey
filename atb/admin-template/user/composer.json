@@ -24,12 +24,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Corevendor\\User\\": "src"
+      "AdminTemplate\\User\\": "src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Corevendor\\User\\": "tests"
+      "AdminTemplate\\User\\": "tests"
     }
   },
   "scripts": {

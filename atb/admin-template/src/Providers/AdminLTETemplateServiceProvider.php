@@ -1,11 +1,9 @@
 <?php
 
-namespace Atb\Corevendor\Providers;
+namespace Atb\AdminTemplate\Providers;
 
-use Atb\Corevendor\Facades\AdminLTE;
-use Atb\Corevendor\User\Providers\GuestUserServiceProvider;
-use Creativeorange\Gravatar\Facades\Gravatar;
-use Creativeorange\Gravatar\GravatarServiceProvider;
+use Atb\AdminTemplate\Facades\AdminLTE;
+use Atb\AdminTemplate\User\Providers\GuestUserServiceProvider;
 use Illuminate\Console\DetectsApplicationNamespace;
 use Illuminate\Support\ServiceProvider;
 
@@ -26,12 +24,8 @@ class AdminLTETemplateServiceProvider extends ServiceProvider
         }
 
         $this->app->bind('AdminLTE', function () {
-            return new \Atb\Corevendor\AdminLTE();
+            return new \Atb\AdminTemplate\AdminLTE();
         });
-
-        if (config('adminlte.gravatar', true)) {
-            $this->registerGravatarServiceProvider();
-        }
 
         if (config('adminlte.guestuser', true)) {
             $this->registerGuestUserProvider();
@@ -47,17 +41,6 @@ class AdminLTETemplateServiceProvider extends ServiceProvider
     protected function registerGuestUserProvider()
     {
         $this->app->register(GuestUserServiceProvider::class);
-    }
-
-    /**
-     * Register Gravatar Service Provider.
-     */
-    protected function registerGravatarServiceProvider()
-    {
-        $this->app->register(GravatarServiceProvider::class);
-        if (!class_exists('Gravatar')) {
-            class_alias(Gravatar::class, 'Gravatar');
-        }
     }
 
     /**
@@ -80,7 +63,6 @@ class AdminLTETemplateServiceProvider extends ServiceProvider
         $this->publishTests();
 
         $this->publishLanguages();
-        $this->publishGravatar();
         $this->publishConfig();
         $this->publishWebRoutes();
         $this->publishApiRoutes();
@@ -209,13 +191,6 @@ class AdminLTETemplateServiceProvider extends ServiceProvider
         $this->publishes(AdminLTE::languages(), 'adminlte_lang');
     }
 
-    /**
-     * Publish config Gravatar file using group.
-     */
-    private function publishGravatar()
-    {
-        $this->publishes(AdminLTE::gravatar(), 'admin');
-    }
 
     /**
      * Publish adminlte package config.

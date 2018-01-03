@@ -1,6 +1,6 @@
 <?php
 
-namespace Atb\Corevendor\Facades;
+namespace Atb\AdminTemplate\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
