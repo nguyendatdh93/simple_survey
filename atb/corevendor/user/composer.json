@@ -1,0 +1,47 @@
+{
+  "name": "atb/user",
+  "type": "library",
+  "description": "A boosted User for Laravel",
+  "keywords": [
+    "Atb",
+    "user"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Datnv",
+      "email": "nguyendatdh93@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "~5.6|~7.0",
+    "laravel/framework": "^5.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit" : "~4.0||~5.0",
+    "scrutinizer/ocular": "~1.1",
+    "squizlabs/php_codesniffer": "~2.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "Corevendor\\User\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Corevendor\\User\\": "tests"
+    }
+  },
+  "scripts": {
+    "test": "phpunit",
+    "format": "phpcbf --standard=psr2 src/"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
