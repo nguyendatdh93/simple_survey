@@ -17,19 +17,16 @@ Route::prefix('auth')->group(function () {
     Route::get('/google', array('as' => 'auth.google', 'uses' => 'Auth\LoginController@loginWithGoogle'));
 });
 
+Route::get('/preview', 'SurveyController@preview');
+Route::get('/publish/{id}', 'SurveyController@publishSurveyById');
+
 
 Route::group(['middleware' => 'auth'], function () {
-    //    Route::get('/link1', function ()    {
-//        // Uses Auth Middleware
-//    });
-
-    //Please do not remove this if you want adminlte:route and adminlte:link commands to works correctly.
-    #adminlte_routes
 });
 
+//example
 Route::get('/home', 'HomeController@index');
 Route::get('/form', 'HomeController@form');
-Route::get('/form-preview', 'HomeController@formPreview');
 Route::get('/table', 'HomeController@table');
 Route::get('/posts', 'PostController@index');
 

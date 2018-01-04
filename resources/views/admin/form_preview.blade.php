@@ -44,6 +44,17 @@
                     <div class="col-md-1"></div>
                 </div>
                 <!-- /.row -->
+                <div class="row preview">
+                    <!-- left column -->
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                        <div class="preview-button">
+                            {!! FormSimple::button('Draf', array('type' => 'submit','class' => 'btn btn-default','icon' => '', "style" => "display:block; margin:0px auto; float: left" )) !!}
+                            {!! FormSimple::button('Publish', array('type' => 'submit','class' => 'btn btn-primary','icon' => '', "style" => "display:block; margin:0px auto; float: left; margin-left : 10px" )) !!}
+                        </div>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
             </section>
     </div>
 @endsection
@@ -82,5 +93,10 @@
     .preview-footer .row {
         padding: 10px;
         border-top : solid 1px #d4d4d4;
+    }
+    .preview-button {
+        width: 300px;
+        display: block;
+        margin: 0px auto;
     }
 </style>
