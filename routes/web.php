@@ -18,8 +18,12 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::get('/preview', 'SurveyController@preview');
-Route::get('/publish/{id}', 'SurveyController@publishSurveyById');
 
+Route::prefix('survey')->group(function () {
+    Route::get('/publish/{id}', 'SurveyController@publishSurveyById');
+    Route::get('/close/{id}', 'SurveyController@closeSurveyById');
+    Route::get('/list', 'SurveyController@index');
+});
 
 Route::group(['middleware' => 'auth'], function () {
 });

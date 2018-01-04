@@ -9,6 +9,7 @@ namespace App\Repositories\Eloquents;
 
 use App\Repositories\Contracts\SurveyRepositoryInterface;
 use App\Survey;
+use Illuminate\Support\Facades\Auth;
 use Mockery\Exception;
 
 class SurveyRepository extends \EloquentRepository implements SurveyRepositoryInterface
@@ -17,6 +18,16 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
     public function getModel()
     {
         return Survey::class;
+    }
+
+    public function getAllSurvey()
+    {
+        $result = $this->_model->select('*')
+            ->where('user_id', Auth::id())
+            ->where('del_flg', 0)
+            ->get()->toArray();
+
+        return $result;
     }
 
     /**
@@ -39,7 +50,7 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
     {
         if ($survey_id) {
             try {
-                $result = $this->_model->where('id', $survey_id)->update(['published_at' => date("Y-m-d h:i:s")]);
+                $result = $this->_model->where('id', $survey_id)->update(['published_at' => date("Y-m-d h:i:s"), 'status' => Survey::STATUS_SURVEY_PUBLISHED]);
 
                 return $result;
             }catch (\Exception $e) {
@@ -59,7 +70,7 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
     {
         if ($survey_id) {
             try {
-                $result = $this->_model->where('id', $survey_id)->update(['closed_at' => date("Y-m-d h:i:s")]);
+                $result = $this->_model->where('id', $survey_id)->update(['closed_at' => date("Y-m-d h:i:s"), 'status' => Survey::STATUS_SURVEY_CLOSED]);
 
                 return $result;
             }catch (\Exception $e) {

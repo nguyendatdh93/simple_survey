@@ -19,6 +19,7 @@ class CreateSurveysTable extends Migration
             $table->integer('user_id');
             $table->text('image_path')->nullable($value = true);
             $table->text('description')->nullable($value = true);
+            $table->integer('status')->default(0);
             $table->integer('del_flg')->default(0);
             $table->dateTime('published_at')->nullable($value = true);
             $table->dateTime('closed_at')->nullable($value = true);

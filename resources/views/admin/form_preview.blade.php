@@ -19,7 +19,7 @@
                                 <div class="preview preview-header">
                                     <h1>{{ isset($survey['name']) ? $survey['name'] : "Survey must has name" }}</h1>
                                     @if($survey['image_path'] != '')
-                                        <img src="https://www.w3schools.com/css/trolltunga.jpg" class="img-rounded" alt="Cinque Terre">
+                                        {!! \App\BaseWidget\Form::img(isset($survey['image_path']) ? $survey['image_path'] : "", array("class" => "img-rounded","alt" => "Cinque Terre")) !!}
                                     @endif
                                     <p>{{ isset($survey['description']) ? $survey['description'] : "" }}</p>
                                     @if(isset($survey['questions'][\App\Question::CATEGORY_HEADER]))

@@ -18,35 +18,35 @@ class Menu
     {
         $menus['header'] = trans('adminlte_lang::message.header_menu');
         $menus[] = Array(
-            "text"   => trans('adminlte_lang::message.home'),
-            "icon"   => "fa fa-link",
+            "text"   => trans('adminlte_lang::survey.menu_survey_list'),
+            "icon"   => "fa fa-table",
             "active" => true,
-            "url"    => 'posts',
+            "url"    => '/survey/list',
         );
 
-        $menus[] = Array(
-            "text" => trans('adminlte_lang::message.anotherlink'),
-            "icon" => "fa fa-link",
-            "url"  => '#',
-        );
-
-        $menus[] = Array(
-            "text"  => trans('adminlte_lang::message.multilevel'),
-            "icon"  => "fa fa-link",
-            "url"   => 'posts',
-            'child' => array (
-                array(
-                    "text" => trans('adminlte_lang::message.linklevel2'),
-                    "icon" => "fa fa-link",
-                    "url"  => '#',
-                ),
-                array(
-                    "text" => trans('adminlte_lang::message.linklevel2'),
-                    "icon" => "fa fa-link",
-                    "url"  => '#',
-                )
-            )
-        );
+//        $menus[] = Array(
+//            "text" => trans('adminlte_lang::message.anotherlink'),
+//            "icon" => "fa fa-link",
+//            "url"  => '#',
+//        );
+//
+//        $menus[] = Array(
+//            "text"  => trans('adminlte_lang::message.multilevel'),
+//            "icon"  => "fa fa-link",
+//            "url"   => 'posts',
+//            'child' => array (
+//                array(
+//                    "text" => trans('adminlte_lang::message.linklevel2'),
+//                    "icon" => "fa fa-link",
+//                    "url"  => '#',
+//                ),
+//                array(
+//                    "text" => trans('adminlte_lang::message.linklevel2'),
+//                    "icon" => "fa fa-link",
+//                    "url"  => '#',
+//                )
+//            )
+//        );
 
         $this->menus = $menus;
     }
