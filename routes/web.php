@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::get('/home', 'HomeController@index');
 Route::get('/form', 'HomeController@form');
+Route::get('/form-preview', 'HomeController@formPreview');
 Route::get('/table', 'HomeController@table');
 Route::get('/posts', 'PostController@index');
 

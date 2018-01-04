@@ -158,7 +158,7 @@ class Form
         $attributes = "";
         if (is_array($paramAttributes) && count($paramAttributes) > 0) {
             foreach ($paramAttributes as $key => $param) {
-                $attributes .= $key .'= "'.$param.'"';
+                $attributes .= $key .'= "'.$param.'" ';
             }
         }
 
