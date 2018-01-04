@@ -1,11 +1,12 @@
 <head>
-    <meta charset="UTF-8">
-    <title> AdminLTE 2 with Laravel - @yield('htmlheader_title', 'Your title here') </title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title> @yield('htmlheader_title', 'Your title here') </title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link href="{{ asset('/css/all.css') }}" rel="stylesheet" type="text/css" />
+    {{--{!! Html::style('css/style.css?time=' . time())!!}--}}
     {{--<link href="{{ asset('/css/select2.min.css') }}" rel="stylesheet" type="text/css" />--}}
     <!-- bootstrap datepicker -->
     <link href="{{ asset('assets/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
@@ -36,4 +37,5 @@
     <!-- Google Font -->
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    {{ Html::style('css/styles.css') }}
 </head>
