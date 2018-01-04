@@ -144,9 +144,9 @@ class Form
         return ob_get_clean();
     }
 
-    public static function table($id_table, $title, $title_headers, $datas)
+    public static function table($settings, $datas)
     {
-        return view('admin::layouts.partials.table', array('id_table' => $id_table,'title' => $title,'title_headers'=> $title_headers, 'datas' => $datas));
+        return view('admin::layouts.partials.table', array('settings' => $settings, 'datas' => $datas));
     }
 
     /**
@@ -158,7 +158,7 @@ class Form
         $attributes = "";
         if (is_array($paramAttributes) && count($paramAttributes) > 0) {
             foreach ($paramAttributes as $key => $param) {
-                $attributes .= $key .'= "'.$param.'"';
+                $attributes .= $key .'= "'.$param.'" ';
             }
         }
 
@@ -197,6 +197,19 @@ class Form
     {
         ob_start();
         echo '<textarea '. self::getAttributes($paramAttributes).' rows="10" cols="80"> </textarea>';
+
+        return ob_get_clean();
+    }
+
+    /**
+     * @param $src
+     * @param array $paramAttributes
+     * @return string
+     */
+    public static function img($src, $paramAttributes=array())
+    {
+        ob_start();
+        echo '<img src="'.$src.'" '. self::getAttributes($paramAttributes).' >';
 
         return ob_get_clean();
     }

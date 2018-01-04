@@ -9,6 +9,7 @@ namespace App\BaseWidget;
 
 use \App\BaseWidget\Validator;
 use Illuminate\Support\Facades\View;
+use Config;
 
 class Menu
 {
@@ -17,36 +18,17 @@ class Menu
     public function __construct()
     {
         $menus['header'] = trans('adminlte_lang::message.header_menu');
-        $menus[] = Array(
-            "text"   => trans('adminlte_lang::message.home'),
-            "icon"   => "fa fa-link",
+        $ip_address = $_SERVER['REMOTE_ADDR'];
+        $menus['survey_list'] = Array(
+            "text"   => trans('adminlte_lang::survey.menu_survey_list'),
+            "icon"   => "fa fa-table",
             "active" => true,
-            "url"    => 'posts',
+            "url"    => '/survey/list',
         );
 
-        $menus[] = Array(
-            "text" => trans('adminlte_lang::message.anotherlink'),
-            "icon" => "fa fa-link",
-            "url"  => '#',
-        );
-
-        $menus[] = Array(
-            "text"  => trans('adminlte_lang::message.multilevel'),
-            "icon"  => "fa fa-link",
-            "url"   => 'posts',
-            'child' => array (
-                array(
-                    "text" => trans('adminlte_lang::message.linklevel2'),
-                    "icon" => "fa fa-link",
-                    "url"  => '#',
-                ),
-                array(
-                    "text" => trans('adminlte_lang::message.linklevel2'),
-                    "icon" => "fa fa-link",
-                    "url"  => '#',
-                )
-            )
-        );
+        if(in_array($ip_address, Config::get("config.ip_private"))) {
+            $menus['survey_list']['hidden'] = true;
+        }
 
         $this->menus = $menus;
     }
