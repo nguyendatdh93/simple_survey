@@ -28,7 +28,7 @@
                             <span style="color:white">{{ Auth::user()->email }}</span>
                         </div>
                         <div class="col-md-2">
-                            <a style="color:white" href="{{ url('/logout') }}"
+                            <a style="color:white;display: block;margin-top: 5px;" href="{{ url('/logout') }}"
                                onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">
                                 <i class="fa fa-fw fa-sign-out"></i>

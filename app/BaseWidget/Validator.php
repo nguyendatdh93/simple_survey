@@ -23,4 +23,14 @@ class Validator
 
         return strlen(trim($val)) ? true : false;
     }
+
+    public static function checkIsButtonTag($setting)
+    {
+        return isset($setting['href']) ? false : true;
+    }
+
+    public static function checkIsATag($setting)
+    {
+        return isset($setting['href']) ? true : false;
+    }
 }

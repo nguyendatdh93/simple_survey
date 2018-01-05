@@ -22,7 +22,6 @@
                     <!-- /.row -->
                 </section>
                 <!-- /.content -->
-                {!! \App\BaseWidget\Form::link('Go to homepage',array('href' => url('form'),'class' => 'btn btn-primary')) !!}
             </div>
             <!--/.col (right) -->
             <!-- /.row -->

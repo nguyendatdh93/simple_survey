@@ -12,14 +12,15 @@
                     <!-- left column -->
                     <div class="col-md-1"></div>
                     <div class="col-md-10">
-                        <div class="panel panel-default">
+                        @include('admin::layouts.partials.alert_message')
+                        <div>
                             <div class="col-md-1"></div>
                             <!-- general form elements -->
                             <div class="col-md-10">
                                 <div class="preview preview-header">
                                     <h1>{{ isset($survey['name']) ? $survey['name'] : "Survey must has name" }}</h1>
                                     @if($survey['image_path'] != '')
-                                        {!! \App\BaseWidget\Form::img(isset($survey['image_path']) ? $survey['image_path'] : "", array("class" => "img-rounded","alt" => "Cinque Terre")) !!}
+                                        {!! FormSimple::img(isset($survey['image_path']) ? $survey['image_path'] : "", array("class" => "img-rounded","alt" => "Cinque Terre")) !!}
                                     @endif
                                     <p>{{ isset($survey['description']) ? $survey['description'] : "" }}</p>
                                     @if(isset($survey['questions'][\App\Question::CATEGORY_HEADER]))
@@ -49,14 +50,60 @@
                     <div class="col-md-1"></div>
                     <div class="col-md-10">
                         <div class="preview-button">
-                            {!! FormSimple::button('Draf', array('type' => 'submit','class' => 'btn btn-default','icon' => '', "style" => "display:block; margin:0px auto; float: left" )) !!}
-                            {!! FormSimple::button('Publish', array('type' => 'submit','class' => 'btn btn-primary','icon' => '', "style" => "display:block; margin:0px auto; float: left; margin-left : 10px" )) !!}
+                            @if($name_url == \App\Survey::NAME_URL_PREVIEW_DRAF)
+                                {!! FormSimple::a('Publish', '#', array('class' => 'btn bg-olive btn-flat margin','icon' => '', "style" => "display:block; margin:0px auto;", 'data-toggle' =>"modal", 'data-target' => "#modal-confirm-publish")) !!}
+                            @elseif($name_url == \App\Survey::NAME_URL_PREVIEW_PUBLISH)
+                                {!! FormSimple::a('Close', '#', array('class' => 'btn bg-orange btn-flat margin','icon' => '', "style" => "display:block; margin:0px auto;", 'data-toggle' =>"modal", 'data-target' => "#modal-confirm-close")) !!}
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-1"></div>
                 </div>
             </section>
     </div>
+    {!! FormSimple::modalConfirm(array(
+             'id'      => 'modal-confirm-publish',
+             'title'   => trans('adminlte_lang::survey.confirm_publish_survey_title'),
+             'content' => trans('adminlte_lang::survey.confirm_publish_survey_content'),
+             'buttons' => array(
+                array(
+                    'text'  => trans('adminlte_lang::survey.confirm_publish_survey_button_close'),
+                    'attributes' => array(
+                        'class'        => 'btn btn-default pull-left',
+                        'data-dismiss' => "modal"
+                    )
+                ),
+                array(
+                    'text'  => trans('adminlte_lang::survey.confirm_publish_survey_button_publish'),
+                    'href'  => route(\App\Survey::NAME_URL_PUBLISH_SURVEY).'/'.$survey['id'],
+                    'attributes' => array(
+                        'class' => 'btn btn-primary',
+                    )
+                )
+             )
+        )) !!}
+
+    {!! FormSimple::modalConfirm(array(
+             'id'      => 'modal-confirm-close',
+             'title'   => trans('adminlte_lang::survey.confirm_close_survey_title'),
+             'content' => trans('adminlte_lang::survey.confirm_close_survey_content'),
+             'buttons' => array(
+                array(
+                    'text'  => trans('adminlte_lang::survey.confirm_close_survey_button_close'),
+                    'attributes' => array(
+                        'class'        => 'btn btn-default pull-left',
+                        'data-dismiss' => "modal"
+                    )
+                ),
+                array(
+                    'text'  => trans('adminlte_lang::survey.confirm_close_survey_button_publish'),
+                    'href'  => route(\App\Survey::NAME_URL_CLOSE_SURVEY).'/'.$survey['id'],
+                    'attributes' => array(
+                        'class' => 'btn btn-primary',
+                    )
+                )
+             )
+        )) !!}
 @endsection
 
 <style>
@@ -77,6 +124,7 @@
     .preview-header img {
         margin: 0px auto;
         display: block;
+        width: 100%;
     }
     .preview-content {
         background: #fff;
@@ -94,8 +142,8 @@
         padding: 10px;
         border-top : solid 1px #d4d4d4;
     }
-    .preview-button {
-        width: 300px;
+    .btn-flat {
+        width: 80px;
         display: block;
         margin: 0px auto;
     }

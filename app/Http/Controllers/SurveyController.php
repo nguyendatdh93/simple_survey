@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Repositories\Contracts\SurveyRepositoryInterface;
 use App\Repositories\Contracts\QuestionRepositoryInterface;
 use App\Repositories\Contracts\QuestionChoiceRepositoryInterface;
+use Illuminate\Support\Facades\Route;
 
 class SurveyController extends Controller
 {
@@ -34,6 +35,7 @@ class SurveyController extends Controller
             'title' => 'Surveys list managerment',
             'id'    => 'survey-table',
             'headers_columns' => array(
+                'Id'             => 'id',
                 'Status'         => 'status',
                 'Survey Name'    => 'name',
                 'Image'          => array(
@@ -78,11 +80,10 @@ class SurveyController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function preview(Request $request)
+    public function preview(Request $request, $id)
     {
-        $survey_id           = $request->get('id');
-        $survey              = $this->surveyRepository->getSurveyById($survey_id);
-        $survey['questions'] = $this->questionRepository->getQuestionSurveyBySurveyId($survey_id);
+        $survey              = $this->surveyRepository->getSurveyById($id);
+        $survey['questions'] = $this->questionRepository->getQuestionSurveyBySurveyId($id);
         foreach ($survey['questions'] as $key => $question) {
             $question_choices = $this->questionChoiceRepository->getQuestionChoiceByQuestionId($question['id']);
             if (count($question_choices) > 0) {
@@ -98,7 +99,7 @@ class SurveyController extends Controller
 
         $survey['questions'] = $group_question_survey;
 
-        return view('admin::form_preview', array('survey' => $survey));
+        return view('admin::preview', array('survey' => $survey, 'name_url' => $request->route()->getName()));
     }
 
     /**
@@ -109,7 +110,11 @@ class SurveyController extends Controller
     {
         $result = $this->surveyRepository->publishSurveyById($id);
 
-        return $result;
+        if ($result) {
+            return redirect()->route(Survey::NAME_URL_PREVIEW_PUBLISH, ['id' => $id])->with('alert_success', trans('adminlte_lang::survey.message_publish_survey_success'));
+        }
+
+        return redirect()->route(Survey::NAME_URL_PREVIEW_DRAF, ['id' => $id])->with('alert_error', trans('adminlte_lang::survey.message_publish_survey_not_success'));
     }
 
     /**
@@ -120,7 +125,11 @@ class SurveyController extends Controller
     {
         $result = $this->surveyRepository->closeSurveyById($id);
 
-        return $result;
+        if ($result) {
+            return redirect()->route(Survey::NAME_URL_PREVIEW_CLOSE, ['id' => $id])->with('alert_success', trans('adminlte_lang::survey.message_close_survey_success'));
+        }
+
+        return redirect()->route(Survey::NAME_URL_PREVIEW_PUBLISH, ['id' => $id])->with('alert_error', trans('adminlte_lang::survey.message_close_survey_not_success'));
     }
 
     /**

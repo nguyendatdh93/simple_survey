@@ -144,6 +144,11 @@ class Form
         return ob_get_clean();
     }
 
+    /**
+     * @param $settings
+     * @param $datas
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public static function table($settings, $datas)
     {
         return view('admin::layouts.partials.table', array('settings' => $settings, 'datas' => $datas));
@@ -212,5 +217,52 @@ class Form
         echo '<img src="'.$src.'" '. self::getAttributes($paramAttributes).' >';
 
         return ob_get_clean();
+    }
+
+    /**
+     * @param $name
+     * @param $href
+     * @param array $paramAttributes
+     * @return string|void
+     */
+    public static function a($name, $href, $paramAttributes=array())
+    {
+        if (!Validator::isNullOrEmpty($href)) {
+            return;
+        }
+
+        ob_start();
+        $icon = '';
+        if (isset($paramAttributes['icon'])) {
+            $icon = "<i class='".$paramAttributes['icon']."' style='padding-right: 5px' aria-hidden=\"true\"></i>";
+            unset($paramAttributes['icon']);
+        }
+
+        echo '<a href="'.$href.'" '. self::getAttributes($paramAttributes).' >'.$icon.$name.'</a>';
+
+        return ob_get_clean();
+    }
+
+    /**
+     * @param $id
+     * @param $title
+     * @param $content
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public static function modalConfirm($settings)
+    {
+        if (!isset($settings['id'])) {
+            $settings['id'] = '';
+        }
+
+        if (!isset($settings['title'])) {
+            $settings['title'] = '';
+        }
+
+        if (!isset($settings['content'])) {
+            $settings['content'] = '';
+        }
+
+        return view('admin::layouts.partials.modal_confirm', array('settings' => $settings));
     }
 }

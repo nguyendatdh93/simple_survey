@@ -18,10 +18,15 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::get('/preview', 'SurveyController@preview');
+Route::prefix('preview')->group(function () {
+    Route::get('/publish/{id?}', 'SurveyController@preview')->name(\App\Survey::NAME_URL_PREVIEW_PUBLISH);
+    Route::get('/close/{id?}', 'SurveyController@preview')->name(\App\Survey::NAME_URL_PREVIEW_CLOSE);
+    Route::get('/draf/{id?}', 'SurveyController@preview')->name(\App\Survey::NAME_URL_PREVIEW_DRAF);
+});
 
 Route::prefix('survey')->group(function () {
-    Route::get('/publish/{id}', 'SurveyController@publishSurveyById');
-    Route::get('/close/{id}', 'SurveyController@closeSurveyById');
+    Route::get('/publish/{id?}', 'SurveyController@publishSurveyById')->name(\App\Survey::NAME_URL_PUBLISH_SURVEY);
+    Route::get('/close/{id?}', 'SurveyController@closeSurveyById')->name(\App\Survey::NAME_URL_CLOSE_SURVEY);
     Route::get('/list', 'SurveyController@index');
 });
 
