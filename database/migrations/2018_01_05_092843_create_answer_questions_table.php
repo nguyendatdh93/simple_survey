@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAnwserQuestionsTable extends Migration
+class CreateAnswerQuestionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateAnwserQuestionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('anwser_questions', function (Blueprint $table) {
+        Schema::create('answer_questions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('answer_id');
             $table->integer('question_id');

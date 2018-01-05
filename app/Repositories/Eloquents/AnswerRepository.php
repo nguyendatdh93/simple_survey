@@ -20,6 +20,16 @@ class AnswerRepository extends \EloquentRepository implements AnswerRepositoryIn
 
     public function getNumberAnswersBySurveyId($survey_id)
     {
+        $number_answers = $this->_model->where('survey_id', $survey_id)->count();
 
+        return $number_answers;
+    }
+
+    public function getAnswersBySurveyId($survey_id)
+    {
+        $answers = $this->_model->select("*")
+            ->where('survey_id', $survey_id)->get()->toArray();
+
+        return $answers;
     }
 }

@@ -31,6 +31,7 @@ Route::prefix('survey')->group(function () {
 
 Route::prefix('download')->group(function () {
     Route::get('/list', 'SurveyController@downloadListSurvey');
+    Route::get('/answer/{id?}', 'SurveyController@downloadPageSurveyBySurveyId');
 });
 
 Route::group(['middleware' => 'auth'], function () {

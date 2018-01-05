@@ -11,4 +11,5 @@ namespace App\Repositories\Contracts;
 interface AnswerRepositoryInterface
 {
     public function getNumberAnswersBySurveyId($survey_id);
+    public function getAnswersBySurveyId($survey_id);
 }

@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use App\Repositories\Contracts\AnswerQuestionRepositoryInterface;
 use App\Survey;
 use Illuminate\Http\Request;
 use App\Repositories\Contracts\SurveyRepositoryInterface;
 use App\Repositories\Contracts\QuestionRepositoryInterface;
 use App\Repositories\Contracts\QuestionChoiceRepositoryInterface;
+use App\Repositories\Contracts\AnswerRepositoryInterface;
 use Illuminate\Support\Facades\Route;
 
 class SurveyController extends Controller
@@ -15,13 +17,17 @@ class SurveyController extends Controller
     protected $surveyRepository;
     protected $questionRepository;
     protected $questionChoiceRepository;
+    protected $answerRepository;
+    protected $answerQuestionRepository;
 
-    public function __construct(SurveyRepositoryInterface $surveyRepository, QuestionRepositoryInterface $questionRepository, QuestionChoiceRepositoryInterface $questionChoiceRepository)
+    public function __construct(SurveyRepositoryInterface $surveyRepository, QuestionRepositoryInterface $questionRepository, QuestionChoiceRepositoryInterface $questionChoiceRepository, AnswerRepositoryInterface $answerRepository, AnswerQuestionRepositoryInterface $answerQuestionRepository)
     {
         $this->middleware('auth');
         $this->surveyRepository = $surveyRepository;
         $this->questionRepository = $questionRepository;
         $this->questionChoiceRepository = $questionChoiceRepository;
+        $this->answerRepository = $answerRepository;
+        $this->answerQuestionRepository = $answerQuestionRepository;
     }
 
     /**
@@ -50,7 +56,22 @@ class SurveyController extends Controller
         );
 
         $surveys = $this->surveyRepository->getAllSurvey();
+        $surveys = $this->getDataSurveyForShowing($surveys);
 
+        return view('admin::datatable', array('settings' => $table_settings, 'datas' => $surveys));
+    }
+
+    public function showNumberAnswers($survey)
+    {
+        if ($this->answerRepository->getNumberAnswersBySurveyId($survey['id']) > 0) {
+            return $this->answerRepository->getNumberAnswersBySurveyId($survey['id']);
+        }
+
+        return '-';
+    }
+
+    public function getDataSurveyForShowing($surveys)
+    {
         foreach ($surveys as $key => $survey) {
             if ($survey['status'] == Survey::STATUS_SURVEY_DRAF) {
                 $surveys[$key]['status'] = trans('adminlte_lang::survey.draf');
@@ -60,10 +81,10 @@ class SurveyController extends Controller
                 $surveys[$key]['status'] = trans('adminlte_lang::survey.closed');
             }
 
-            $surveys[$key]['number_answers'] = 0;
+            $surveys[$key]['number_answers'] = $this->showNumberAnswers($survey);
         }
 
-        return view('admin::datatable', array('settings' => $table_settings, 'datas' => $surveys));
+        return $surveys;
     }
 
     public function downloadListSurvey()
@@ -87,20 +108,24 @@ class SurveyController extends Controller
         );
 
         $surveys = $this->surveyRepository->getDownloadListSurvey();
-
-        foreach ($surveys as $key => $survey) {
-            if ($survey['status'] == Survey::STATUS_SURVEY_DRAF) {
-                $surveys[$key]['status'] = trans('adminlte_lang::survey.draf');
-            } elseif ($survey['status'] == Survey::STATUS_SURVEY_PUBLISHED) {
-                $surveys[$key]['status'] = trans('adminlte_lang::survey.published');
-            } else {
-                $surveys[$key]['status'] = trans('adminlte_lang::survey.closed');
-            }
-
-            $surveys[$key]['number_answers'] = 0;
-        }
+        $surveys = $this->getDataSurveyForShowing($surveys);
 
         return view('admin::datatable', array('settings' => $table_settings, 'datas' => $surveys));
+    }
+
+    public function downloadPageSurveyBySurveyId($id)
+    {
+        $list_questions = $this->questionRepository->getListQuestionBySurveyId($id);
+        $answers = $this->answerRepository->getAnswersBySurveyId($id);
+        foreach ($answers as $key => $answer) {
+            $answers[$key]['answers'] = $this->answerQuestionRepository->getAnswersByAnswerId($answer['id']);
+        }
+        
+        $headers_columns = array();
+
+        foreach ($list_questions as $question) {
+            $headers_columns[$question['text']] = 0;
+        }
     }
 
     /**
