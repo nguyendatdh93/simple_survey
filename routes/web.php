@@ -17,7 +17,6 @@ Route::prefix('auth')->group(function () {
     Route::get('/google', array('as' => 'auth.google', 'uses' => 'Auth\LoginController@loginWithGoogle'));
 });
 
-Route::get('/preview', 'SurveyController@preview');
 Route::prefix('preview')->group(function () {
     Route::get('/publish/{id?}', 'SurveyController@preview')->name(\App\Survey::NAME_URL_PREVIEW_PUBLISH);
     Route::get('/close/{id?}', 'SurveyController@preview')->name(\App\Survey::NAME_URL_PREVIEW_CLOSE);
