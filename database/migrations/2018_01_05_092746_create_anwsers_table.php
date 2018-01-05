@@ -16,7 +16,6 @@ class CreateAnwsersTable extends Migration
         Schema::create('anwsers', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('survey_id');
-            $table->integer('status')->default(0);
             $table->text('user_agent')->nullable($value = true);
             $table->integer('del_flg')->default(0);
             $table->timestamps();
