@@ -84,7 +84,9 @@
             } else {
                 class_button_status = "btn-warning";
             }
+
             html    += '<button type="button" class="btn btn-block '+ class_button_status +' btn-xs">'+data[1]+'</button>';
+
             return html;
         }
     });

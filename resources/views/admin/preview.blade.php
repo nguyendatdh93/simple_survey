@@ -49,8 +49,13 @@
                     <div class="col-md-1"></div>
                     <div class="col-md-10">
                         <div class="preview-button">
-                            {!! FormSimple::button('Draf', array('type' => 'submit','class' => 'btn btn-default','icon' => '', "style" => "display:block; margin:0px auto; float: left" )) !!}
-                            {!! FormSimple::button('Publish', array('type' => 'submit','class' => 'btn btn-primary','icon' => '', "style" => "display:block; margin:0px auto; float: left; margin-left : 10px" )) !!}
+                            @if($name_url == \App\Survey::NAME_URL_PREVIEW_DRAF)
+                                {!! FormSimple::button('Publish', array('type' => 'submit','class' => 'btn bg-olive btn-flat margin','icon' => '', "style" => "display:block; margin:0px auto;" )) !!}
+                            @elseif($name_url == \App\Survey::NAME_URL_PREVIEW_PUBLISH)
+                                {!! FormSimple::button('Close', array('type' => 'submit','class' => 'btn bg-orange btn-flat margin','icon' => '', "style" => "display:block; margin:0px auto;" )) !!}
+                            @endif
+
+
                         </div>
                     </div>
                     <div class="col-md-1"></div>
@@ -77,6 +82,7 @@
     .preview-header img {
         margin: 0px auto;
         display: block;
+        width: 100%;
     }
     .preview-content {
         background: #fff;
