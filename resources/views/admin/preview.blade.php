@@ -51,9 +51,9 @@
                     <div class="col-md-10">
                         <div class="preview-button">
                             @if($name_url == \App\Survey::NAME_URL_PREVIEW_DRAF)
-                                {!! FormSimple::a('Publish', '#', array('class' => 'btn bg-olive btn-flat margin','icon' => '', "style" => "display:block; margin:0px auto;", 'data-toggle' =>"modal", 'data-target' => "#modal-confirm-publish")) !!}
+                                {!! FormSimple::a(trans('adminlte_lang::survey.confirm_button_publish'), '#', array('class' => 'btn bg-olive btn-flat margin','icon' => '', "style" => "display:block; margin:0px auto;", 'data-toggle' =>"modal", 'data-target' => "#modal-confirm-publish")) !!}
                             @elseif($name_url == \App\Survey::NAME_URL_PREVIEW_PUBLISH)
-                                {!! FormSimple::a('Close', '#', array('class' => 'btn bg-orange btn-flat margin','icon' => '', "style" => "display:block; margin:0px auto;", 'data-toggle' =>"modal", 'data-target' => "#modal-confirm-close")) !!}
+                                {!! FormSimple::a(trans('adminlte_lang::survey.confirm_button_close'), '#', array('class' => 'btn bg-orange btn-flat margin','icon' => '', "style" => "display:block; margin:0px auto;", 'data-toggle' =>"modal", 'data-target' => "#modal-confirm-close")) !!}
                             @endif
                         </div>
                     </div>
@@ -67,14 +67,7 @@
              'content' => trans('adminlte_lang::survey.confirm_publish_survey_content'),
              'buttons' => array(
                 array(
-                    'text'  => trans('adminlte_lang::survey.confirm_publish_survey_button_close'),
-                    'attributes' => array(
-                        'class'        => 'btn btn-default pull-left',
-                        'data-dismiss' => "modal"
-                    )
-                ),
-                array(
-                    'text'  => trans('adminlte_lang::survey.confirm_publish_survey_button_publish'),
+                    'text'  => trans('adminlte_lang::survey.confirm_button_publish'),
                     'href'  => route(\App\Survey::NAME_URL_PUBLISH_SURVEY).'/'.$survey['id'],
                     'attributes' => array(
                         'class' => 'btn btn-primary',
@@ -89,14 +82,7 @@
              'content' => trans('adminlte_lang::survey.confirm_close_survey_content'),
              'buttons' => array(
                 array(
-                    'text'  => trans('adminlte_lang::survey.confirm_close_survey_button_close'),
-                    'attributes' => array(
-                        'class'        => 'btn btn-default pull-left',
-                        'data-dismiss' => "modal"
-                    )
-                ),
-                array(
-                    'text'  => trans('adminlte_lang::survey.confirm_close_survey_button_publish'),
+                    'text'  => trans('adminlte_lang::survey.confirm_button_close'),
                     'href'  => route(\App\Survey::NAME_URL_CLOSE_SURVEY).'/'.$survey['id'],
                     'attributes' => array(
                         'class' => 'btn btn-primary',
