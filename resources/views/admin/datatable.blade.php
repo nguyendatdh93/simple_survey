@@ -14,7 +14,7 @@
                 <section class="content">
                     <div class="row">
                         <div class="col-xs-12">
-                            {!! \App\BaseWidget\Form::table($id_table, $title, $title_headers, $datas) !!}
+                            {!! \App\BaseWidget\Form::table($settings, $datas) !!}
                             <!-- /.box -->
                         </div>
                         <!-- /.col -->
@@ -22,7 +22,6 @@
                     <!-- /.row -->
                 </section>
                 <!-- /.content -->
-                {!! \App\BaseWidget\Form::link('Go to homepage',array('href' => url('form'),'class' => 'btn btn-primary')) !!}
             </div>
             <!--/.col (right) -->
             <!-- /.row -->

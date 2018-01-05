@@ -10,6 +10,8 @@ namespace App\BaseWidget;
 
 class Validator
 {
+    const TYPE_IMAGE = 'image';
+
     /**
      * Check null or empty array/string
      * @param $val
@@ -20,5 +22,15 @@ class Validator
         if(is_array($val)) return !empty($val);
 
         return strlen(trim($val)) ? true : false;
+    }
+
+    public static function checkIsButtonTag($setting)
+    {
+        return isset($setting['href']) ? false : true;
+    }
+
+    public static function checkIsATag($setting)
+    {
+        return isset($setting['href']) ? true : false;
     }
 }
