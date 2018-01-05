@@ -110,7 +110,11 @@ class SurveyController extends Controller
     {
         $result = $this->surveyRepository->publishSurveyById($id);
 
-        return $result;
+        if ($result) {
+            return redirect()->route(Survey::NAME_URL_PREVIEW_PUBLISH, ['id' => $id])->with('alert_success', trans('adminlte_lang::survey.message_publish_survey_success'));
+        }
+
+        return redirect()->route(Survey::NAME_URL_PREVIEW_DRAF, ['id' => $id])->with('alert_error', trans('adminlte_lang::survey.message_publish_survey_not_success'));
     }
 
     /**
@@ -121,7 +125,11 @@ class SurveyController extends Controller
     {
         $result = $this->surveyRepository->closeSurveyById($id);
 
-        return $result;
+        if ($result) {
+            return redirect()->route(Survey::NAME_URL_PREVIEW_CLOSE, ['id' => $id])->with('alert_success', trans('adminlte_lang::survey.message_close_survey_success'));
+        }
+
+        return redirect()->route(Survey::NAME_URL_PREVIEW_PUBLISH, ['id' => $id])->with('alert_error', trans('adminlte_lang::survey.message_close_survey_not_success'));
     }
 
     /**

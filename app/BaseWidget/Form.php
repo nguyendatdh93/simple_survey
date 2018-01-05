@@ -213,4 +213,22 @@ class Form
 
         return ob_get_clean();
     }
+
+    public static function a($name, $href, $paramAttributes=array())
+    {
+        if (!Validator::isNullOrEmpty($href)) {
+            return;
+        }
+
+        ob_start();
+        $icon = '';
+        if (isset($paramAttributes['icon'])) {
+            $icon = "<i class='".$paramAttributes['icon']."' style='padding-right: 5px' aria-hidden=\"true\"></i>";
+            unset($paramAttributes['icon']);
+        }
+
+        echo '<a href="'.$href.'" '. self::getAttributes($paramAttributes).' >'.$icon.$name.'</a>';
+
+        return ob_get_clean();
+    }
 }

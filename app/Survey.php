@@ -15,4 +15,7 @@ class Survey extends Model
     const NAME_URL_PREVIEW_PUBLISH = 'publish';
     const NAME_URL_PREVIEW_CLOSE   = 'close';
     const NAME_URL_PREVIEW_DRAF    = 'draf';
+
+    const NAME_URL_PUBLISH_SURVEY = 'publish-survey';
+    const NAME_URL_CLOSE_SURVEY   = 'close-survey';
 }

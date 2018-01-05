@@ -12,7 +12,8 @@
                     <!-- left column -->
                     <div class="col-md-1"></div>
                     <div class="col-md-10">
-                        <div class="panel panel-default">
+                        @include('admin::layouts.partials.alert_message')
+                        <div>
                             <div class="col-md-1"></div>
                             <!-- general form elements -->
                             <div class="col-md-10">
@@ -50,12 +51,12 @@
                     <div class="col-md-10">
                         <div class="preview-button">
                             @if($name_url == \App\Survey::NAME_URL_PREVIEW_DRAF)
-                                {!! FormSimple::button('Publish', array('type' => 'submit','class' => 'btn bg-olive btn-flat margin','icon' => '', "style" => "display:block; margin:0px auto;" )) !!}
+                                @php $url = route(\App\Survey::NAME_URL_PUBLISH_SURVEY).'/'.$survey['id'] @endphp
+                                {!! FormSimple::a('Publish', $url, array('class' => 'btn bg-olive btn-flat margin','icon' => '', "style" => "display:block; margin:0px auto;" )) !!}
                             @elseif($name_url == \App\Survey::NAME_URL_PREVIEW_PUBLISH)
-                                {!! FormSimple::button('Close', array('type' => 'submit','class' => 'btn bg-orange btn-flat margin','icon' => '', "style" => "display:block; margin:0px auto;" )) !!}
+                                @php $url = route(\App\Survey::NAME_URL_CLOSE_SURVEY).'/'.$survey['id'] @endphp
+                                {!! FormSimple::a('Close', $url, array('class' => 'btn bg-orange btn-flat margin','icon' => '', "style" => "display:block; margin:0px auto;" )) !!}
                             @endif
-
-
                         </div>
                     </div>
                     <div class="col-md-1"></div>
@@ -100,8 +101,8 @@
         padding: 10px;
         border-top : solid 1px #d4d4d4;
     }
-    .preview-button {
-        width: 300px;
+    .btn-flat {
+        width: 80px;
         display: block;
         margin: 0px auto;
     }

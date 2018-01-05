@@ -18,11 +18,11 @@
 
         $('#survey-table').DataTable({
             'paging'      : true,
-            'lengthChange': false,
+            'lengthChange': true,
             'searching'   : true,
             'ordering'    : true,
             'info'        : true,
-            'autoWidth'   : false,
+            'autoWidth'   : true,
             'createdRow' : function( row, data, dataIndex ) {
                 $( row ).addClass(changeColorRow(row,data));
                 $(row).children(".tbl-control").html(addControls(row,data));
@@ -54,9 +54,9 @@
 
         function addControls(row,data)
         {
-            var html = '',
+            var html            = '',
             url_redirect_detail = '',
-            url_redirect_copy = '';
+            url_redirect_copy   = '';
 
             if(data.indexOf("{{ trans('adminlte_lang::survey.draf') }}") >= 0) {
                 url_redirect_detail = "{{ route("draf") }}/"+ data[0];
@@ -74,7 +74,7 @@
 
         function buttonForStatus(data)
         {
-            var html     = '',
+            var html            = '',
             class_button_status = '';
 
             if(data.indexOf("{{ trans('adminlte_lang::survey.draf') }}") >= 0) {
@@ -85,7 +85,7 @@
                 class_button_status = "btn-warning";
             }
 
-            html    += '<button type="button" class="btn btn-block '+ class_button_status +' btn-xs">'+data[1]+'</button>';
+            html += '<button type="button" class="btn btn-block '+ class_button_status +' btn-xs">'+data[1]+'</button>';
 
             return html;
         }
