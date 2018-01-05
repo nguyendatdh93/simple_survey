@@ -198,6 +198,10 @@ class Form
         ob_start();
         echo '<textarea '. self::getAttributes($paramAttributes).' rows="10" cols="80"> </textarea>';
 
+        if (isset($paramAttributes['help-block'])) {
+            echo '<p class="help-block">'.$paramAttributes['help-block'].'</p>';
+        }
+
         return ob_get_clean();
     }
 }

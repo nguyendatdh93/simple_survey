@@ -33,3 +33,7 @@ Route::get('/table', 'HomeController@table');
 Route::get('/posts', 'PostController@index');
 
 Route::get('/users', 'UserController@index');
+
+
+Route::get('/survey/new', 'SurveyController@create');
+Route::post('/survey/save', 'SurveyController@save');
