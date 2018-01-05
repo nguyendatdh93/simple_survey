@@ -92,13 +92,13 @@
 </script>
 
 <style>
-    .row-draf {
-        background-color: white !important;
-    }
-    .row-published {
-        background-color: #ceebf5 !important;
-    }
-    .row-closed {
-        background-color: #fbeed8 !important;
-    }
+    /*.row-draf {*/
+        /*background-color: white !important;*/
+    /*}*/
+    /*.row-published {*/
+        /*background-color: #ceebf5 !important;*/
+    /*}*/
+    /*.row-closed {*/
+        /*background-color: #fbeed8 !important;*/
+    /*}*/
 </style>
