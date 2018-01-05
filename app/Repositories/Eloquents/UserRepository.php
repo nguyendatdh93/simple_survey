@@ -7,7 +7,6 @@
  */
 namespace App\Repositories\Eloquents;
 
-use App\Account;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\User;
 
@@ -16,7 +15,7 @@ class UserRepository extends \EloquentRepository implements UserRepositoryInterf
 
     public function getModel()
     {
-        return Account::class;
+        return User::class;
     }
 
     public function getAll()

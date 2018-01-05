@@ -34,6 +34,7 @@ class SurveyController extends Controller
             'title' => 'Surveys list managerment',
             'id'    => 'survey-table',
             'headers_columns' => array(
+                'Id'             => 'id',
                 'Status'         => 'status',
                 'Survey Name'    => 'name',
                 'Image'          => array(

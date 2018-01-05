@@ -18,6 +18,11 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::get('/preview', 'SurveyController@preview');
+Route::prefix('preview')->group(function () {
+    Route::get('/publish/{id?}', 'SurveyController@preview')->name('publish');
+    Route::get('/close/{id?}', 'SurveyController@preview')->name('close');
+    Route::get('/draf/{id?}', 'SurveyController@preview')->name('draf');
+});
 
 Route::prefix('survey')->group(function () {
     Route::get('/publish/{id}', 'SurveyController@publishSurveyById');

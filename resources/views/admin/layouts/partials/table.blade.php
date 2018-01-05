@@ -7,7 +7,7 @@
         <table id="{{ isset($settings['id']) ? $settings['id'] : "table-default" }}" class="table table-bordered table-striped" data-setting-searching="false">
             <thead>
             <tr>
-                @if(!isset($settings['headers_columns']['id'])) <th style="text-align: center">{{ "ID" }}</th> @endif
+                @if(!isset($settings['headers_columns']['Id'])) <th style="text-align: center">{{ "ID" }}</th> @endif
                 @foreach($settings['headers_columns'] as $key => $key_column)
                     <th style="text-align: center">{{ $key }}</th>
                 @endforeach
@@ -19,23 +19,23 @@
             <tbody>
             @foreach($datas as $data)
                 <tr>
-                    @if(!isset($settings['headers_columns']['id'])) <td>{{ "-" }}</td> @endif
+                    @if(!isset($settings['headers_columns']['Id'])) <td>{{ "-" }}</td> @endif
                     @foreach($settings['headers_columns'] as $key => $key_column)
                         @if(is_array($key_column))
-                            <td>@if($key_column['type'] == \App\BaseWidget\Validator::TYPE_IMAGE) {!! \App\BaseWidget\Form::img($data[$key_column['column']], array("class" => "img-datatable","alt" => "Image")) !!} @endif </td>
+                            <td class="tbl-{{$key_column['column']}}">@if($key_column['type'] == \App\BaseWidget\Validator::TYPE_IMAGE) {!! \App\BaseWidget\Form::img($data[$key_column['column']], array("class" => "img-datatable","alt" => "Image")) !!} @endif </td>
                         @else
-                            <td>{{ $data[$key_column] }}</td>
+                            <td class="tbl-{{$key_column}}">{{ $data[$key_column] }}</td>
                         @endif
                     @endforeach
                     @if(isset($settings['controls']) && $settings['controls'] == true)
-                        <th style="text-align: center">{{ "-" }}</th>
+                        <td style="text-align: center" class="tbl-control">{{ "-" }}</td>
                     @endif
                 </tr>
             @endforeach
             </tbody>
             <tfoot>
             <tr>
-                @if(!isset($settings['headers_columns']['id'])) <th style="text-align: center">{{ "ID" }}</th> @endif
+                @if(!isset($settings['headers_columns']['Id'])) <th style="text-align: center">{{ "ID" }}</th> @endif
                 @foreach($settings['headers_columns'] as $key => $title)
                     <th style="text-align: center">{{ $key }}</th>
                 @endforeach
