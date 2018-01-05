@@ -17,7 +17,6 @@ class CreateAnwserQuestionsTable extends Migration
             $table->increments('id');
             $table->integer('answer_id');
             $table->integer('question_id');
-            $table->integer('question_choice_id');
             $table->text('text');
             $table->integer('del_flg')->default(0);
             $table->timestamps();
