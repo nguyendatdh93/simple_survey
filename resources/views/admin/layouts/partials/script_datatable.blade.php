@@ -30,7 +30,6 @@
             },
             "columnDefs": [
                 { "targets": 0, "visible" : false },
-                { "targets": 1,"orderable" : false},
                 { "targets": 3, "orderable" : false},
                 { "targets": 4, "orderable" : false},
                 { "targets": 5, "orderable" : false},

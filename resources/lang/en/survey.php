@@ -17,4 +17,12 @@ return [
     'confirm_close_survey_title' => "Confirm close survey",
     'confirm_close_survey_button_close' => "Close",
     'confirm_close_survey_button_publish' => "Publish",
+    'survey_list_table_title' => "Surveys list managerment",
+    'survey_list_table_header_column_id' => "Id",
+    'survey_list_table_header_column_status' => "Status",
+    'survey_list_table_header_column_survey_name' => "Survey Name",
+    'survey_list_table_header_column_survey_image' => "Image",
+    'survey_list_table_header_column_survey_published_at' => "Published at",
+    'survey_list_table_header_column_survey_closed_at' => "Closed at",
+    'survey_list_table_header_column_survey_number_answers' => "Number Answers",
 ];

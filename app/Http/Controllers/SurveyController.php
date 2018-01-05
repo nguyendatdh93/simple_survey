@@ -32,19 +32,19 @@ class SurveyController extends Controller
     public function index()
     {
         $table_settings = array(
-            'title' => 'Surveys list managerment',
+            'title' => trans('adminlte_lang::survey.survey_list_table_title'),
             'id'    => 'survey-table',
             'headers_columns' => array(
-                'Id'             => 'id',
-                'Status'         => 'status',
-                'Survey Name'    => 'name',
-                'Image'          => array(
+                trans('adminlte_lang::survey.survey_list_table_header_column_id')                    => 'id',
+                trans('adminlte_lang::survey.survey_list_table_header_column_status')                => 'status',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_name')           => 'name',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_image')          => array(
                     'column'     => 'image_path',
                     'type'       => 'image'
                 ),
-                'Published at'   => 'published_at',
-                'Closed at'      => 'closed_at',
-                "Number Answers" => 'number_answers'
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_published_at')   => 'published_at',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_closed_at')      => 'closed_at',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_number_answers') => 'number_answers'
             ),
             'controls' => true
         );
