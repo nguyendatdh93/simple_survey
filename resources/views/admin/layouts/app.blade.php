@@ -57,5 +57,9 @@ desired effect
     @include('admin::layouts.partials.scripts')
 @show
 
+@section('datatable')
+
+@show
+
 </body>
 </html>

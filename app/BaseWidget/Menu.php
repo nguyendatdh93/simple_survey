@@ -26,6 +26,13 @@ class Menu
             "url"    => '/survey/list',
         );
 
+        $menus['survey_list_download'] = Array(
+            "text"   => trans('adminlte_lang::survey.menu_survey_download'),
+            "icon"   => "fa fa-cloud-download",
+            "active" => false,
+            "url"    => '/download/list',
+        );
+
         if(in_array($ip_address, Config::get("config.ip_private"))) {
             $menus['survey_list']['hidden'] = true;
         }

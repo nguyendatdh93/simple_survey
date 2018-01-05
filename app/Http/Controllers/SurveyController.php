@@ -66,6 +66,43 @@ class SurveyController extends Controller
         return view('admin::datatable', array('settings' => $table_settings, 'datas' => $surveys));
     }
 
+    public function downloadListSurvey()
+    {
+        $table_settings = array(
+            'title' => trans('adminlte_lang::survey.survey_list_table_title'),
+            'id'    => 'download-table',
+            'headers_columns' => array(
+                trans('adminlte_lang::survey.survey_list_table_header_column_id')                    => 'id',
+                trans('adminlte_lang::survey.survey_list_table_header_column_status')                => 'status',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_name')           => 'name',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_image')          => array(
+                    'column'     => 'image_path',
+                    'type'       => 'image'
+                ),
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_published_at')   => 'published_at',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_closed_at')      => 'closed_at',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_number_answers') => 'number_answers'
+            ),
+            'controls' => true
+        );
+
+        $surveys = $this->surveyRepository->getDownloadListSurvey();
+
+        foreach ($surveys as $key => $survey) {
+            if ($survey['status'] == Survey::STATUS_SURVEY_DRAF) {
+                $surveys[$key]['status'] = trans('adminlte_lang::survey.draf');
+            } elseif ($survey['status'] == Survey::STATUS_SURVEY_PUBLISHED) {
+                $surveys[$key]['status'] = trans('adminlte_lang::survey.published');
+            } else {
+                $surveys[$key]['status'] = trans('adminlte_lang::survey.closed');
+            }
+
+            $surveys[$key]['number_answers'] = 0;
+        }
+
+        return view('admin::datatable', array('settings' => $table_settings, 'datas' => $surveys));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

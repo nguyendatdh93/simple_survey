@@ -30,6 +30,17 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
         return $result;
     }
 
+    public function getDownloadListSurvey()
+    {
+        $result = $this->_model->select('*')
+            ->where('user_id', Auth::id())
+            ->where('status', '!=', Survey::STATUS_SURVEY_DRAF)
+            ->where('del_flg', 0)
+            ->get()->toArray();
+
+        return $result;
+    }
+
     /**
      * @param $survey_id
      * @return mixed

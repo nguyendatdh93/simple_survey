@@ -5,6 +5,7 @@ return [
     'published' => 'Published',
     'closed' => 'Closed',
     'menu_survey_list' => 'Survey Managerment',
+    'menu_survey_download' => 'Download Managerment',
     'message_publish_survey_success' => 'Publish survey success',
     'message_publish_survey_not_success' => 'Publish survey not success',
     'message_close_survey_success' => 'Close survey success',
