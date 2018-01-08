@@ -30,5 +30,8 @@ return [
     'button_more' => 'More',
     'button_less' => 'Less',
     'answer_download_table' => "Answers managerment",
-    'button_download_csv' => 'Download CSV'
+    'button_download_csv' => 'Download CSV',
+    'button_clear_data' => 'Clear data',
+    'confirm_clear_data_title' => 'Clear data',
+    'confirm_clear_data_content' => 'Are you sure to clear data?',
 ];

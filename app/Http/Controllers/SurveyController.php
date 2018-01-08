@@ -137,6 +137,16 @@ class SurveyController extends Controller
                         'class' => 'btn btn-primary',
                         'icon'  => 'fa fa-fw fa-download'
                     )
+                ),
+                array(
+                    'text'  => trans('adminlte_lang::survey.button_clear_data'),
+                    'href'  => \route(Survey::NAME_URL_DOWNLOAD_SURVEY).'/'.$id,
+                    'attributes' => array(
+                        'class' => 'btn bg-orange margin',
+                        'icon'  => 'fa fa-trash',
+                        'data-toggle' =>"modal",
+                        'data-target' => "#modal-confirm-clear-data"
+                    )
                 )
             )
         );
@@ -144,7 +154,7 @@ class SurveyController extends Controller
         return view('admin::datatable', array('settings' => $table_settings, 'datas' => $answer_datas));
     }
 
-    public function downloadCSVFile($id)
+    public function downloadSurveyCSVFile($id)
     {
         $answer_datas = $this->getAnswerForSurveyBySurveyID($id);
         $headers = [

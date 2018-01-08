@@ -1,3 +1,18 @@
+{!! FormSimple::modalConfirm(array(
+             'id'      => 'modal-confirm-clear-data',
+             'title'   => trans('adminlte_lang::survey.confirm_clear_data_title'),
+             'content' => trans('adminlte_lang::survey.confirm_clear_data_content'),
+             'buttons' => array(
+                array(
+                    'text'  => trans('adminlte_lang::survey.confirm_button_publish'),
+                    'href'  => '#',
+                    'attributes' => array(
+                        'class' => 'btn btn-primary',
+                    )
+                )
+             )
+        )) !!}
+
 <script>
     $(function () {
         $('#download-table').DataTable({
@@ -28,13 +43,9 @@
                 url_redirect_detail = '',
                 url_redirect_copy   = '';
 
-            if(data.indexOf("{{ trans('adminlte_lang::survey.draf') }}") >= 0) {
-                url_redirect_detail = "{{ route("draf") }}/"+ data[0];
-            } else if(data.indexOf("{{ trans('adminlte_lang::survey.published') }}") >= 0) {
-                url_redirect_detail = "{{ route("publish") }}/"+ data[0];
-            } else {
-                url_redirect_detail = "{{ route("close") }}/"+ data[0];
-            }
+
+            url_redirect_detail = "{{ route(\App\Survey::NAME_URL_DOWNLOAD_PAGE_SURVEY) }}/"+ data[0];
+
 
             html += '<a href="'+ url_redirect_detail +'" class="btn btn-default bg-olive" data-toggle="tooltip" title="{{ trans('adminlte_lang::survey.go_download_button') }}"><i class="fa fa-download"></i></a>';
 
