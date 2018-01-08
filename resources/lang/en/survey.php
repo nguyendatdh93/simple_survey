@@ -29,4 +29,6 @@ return [
     'go_download_button' => 'Go to download page',
     'button_more' => 'More',
     'button_less' => 'Less',
+    'answer_download_table' => "Answers managerment",
+    'button_download_csv' => 'Download CSV'
 ];

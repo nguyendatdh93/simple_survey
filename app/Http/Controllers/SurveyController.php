@@ -11,6 +11,7 @@ use App\Repositories\Contracts\QuestionRepositoryInterface;
 use App\Repositories\Contracts\QuestionChoiceRepositoryInterface;
 use App\Repositories\Contracts\AnswerRepositoryInterface;
 use Illuminate\Support\Facades\Route;
+use Response;
 
 class SurveyController extends Controller
 {
@@ -116,7 +117,66 @@ class SurveyController extends Controller
     public function downloadPageSurveyBySurveyId($id)
     {
         $list_questions = $this->questionRepository->getListQuestionBySurveyId($id);
-        $list_answers   = $this->answerRepository->getAnswersBySurveyId($id);
+        $answer_datas   = $this->getAnswerForSurveyBySurveyID($id, $list_questions);
+
+        foreach ($list_questions as $question) {
+            $headers_columns[$question['text']] = $question['text'];
+        }
+        $headers_columns['Time created'] = 'created_at';
+
+        $table_settings = array(
+            'title' => trans('adminlte_lang::survey.answer_download_table'),
+            'id' => 'download-page-table',
+            'headers_columns' => $headers_columns,
+            'controls' => false,
+            'buttons' => array(
+                array(
+                    'text'  => trans('adminlte_lang::survey.button_download_csv'),
+                    'href'  => \route(Survey::NAME_URL_DOWNLOAD_SURVEY).'/'.$id,
+                    'attributes' => array(
+                        'class' => 'btn btn-primary',
+                        'icon'  => 'fa fa-fw fa-download'
+                    )
+                )
+            )
+        );
+
+        return view('admin::datatable', array('settings' => $table_settings, 'datas' => $answer_datas));
+    }
+
+    public function downloadCSVFile($id)
+    {
+        $answer_datas = $this->getAnswerForSurveyBySurveyID($id);
+        $headers = [
+            'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0'
+            ,   'Content-type'        => 'text/csv'
+            ,   'Content-Disposition' => 'attachment; filename='.$this->surveyRepository->getNameSurvey($id).'.csv'
+            ,   'Expires'             => '0'
+            ,   'Pragma'              => 'public'
+        ];
+
+        # add headers for each column in the CSV download
+        array_unshift($answer_datas, array_keys($answer_datas[0]));
+
+        $callback = function() use ($answer_datas)
+        {
+            $FH = fopen('php://output', 'w');
+            foreach ($answer_datas as $key => $row) {
+                fputcsv($FH, $row);
+            }
+            fclose($FH);
+        };
+
+        return Response::stream($callback, 200, $headers);
+    }
+
+    public function getAnswerForSurveyBySurveyID($survey_id, $list_questions = array())
+    {
+        if (count($list_questions) == 0) {
+            $list_questions = $this->questionRepository->getListQuestionBySurveyId($survey_id);
+        }
+
+        $list_answers   = $this->answerRepository->getAnswersBySurveyId($survey_id);
         foreach ($list_answers as $key_list_answer => $list_answer) {
             $list_answers[$key_list_answer]['answers'] = $this->answerQuestionRepository->getAnswersByAnswerId($list_answer['id']);
         }
@@ -139,21 +199,7 @@ class SurveyController extends Controller
             $answer_datas[$key_list_answer]['created_at'] = $list_answer['created_at'];
         }
 
-        $headers_columns = array();
-
-        foreach ($list_questions as $question) {
-            $headers_columns[$question['text']] = $question['text'];
-        }
-        $headers_columns['Time created'] = 'created_at';
-
-        $table_settings = array(
-            'title' => trans('adminlte_lang::survey.survey_list_table_title'),
-            'id' => 'download-page-table',
-            'headers_columns' => $headers_columns,
-            'controls' => false
-        );
-
-        return view('admin::datatable', array('settings' => $table_settings, 'datas' => $answer_datas));
+        return $answer_datas;
     }
 
     /**

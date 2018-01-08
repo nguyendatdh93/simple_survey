@@ -92,4 +92,13 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
 
         return 0;
     }
+
+    public function getNameSurvey($survey_id)
+    {
+        $result = $this->_model->select('name')
+            ->where('id', $survey_id)
+            ->get()->toArray();
+
+        return $result[0]['name'];
+    }
 }
