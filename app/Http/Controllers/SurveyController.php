@@ -2,26 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\SecureDownloadSurvey;
 use App\Http\Requests;
+use App\Repositories\Contracts\AnswerQuestionRepositoryInterface;
 use App\Survey;
 use Illuminate\Http\Request;
 use App\Repositories\Contracts\SurveyRepositoryInterface;
 use App\Repositories\Contracts\QuestionRepositoryInterface;
 use App\Repositories\Contracts\QuestionChoiceRepositoryInterface;
+use App\Repositories\Contracts\AnswerRepositoryInterface;
 use Illuminate\Support\Facades\Route;
+use Response;
 
 class SurveyController extends Controller
 {
     protected $surveyRepository;
     protected $questionRepository;
     protected $questionChoiceRepository;
+    protected $answerRepository;
+    protected $answerQuestionRepository;
 
-    public function __construct(SurveyRepositoryInterface $surveyRepository, QuestionRepositoryInterface $questionRepository, QuestionChoiceRepositoryInterface $questionChoiceRepository)
+    public function __construct(SurveyRepositoryInterface $surveyRepository, QuestionRepositoryInterface $questionRepository, QuestionChoiceRepositoryInterface $questionChoiceRepository, AnswerRepositoryInterface $answerRepository, AnswerQuestionRepositoryInterface $answerQuestionRepository)
     {
         $this->middleware('auth');
+        $this->middleware(SecureDownloadSurvey::class);
         $this->surveyRepository = $surveyRepository;
         $this->questionRepository = $questionRepository;
         $this->questionChoiceRepository = $questionChoiceRepository;
+        $this->answerRepository = $answerRepository;
+        $this->answerQuestionRepository = $answerQuestionRepository;
     }
 
     /**
@@ -32,25 +41,40 @@ class SurveyController extends Controller
     public function index()
     {
         $table_settings = array(
-            'title' => 'Surveys list managerment',
-            'id'    => 'survey-table',
+            'title' => trans('adminlte_lang::survey.survey_list_table_title'),
+            'id' => 'survey-table',
             'headers_columns' => array(
-                'Id'             => 'id',
-                'Status'         => 'status',
-                'Survey Name'    => 'name',
-                'Image'          => array(
-                    'column'     => 'image_path',
-                    'type'       => 'image'
+                trans('adminlte_lang::survey.survey_list_table_header_column_id') => 'id',
+                trans('adminlte_lang::survey.survey_list_table_header_column_status') => 'status',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_name') => 'name',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_image') => array(
+                    'column' => 'image_path',
+                    'type' => 'image'
                 ),
-                'Published at'   => 'published_at',
-                'Closed at'      => 'closed_at',
-                "Number Answers" => 'number_answers'
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_published_at') => 'published_at',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_closed_at') => 'closed_at',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_number_answers') => 'number_answers'
             ),
             'controls' => true
         );
 
         $surveys = $this->surveyRepository->getAllSurvey();
+        $surveys = $this->getDataSurveyForShowing($surveys);
 
+        return view('admin::datatable', array('settings' => $table_settings, 'datas' => $surveys));
+    }
+
+    public function showNumberAnswers($survey)
+    {
+        if ($this->answerRepository->getNumberAnswersBySurveyId($survey['id']) > 0) {
+            return $this->answerRepository->getNumberAnswersBySurveyId($survey['id']);
+        }
+
+        return '-';
+    }
+
+    public function getDataSurveyForShowing($surveys)
+    {
         foreach ($surveys as $key => $survey) {
             if ($survey['status'] == Survey::STATUS_SURVEY_DRAF) {
                 $surveys[$key]['status'] = trans('adminlte_lang::survey.draf');
@@ -60,10 +84,140 @@ class SurveyController extends Controller
                 $surveys[$key]['status'] = trans('adminlte_lang::survey.closed');
             }
 
-            $surveys[$key]['number_answers'] = 0;
+            $surveys[$key]['number_answers'] = $this->showNumberAnswers($survey);
         }
 
+        return $surveys;
+    }
+
+    public function downloadListSurvey()
+    {
+        $table_settings = array(
+            'title' => trans('adminlte_lang::survey.survey_list_table_title'),
+            'id' => 'download-table',
+            'headers_columns' => array(
+                trans('adminlte_lang::survey.survey_list_table_header_column_id') => 'id',
+                trans('adminlte_lang::survey.survey_list_table_header_column_status') => 'status',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_name') => 'name',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_image') => array(
+                    'column' => 'image_path',
+                    'type' => 'image'
+                ),
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_published_at') => 'published_at',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_closed_at') => 'closed_at',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_number_answers') => 'number_answers'
+            ),
+            'controls' => true
+        );
+
+        $surveys = $this->surveyRepository->getDownloadListSurvey();
+        $surveys = $this->getDataSurveyForShowing($surveys);
+
         return view('admin::datatable', array('settings' => $table_settings, 'datas' => $surveys));
+    }
+
+    public function downloadPageSurveyBySurveyId($id)
+    {
+        $list_questions = $this->questionRepository->getListQuestionBySurveyId($id);
+        $answer_datas   = $this->getAnswerForSurveyBySurveyID($id, $list_questions);
+
+        foreach ($list_questions as $question) {
+            $headers_columns[$question['text']] = $question['text'];
+        }
+        $headers_columns[trans('adminlte_lang::survey.time_created')] = 'created_at';
+
+        $buttons = array();
+        if ($this->answerRepository->getNumberAnswersBySurveyId($id) > 0)
+        {
+            $buttons[] = array(
+                'text'  => trans('adminlte_lang::survey.button_download_csv'),
+                'href'  => \route(Survey::NAME_URL_DOWNLOAD_SURVEY).'/'.$id,
+                'attributes' => array(
+                    'class' => 'btn btn-primary',
+                    'icon'  => 'fa fa-fw fa-download'
+                )
+            );
+        }
+
+        $buttons[] = array(
+            'text'  => trans('adminlte_lang::survey.button_clear_data'),
+            'href'  => \route(Survey::NAME_URL_DOWNLOAD_SURVEY).'/'.$id,
+            'attributes' => array(
+                'class' => 'btn bg-orange margin',
+                'icon'  => 'fa fa-trash',
+                'data-toggle' =>"modal",
+                'data-target' => "#modal-confirm-clear-data"
+            )
+        );
+
+
+        $table_settings = array(
+            'title' => trans('adminlte_lang::survey.answer_download_table'),
+            'id' => 'download-page-table',
+            'headers_columns' => $headers_columns,
+            'controls' => false,
+            'buttons' => $buttons
+        );
+
+        return view('admin::datatable', array('settings' => $table_settings, 'datas' => $answer_datas));
+    }
+
+    public function downloadSurveyCSVFile($id)
+    {
+        $answer_datas = $this->getAnswerForSurveyBySurveyID($id);
+        $headers = [
+            'Cache-Control'           => 'must-revalidate, post-check=0, pre-check=0'
+            ,   'Content-type'        => 'text/csv'
+            ,   'Content-Disposition' => 'attachment; filename='.$this->surveyRepository->getNameSurvey($id).'.csv'
+            ,   'Expires'             => '0'
+            ,   'Pragma'              => 'public'
+        ];
+
+        # add headers for each column in the CSV download
+        array_unshift($answer_datas, array_keys($answer_datas[0]));
+
+        $callback = function() use ($answer_datas)
+        {
+            $FH = fopen('php://output', 'w');
+            foreach ($answer_datas as $key => $row) {
+                fputcsv($FH, $row);
+            }
+            fclose($FH);
+        };
+
+        return Response::stream($callback, 200, $headers);
+    }
+
+    public function getAnswerForSurveyBySurveyID($survey_id, $list_questions = array())
+    {
+        if (count($list_questions) == 0) {
+            $list_questions = $this->questionRepository->getListQuestionBySurveyId($survey_id);
+        }
+
+        $list_answers   = $this->answerRepository->getAnswersBySurveyId($survey_id);
+        foreach ($list_answers as $key_list_answer => $list_answer) {
+            $list_answers[$key_list_answer]['answers'] = $this->answerQuestionRepository->getAnswersByAnswerId($list_answer['id']);
+        }
+
+        $answer_questions = array();
+        foreach ($list_questions as $question) {
+            $answer_questions[$question['id']] = $question['text'];
+        }
+
+        $answer_datas = array();
+        foreach ($list_answers as $key_list_answer => $list_answer) {
+            foreach ($list_answer['answers'] as $key_answer => $answer) {
+                foreach ($answer_questions as $key_question => $question) {
+                    if ($key_question == $answer['question_id']) {
+                        $answer_datas[$key_list_answer][$question] = $answer['text'];
+                    }
+                }
+            }
+
+            $answer_datas[$key_list_answer]['created_at'] = $list_answer['created_at'];
+        }
+
+        return $answer_datas;
     }
 
     /**
@@ -82,7 +236,7 @@ class SurveyController extends Controller
      */
     public function preview(Request $request, $id)
     {
-        $survey              = $this->surveyRepository->getSurveyById($id);
+        $survey = $this->surveyRepository->getSurveyById($id);
         $survey['questions'] = $this->questionRepository->getQuestionSurveyBySurveyId($id);
         foreach ($survey['questions'] as $key => $question) {
             $question_choices = $this->questionChoiceRepository->getQuestionChoiceByQuestionId($question['id']);
@@ -93,7 +247,7 @@ class SurveyController extends Controller
 
         $group_question_survey = array();
 
-        foreach ( $survey['questions'] as $question ) {
+        foreach ($survey['questions'] as $question) {
             $group_question_survey[$question['category']][] = $question;
         }
 
@@ -135,7 +289,7 @@ class SurveyController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -146,7 +300,7 @@ class SurveyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -157,7 +311,7 @@ class SurveyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -168,8 +322,8 @@ class SurveyController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -180,7 +334,7 @@ class SurveyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

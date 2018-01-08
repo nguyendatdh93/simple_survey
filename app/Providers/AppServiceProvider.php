@@ -10,6 +10,10 @@ use App\Repositories\Contracts\QuestionRepositoryInterface;
 use App\Repositories\Eloquents\QuestionRepository;
 use App\Repositories\Contracts\QuestionChoiceRepositoryInterface;
 use App\Repositories\Eloquents\QuestionChoiceRepository;
+use App\Repositories\Contracts\AnswerRepositoryInterface;
+use App\Repositories\Eloquents\AnswerRepository;
+use App\Repositories\Contracts\AnswerQuestionRepositoryInterface;
+use App\Repositories\Eloquents\AnswerQuestionRepository;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Dusk\DuskServiceProvider;
 use Illuminate\Support\Facades\Schema;
@@ -55,6 +59,16 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             QuestionChoiceRepositoryInterface::class,
             QuestionChoiceRepository::class
+        );
+
+        $this->app->singleton(
+            AnswerRepositoryInterface::class,
+            AnswerRepository::class
+        );
+
+        $this->app->singleton(
+            AnswerQuestionRepositoryInterface::class,
+            AnswerQuestionRepository::class
         );
     }
 }

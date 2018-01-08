@@ -4,6 +4,10 @@
     {{ trans('adminlte_lang::message.home') }}
 @endsection
 
+@section('datatable')
+    {{--<script src="{{ url ('datatableservice.js') }}"></script>--}}
+@stop
+
 @section('main-content-form')
     <div class="container-fluid spark-screen">
         <!-- Main content -->
@@ -29,3 +33,4 @@
         </div>
     </div>
 @endsection
+

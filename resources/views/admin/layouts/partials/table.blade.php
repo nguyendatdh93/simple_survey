@@ -1,6 +1,17 @@
 <div class="box">
     <div class="box-header">
         <h3 class="box-title">{{ isset($settings['title']) ? $settings['title'] : "" }}</h3>
+        <div class="pull-right">
+            @if(isset($settings['buttons']))
+                @foreach($settings['buttons'] as $button)
+                    @if(\App\BaseWidget\Validator::checkIsButtonTag($button))
+                        {!! \App\BaseWidget\Form::button($button['text'], $button['attributes']) !!}
+                    @else
+                        {!! \App\BaseWidget\Form::a($button['text'], $button['href'], $button['attributes']) !!}
+                    @endif
+                @endforeach
+            @endif
+        </div>
     </div>
     <!-- /.box-header -->
     <div class="box-body">
@@ -19,6 +30,7 @@
             <tbody>
             @foreach($datas as $data)
                 <tr>
+
                     @if(!isset($settings['headers_columns']['Id'])) <td>{{ "-" }}</td> @endif
                     @foreach($settings['headers_columns'] as $key => $key_column)
                         @if(is_array($key_column))

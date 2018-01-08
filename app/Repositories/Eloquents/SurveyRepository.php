@@ -30,6 +30,17 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
         return $result;
     }
 
+    public function getDownloadListSurvey()
+    {
+        $result = $this->_model->select('*')
+            ->where('user_id', Auth::id())
+            ->where('status', '!=', Survey::STATUS_SURVEY_DRAF)
+            ->where('del_flg', 0)
+            ->get()->toArray();
+
+        return $result;
+    }
+
     /**
      * @param $survey_id
      * @return mixed
@@ -80,5 +91,14 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
         }
 
         return 0;
+    }
+
+    public function getNameSurvey($survey_id)
+    {
+        $result = $this->_model->select('name')
+            ->where('id', $survey_id)
+            ->get()->toArray();
+
+        return $result[0]['name'];
     }
 }

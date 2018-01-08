@@ -11,4 +11,5 @@ namespace App\Repositories\Contracts;
 interface QuestionRepositoryInterface
 {
     public function getQuestionSurveyBySurveyId($survey_id);
+    public function getListQuestionBySurveyId($survey_id);
 }
