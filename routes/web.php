@@ -26,11 +26,11 @@ Route::prefix('preview')->group(function () {
 Route::prefix('survey')->group(function () {
     Route::get('/publish/{id?}', 'SurveyController@publishSurveyById')->name(\App\Survey::NAME_URL_PUBLISH_SURVEY);
     Route::get('/close/{id?}', 'SurveyController@closeSurveyById')->name(\App\Survey::NAME_URL_CLOSE_SURVEY);
-    Route::get('/list', 'SurveyController@index');
+    Route::get('/list', 'SurveyController@index')->name(\App\Survey::NAME_URL_SURVEY_LIST);
 });
 
 Route::prefix('download')->group(function () {
-    Route::get('/list', 'SurveyController@downloadListSurvey');
+    Route::get('/list', 'SurveyController@downloadListSurvey')->name(\App\Survey::NAME_URL_DOWNLOAD_LIST);
     Route::get('/answer/{id?}', 'SurveyController@downloadPageSurveyBySurveyId')->name(\App\Survey::NAME_URL_DOWNLOAD_PAGE_SURVEY);
     Route::get('/csv/{id?}', 'SurveyController@downloadSurveyCSVFile')->name(\App\Survey::NAME_URL_DOWNLOAD_SURVEY);
 });

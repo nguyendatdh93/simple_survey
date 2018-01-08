@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Services\AuthService;
+use App\Survey;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use Config;
 use Auth;
 
-class LoginController extends Controller
+class LoginController extends AuthService
 {
     /*
     |--------------------------------------------------------------------------
@@ -123,7 +125,11 @@ class LoginController extends Controller
 
         Auth::login($user_info);
 
-        return redirect('/home');
+        if ($this->isSecurePrivateRange($request->ip())) {
+            return redirect()->route(Survey::NAME_URL_DOWNLOAD_LIST);
+        } else {
+            return redirect()->route(Survey::NAME_URL_SURVEY_LIST);
+        }
     }
 
     public function revolkeAccessTokenGoogle($token)
