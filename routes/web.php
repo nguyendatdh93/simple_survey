@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'HomeController@index');
+Route::get('/', 'SurveyController@index');
 
 Route::prefix('auth')->group(function () {
     Route::get('/google', array('as' => 'auth.google', 'uses' => 'Auth\LoginController@loginWithGoogle'));
@@ -39,7 +39,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 //example
-Route::get('/home', 'HomeController@index');
+Route::get('/home', 'SurveyController@index');
 Route::get('/form', 'HomeController@form');
 Route::get('/table', 'HomeController@table');
 Route::get('/posts', 'PostController@index');
