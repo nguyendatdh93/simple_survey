@@ -19,6 +19,7 @@
             <tbody>
             @foreach($datas as $data)
                 <tr>
+
                     @if(!isset($settings['headers_columns']['Id'])) <td>{{ "-" }}</td> @endif
                     @foreach($settings['headers_columns'] as $key => $key_column)
                         @if(is_array($key_column))

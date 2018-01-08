@@ -39,17 +39,17 @@ class SurveyController extends Controller
     {
         $table_settings = array(
             'title' => trans('adminlte_lang::survey.survey_list_table_title'),
-            'id'    => 'survey-table',
+            'id' => 'survey-table',
             'headers_columns' => array(
-                trans('adminlte_lang::survey.survey_list_table_header_column_id')                    => 'id',
-                trans('adminlte_lang::survey.survey_list_table_header_column_status')                => 'status',
-                trans('adminlte_lang::survey.survey_list_table_header_column_survey_name')           => 'name',
-                trans('adminlte_lang::survey.survey_list_table_header_column_survey_image')          => array(
-                    'column'     => 'image_path',
-                    'type'       => 'image'
+                trans('adminlte_lang::survey.survey_list_table_header_column_id') => 'id',
+                trans('adminlte_lang::survey.survey_list_table_header_column_status') => 'status',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_name') => 'name',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_image') => array(
+                    'column' => 'image_path',
+                    'type' => 'image'
                 ),
-                trans('adminlte_lang::survey.survey_list_table_header_column_survey_published_at')   => 'published_at',
-                trans('adminlte_lang::survey.survey_list_table_header_column_survey_closed_at')      => 'closed_at',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_published_at') => 'published_at',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_closed_at') => 'closed_at',
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_number_answers') => 'number_answers'
             ),
             'controls' => true
@@ -91,17 +91,17 @@ class SurveyController extends Controller
     {
         $table_settings = array(
             'title' => trans('adminlte_lang::survey.survey_list_table_title'),
-            'id'    => 'download-table',
+            'id' => 'download-table',
             'headers_columns' => array(
-                trans('adminlte_lang::survey.survey_list_table_header_column_id')                    => 'id',
-                trans('adminlte_lang::survey.survey_list_table_header_column_status')                => 'status',
-                trans('adminlte_lang::survey.survey_list_table_header_column_survey_name')           => 'name',
-                trans('adminlte_lang::survey.survey_list_table_header_column_survey_image')          => array(
-                    'column'     => 'image_path',
-                    'type'       => 'image'
+                trans('adminlte_lang::survey.survey_list_table_header_column_id') => 'id',
+                trans('adminlte_lang::survey.survey_list_table_header_column_status') => 'status',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_name') => 'name',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_image') => array(
+                    'column' => 'image_path',
+                    'type' => 'image'
                 ),
-                trans('adminlte_lang::survey.survey_list_table_header_column_survey_published_at')   => 'published_at',
-                trans('adminlte_lang::survey.survey_list_table_header_column_survey_closed_at')      => 'closed_at',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_published_at') => 'published_at',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_closed_at') => 'closed_at',
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_number_answers') => 'number_answers'
             ),
             'controls' => true
@@ -116,16 +116,44 @@ class SurveyController extends Controller
     public function downloadPageSurveyBySurveyId($id)
     {
         $list_questions = $this->questionRepository->getListQuestionBySurveyId($id);
-        $answers = $this->answerRepository->getAnswersBySurveyId($id);
-        foreach ($answers as $key => $answer) {
-            $answers[$key]['answers'] = $this->answerQuestionRepository->getAnswersByAnswerId($answer['id']);
+        $list_answers   = $this->answerRepository->getAnswersBySurveyId($id);
+        foreach ($list_answers as $key_list_answer => $list_answer) {
+            $list_answers[$key_list_answer]['answers'] = $this->answerQuestionRepository->getAnswersByAnswerId($list_answer['id']);
         }
-        
+
+        $answer_questions = array();
+        foreach ($list_questions as $question) {
+            $answer_questions[$question['id']] = $question['text'];
+        }
+
+        $answer_datas = array();
+        foreach ($list_answers as $key_list_answer => $list_answer) {
+            foreach ($list_answer['answers'] as $key_answer => $answer) {
+                foreach ($answer_questions as $key_question => $question) {
+                    if ($key_question == $answer['question_id']) {
+                        $answer_datas[$key_list_answer][$question] = $answer['text'];
+                    }
+                }
+            }
+
+            $answer_datas[$key_list_answer]['created_at'] = $list_answer['created_at'];
+        }
+
         $headers_columns = array();
 
         foreach ($list_questions as $question) {
-            $headers_columns[$question['text']] = 0;
+            $headers_columns[$question['text']] = $question['text'];
         }
+        $headers_columns['Time created'] = 'created_at';
+
+        $table_settings = array(
+            'title' => trans('adminlte_lang::survey.survey_list_table_title'),
+            'id' => 'download-page-table',
+            'headers_columns' => $headers_columns,
+            'controls' => false
+        );
+
+        return view('admin::datatable', array('settings' => $table_settings, 'datas' => $answer_datas));
     }
 
     /**
@@ -144,7 +172,7 @@ class SurveyController extends Controller
      */
     public function preview(Request $request, $id)
     {
-        $survey              = $this->surveyRepository->getSurveyById($id);
+        $survey = $this->surveyRepository->getSurveyById($id);
         $survey['questions'] = $this->questionRepository->getQuestionSurveyBySurveyId($id);
         foreach ($survey['questions'] as $key => $question) {
             $question_choices = $this->questionChoiceRepository->getQuestionChoiceByQuestionId($question['id']);
@@ -155,7 +183,7 @@ class SurveyController extends Controller
 
         $group_question_survey = array();
 
-        foreach ( $survey['questions'] as $question ) {
+        foreach ($survey['questions'] as $question) {
             $group_question_survey[$question['category']][] = $question;
         }
 
@@ -197,7 +225,7 @@ class SurveyController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -208,7 +236,7 @@ class SurveyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -219,7 +247,7 @@ class SurveyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -230,8 +258,8 @@ class SurveyController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -242,7 +270,7 @@ class SurveyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

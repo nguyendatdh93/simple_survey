@@ -26,5 +26,7 @@ return [
     'survey_list_table_header_column_survey_published_at' => "Published at",
     'survey_list_table_header_column_survey_closed_at' => "Closed at",
     'survey_list_table_header_column_survey_number_answers' => "Number Answers",
-    'go_download_button' => 'Go to download page'
+    'go_download_button' => 'Go to download page',
+    'button_more' => 'More',
+    'button_less' => 'Less',
 ];
