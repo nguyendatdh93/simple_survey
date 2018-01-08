@@ -122,33 +122,39 @@ class SurveyController extends Controller
         foreach ($list_questions as $question) {
             $headers_columns[$question['text']] = $question['text'];
         }
-        $headers_columns['Time created'] = 'created_at';
+        $headers_columns[trans('adminlte_lang::survey.time_created')] = 'created_at';
+
+        $buttons = array();
+        if ($this->answerRepository->getNumberAnswersBySurveyId($id) > 0)
+        {
+            $buttons[] = array(
+                'text'  => trans('adminlte_lang::survey.button_download_csv'),
+                'href'  => \route(Survey::NAME_URL_DOWNLOAD_SURVEY).'/'.$id,
+                'attributes' => array(
+                    'class' => 'btn btn-primary',
+                    'icon'  => 'fa fa-fw fa-download'
+                )
+            );
+        }
+
+        $buttons[] = array(
+            'text'  => trans('adminlte_lang::survey.button_clear_data'),
+            'href'  => \route(Survey::NAME_URL_DOWNLOAD_SURVEY).'/'.$id,
+            'attributes' => array(
+                'class' => 'btn bg-orange margin',
+                'icon'  => 'fa fa-trash',
+                'data-toggle' =>"modal",
+                'data-target' => "#modal-confirm-clear-data"
+            )
+        );
+
 
         $table_settings = array(
             'title' => trans('adminlte_lang::survey.answer_download_table'),
             'id' => 'download-page-table',
             'headers_columns' => $headers_columns,
             'controls' => false,
-            'buttons' => array(
-                array(
-                    'text'  => trans('adminlte_lang::survey.button_download_csv'),
-                    'href'  => \route(Survey::NAME_URL_DOWNLOAD_SURVEY).'/'.$id,
-                    'attributes' => array(
-                        'class' => 'btn btn-primary',
-                        'icon'  => 'fa fa-fw fa-download'
-                    )
-                ),
-                array(
-                    'text'  => trans('adminlte_lang::survey.button_clear_data'),
-                    'href'  => \route(Survey::NAME_URL_DOWNLOAD_SURVEY).'/'.$id,
-                    'attributes' => array(
-                        'class' => 'btn bg-orange margin',
-                        'icon'  => 'fa fa-trash',
-                        'data-toggle' =>"modal",
-                        'data-target' => "#modal-confirm-clear-data"
-                    )
-                )
-            )
+            'buttons' => $buttons
         );
 
         return view('admin::datatable', array('settings' => $table_settings, 'datas' => $answer_datas));
@@ -158,7 +164,7 @@ class SurveyController extends Controller
     {
         $answer_datas = $this->getAnswerForSurveyBySurveyID($id);
         $headers = [
-            'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0'
+            'Cache-Control'           => 'must-revalidate, post-check=0, pre-check=0'
             ,   'Content-type'        => 'text/csv'
             ,   'Content-Disposition' => 'attachment; filename='.$this->surveyRepository->getNameSurvey($id).'.csv'
             ,   'Expires'             => '0'

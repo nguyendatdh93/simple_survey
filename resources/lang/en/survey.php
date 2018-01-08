@@ -34,4 +34,5 @@ return [
     'button_clear_data' => 'Clear data',
     'confirm_clear_data_title' => 'Clear data',
     'confirm_clear_data_content' => 'Are you sure to clear data?',
+    'time_created' => 'Time created'
 ];

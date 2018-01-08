@@ -22,7 +22,7 @@ class Menu
         $menus['survey_list'] = Array(
             "text"   => trans('adminlte_lang::survey.menu_survey_list'),
             "icon"   => "fa fa-table",
-            "active" => true,
+            "active" => false,
             "url"    => '/survey/list',
         );
 
