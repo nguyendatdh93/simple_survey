@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\SecureDownloadSurvey;
 use App\Http\Requests;
 use App\Repositories\Contracts\AnswerQuestionRepositoryInterface;
 use App\Survey;
@@ -24,6 +25,7 @@ class SurveyController extends Controller
     public function __construct(SurveyRepositoryInterface $surveyRepository, QuestionRepositoryInterface $questionRepository, QuestionChoiceRepositoryInterface $questionChoiceRepository, AnswerRepositoryInterface $answerRepository, AnswerQuestionRepositoryInterface $answerQuestionRepository)
     {
         $this->middleware('auth');
+        $this->middleware(SecureDownloadSurvey::class);
         $this->surveyRepository = $surveyRepository;
         $this->questionRepository = $questionRepository;
         $this->questionChoiceRepository = $questionChoiceRepository;

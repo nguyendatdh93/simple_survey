@@ -45,3 +45,7 @@ Route::get('/table', 'HomeController@table');
 Route::get('/posts', 'PostController@index');
 
 Route::get('/users', 'UserController@index');
+
+Route::get('/404', function (){
+    return view('admin::errors.404');
+});

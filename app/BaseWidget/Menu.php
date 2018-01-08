@@ -35,6 +35,8 @@ class Menu
 
         if(in_array($ip_address, Config::get("config.ip_private"))) {
             $menus['survey_list']['hidden'] = true;
+        } else {
+            $menus['survey_list_download']['hidden'] = true;
         }
 
         $this->menus = $menus;
