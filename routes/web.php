@@ -33,19 +33,16 @@ Route::prefix('download')->group(function () {
     Route::get('/list', 'SurveyController@downloadListSurvey')->name(\App\Survey::NAME_URL_DOWNLOAD_LIST);
     Route::get('/answer/{id?}', 'SurveyController@downloadPageSurveyBySurveyId')->name(\App\Survey::NAME_URL_DOWNLOAD_PAGE_SURVEY);
     Route::get('/csv/{id?}', 'SurveyController@downloadSurveyCSVFile')->name(\App\Survey::NAME_URL_DOWNLOAD_SURVEY);
+    Route::get('/clear/{id?}', 'SurveyController@clearDataBySurveyId')->name(\App\Survey::NAME_URL_CLEAR_DATA_SURVEY);
 });
 
 Route::group(['middleware' => 'auth'], function () {
 });
-
-//example
-Route::get('/home', 'SurveyController@index');
-Route::get('/form', 'HomeController@form');
-Route::get('/table', 'HomeController@table');
-Route::get('/posts', 'PostController@index');
 
 Route::get('/users', 'UserController@index');
 
 Route::get('/404', function (){
     return view('admin::errors.404');
 });
+
+Route::get('/setup-lang', 'HomeController@setupLanguage');

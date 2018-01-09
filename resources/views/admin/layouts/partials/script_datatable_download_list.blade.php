@@ -1,18 +1,3 @@
-{!! FormSimple::modalConfirm(array(
-             'id'      => 'modal-confirm-clear-data',
-             'title'   => trans('adminlte_lang::survey.confirm_clear_data_title'),
-             'content' => trans('adminlte_lang::survey.confirm_clear_data_content'),
-             'buttons' => array(
-                array(
-                    'text'  => trans('adminlte_lang::survey.confirm_button_publish'),
-                    'href'  => '#',
-                    'attributes' => array(
-                        'class' => 'btn btn-primary',
-                    )
-                )
-             )
-        )) !!}
-
 <script>
     $(function () {
         $('#download-table').DataTable({

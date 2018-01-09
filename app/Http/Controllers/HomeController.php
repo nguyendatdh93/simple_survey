@@ -26,23 +26,9 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return Response
-     */
-    public function index()
+    public function setupLanguage()
     {
-        return view('admin::home');
-    }
-
-    public function form()
-    {
-        return view('admin::form');
-    }
-
-    public function table()
-    {
-        return view('admin::datatable');
+        $language = trans('adminlte_lang::datatable');
+        return json_encode($language);die;
     }
 }

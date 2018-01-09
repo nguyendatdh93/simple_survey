@@ -1,3 +1,4 @@
+@include('admin::layouts.partials.alert_message')
 <div class="box">
     <div class="box-header">
         <h3 class="box-title">{{ isset($settings['title']) ? $settings['title'] : "" }}</h3>
