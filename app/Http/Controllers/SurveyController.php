@@ -9,6 +9,7 @@ use App\Repositories\Contracts\SurveyRepositoryInterface;
 use App\Repositories\Contracts\QuestionRepositoryInterface;
 use App\Repositories\Contracts\QuestionChoiceRepositoryInterface;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Input;
 
 class SurveyController extends Controller
 {
