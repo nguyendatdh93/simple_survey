@@ -34,6 +34,9 @@
                 { "targets": 6, "orderable" : false},
                 { "targets": 7,"orderable" : false},
             ],
+            "language": {
+                "url" : "/setup-lang"
+            }
         });
 
         function addControls(row,data)

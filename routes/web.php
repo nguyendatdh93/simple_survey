@@ -38,12 +38,6 @@ Route::prefix('download')->group(function () {
 Route::group(['middleware' => 'auth'], function () {
 });
 
-//example
-Route::get('/home', 'SurveyController@index');
-Route::get('/form', 'HomeController@form');
-Route::get('/table', 'HomeController@table');
-Route::get('/posts', 'PostController@index');
-
 Route::get('/users', 'UserController@index');
 
 Route::get('/404', function (){

@@ -16,6 +16,9 @@
                     }
                 }
             ],
+            "language": {
+                "url" : "/setup-lang"
+            }
         });
 
         function cutLineText(data)
