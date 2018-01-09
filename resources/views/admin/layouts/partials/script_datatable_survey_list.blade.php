@@ -30,7 +30,6 @@
             },
             "columnDefs": [
                 { "targets": 0, "visible" : false },
-                { "targets": 1,"orderable" : false},
                 { "targets": 3, "orderable" : false},
                 { "targets": 4, "orderable" : false},
                 { "targets": 5, "orderable" : false},
@@ -94,13 +93,7 @@
 </script>
 
 <style>
-    /*.row-draf {*/
-        /*background-color: white !important;*/
-    /*}*/
-    /*.row-published {*/
-        /*background-color: #ceebf5 !important;*/
-    /*}*/
-    /*.row-closed {*/
-        /*background-color: #fbeed8 !important;*/
-    /*}*/
+    #survey-table tr td:not(.tbl-name) {
+        text-align: center;
+    }
 </style>

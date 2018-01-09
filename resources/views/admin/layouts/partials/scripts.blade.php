@@ -39,4 +39,6 @@
 
 </script>
 
-@include('admin::layouts.partials.script_datatable')
+@include('admin::layouts.partials.script_datatable_survey_list')
+@include('admin::layouts.partials.script_datatable_download_list')
+@include('admin::layouts.partials.script_datatable_download_page')

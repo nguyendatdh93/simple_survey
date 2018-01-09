@@ -1,15 +1,7 @@
 @extends('admin::layouts.base')
 
 @section('htmlheader_title')
-	{{ trans('adminlte_lang::message.home') }}
-@endsection
-
-@section('contentheader_title')
-	{{ 'Create / Edit' }}
-@endsection
-
-@section('contentheader_description')
-	{{ 'survey' }}
+	{{ trans('create survey') }}
 @endsection
 
 <style>

@@ -17,9 +17,9 @@ class Survey
      * @param array $paramAttributes
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public static function singleText($questionText, $paramAttributes = array())
+    public static function singleText($question, $paramAttributes = array())
     {
-        return view('admin::layouts.survey_partials.single_text', array('question_text' => $questionText, 'data_attributes' => $paramAttributes));
+        return view('admin::layouts.survey_partials.single_text', array('question' => $question, 'data_attributes' => $paramAttributes));
     }
 
     /**
@@ -27,20 +27,9 @@ class Survey
      * @param array $paramAttributes
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public static function multiText($questionText, $paramAttributes = array())
+    public static function multiText($question, $paramAttributes = array())
     {
-        return view('admin::layouts.survey_partials.multi_text', array('question_text' => $questionText, 'data_attributes' => $paramAttributes));
-    }
-
-    /**
-     * @param $questionText
-     * @param $choices
-     * @param array $paramAttributes
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public static function singleChoice($questionText, $choices, $paramAttributes = array())
-    {
-        return view('admin::layouts.survey_partials.single_choice', array('question_text' => $questionText, 'choices' => $choices, 'data_attributes' => $paramAttributes));
+        return view('admin::layouts.survey_partials.multi_text', array('question' => $question, 'data_attributes' => $paramAttributes));
     }
 
     /**
@@ -49,9 +38,20 @@ class Survey
      * @param array $paramAttributes
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public static function multiChoice($questionText, $choices, $paramAttributes = array())
+    public static function singleChoice($question, $choices, $paramAttributes = array())
     {
-        return view('admin::layouts.survey_partials.multi_choice', array('question_text' => $questionText, 'choices' => $choices, 'data_attributes' => $paramAttributes));
+        return view('admin::layouts.survey_partials.single_choice', array('question' => $question, 'choices' => $choices, 'data_attributes' => $paramAttributes));
+    }
+
+    /**
+     * @param $questionText
+     * @param $choices
+     * @param array $paramAttributes
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public static function multiChoice($question, $choices, $paramAttributes = array())
+    {
+        return view('admin::layouts.survey_partials.multi_choice', array('question' => $question, 'choices' => $choices, 'data_attributes' => $paramAttributes));
     }
 
     /**

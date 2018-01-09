@@ -16,4 +16,6 @@ class Question extends Model
     const CATEGORY_HEADER  = 1;
     const CATEGORY_CONTENT = 2;
     const CATEGORY_FOOTER  = 3;
+
+    const REQUIRE_QUESTION = 0;
 }

@@ -25,4 +25,12 @@ class QuestionRepository extends \EloquentRepository implements QuestionReposito
 
         return $result;
     }
+
+    public function getListQuestionBySurveyId($survey_id)
+    {
+        $result = $this->_model->select('id','text')
+            ->where('survey_id',$survey_id)->get()->toArray();
+
+        return $result;
+    }
 }
