@@ -93,13 +93,7 @@
 </script>
 
 <style>
-    /*.row-draf {*/
-        /*background-color: white !important;*/
-    /*}*/
-    /*.row-published {*/
-        /*background-color: #ceebf5 !important;*/
-    /*}*/
-    /*.row-closed {*/
-        /*background-color: #fbeed8 !important;*/
-    /*}*/
+    #survey-table tr td:not(.tbl-name) {
+        text-align: center;
+    }
 </style>

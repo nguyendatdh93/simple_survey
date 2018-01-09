@@ -43,7 +43,7 @@ class SecureDownloadSurvey
 
     public function isSecurePrivateRange($ip)
     {
-        $ip_privates    = Config::get('config.ip_private');
+        $ip_privates = Config::get('config.ip_private');
 
         return $this->checkIpRange($ip_privates, $ip);
     }

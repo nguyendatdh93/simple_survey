@@ -4,7 +4,7 @@
     <!-- Logo -->
     <a href="{{ url('/survey/list') }}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>A</b>LT</span>
+        <span class="logo-mini"></span>
         <!-- logo for regular state and mobile devices -->
         <span class="logo-lg"><b>{{ $logo }}</b> </span>
     </a>
@@ -28,7 +28,7 @@
                             <span style="color:white">{{ Auth::user()->email }}</span>
                         </div>
                         <div class="col-md-2">
-                            <a style="color:white;display: block;margin-top: 5px;" href="{{ url('/logout') }}"
+                            <a style="color:white;display: block;" href="{{ url('/logout') }}"
                                onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">
                                 <i class="fa fa-fw fa-sign-out"></i>

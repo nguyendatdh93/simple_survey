@@ -23,7 +23,6 @@
             'info'        : true,
             'autoWidth'   : true,
             'createdRow' : function( row, data, dataIndex ) {
-//                var DatatableSerbvice = new DatatableService();
                 $(row).children(".tbl-control").html(addControls(row,data));
                 $(row).children(".tbl-status").html(buttonForStatus(data));
             },
@@ -39,7 +38,7 @@
 
         function addControls(row,data)
         {
-            var html            = '',
+            var html                = '',
                 url_redirect_detail = '',
                 url_redirect_copy   = '';
 
@@ -72,5 +71,10 @@
 
 
     });
-
 </script>
+
+<style>
+    #download-table tr td:not(.tbl-name) {
+        text-align: center;
+    }
+</style>

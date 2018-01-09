@@ -134,5 +134,5 @@ return [
     'loggedin'                => 'Logged in!',
     'entering'                => 'Entering...',
     'registered'              => 'User Registered!',
-    'header_menu'             => 'Menu',
+    'header_menu'             => '',
 ];
