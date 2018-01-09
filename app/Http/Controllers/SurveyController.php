@@ -59,7 +59,17 @@ class SurveyController extends Controller
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_closed_at') => 'closed_at',
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_number_answers') => 'number_answers'
             ),
-            'controls' => true
+            'controls' => true,
+            'buttons'  => array(
+                array(
+                    'text'  => trans('adminlte_lang::survey.button_create_new_survey'),
+                    'href'  => '#',
+                    'attributes' => array(
+                        'class' => 'btn btn-info',
+                        'icon'  => 'fa fa-plus-circle'
+                    )
+                )
+            )
         );
 
         $surveys = $this->surveyRepository->getAllSurvey();

@@ -2,6 +2,7 @@
     $(function () {
         $('#download-table').DataTable({
             'paging'      : true,
+            "order": [[ 0, "desc" ]],
             'lengthChange': true,
             'searching'   : true,
             'ordering'    : true,

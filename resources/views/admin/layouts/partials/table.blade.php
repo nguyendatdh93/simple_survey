@@ -29,10 +29,12 @@
             </tr>
             </thead>
             <tbody>
+            @php $stt = 1; @endphp
             @foreach($datas as $data)
                 <tr>
 
-                    @if(!isset($settings['headers_columns']['Id'])) <td>{{ "-" }}</td> @endif
+                    @if(!isset($settings['headers_columns']['Id'])) <td>{{ $stt }}</td> @endif
+                    @php $stt++; @endphp
                     @foreach($settings['headers_columns'] as $key => $key_column)
                         @if(is_array($key_column))
                             <td class="tbl-{{$key_column['column']}}">@if($key_column['type'] == \App\BaseWidget\Validator::TYPE_IMAGE) {!! \App\BaseWidget\Form::img($data[$key_column['column']], array("class" => "img-datatable","alt" => "Image")) !!} @endif </td>
