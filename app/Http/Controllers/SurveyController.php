@@ -99,9 +99,16 @@ class SurveyController extends Controller
             }
 
             $surveys[$key]['number_answers'] = $this->showNumberAnswers($survey);
+            $surveys[$key]['image_path']     = \route('show-image').'/'.$this->getImageName($survey['image_path']);
         }
 
         return $surveys;
+    }
+
+    public function getImageName($image_path)
+    {
+        $explode_image_path = explode('/', $image_path);
+        return end($explode_image_path);
     }
 
     public function downloadListSurvey()

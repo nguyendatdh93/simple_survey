@@ -46,3 +46,4 @@ Route::get('/404', function (){
 });
 
 Route::get('/setup-lang', 'HomeController@setupLanguage');
+Route::get('/image/{image_name?}', 'HomeController@showImage')->name('show-image');

@@ -1,21 +1,6 @@
 <script>
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
-        $('#users-table').DataTable({
-            'paging'      : true,
-            'lengthChange': false,
-            'searching'   : true,
-            'ordering'    : true,
-            'info'        : true,
-            'autoWidth'   : false,
-            "columnDefs": [
-                { "orderable": false, "targets": 0, "visible" : false },
-                { "orderable": true, "targets": 1 },
-                { "orderable": true, "targets": 2 },
-                { "orderable": false, "targets": 3 },
-            ],
-        });
-
         $('#survey-table').DataTable({
             'paging'      : true,
             "order": [[ 0, "desc" ]],
