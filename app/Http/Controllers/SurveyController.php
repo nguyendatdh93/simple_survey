@@ -167,10 +167,16 @@ class SurveyController extends Controller
     public function downloadSurveyCSVFile($id)
     {
         $answer_datas = $this->getAnswerForSurveyBySurveyID($id);
+        $survey_name  = $this->surveyRepository->getNameSurvey($id);
+        if (strlen($survey_name) > 50)
+        {
+            $survey_name = substr($survey_name,0,50);
+        }
+
         $headers = [
             'Cache-Control'           => 'must-revalidate, post-check=0, pre-check=0'
             ,   'Content-type'        => 'text/csv'
-            ,   'Content-Disposition' => 'attachment; filename='.$this->surveyRepository->getNameSurvey($id).'.csv'
+            ,   'Content-Disposition' => 'attachment; filename='.$survey_name.'.csv'
             ,   'Expires'             => '0'
             ,   'Pragma'              => 'public'
         ];
@@ -298,7 +304,7 @@ class SurveyController extends Controller
                 }
 
                 $this->answerRepository->clearDataAnswersBySurveyId($id);
-                
+
                 return redirect()->route(Survey::NAME_URL_DOWNLOAD_LIST)->with('alert_success', trans('adminlte_lang::survey.message_clear_data_success'));
             }catch (\Exception $e) {
                 return redirect()->route(Survey::NAME_URL_DOWNLOAD_PAGE_SURVEY,['id' => $id])->with('alert_error', trans('adminlte_lang::survey.message_clear_data_not_success'));
