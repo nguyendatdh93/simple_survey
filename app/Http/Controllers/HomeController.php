@@ -45,4 +45,10 @@ class HomeController extends Controller
     {
         return view('admin::datatable');
     }
+
+    public function setupLanguage()
+    {
+        $language = trans('adminlte_lang::datatable');
+        return json_encode($language);die;
+    }
 }
