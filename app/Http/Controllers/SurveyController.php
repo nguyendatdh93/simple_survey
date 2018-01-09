@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Middleware\SecureDownloadSurvey;
 use App\Http\Requests;
+use App\Question;
 use App\Repositories\Contracts\AnswerQuestionRepositoryInterface;
+use App\Repositories\Contracts\ConfirmContentRepositoryInterface;
 use App\Survey;
 use Illuminate\Http\Request;
 use App\Repositories\Contracts\SurveyRepositoryInterface;
@@ -21,8 +23,9 @@ class SurveyController extends Controller
     protected $questionChoiceRepository;
     protected $answerRepository;
     protected $answerQuestionRepository;
+    protected $confirmContentRepository;
 
-    public function __construct(SurveyRepositoryInterface $surveyRepository, QuestionRepositoryInterface $questionRepository, QuestionChoiceRepositoryInterface $questionChoiceRepository, AnswerRepositoryInterface $answerRepository, AnswerQuestionRepositoryInterface $answerQuestionRepository)
+    public function __construct(SurveyRepositoryInterface $surveyRepository, QuestionRepositoryInterface $questionRepository, QuestionChoiceRepositoryInterface $questionChoiceRepository, AnswerRepositoryInterface $answerRepository, AnswerQuestionRepositoryInterface $answerQuestionRepository, ConfirmContentRepositoryInterface $confirmContentRepository)
     {
         $this->middleware('auth');
         $this->middleware(SecureDownloadSurvey::class);
@@ -31,6 +34,7 @@ class SurveyController extends Controller
         $this->questionChoiceRepository = $questionChoiceRepository;
         $this->answerRepository = $answerRepository;
         $this->answerQuestionRepository = $answerQuestionRepository;
+        $this->confirmContentRepository = $confirmContentRepository;
     }
 
     /**
@@ -242,6 +246,11 @@ class SurveyController extends Controller
             $question_choices = $this->questionChoiceRepository->getQuestionChoiceByQuestionId($question['id']);
             if (count($question_choices) > 0) {
                 $survey['questions'][$key]['question_choices'] = $question_choices;
+            }
+
+            $confirm_content = $this->confirmContentRepository->getConfirmContentByQuestionId($question['id']);
+            if (count($confirm_content) > 0) {
+                $survey['questions'][$key]['confirm_contents'] = $confirm_content;
             }
         }
 

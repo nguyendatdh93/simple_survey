@@ -8,5 +8,7 @@
         {!! \App\BaseWidget\Survey::singleChoice($survey_content, $survey_content['question_choices'], array("name" => "optradio")) !!}
     @elseif($survey_content['type'] == \App\Question::TYPE_MULTI_CHOICE)
         {!! \App\BaseWidget\Survey::multiChoice($survey_content, $survey_content['question_choices'], array("name" => "optcheckbox")) !!}
+    @else
+        {!! \App\BaseWidget\Survey::termConfirm($survey_content, $survey_content['confirm_contents'],  $survey_content['question_choices'], array("name" => "optcheckbox")) !!}
     @endif
 @endforeach

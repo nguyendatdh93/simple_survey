@@ -54,6 +54,11 @@ class Survey
         return view('admin::layouts.survey_partials.multi_choice', array('question' => $question, 'choices' => $choices, 'data_attributes' => $paramAttributes));
     }
 
+    public static function termConfirm($question, $confirms, $choices, $paramAttributes = array())
+    {
+        return view('admin::layouts.survey_partials.confirm', array('question' => $question, 'confirms' => $confirms,'choices' => $choices, 'data_attributes' => $paramAttributes));
+    }
+
     /**
      * @param $surveyContent
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
