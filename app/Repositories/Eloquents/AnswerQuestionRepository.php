@@ -25,4 +25,9 @@ class AnswerQuestionRepository extends \EloquentRepository implements AnswerQues
 
         return $answers;
     }
+
+    public function clearDataByAnswerId($answer_id)
+    {
+        $this->_model->where('answer_id', $answer_id)->delete();
+    }
 }

@@ -32,4 +32,9 @@ class AnswerRepository extends \EloquentRepository implements AnswerRepositoryIn
 
         return $answers;
     }
+
+    public function clearDataAnswersBySurveyId($survey_id)
+    {
+        $this->_model->where('survey_id', $survey_id)->delete();
+    }
 }

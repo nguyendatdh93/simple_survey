@@ -34,5 +34,8 @@ return [
     'button_clear_data' => 'Clear data',
     'confirm_clear_data_title' => 'Clear data',
     'confirm_clear_data_content' => 'Are you sure to clear data?',
-    'time_created' => 'Time created'
+    'time_created' => 'Time created',
+    'confirm_button_clear_data' => 'Clear data',
+    'message_clear_data_not_success' => 'Clear data for this survey is not success',
+    'message_clear_data_success' => 'Clear data for this survey is success',
 ];

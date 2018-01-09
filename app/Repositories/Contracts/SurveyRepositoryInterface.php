@@ -16,4 +16,5 @@ interface SurveyRepositoryInterface
     public function closeSurveyById($survey_id);
     public function getDownloadListSurvey();
     public function getNameSurvey($survey_id);
+    public function deleteSurvey($survey_id);
 }

@@ -141,19 +141,17 @@ class SurveyController extends Controller
                     'icon'  => 'fa fa-fw fa-download'
                 )
             );
+
+            $buttons[] = array(
+                'text'  => trans('adminlte_lang::survey.button_clear_data'),
+                'attributes' => array(
+                    'class'       => 'btn bg-orange margin',
+                    'icon'        => 'fa fa-trash',
+                    'data-toggle' => "modal",
+                    'data-target' => "#modal-confirm-clear-data-survey"
+                )
+            );
         }
-
-        $buttons[] = array(
-            'text'  => trans('adminlte_lang::survey.button_clear_data'),
-            'href'  => \route(Survey::NAME_URL_DOWNLOAD_SURVEY).'/'.$id,
-            'attributes' => array(
-                'class' => 'btn bg-orange margin',
-                'icon'  => 'fa fa-trash',
-                'data-toggle' =>"modal",
-                'data-target' => "#modal-confirm-clear-data"
-            )
-        );
-
 
         $table_settings = array(
             'title' => trans('adminlte_lang::survey.answer_download_table'),
@@ -163,7 +161,7 @@ class SurveyController extends Controller
             'buttons' => $buttons
         );
 
-        return view('admin::datatable', array('settings' => $table_settings, 'datas' => $answer_datas));
+        return view('admin::datatable', array('settings' => $table_settings, 'datas' => $answer_datas,'survey_id' => $id));
     }
 
     public function downloadSurveyCSVFile($id)
@@ -222,16 +220,6 @@ class SurveyController extends Controller
         }
 
         return $answer_datas;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -296,58 +284,27 @@ class SurveyController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return bool
      */
-    public function store(Request $request)
+    public function clearDataBySurveyId($id)
     {
-        //
-    }
+        if ($id) {
+            try {
+                $this->surveyRepository->deleteSurvey($id);
+                $answers = $this->answerRepository->getAnswersBySurveyId($id);
+                foreach ($answers as $answer) {
+                    $this->answerQuestionRepository->clearDataByAnswerId($answer['id']);
+                }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+                $this->answerRepository->clearDataAnswersBySurveyId($id);
+                
+                return redirect()->route(Survey::NAME_URL_DOWNLOAD_LIST)->with('alert_success', trans('adminlte_lang::survey.message_clear_data_success'));
+            }catch (\Exception $e) {
+                return redirect()->route(Survey::NAME_URL_DOWNLOAD_PAGE_SURVEY,['id' => $id])->with('alert_error', trans('adminlte_lang::survey.message_clear_data_not_success'));
+            }
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return redirect()->route(Survey::NAME_URL_DOWNLOAD_PAGE_SURVEY,['id' => $id])->with('alert_error', trans('adminlte_lang::survey.message_clear_data_not_success'));
     }
 }
