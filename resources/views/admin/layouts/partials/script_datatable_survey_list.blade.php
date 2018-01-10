@@ -77,7 +77,7 @@
                 class_button_status = "btn-default";
             }
 
-            html += '<button type="button" class="btn btn-block '+ class_button_status +' btn-xs">'+data[1]+'</button>';
+            html += '<button type="button" class="btn '+ class_button_status +' btn-xs">'+data[1]+'</button>';
 
             return html;
         }

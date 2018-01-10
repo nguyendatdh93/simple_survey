@@ -49,10 +49,13 @@
                     <!-- left column -->
                     <div class="col-md-1"></div>
                     <div class="col-md-10">
-                        <div class="preview-button" style="display: block;margin: 0px auto;width: 200px">
+                        <div class="preview-button">
                             @if($name_url == \App\Survey::NAME_URL_PREVIEW_DRAF)
-                                {!! FormSimple::a(trans('adminlte_lang::survey.confirm_button_close'), '#', array('class' => 'btn bg-orange btn-flat margin','icon' => '', "style" => "display:block; margin:0px auto;float:left", 'data-toggle' =>"modal", 'data-target' => "#modal-confirm-close")) !!}
-                                {!! FormSimple::a(trans('adminlte_lang::survey.confirm_button_publish'), '#', array('class' => 'btn bg-olive btn-flat margin','icon' => '', "style" => "display:block; margin:0px auto;float:left;margin-left:10px", 'data-toggle' =>"modal", 'data-target' => "#modal-confirm-publish")) !!}
+                                {!! FormSimple::a(trans('adminlte_lang::survey.go_to_edit_survey'), '#', array('class' => 'btn btn-link','icon' => '', "style" => "display:block; margin:0px auto;float:left")) !!}
+                                <div style="width: 250px;display: block;margin: 0px auto;">
+                                    {!! FormSimple::a(trans('adminlte_lang::survey.confirm_button_close'), '#', array('class' => 'btn bg-orange btn-flat margin','icon' => '', "style" => "display:block; margin:0px auto;float:left", 'data-toggle' =>"modal", 'data-target' => "#modal-confirm-close")) !!}
+                                    {!! FormSimple::a(trans('adminlte_lang::survey.confirm_button_publish'), '#', array('class' => 'btn bg-olive btn-flat margin','icon' => '', "style" => "display:block; margin:0px auto;float:left;margin-left:10px", 'data-toggle' =>"modal", 'data-target' => "#modal-confirm-publish")) !!}
+                                </div>
                             @elseif($name_url == \App\Survey::NAME_URL_PREVIEW_PUBLISH)
                                 {!! FormSimple::a(trans('adminlte_lang::survey.confirm_button_close'), '#', array('class' => 'btn bg-orange btn-flat margin','icon' => '', "style" => "display:block; margin:0px auto;", 'data-toggle' =>"modal", 'data-target' => "#modal-confirm-close")) !!}
                             @endif

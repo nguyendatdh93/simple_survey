@@ -41,4 +41,5 @@ return [
     'button_create_new_survey'  => 'Create new survey',
     'edit_survey'  => 'Edit survey',
     'alert_success_create_survey'  => 'Create survey success',
+    'go_to_edit_survey'  => 'Go to edit survey',
 ];

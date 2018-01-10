@@ -358,7 +358,7 @@ class SurveyController extends Controller
             }
         }
 
-        return redirect()->route(Survey::NAME_URL_SURVEY_LIST)->with('alert_success',trans('adminlte_lang:survey.alert_success_create_survey'));
+        return redirect()->route(Survey::NAME_URL_SURVEY_LIST)->with('alert_success',trans('adminlte_lang::survey.alert_success_create_survey'));
     }
 
     /**
