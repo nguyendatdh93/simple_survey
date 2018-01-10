@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Middleware\SecureDownloadSurvey;
 use App\Http\Requests;
+use App\Http\Services\EncryptionService;
 use App\Question;
 use App\Repositories\Contracts\AnswerQuestionRepositoryInterface;
 use App\Repositories\Contracts\ConfirmContentRepositoryInterface;
@@ -388,7 +389,9 @@ class SurveyController extends Controller
             $group_question_survey[$question['category']][] = $question;
         }
 
-        $survey['questions'] = $group_question_survey;
+        $survey['questions']      = $group_question_survey;
+        $encryption_service       = new EncryptionService();
+        $survey['encryption_url'] = $encryption_service->encrypt($id);
 
         return view('admin::preview', array('survey' => $survey, 'name_url' => $request->route()->getName()));
     }

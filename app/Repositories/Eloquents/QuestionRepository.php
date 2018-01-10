@@ -29,7 +29,9 @@ class QuestionRepository extends \EloquentRepository implements QuestionReposito
     public function getListQuestionBySurveyId($survey_id)
     {
         $result = $this->_model->select('id','text')
-            ->where('survey_id',$survey_id)->get()->toArray();
+            ->where('survey_id',$survey_id)
+            ->where('type', '!=' , Question::TYPE_CONFIRMATION)
+            ->get()->toArray();
 
         return $result;
     }

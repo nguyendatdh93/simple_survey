@@ -17,6 +17,14 @@
                             <div class="col-md-1"></div>
                             <!-- general form elements -->
                             <div class="col-md-10">
+                                @if($name_url == \App\Survey::NAME_URL_PREVIEW_PUBLISH)
+                                    <div class="form-group row">
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">{{ Request::root() }}/</label>
+                                        <div class="col-sm-10">
+                                            <input type="email" class="form-control" id="url" value="{{ isset($survey['encryption_url']) ? $survey['encryption_url'] : "#" }}">
+                                        </div>
+                                    </div>
+                                @endif
                                 <div class="preview preview-header">
                                     <h1>{{ isset($survey['name']) ? $survey['name'] : "Survey must has name" }}</h1>
                                     @if($survey['image_path'] != '')

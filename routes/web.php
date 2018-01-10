@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/{encrypt}', 'AnswerController@showQuestionSurvey');
 Route::get('/', 'SurveyController@index');
 
 Route::prefix('auth')->group(function () {
