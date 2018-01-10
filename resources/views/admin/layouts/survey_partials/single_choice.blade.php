@@ -4,7 +4,7 @@
             <p>{{ $question['text'] }}</p>
         </div>
         <div class="col-md-2">
-            @if(isset($question['require']) && $question['require'] == \App\Question::REQUIRE_QUESTION) <span style="color: red;font-size: 20px;font-weight: bold"> * </span> @endif
+            @if(isset($question['require']) && $question['require'] == \App\Question::REQUIRE_QUESTION_YES) <span style="color: red;font-size: 20px;font-weight: bold"> * </span> @endif
         </div>
     </div>
     <div class="col-md-8">

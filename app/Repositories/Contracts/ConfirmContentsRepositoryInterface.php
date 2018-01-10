@@ -14,4 +14,5 @@ interface ConfirmContentsRepositoryInterface
 {
     public function createEmptyObject();
     public function save(ConfirmContent $confirm_content);
+    public function getConfirmContentByQuestionId($question_id);
 }

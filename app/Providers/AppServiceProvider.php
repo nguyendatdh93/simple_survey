@@ -79,10 +79,5 @@ class AppServiceProvider extends ServiceProvider
             AnswerQuestionRepositoryInterface::class,
             AnswerQuestionRepository::class
         );
-
-        $this->app->singleton(
-            ConfirmContentRepositoryInterface::class,
-            ConfirmContentRepository::class
-        );
     }
 }
