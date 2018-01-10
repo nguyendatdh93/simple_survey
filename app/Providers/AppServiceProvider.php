@@ -16,6 +16,8 @@ use App\Repositories\Contracts\AnswerRepositoryInterface;
 use App\Repositories\Eloquents\AnswerRepository;
 use App\Repositories\Contracts\AnswerQuestionRepositoryInterface;
 use App\Repositories\Eloquents\AnswerQuestionRepository;
+use App\Repositories\Contracts\ConfirmContentRepositoryInterface;
+use App\Repositories\Eloquents\ConfirmContentRepository;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Dusk\DuskServiceProvider;
 use Illuminate\Support\Facades\Schema;
@@ -76,6 +78,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             AnswerQuestionRepositoryInterface::class,
             AnswerQuestionRepository::class
+        );
+
+        $this->app->singleton(
+            ConfirmContentRepositoryInterface::class,
+            ConfirmContentRepository::class
         );
     }
 }

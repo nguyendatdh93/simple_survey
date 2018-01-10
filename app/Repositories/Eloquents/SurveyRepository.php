@@ -38,6 +38,7 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
             ->where('del_flg', 0)
             ->get()->toArray();
 
+
         return $result;
     }
 
@@ -110,5 +111,11 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
         $survey->save();
 
         return $survey;
+    }
+
+    public function deleteSurvey($survey_id)
+    {
+        $this->_model->where('id',$survey_id)
+                    ->update(['del_flg'=> Survey::DELETE_FLG]);
     }
 }

@@ -18,6 +18,7 @@
 
         $('#survey-table').DataTable({
             'paging'      : true,
+            "order": [[ 0, "desc" ]],
             'lengthChange': true,
             'searching'   : true,
             'ordering'    : true,
@@ -36,6 +37,9 @@
                 { "targets": 6, "orderable" : false},
                 { "targets": 7,"orderable" : false},
             ],
+            "language": {
+                "url" : "/setup-lang"
+            }
         });
 
         function changeColorRow(row,data)

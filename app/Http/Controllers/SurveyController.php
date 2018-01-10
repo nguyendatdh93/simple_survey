@@ -6,6 +6,7 @@ use App\Http\Middleware\SecureDownloadSurvey;
 use App\Http\Requests;
 use App\Question;
 use App\Repositories\Contracts\AnswerQuestionRepositoryInterface;
+use App\Repositories\Contracts\ConfirmContentRepositoryInterface;
 use App\Survey;
 use Illuminate\Http\Request;
 use App\Repositories\Contracts\SurveyRepositoryInterface;
@@ -44,6 +45,7 @@ class SurveyController extends Controller
         $this->confirmContentRepository = $confirmContentRepository;
         $this->answerRepository = $answerRepository;
         $this->answerQuestionRepository = $answerQuestionRepository;
+        $this->confirmContentRepository = $confirmContentRepository;
     }
 
     /**
@@ -68,7 +70,17 @@ class SurveyController extends Controller
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_closed_at') => 'closed_at',
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_number_answers') => 'number_answers'
             ),
-            'controls' => true
+            'controls' => true,
+            'buttons'  => array(
+                array(
+                    'text'  => trans('adminlte_lang::survey.button_create_new_survey'),
+                    'href'  => '#',
+                    'attributes' => array(
+                        'class' => 'btn btn-info',
+                        'icon'  => 'fa fa-plus-circle'
+                    )
+                )
+            )
         );
 
         $surveys = $this->surveyRepository->getAllSurvey();
@@ -150,19 +162,17 @@ class SurveyController extends Controller
                     'icon'  => 'fa fa-fw fa-download'
                 )
             );
+
+            $buttons[] = array(
+                'text'  => trans('adminlte_lang::survey.button_clear_data'),
+                'attributes' => array(
+                    'class'       => 'btn bg-orange margin',
+                    'icon'        => 'fa fa-trash',
+                    'data-toggle' => "modal",
+                    'data-target' => "#modal-confirm-clear-data-survey"
+                )
+            );
         }
-
-        $buttons[] = array(
-            'text'  => trans('adminlte_lang::survey.button_clear_data'),
-            'href'  => \route(Survey::NAME_URL_DOWNLOAD_SURVEY).'/'.$id,
-            'attributes' => array(
-                'class' => 'btn bg-orange margin',
-                'icon'  => 'fa fa-trash',
-                'data-toggle' =>"modal",
-                'data-target' => "#modal-confirm-clear-data"
-            )
-        );
-
 
         $table_settings = array(
             'title' => trans('adminlte_lang::survey.answer_download_table'),
@@ -172,16 +182,22 @@ class SurveyController extends Controller
             'buttons' => $buttons
         );
 
-        return view('admin::datatable', array('settings' => $table_settings, 'datas' => $answer_datas));
+        return view('admin::datatable', array('settings' => $table_settings, 'datas' => $answer_datas,'survey_id' => $id));
     }
 
     public function downloadSurveyCSVFile($id)
     {
         $answer_datas = $this->getAnswerForSurveyBySurveyID($id);
+        $survey_name  = $this->surveyRepository->getNameSurvey($id);
+        if (strlen($survey_name) > 50)
+        {
+            $survey_name = substr($survey_name,0,50);
+        }
+
         $headers = [
             'Cache-Control'           => 'must-revalidate, post-check=0, pre-check=0'
             ,   'Content-type'        => 'text/csv'
-            ,   'Content-Disposition' => 'attachment; filename='.$this->surveyRepository->getNameSurvey($id).'.csv'
+            ,   'Content-Disposition' => 'attachment; filename='.$survey_name.'.csv'
             ,   'Expires'             => '0'
             ,   'Pragma'              => 'public'
         ];
@@ -351,6 +367,11 @@ class SurveyController extends Controller
             if (count($question_choices) > 0) {
                 $survey['questions'][$key]['question_choices'] = $question_choices;
             }
+
+            $confirm_content = $this->confirmContentRepository->getConfirmContentByQuestionId($question['id']);
+            if (count($confirm_content) > 0) {
+                $survey['questions'][$key]['confirm_contents'] = $confirm_content;
+            }
         }
 
         $group_question_survey = array();
@@ -395,58 +416,27 @@ class SurveyController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return bool
      */
-    public function store(Request $request)
+    public function clearDataBySurveyId($id)
     {
-        //
-    }
+        if ($id) {
+            try {
+                $this->surveyRepository->deleteSurvey($id);
+                $answers = $this->answerRepository->getAnswersBySurveyId($id);
+                foreach ($answers as $answer) {
+                    $this->answerQuestionRepository->clearDataByAnswerId($answer['id']);
+                }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+                $this->answerRepository->clearDataAnswersBySurveyId($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+                return redirect()->route(Survey::NAME_URL_DOWNLOAD_LIST)->with('alert_success', trans('adminlte_lang::survey.message_clear_data_success'));
+            }catch (\Exception $e) {
+                return redirect()->route(Survey::NAME_URL_DOWNLOAD_PAGE_SURVEY,['id' => $id])->with('alert_error', trans('adminlte_lang::survey.message_clear_data_not_success'));
+            }
+        }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return redirect()->route(Survey::NAME_URL_DOWNLOAD_PAGE_SURVEY,['id' => $id])->with('alert_error', trans('adminlte_lang::survey.message_clear_data_not_success'));
     }
 }

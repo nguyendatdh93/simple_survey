@@ -11,4 +11,5 @@ namespace App\Repositories\Contracts;
 interface AnswerQuestionRepositoryInterface
 {
     public function getAnswersByAnswerId($answer_id);
+    public function clearDataByAnswerId($answer_id);
 }

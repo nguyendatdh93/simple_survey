@@ -31,7 +31,7 @@
                             <a style="color:white;display: block;" href="{{ url('/logout') }}"
                                onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">
-                                <i class="fa fa-fw fa-sign-out"></i>
+                                <i class="fa fa-fw fa-sign-out" data-toggle="tooltip" title="Logout" data-placement="bottom"></i>
                             </a>
 
                             <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
