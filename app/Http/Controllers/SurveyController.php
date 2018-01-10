@@ -251,8 +251,9 @@ class SurveyController extends Controller
      */
     public function preview(Request $request, $id)
     {
-        $survey = $this->surveyRepository->getSurveyById($id);
-        $survey['questions'] = $this->questionRepository->getQuestionSurveyBySurveyId($id);
+        $survey               = $this->surveyRepository->getSurveyById($id);
+        $survey['image_path'] = \route('show-image').'/'.$this->getImageName($survey['image_path']);
+        $survey['questions']  = $this->questionRepository->getQuestionSurveyBySurveyId($id);
         foreach ($survey['questions'] as $key => $question) {
             $question_choices = $this->questionChoiceRepository->getQuestionChoiceByQuestionId($question['id']);
             if (count($question_choices) > 0) {
