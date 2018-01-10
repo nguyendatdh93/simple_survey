@@ -33,4 +33,14 @@ class QuestionRepository extends \EloquentRepository implements QuestionReposito
 
         return $result;
     }
+
+    public function createEmptyObject() {
+        return new Question();
+    }
+
+    public function save(Question $question) {
+        $question->save();
+
+        return $question;
+    }
 }

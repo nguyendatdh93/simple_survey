@@ -25,4 +25,14 @@ class QuestionChoiceRepository extends \EloquentRepository implements QuestionCh
 
         return $result;
     }
+
+    public function createEmptyObject() {
+        return new QuestionChoice();
+    }
+
+    public function save(QuestionChoice $question_choice) {
+        $question_choice->save();
+
+        return $question_choice;
+    }
 }

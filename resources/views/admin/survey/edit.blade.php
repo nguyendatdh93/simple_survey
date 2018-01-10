@@ -441,18 +441,18 @@
 		$(new_html).insertAfter($(this).parent().parent().parent().parent().parent().parent());
 	});
 
-    $(document).on('submit', '#survey_form',function(event) {
-        $.ajax({
-            url: '/survey/save',
-            type: 'POST',
-            dataType: 'json',
-            data: $('#survey_form').serialize(),
-            success: function( data ) {
-                for(var id in data) {
-                    jQuery('#' + id).html(data[id]);
-                }
-            }
-        });
-        return false;
-    });
+//    $(document).on('submit', '#survey_form',function(event) {
+//        $.ajax({
+//            url: '/survey/save',
+//            type: 'POST',
+//            dataType: 'json',
+//            data: $('#survey_form').serialize(),
+//            success: function( data ) {
+//                for(var id in data) {
+//                    jQuery('#' + id).html(data[id]);
+//                }
+//            }
+//        });
+//        return false;
+//    });
 </script>

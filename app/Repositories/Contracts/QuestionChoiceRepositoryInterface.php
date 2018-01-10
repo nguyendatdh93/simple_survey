@@ -8,7 +8,11 @@
 
 namespace App\Repositories\Contracts;
 
+use App\QuestionChoice;
+
 interface QuestionChoiceRepositoryInterface
 {
     public function getQuestionChoiceByQuestionId($question_id);
+    public function createEmptyObject();
+    public function save(QuestionChoice $question_choice);
 }
