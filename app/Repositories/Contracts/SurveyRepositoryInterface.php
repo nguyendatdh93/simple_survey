@@ -8,6 +8,8 @@
 
 namespace App\Repositories\Contracts;
 
+use App\Survey;
+
 interface SurveyRepositoryInterface
 {
     public function getAllSurvey();
@@ -16,4 +18,6 @@ interface SurveyRepositoryInterface
     public function closeSurveyById($survey_id);
     public function getDownloadListSurvey();
     public function getNameSurvey($survey_id);
+    public function createEmptyObject();
+    public function save(Survey $survey);
 }
