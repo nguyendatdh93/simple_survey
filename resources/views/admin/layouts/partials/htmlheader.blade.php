@@ -45,7 +45,11 @@
             display: block;
             height: 37px;
         }
-        #survey-table,#download-table tr td:not(.tbl-image_path):not(.tbl-control) {
+        #survey-table tr td:not(.tbl-image_path):not(.tbl-control) {
+            padding-top: 15px !important;
+        }
+
+        #download-table tr td:not(.tbl-image_path):not(.tbl-control) {
             padding-top: 15px !important;
         }
     </style>

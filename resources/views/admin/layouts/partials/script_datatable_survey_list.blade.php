@@ -20,7 +20,7 @@
                 { "targets": 4, "orderable" : false},
                 { "targets": 5, "orderable" : false},
                 { "targets": 6, "orderable" : false},
-                { "targets": 7,"orderable" : false},
+                { "targets": 7,"orderable" : false, "width": "135px"},
             ],
             "language": {
                 "url" : "/setup-lang"
@@ -88,5 +88,9 @@
 <style>
     #survey-table tr td:not(.tbl-name) {
         text-align: center;
+    }
+
+    #survey-table td.tbl-control {
+        text-align: unset !important;
     }
 </style>
