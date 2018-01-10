@@ -43,11 +43,11 @@
                 class_button_status = '';
 
             if(data.indexOf("{{ trans('adminlte_lang::survey.draf') }}") >= 0) {
-                class_button_status = "btn-default";
-            } else if(data.indexOf("{{ trans('adminlte_lang::survey.published') }}") >= 0) {
                 class_button_status = "btn-info";
-            } else {
+            } else if(data.indexOf("{{ trans('adminlte_lang::survey.published') }}") >= 0) {
                 class_button_status = "btn-warning";
+            } else {
+                class_button_status = "btn-default";
             }
 
             html += '<button type="button" class="btn btn-block '+ class_button_status +' btn-xs">'+data[1]+'</button>';
