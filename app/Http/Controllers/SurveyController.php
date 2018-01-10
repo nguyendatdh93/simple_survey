@@ -119,7 +119,7 @@ class SurveyController extends Controller
     public function getImageName($image_path)
     {
         $explode_image_path = explode('/', $image_path);
-        return end($explode_image_path);
+        return $explode_image_path[count($explode_image_path) - 2] . '/'. end($explode_image_path);
     }
 
     public function downloadListSurvey()
@@ -263,8 +263,6 @@ class SurveyController extends Controller
      */
     public function create()
     {
-
-
         $layout = 'admin.survey.edit';
         return view($layout);
     }

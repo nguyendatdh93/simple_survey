@@ -33,14 +33,14 @@ class HomeController extends Controller
         return json_encode($language);die;
     }
 
-    public function showImage($image_name)
+    public function showImage($image_path, $image_name)
     {
         $fileDir = Config::get('config.upload_file_path');
 
-        if (file_exists($fileDir .'/'. $image_name))
+        if (file_exists($fileDir .'/'. $image_path.'/'. $image_name))
         {
-            $contents = file_get_contents($fileDir .'/'. $image_name);
-            header('Content-type: image/jpeg');
+            $contents = file_get_contents($fileDir .'/'. $image_path.'/'. $image_name);
+            header('Content-type: image/png');
 
             echo $contents;
         }
