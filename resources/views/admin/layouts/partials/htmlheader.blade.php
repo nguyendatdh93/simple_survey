@@ -43,6 +43,14 @@
             width: 80px !important;
             margin: 0px auto;
             display: block;
+            height: 37px;
+        }
+        #survey-table tr td:not(.tbl-image_path):not(.tbl-control) {
+            padding-top: 15px !important;
+        }
+
+        #download-table tr td:not(.tbl-image_path):not(.tbl-control) {
+            padding-top: 15px !important;
         }
     </style>
 </head>

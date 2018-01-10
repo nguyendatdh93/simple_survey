@@ -6,7 +6,7 @@
                 <p>{!! $confirm['text'] !!} </p>
             @endforeach
         @endif
-        @if(isset($question['require']) && $question['require'] == \App\Question::REQUIRE_QUESTION)
+        @if(isset($question['require']) && $question['require'] == \App\Question::REQUIRE_QUESTION_YES)
             @if(is_array($choices))
                 @foreach($choices as $choice)
                     <div class="checkbox">

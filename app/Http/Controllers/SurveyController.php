@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Middleware\SecureDownloadSurvey;
 use App\Http\Requests;
+use App\Http\Services\EncryptionService;
 use App\Question;
 use App\Repositories\Contracts\AnswerQuestionRepositoryInterface;
 use App\Repositories\Contracts\ConfirmContentRepositoryInterface;
@@ -74,9 +75,9 @@ class SurveyController extends Controller
             'buttons'  => array(
                 array(
                     'text'  => trans('adminlte_lang::survey.button_create_new_survey'),
-                    'href'  => '#',
+                    'href'  => \route(Survey::NAME_URL_CREATE_SURVEY),
                     'attributes' => array(
-                        'class' => 'btn btn-info',
+                        'class' => 'btn btn-success',
                         'icon'  => 'fa fa-plus-circle'
                     )
                 )
@@ -110,9 +111,16 @@ class SurveyController extends Controller
             }
 
             $surveys[$key]['number_answers'] = $this->showNumberAnswers($survey);
+            $surveys[$key]['image_path']     = \route('show-image').'/'.$this->getImageName($survey['image_path']);
         }
 
         return $surveys;
+    }
+
+    public function getImageName($image_path)
+    {
+        $explode_image_path = explode('/', $image_path);
+        return $explode_image_path[count($explode_image_path) - 2] . '/'. end($explode_image_path);
     }
 
     public function downloadListSurvey()
@@ -256,8 +264,6 @@ class SurveyController extends Controller
      */
     public function create()
     {
-
-
         $layout = 'admin.survey.edit';
         return view($layout);
     }
@@ -352,6 +358,8 @@ class SurveyController extends Controller
                 }
             }
         }
+
+        return redirect()->route(Survey::NAME_URL_SURVEY_LIST)->with('alert_success',trans('adminlte_lang::survey.alert_success_create_survey'));
     }
 
     /**
@@ -360,8 +368,9 @@ class SurveyController extends Controller
      */
     public function preview(Request $request, $id)
     {
-        $survey = $this->surveyRepository->getSurveyById($id);
-        $survey['questions'] = $this->questionRepository->getQuestionSurveyBySurveyId($id);
+        $survey               = $this->surveyRepository->getSurveyById($id);
+        $survey['image_path'] = \route('show-image').'/'.$this->getImageName($survey['image_path']);
+        $survey['questions']  = $this->questionRepository->getQuestionSurveyBySurveyId($id);
         foreach ($survey['questions'] as $key => $question) {
             $question_choices = $this->questionChoiceRepository->getQuestionChoiceByQuestionId($question['id']);
             if (count($question_choices) > 0) {
@@ -380,7 +389,9 @@ class SurveyController extends Controller
             $group_question_survey[$question['category']][] = $question;
         }
 
-        $survey['questions'] = $group_question_survey;
+        $survey['questions']      = $group_question_survey;
+        $encryption_service       = new EncryptionService();
+        $survey['encryption_url'] = $encryption_service->encrypt($id);
 
         return view('admin::preview', array('survey' => $survey, 'name_url' => $request->route()->getName()));
     }

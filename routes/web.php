@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/{encrypt}', 'AnswerController@showQuestionSurvey');
 Route::get('/', 'SurveyController@index');
 
 Route::prefix('auth')->group(function () {
@@ -27,7 +27,7 @@ Route::prefix('survey')->group(function () {
     Route::get('/publish/{id?}', 'SurveyController@publishSurveyById')->name(\App\Survey::NAME_URL_PUBLISH_SURVEY);
     Route::get('/close/{id?}', 'SurveyController@closeSurveyById')->name(\App\Survey::NAME_URL_CLOSE_SURVEY);
     Route::get('/list', 'SurveyController@index')->name(\App\Survey::NAME_URL_SURVEY_LIST);
-    Route::get('/new', 'SurveyController@create');
+    Route::get('/new', 'SurveyController@create')->name(\App\Survey::NAME_URL_CREATE_SURVEY);
     Route::post('/save', 'SurveyController@save');
 });
 
@@ -49,3 +49,4 @@ Route::get('/404', function (){
 });
 
 Route::get('/setup-lang', 'HomeController@setupLanguage');
+Route::get('/image/{image_path?}/{image_name?}', 'HomeController@showImage')->name('show-image');

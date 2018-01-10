@@ -17,12 +17,20 @@
                             <div class="col-md-1"></div>
                             <!-- general form elements -->
                             <div class="col-md-10">
+                                @if($name_url == \App\Survey::NAME_URL_PREVIEW_PUBLISH)
+                                    <div class="form-group row">
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">{{ Request::root() }}/</label>
+                                        <div class="col-sm-10">
+                                            <input type="email" class="form-control" id="url" value="{{ isset($survey['encryption_url']) ? $survey['encryption_url'] : "#" }}">
+                                        </div>
+                                    </div>
+                                @endif
                                 <div class="preview preview-header">
                                     <h1>{{ isset($survey['name']) ? $survey['name'] : "Survey must has name" }}</h1>
                                     @if($survey['image_path'] != '')
                                         {!! FormSimple::img(isset($survey['image_path']) ? $survey['image_path'] : "", array("class" => "img-rounded","alt" => "Cinque Terre")) !!}
                                     @endif
-                                    <p>{{ isset($survey['description']) ? $survey['description'] : "" }}</p>
+                                    <p>{!! isset($survey['description']) ? $survey['description'] : "" !!}</p>
                                     @if(isset($survey['questions'][\App\Question::CATEGORY_HEADER]))
                                         {!! \App\BaseWidget\Survey::formAnswerPattern($survey['questions'][\App\Question::CATEGORY_HEADER]) !!}
                                     @endif
@@ -49,10 +57,13 @@
                     <!-- left column -->
                     <div class="col-md-1"></div>
                     <div class="col-md-10">
-                        <div class="preview-button" style="display: block;margin: 0px auto;width: 200px">
+                        <div class="preview-button">
                             @if($name_url == \App\Survey::NAME_URL_PREVIEW_DRAF)
-                                {!! FormSimple::a(trans('adminlte_lang::survey.confirm_button_close'), '#', array('class' => 'btn bg-orange btn-flat margin','icon' => '', "style" => "display:block; margin:0px auto;float:left", 'data-toggle' =>"modal", 'data-target' => "#modal-confirm-close")) !!}
-                                {!! FormSimple::a(trans('adminlte_lang::survey.confirm_button_publish'), '#', array('class' => 'btn bg-olive btn-flat margin','icon' => '', "style" => "display:block; margin:0px auto;float:left;margin-left:10px", 'data-toggle' =>"modal", 'data-target' => "#modal-confirm-publish")) !!}
+                                {!! FormSimple::a(trans('adminlte_lang::survey.go_to_edit_survey'), '#', array('class' => 'btn btn-link','icon' => '', "style" => "display:block; margin:0px auto;float:left")) !!}
+                                <div style="width: 250px;display: block;margin: 0px auto;">
+                                    {!! FormSimple::a(trans('adminlte_lang::survey.confirm_button_close'), '#', array('class' => 'btn bg-orange btn-flat margin','icon' => '', "style" => "display:block; margin:0px auto;float:left", 'data-toggle' =>"modal", 'data-target' => "#modal-confirm-close")) !!}
+                                    {!! FormSimple::a(trans('adminlte_lang::survey.confirm_button_publish'), '#', array('class' => 'btn bg-olive btn-flat margin','icon' => '', "style" => "display:block; margin:0px auto;float:left;margin-left:10px", 'data-toggle' =>"modal", 'data-target' => "#modal-confirm-publish")) !!}
+                                </div>
                             @elseif($name_url == \App\Survey::NAME_URL_PREVIEW_PUBLISH)
                                 {!! FormSimple::a(trans('adminlte_lang::survey.confirm_button_close'), '#', array('class' => 'btn bg-orange btn-flat margin','icon' => '', "style" => "display:block; margin:0px auto;", 'data-toggle' =>"modal", 'data-target' => "#modal-confirm-close")) !!}
                             @endif
