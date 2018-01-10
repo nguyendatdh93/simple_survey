@@ -19,9 +19,12 @@
                             <div class="col-md-10">
                                 @if($name_url == \App\Survey::NAME_URL_PREVIEW_PUBLISH)
                                     <div class="form-group row">
-                                        <label for="inputEmail3" class="col-sm-2 col-form-label">{{ Request::root() }}/</label>
-                                        <div class="col-sm-10">
-                                            <input type="email" class="form-control" id="url" value="{{ isset($survey['encryption_url']) ? $survey['encryption_url'] : "#" }}">
+                                        <label id="jsDomain" class="col-sm-2 col-form-label">{{ Request::root() }}/</label>
+                                        <div class="col-sm-5">
+                                            {!! FormSimple::input(array('type'=>'text','class' => 'form-control', 'id' => 'jsEncryptURL', "value" => isset($survey['encryption_url']) ? $survey['encryption_url'] : "#")) !!}
+                                        </div>
+                                        <div class="col-sm-1">
+                                            {!! FormSimple::button(trans('adminlte_lang::survey.button_coppy_url'), array('class' => 'btn btn-link','icon' => 'fa fa-clone', 'onClick' => "copyClipBoard()")) !!}
                                         </div>
                                     </div>
                                 @endif
@@ -146,3 +149,33 @@
         margin: 0px auto;
     }
 </style>
+
+<script>
+    function copyClipBoard() {
+        var copyText = document.getElementById("jsDomain").textContent +'/'+ document.getElementById("jsEncryptURL").value;
+        copyToClipboard(copyText);
+        alert("Copied the text: " + copyText);
+    }
+
+    function copyToClipboard(text) {
+        if (window.clipboardData && window.clipboardData.setData) {
+            // IE specific code path to prevent textarea being shown while dialog is visible.
+            return clipboardData.setData("Text", text);
+
+        } else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
+            var textarea = document.createElement("textarea");
+            textarea.textContent = text;
+            textarea.style.position = "fixed";  // Prevent scrolling to bottom of page in MS Edge.
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                return document.execCommand("copy");  // Security exception may be thrown by some browsers.
+            } catch (ex) {
+                console.warn("Copy to clipboard failed.", ex);
+                return false;
+            } finally {
+                document.body.removeChild(textarea);
+            }
+        }
+    }
+</script>
