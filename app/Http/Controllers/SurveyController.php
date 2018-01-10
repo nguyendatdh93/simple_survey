@@ -12,26 +12,37 @@ use Illuminate\Http\Request;
 use App\Repositories\Contracts\SurveyRepositoryInterface;
 use App\Repositories\Contracts\QuestionRepositoryInterface;
 use App\Repositories\Contracts\QuestionChoiceRepositoryInterface;
+use App\Repositories\Contracts\ConfirmContentsRepositoryInterface;
 use App\Repositories\Contracts\AnswerRepositoryInterface;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Auth;
 use Response;
+use Config;
+use File;
 
 class SurveyController extends Controller
 {
     protected $surveyRepository;
     protected $questionRepository;
     protected $questionChoiceRepository;
+    protected $confirmContentRepository;
     protected $answerRepository;
     protected $answerQuestionRepository;
-    protected $confirmContentRepository;
 
-    public function __construct(SurveyRepositoryInterface $surveyRepository, QuestionRepositoryInterface $questionRepository, QuestionChoiceRepositoryInterface $questionChoiceRepository, AnswerRepositoryInterface $answerRepository, AnswerQuestionRepositoryInterface $answerQuestionRepository, ConfirmContentRepositoryInterface $confirmContentRepository)
+    public function __construct(SurveyRepositoryInterface $surveyRepository,
+                                QuestionRepositoryInterface $questionRepository,
+                                QuestionChoiceRepositoryInterface $questionChoiceRepository,
+                                ConfirmContentsRepositoryInterface $confirmContentRepository,
+                                AnswerRepositoryInterface $answerRepository,
+                                AnswerQuestionRepositoryInterface $answerQuestionRepository)
     {
         $this->middleware('auth');
         $this->middleware(SecureDownloadSurvey::class);
         $this->surveyRepository = $surveyRepository;
         $this->questionRepository = $questionRepository;
         $this->questionChoiceRepository = $questionChoiceRepository;
+        $this->confirmContentRepository = $confirmContentRepository;
         $this->answerRepository = $answerRepository;
         $this->answerQuestionRepository = $answerQuestionRepository;
         $this->confirmContentRepository = $confirmContentRepository;
@@ -243,6 +254,111 @@ class SurveyController extends Controller
         }
 
         return $answer_datas;
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+
+
+        $layout = 'admin.survey.edit';
+        return view($layout);
+    }
+
+    public function save() {
+        $input   = Input::all();
+        $file    = Input::file('survey_thumbnail');
+        $user_id = Auth::id();
+
+        // validate inputs
+
+
+        // create survey
+        $file_name       = $file->getClientOriginalName();
+        $destinationPath = Config::get('config.upload_file_path');
+
+        try {
+            $path = $destinationPath. '/' . time();
+            File::makeDirectory($path, $mode = 0777, true, true);
+            $file->move($path, $file_name);
+            $image_path = $path . '/' .$file_name;
+
+            $survey = $this->surveyRepository->createEmptyObject();
+            $survey->name        = $input['survey_name'];
+            $survey->user_id     = $user_id;
+            $survey->image_path  = $image_path;
+            $survey->description = $input['survey_description'];
+            $survey = $this->surveyRepository->save($survey);
+        } catch (\Exception $e) {
+            var_dump($e->getMessage());
+            die('Exception');
+        }
+
+        // create questions
+        $new_questions = [];
+        foreach ($input as $input_name => $value) {
+            $split_input_name = explode('_', $input_name);
+            if ($split_input_name[0] != 'question' || !$value) {
+                continue;
+            }
+
+            if (count($split_input_name) == 3) {
+                $new_questions[$split_input_name[1]][$split_input_name[2]] = $value;
+                continue;
+            }
+
+            if ($split_input_name[2] == 'confirmation') {
+                if ($split_input_name[3] == 'text') {
+                    $new_questions[$split_input_name[1]]['confirmation_text'] = $value;
+                } else {
+                    $new_questions[$split_input_name[1]]['agree_text'] = $value;
+                }
+
+                continue;
+            }
+
+            if ($split_input_name[2] == 'choice') {
+                $new_questions[$split_input_name[1]]['choice'][] = $value;
+            }
+        }
+
+        $i = 0;
+        foreach ($new_questions as $new_question) {
+            $i++;
+            $question = $this->questionRepository->createEmptyObject();
+            $question->survey_id = $survey->id;
+            $question->text      = $new_question['text'];
+            $question->type      = $new_question['type'];
+            $question->require   = empty($new_question['required']) ? Question::REQUIRE_QUESTION_NO : Question::REQUIRE_QUESTION_YES;
+            $question->category  = $new_question['category'];
+            $question->no        = $i;
+            $question = $this->questionRepository->save($question);
+
+            if ($question->type == Question::TYPE_SINGLE_CHOICE || $question->type == Question::TYPE_MULTI_CHOICE) {
+                foreach ($new_question['choice'] as $choice) {
+                    $question_choice = $this->questionChoiceRepository->createEmptyObject();
+                    $question_choice->question_id = $question->id;
+                    $question_choice->text        = $choice;
+                    $this->questionChoiceRepository->save($question_choice);
+                }
+            } elseif ($question->type == Question::TYPE_CONFIRMATION) {
+                $confirm_content = $this->confirmContentRepository->createEmptyObject();
+                $confirm_content->question_id = $question->id;
+                $confirm_content->text        = $new_question['confirmation_text'];
+                $this->confirmContentRepository->save($confirm_content);
+
+                if ($question->require == Question::REQUIRE_QUESTION_YES) {
+                    $question_choice = $this->questionChoiceRepository->createEmptyObject();
+                    $question_choice->question_id = $question->id;
+                    $question_choice->text        = $new_question['agree_text'];
+                    $this->questionChoiceRepository->save($question_choice);
+                }
+            }
+        }
     }
 
     /**

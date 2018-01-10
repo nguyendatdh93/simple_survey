@@ -103,6 +103,16 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
         return $result[0]['name'];
     }
 
+    public function createEmptyObject() {
+        return new Survey();
+    }
+
+    public function save(Survey $survey) {
+        $survey->save();
+
+        return $survey;
+    }
+
     public function deleteSurvey($survey_id)
     {
         $this->_model->where('id',$survey_id)

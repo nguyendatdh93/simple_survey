@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Repositories\Contracts\ConfirmContentsRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
+use App\Repositories\Eloquents\ConfirmContentsRepository;
 use App\Repositories\Eloquents\UserRepository;
 use App\Repositories\Contracts\SurveyRepositoryInterface;
 use App\Repositories\Eloquents\SurveyRepository;
@@ -61,6 +63,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             QuestionChoiceRepositoryInterface::class,
             QuestionChoiceRepository::class
+        );
+
+        $this->app->singleton(
+            ConfirmContentsRepositoryInterface::class,
+            ConfirmContentsRepository::class
         );
 
         $this->app->singleton(

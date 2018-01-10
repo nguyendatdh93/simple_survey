@@ -27,6 +27,8 @@ Route::prefix('survey')->group(function () {
     Route::get('/publish/{id?}', 'SurveyController@publishSurveyById')->name(\App\Survey::NAME_URL_PUBLISH_SURVEY);
     Route::get('/close/{id?}', 'SurveyController@closeSurveyById')->name(\App\Survey::NAME_URL_CLOSE_SURVEY);
     Route::get('/list', 'SurveyController@index')->name(\App\Survey::NAME_URL_SURVEY_LIST);
+    Route::get('/new', 'SurveyController@create');
+    Route::post('/save', 'SurveyController@save');
 });
 
 Route::prefix('download')->group(function () {
@@ -40,6 +42,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::get('/users', 'UserController@index');
+
 
 Route::get('/404', function (){
     return view('admin::errors.404');
