@@ -27,7 +27,7 @@ Route::prefix('survey')->group(function () {
     Route::get('/publish/{id?}', 'SurveyController@publishSurveyById')->name(\App\Survey::NAME_URL_PUBLISH_SURVEY);
     Route::get('/close/{id?}', 'SurveyController@closeSurveyById')->name(\App\Survey::NAME_URL_CLOSE_SURVEY);
     Route::get('/list', 'SurveyController@index')->name(\App\Survey::NAME_URL_SURVEY_LIST);
-    Route::get('/new', 'SurveyController@create');
+    Route::get('/new', 'SurveyController@create')->name(\App\Survey::NAME_URL_CREATE_SURVEY);
     Route::post('/save', 'SurveyController@save');
 });
 

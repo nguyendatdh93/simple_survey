@@ -22,7 +22,7 @@
                                     @if($survey['image_path'] != '')
                                         {!! FormSimple::img(isset($survey['image_path']) ? $survey['image_path'] : "", array("class" => "img-rounded","alt" => "Cinque Terre")) !!}
                                     @endif
-                                    <p>{{ isset($survey['description']) ? $survey['description'] : "" }}</p>
+                                    <p>{!! isset($survey['description']) ? $survey['description'] : "" !!}</p>
                                     @if(isset($survey['questions'][\App\Question::CATEGORY_HEADER]))
                                         {!! \App\BaseWidget\Survey::formAnswerPattern($survey['questions'][\App\Question::CATEGORY_HEADER]) !!}
                                     @endif

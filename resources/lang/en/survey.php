@@ -38,5 +38,7 @@ return [
     'confirm_button_clear_data' => 'Clear data',
     'message_clear_data_not_success' => 'Clear data for this survey is not success',
     'message_clear_data_success' => 'Clear data for this survey is success',
-    'button_create_new_survey'  => 'Create new survey'
+    'button_create_new_survey'  => 'Create new survey',
+    'edit_survey'  => 'Edit survey',
+    'alert_success_create_survey'  => 'Create survey success',
 ];

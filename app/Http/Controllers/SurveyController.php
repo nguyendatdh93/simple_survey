@@ -74,7 +74,7 @@ class SurveyController extends Controller
             'buttons'  => array(
                 array(
                     'text'  => trans('adminlte_lang::survey.button_create_new_survey'),
-                    'href'  => '#',
+                    'href'  => \route(Survey::NAME_URL_CREATE_SURVEY),
                     'attributes' => array(
                         'class' => 'btn btn-success',
                         'icon'  => 'fa fa-plus-circle'
@@ -357,6 +357,8 @@ class SurveyController extends Controller
                 }
             }
         }
+
+        return redirect()->route(Survey::NAME_URL_SURVEY_LIST)->with('alert_success',trans('adminlte_lang:survey.alert_success_create_survey'));
     }
 
     /**
