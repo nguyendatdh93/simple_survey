@@ -22,23 +22,19 @@
 
         <script>
             function agreeCheck(){
-                var flg1 = document.getElementById('JChkCaution1').checked;
-                if(!flg1){
-                    alert('規約に承諾してください');
-                    return false;
-                } else {
+//                var flg1 = document.getElementById('JChkCaution1').checked;
+//                if(!flg1){
+//                    alert('規約に承諾してください');
+//                    return false;
+//                } else {
                     document.join_form.submit();
-                }
+//                }
             }
         </script>
 
         @include('admin::survey.partials.form_content')
 
-        <div class="footer">
-            <!-- ▼変更可能エリア※div（copy）は固定なので変更しないでください -->
-            <p class="copy">Copyright &copy; 2016 ●●●●●, Inc. All Rights Reserved.</p>
-            <!-- ▲変更可能エリア 終わり -->
-            <!-- /.footer --></div>
+        @include('admin::survey.partials.footer')
 
         <!-- /.layout --></div>
     <!-- /.pagetop --></div>

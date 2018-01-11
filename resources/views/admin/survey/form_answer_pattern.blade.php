@@ -1,14 +1,15 @@
-
 @foreach($survey_contents as $survey_content)
-    @if($survey_content['type'] == \App\Question::TYPE_SINGLE_TEXT)
-        {!! \App\BaseWidget\Survey::singleText($survey_content, array('class' => 'exampleInputEmail1', 'placeholder' => 'Enter answer')) !!}
-    @elseif($survey_content['type'] == \App\Question::TYPE_MULTI_TEXT)
-        {!! \App\BaseWidget\Survey::multiText($survey_content, array("rows" => "3", "placeholder" => "Enter ...")) !!}
-    @elseif($survey_content['type'] == \App\Question::TYPE_SINGLE_CHOICE)
-        {!! \App\BaseWidget\Survey::singleChoice($survey_content, $survey_content['question_choices'], array("name" => "optradio")) !!}
-    @elseif($survey_content['type'] == \App\Question::TYPE_MULTI_CHOICE)
-        {!! \App\BaseWidget\Survey::multiChoice($survey_content, $survey_content['question_choices'], array("name" => "optcheckbox")) !!}
-    @else
-        {!! \App\BaseWidget\Survey::termConfirm($survey_content, $survey_content['confirm_contents'],  $survey_content['question_choices'], array("name" => "optcheckbox")) !!}
+    @if(isset($survey_content['type']))
+        @if($survey_content['type'] == \App\Question::TYPE_SINGLE_TEXT)
+            {!! \App\BaseWidget\Survey::singleText($survey_content, array("name" => "num", "value" =>"", "class" => "ipt01","maxlength" => "255")) !!}
+        @elseif($survey_content['type'] == \App\Question::TYPE_MULTI_TEXT)
+            {!! \App\BaseWidget\Survey::multiText($survey_content, array("id" => "comment", "class" => "txt01", "name" => "comment", "maxlength" => "225", "placeholder" => "コメントをご記入下さい")) !!}
+        @elseif($survey_content['type'] == \App\Question::TYPE_SINGLE_CHOICE)
+            {!! \App\BaseWidget\Survey::singleChoice($survey_content, $survey_content['question_choices'], array("name" => "optradio")) !!}
+        @elseif($survey_content['type'] == \App\Question::TYPE_MULTI_CHOICE)
+            {!! \App\BaseWidget\Survey::multiChoice($survey_content, $survey_content['question_choices'], array("name" => "optcheckbox[]")) !!}
+        @else
+            {!! \App\BaseWidget\Survey::termConfirm($survey_content, $survey_content['confirm_contents'],  $survey_content['question_choices'], array("name" => "optcheckbox_confirm")) !!}
+        @endif
     @endif
 @endforeach

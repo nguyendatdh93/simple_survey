@@ -21,6 +21,8 @@ class Survey extends Model
     const NAME_URL_CLOSE_SURVEY   = 'close-survey';
     const NAME_URL_CREATE_SURVEY  = 'create-new-survey';
     const NAME_URL_ANSWER_SURVEY  = 'answer-survey';
+	const NAME_URL_ANSWER_CONFIRM = 'answer-survey-confirm';
+	const NAME_URL_SUBMIT_CONFIRM = 'answer-survey-submit';
 
     const NAME_URL_DOWNLOAD_LIST          = 'download-list';
     const NAME_URL_DOWNLOAD_SURVEY        = 'download-survey';

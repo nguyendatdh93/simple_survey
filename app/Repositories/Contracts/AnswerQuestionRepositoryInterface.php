@@ -12,4 +12,5 @@ interface AnswerQuestionRepositoryInterface
 {
     public function getAnswersByAnswerId($answer_id);
     public function clearDataByAnswerId($answer_id);
+    public function save($data);
 }

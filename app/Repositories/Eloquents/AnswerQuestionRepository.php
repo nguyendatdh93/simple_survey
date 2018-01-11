@@ -30,4 +30,16 @@ class AnswerQuestionRepository extends \EloquentRepository implements AnswerQues
     {
         $this->_model->where('answer_id', $answer_id)->delete();
     }
+    
+    public function save($data)
+    {
+	    $this->_model->insert(
+		    [
+		    	'answer_id'   => $data['answer_id'],
+			    'question_id' => $data['question_id'],
+			    'text'        => $data['text'],
+			    'created_at'  => date("Y-m-d h:i:s"),
+		    ]
+	    );
+    }
 }

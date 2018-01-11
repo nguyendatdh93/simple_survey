@@ -20,4 +20,6 @@ class Question extends Model
 
     const REQUIRE_QUESTION_YES = 1;
     const REQUIRE_QUESTION_NO  = 0;
+    
+    const DELETE_FLG = 1;
 }

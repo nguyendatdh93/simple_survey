@@ -35,4 +35,12 @@ class QuestionChoiceRepository extends \EloquentRepository implements QuestionCh
 
         return $question_choice;
     }
+    
+    public function getChoiceTextByChoiceId($choice_id)
+    {
+	    $result = $this->_model->select('text')
+		    ->where('id', $choice_id)->get()->first()->toArray();
+	
+	    return $result;
+    }
 }

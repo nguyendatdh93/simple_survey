@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Services\EncryptionService;
 use App\Http\Services\SurveyService;
+use App\Question;
 use App\Repositories\Contracts\AnswerQuestionRepositoryInterface;
 use App\Repositories\Contracts\AnswerRepositoryInterface;
 use App\Repositories\Contracts\ConfirmContentRepositoryInterface;
@@ -11,6 +12,10 @@ use App\Repositories\Contracts\ConfirmContentsRepositoryInterface;
 use App\Repositories\Contracts\QuestionChoiceRepositoryInterface;
 use App\Repositories\Contracts\QuestionRepositoryInterface;
 use App\Repositories\Contracts\SurveyRepositoryInterface;
+use App\Survey;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
+use OAuth\Common\Storage\Session;
 
 class AnswerSurveyController extends Controller
 {
@@ -44,30 +49,77 @@ class AnswerSurveyController extends Controller
 	
 	public function showQuestionSurvey($encrypt)
 	{
-		$encryption_service   = new EncryptionService();
-		$id                   = $encryption_service->decrypt($encrypt);
-		$survey               = $this->surveyRepository->getSurveyById($id);
-		$survey_service       = new SurveyService();
-		$survey['image_path'] = \route('show-image').'/'.$survey_service->getImageName($survey['image_path']);
-		$survey['questions']  = $this->questionRepository->getQuestionSurveyBySurveyId($id);
+		$encryption_service    = new EncryptionService();
+		$id                    = $encryption_service->decrypt($encrypt);
+		$survey_service        = new SurveyService();
+		$survey                = $survey_service->getDataSurvey($id);
+		$survey['encrypt_url'] = $encrypt;
+		
+		return view('admin::answer', array('survey' => $survey));
+	}
+	
+	public function showFormConfirmAnswerSurvey(Request $request, $encrypt)
+	{
+		$input               = Input::get();
+		$encryption_service  = new EncryptionService();
+		$id                  = $encryption_service->decrypt($encrypt);
+		$survey              = $this->surveyRepository->getSurveyById($id);
+		$survey['questions'] = $this->questionRepository->getQuestionSurveyWithoutConfirmTypeBySurveyId($id);
+		
 		foreach ($survey['questions'] as $key => $question) {
-			$question_choices = $this->questionChoiceRepository->getQuestionChoiceByQuestionId($question['id']);
-			if (count($question_choices) > 0) {
-				$survey['questions'][$key]['question_choices'] = $question_choices;
-			}
-			
-			$confirm_content = $this->confirmContentRepository->getConfirmContentByQuestionId($question['id']);
-			if (count($confirm_content) > 0) {
-				$survey['questions'][$key]['confirm_contents'] = $confirm_content;
+			if ($question['type'] == Question::TYPE_SINGLE_CHOICE) {
+				$answer = array(
+					$input[$question['id']] => $this->questionChoiceRepository->getChoiceTextByChoiceId($input[$question['id']]),
+				);
+				
+				$survey['questions'][$key]['answer'] = $answer;
+			} elseif ($question['type'] == Question::TYPE_MULTI_CHOICE) {
+				$answer = array();
+				foreach ($input[$question['id']] as $choice_id) {
+					$answer[$choice_id] = $this->questionChoiceRepository->getChoiceTextByChoiceId($choice_id);
+				}
+				
+				$survey['questions'][$key]['answer'] = $answer;
+			} else {
+				$survey['questions'][$key]['answer'] = $input[$question['id']];
 			}
 		}
 		
-		$group_question_survey = array();
+		$survey['encrypt_url'] = $encrypt;
+		$request->session()->put('answer', $survey);
 		
-		foreach ($survey['questions'] as $question) {
-			$group_question_survey[$question['category']][] = $question;
+		return view('admin::answer_confirm', array('survey' => $survey));
+	}
+	
+	public function answerSurvey(Request $request)
+	{
+		$survey = $request->session()->get('answer');
+		try {
+			$id_answer = $this->answerRepository->save($survey['id']);
+			foreach ($survey['questions'] as $question) {
+				if (is_array($question['answer'])) {
+					$answer_text = "";
+					foreach($question['answer'] as $text) {
+						$answer_text = $answer_text . ',' . $text['text'];
+					}
+					
+					$answer_text = trim($answer_text, ',');
+				} else {
+					$answer_text = $question['answer'];
+				}
+				
+				$data = array(
+					'answer_id'   => $id_answer,
+					'question_id' => $question['id'],
+					'text'        => $answer_text,
+				);
+				
+				$this->answerQuestionRepository->save($data);
+			}
+		}catch (\Exception $e) {
+			return view('admin::answer_confirm', array('survey' => $request->session()->get('answer')));
 		}
 		
-		$survey['questions']      = $group_question_survey;
+		return view('admin::answer_confirm', array('survey' => $request->session()->get('answer')));
 	}
 }

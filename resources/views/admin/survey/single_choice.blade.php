@@ -3,7 +3,10 @@
     <td>
         @if(is_array($choices))
             @foreach($choices as $choice)
-                <label><input type="radio" {!!  \App\BaseWidget\Form::getAttributes($data_attributes) !!} value="">{{ $choice['text'] }}</label>
+                @php
+                    $identification = 'question_' . $question['id'] . '_' . $question['survey_id'] . '_choice_' . $choice['id'];
+                @endphp
+                <label><input type="radio" {!!  \App\BaseWidget\Form::getAttributes($data_attributes) !!} class="{{ $identification }}" value="{{ $choice['id'] }}">{{ $choice['text'] }}</label>
             @endforeach
         @endif
     </td>

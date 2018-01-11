@@ -368,8 +368,7 @@ class SurveyController extends Controller
         $survey                   = $survey_service->getDataSurvey($id);
         $encryption_service       = new EncryptionService();
         $survey['encryption_url'] = $encryption_service->encrypt($id);
-
-        return view('admin::form_survey', array('survey' => $survey, 'name_url' => $request->route()->getName()));
+        return view('admin::preview', array('survey' => $survey, 'name_url' => $request->route()->getName()));
     }
 
     /**
