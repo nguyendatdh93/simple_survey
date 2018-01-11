@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/{encrypt}', 'AnswerController@showQuestionSurvey');
+
 Route::get('/', 'SurveyController@index');
 
 Route::prefix('auth')->group(function () {
@@ -50,3 +50,4 @@ Route::get('/404', function (){
 
 Route::get('/setup-lang', 'HomeController@setupLanguage');
 Route::get('/image/{image_path?}/{image_name?}', 'HomeController@showImage')->name('show-image');
+Route::get('/s/{encrypt?}', 'AnswerSurveyController@showQuestionSurvey')->name(\App\Survey::NAME_URL_ANSWER_SURVEY);

@@ -19,7 +19,7 @@
                             <div class="col-md-10">
                                 @if($name_url == \App\Survey::NAME_URL_PREVIEW_PUBLISH)
                                     <div class="form-group row">
-                                        <label id="jsDomain" class="col-sm-2 col-form-label">{{ Request::root() }}/</label>
+                                        <label id="jsDomain" class="col-sm-3 col-form-label">{{ route(\App\Survey::NAME_URL_ANSWER_SURVEY) }}/</label>
                                         <div class="col-sm-5">
                                             {!! FormSimple::input(array('type'=>'text','class' => 'form-control', 'id' => 'jsEncryptURL', "value" => isset($survey['encryption_url']) ? $survey['encryption_url'] : "#")) !!}
                                         </div>
@@ -152,7 +152,7 @@
 
 <script>
     function copyClipBoard() {
-        var copyText = document.getElementById("jsDomain").textContent +'/'+ document.getElementById("jsEncryptURL").value;
+        var copyText = document.getElementById("jsDomain").textContent + document.getElementById("jsEncryptURL").value;
         copyToClipboard(copyText);
         alert("Copied the text: " + copyText);
     }
