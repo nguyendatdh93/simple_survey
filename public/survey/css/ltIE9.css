@@ -1,0 +1,51 @@
+@charset "UTF-8";
+/* less than IE9 */
+
+  /* 2 layout
+  ******************************************/
+  #layout {
+    width:750px;
+    margin:0 auto;
+				padding:1em 0;
+  }
+
+/* 3 common
+******************************************/
+
+/* 4_1 form
+******************************************/
+.formArea {
+  margin:1em 0;
+}
+
+/* formTable */
+.formTable {
+  width: 100%;
+  border-right: 0;
+  border-bottom: 0;
+}
+.formTable th,
+.formTable td {
+  padding: 1em;
+  display:table-cell;
+  border-bottom: 1px solid #e6e6e6;
+  border-right: 1px solid #e6e6e6;
+  vertical-align:middle;}
+.formTable th {
+  background:#f6f6f6;
+  width:200px;
+}
+
+
+.validate {
+  display: block;
+		padding-left:0;
+}
+
+.ruleArea1 {
+  display:block;
+  overflow-y: scroll;
+  height: 200px;
+}
+
+.btnRule1 { display:none;}

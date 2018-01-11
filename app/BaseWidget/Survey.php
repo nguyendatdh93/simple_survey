@@ -19,7 +19,7 @@ class Survey
      */
     public static function singleText($question, $paramAttributes = array())
     {
-        return view('admin::layouts.survey_partials.single_text', array('question' => $question, 'data_attributes' => $paramAttributes));
+        return view('admin::survey.single_text', array('question' => $question, 'data_attributes' => $paramAttributes));
     }
 
     /**
@@ -29,7 +29,7 @@ class Survey
      */
     public static function multiText($question, $paramAttributes = array())
     {
-        return view('admin::layouts.survey_partials.multi_text', array('question' => $question, 'data_attributes' => $paramAttributes));
+        return view('admin::survey.multi_text', array('question' => $question, 'data_attributes' => $paramAttributes));
     }
 
     /**
@@ -40,7 +40,7 @@ class Survey
      */
     public static function singleChoice($question, $choices, $paramAttributes = array())
     {
-        return view('admin::layouts.survey_partials.single_choice', array('question' => $question, 'choices' => $choices, 'data_attributes' => $paramAttributes));
+        return view('admin::survey.single_choice', array('question' => $question, 'choices' => $choices, 'data_attributes' => $paramAttributes));
     }
 
     /**
@@ -51,12 +51,12 @@ class Survey
      */
     public static function multiChoice($question, $choices, $paramAttributes = array())
     {
-        return view('admin::layouts.survey_partials.multi_choice', array('question' => $question, 'choices' => $choices, 'data_attributes' => $paramAttributes));
+        return view('admin::survey.multi_choice', array('question' => $question, 'choices' => $choices, 'data_attributes' => $paramAttributes));
     }
 
     public static function termConfirm($question, $confirms, $choices, $paramAttributes = array())
     {
-        return view('admin::layouts.survey_partials.confirm', array('question' => $question, 'confirms' => $confirms,'choices' => $choices, 'data_attributes' => $paramAttributes));
+        return view('admin::survey.confirm_condition', array('question' => $question, 'confirms' => $confirms,'choices' => $choices, 'data_attributes' => $paramAttributes));
     }
 
     /**
@@ -65,6 +65,6 @@ class Survey
      */
     public static function formAnswerPattern($surveyContents)
     {
-        return view('admin::layouts.survey_partials.form_answer_pattern', array('survey_contents' => $surveyContents));
+        return view('admin::survey.form_answer_pattern', array('survey_contents' => $surveyContents));
     }
 }
