@@ -48,6 +48,12 @@
             top: 19px;
             right: 24px;
         }
+        .jsLinkGoEditSurvey {
+            position: absolute;
+            left: 0px;
+            top: 29px;
+            color: dodgerblue !important;
+        }
     </style>
     <nav class="navbar navbar-inverse navbar-fixed-top" style="background: #e6e6e6;border-bottom: 2px solid #e6e6e6">
         <div class="container-fluid">
@@ -66,6 +72,10 @@
                     </div>
                     <button type="button" class="btn btn-link" style="color: dodgerblue" onclick="copyClipbroad()">Copy URL</button>
                 </div>
+            @endif
+
+            @if ($survey['status'] == \App\Survey::STATUS_SURVEY_DRAF)
+                <a href="" class="btn btn-link jsLinkGoEditSurvey">Go to edit</a>
             @endif
         </div>
     </nav>
