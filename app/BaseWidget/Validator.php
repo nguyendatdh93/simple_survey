@@ -10,8 +10,7 @@ namespace App\BaseWidget;
 
 class Validator
 {
-    const TYPE_IMAGE = 'image';
-
+    const TYPE_IMAGE     = 'image';
     /**
      * Check null or empty array/string
      * @param $val

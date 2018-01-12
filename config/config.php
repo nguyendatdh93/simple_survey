@@ -11,4 +11,5 @@ return  [
     'log_path'             => env('CONFIG_LOG_PATH'),
     'max_file_upload_size' => env('CONFIG_MAX_FILE_UPLOAD_SIZE'),
     'storage_path'         => env('STORAGE_PATH'),
+    'encrypt_private_key'  => 'dadb97fbd7e9dd6e46436fa72848217d',
 ];

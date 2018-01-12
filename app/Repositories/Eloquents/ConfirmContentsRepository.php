@@ -22,9 +22,11 @@ class ConfirmContentsRepository extends \EloquentRepository implements ConfirmCo
         return new ConfirmContent();
     }
 
-//    public function save(ConfirmContent $confirm_content) {
-//        $confirm_content->save();
-//
-//        return $confirm_content;
-//    }
+    public function getConfirmContentByQuestionId($question_id)
+    {
+        $result = $this->_model->select('*')
+            ->where('question_id', $question_id)->get()->toArray();
+
+        return $result;
+    }
 }

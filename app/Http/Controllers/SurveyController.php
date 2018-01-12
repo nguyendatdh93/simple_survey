@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Middleware\SecureDownloadSurvey;
 use App\Http\Requests;
+use App\Http\Services\EncryptionService;
+use App\Http\Services\SurveyService;
 use App\Question;
 use App\Repositories\Contracts\AnswerQuestionRepositoryInterface;
+use App\Repositories\Contracts\ConfirmContentRepositoryInterface;
 use App\Survey;
 use Illuminate\Http\Request;
 use App\Repositories\Contracts\SurveyRepositoryInterface;
@@ -38,12 +41,13 @@ class SurveyController extends Controller
     {
         $this->middleware('auth');
         $this->middleware(SecureDownloadSurvey::class);
-        $this->surveyRepository = $surveyRepository;
-        $this->questionRepository = $questionRepository;
+        $this->surveyRepository         = $surveyRepository;
+        $this->questionRepository       = $questionRepository;
         $this->questionChoiceRepository = $questionChoiceRepository;
         $this->confirmContentRepository = $confirmContentRepository;
-        $this->answerRepository = $answerRepository;
+        $this->answerRepository         = $answerRepository;
         $this->answerQuestionRepository = $answerQuestionRepository;
+        $this->confirmContentRepository = $confirmContentRepository;
     }
 
     /**
@@ -55,20 +59,30 @@ class SurveyController extends Controller
     {
         $table_settings = array(
             'title' => trans('adminlte_lang::survey.survey_list_table_title'),
-            'id' => 'survey-table',
+            'id'    => 'survey-table',
             'headers_columns' => array(
-                trans('adminlte_lang::survey.survey_list_table_header_column_id') => 'id',
-                trans('adminlte_lang::survey.survey_list_table_header_column_status') => 'status',
-                trans('adminlte_lang::survey.survey_list_table_header_column_survey_name') => 'name',
+                trans('adminlte_lang::survey.survey_list_table_header_column_id')           => 'id',
+                trans('adminlte_lang::survey.survey_list_table_header_column_status')       => 'status',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_name')  => 'name',
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_image') => array(
                     'column' => 'image_path',
                     'type' => 'image'
                 ),
-                trans('adminlte_lang::survey.survey_list_table_header_column_survey_published_at') => 'published_at',
-                trans('adminlte_lang::survey.survey_list_table_header_column_survey_closed_at') => 'closed_at',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_published_at')   => 'published_at',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_closed_at')      => 'closed_at',
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_number_answers') => 'number_answers'
             ),
-            'controls' => true
+            'controls' => true,
+            'buttons'  => array(
+                array(
+                    'text'  => trans('adminlte_lang::survey.button_create_new_survey'),
+                    'href'  => \route(Survey::NAME_URL_CREATE_SURVEY),
+                    'attributes' => array(
+                        'class' => 'btn btn-success',
+                        'icon'  => 'fa fa-plus-circle'
+                    )
+                )
+            )
         );
 
         $surveys = $this->surveyRepository->getAllSurvey();
@@ -98,6 +112,8 @@ class SurveyController extends Controller
             }
 
             $surveys[$key]['number_answers'] = $this->showNumberAnswers($survey);
+	        $survey_service                  = new SurveyService();
+            $surveys[$key]['image_path']     = \route('show-image').'/'.$survey_service->getImageName($survey['image_path']);
         }
 
         return $surveys;
@@ -109,15 +125,15 @@ class SurveyController extends Controller
             'title' => trans('adminlte_lang::survey.survey_list_table_title'),
             'id' => 'download-table',
             'headers_columns' => array(
-                trans('adminlte_lang::survey.survey_list_table_header_column_id') => 'id',
-                trans('adminlte_lang::survey.survey_list_table_header_column_status') => 'status',
-                trans('adminlte_lang::survey.survey_list_table_header_column_survey_name') => 'name',
+                trans('adminlte_lang::survey.survey_list_table_header_column_id')           => 'id',
+                trans('adminlte_lang::survey.survey_list_table_header_column_status')       => 'status',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_name')  => 'name',
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_image') => array(
                     'column' => 'image_path',
-                    'type' => 'image'
+                    'type'   => 'image'
                 ),
-                trans('adminlte_lang::survey.survey_list_table_header_column_survey_published_at') => 'published_at',
-                trans('adminlte_lang::survey.survey_list_table_header_column_survey_closed_at') => 'closed_at',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_published_at')   => 'published_at',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_closed_at')      => 'closed_at',
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_number_answers') => 'number_answers'
             ),
             'controls' => true
@@ -150,38 +166,42 @@ class SurveyController extends Controller
                     'icon'  => 'fa fa-fw fa-download'
                 )
             );
+
+            $buttons[] = array(
+                'text'  => trans('adminlte_lang::survey.button_clear_data'),
+                'attributes' => array(
+                    'class'       => 'btn bg-orange margin',
+                    'icon'        => 'fa fa-trash',
+                    'data-toggle' => "modal",
+                    'data-target' => "#modal-confirm-clear-data-survey"
+                )
+            );
         }
 
-        $buttons[] = array(
-            'text'  => trans('adminlte_lang::survey.button_clear_data'),
-            'href'  => \route(Survey::NAME_URL_DOWNLOAD_SURVEY).'/'.$id,
-            'attributes' => array(
-                'class' => 'btn bg-orange margin',
-                'icon'  => 'fa fa-trash',
-                'data-toggle' =>"modal",
-                'data-target' => "#modal-confirm-clear-data"
-            )
-        );
-
-
         $table_settings = array(
-            'title' => trans('adminlte_lang::survey.answer_download_table'),
-            'id' => 'download-page-table',
+            'title'           => trans('adminlte_lang::survey.answer_download_table'),
+            'id'              => 'download-page-table',
             'headers_columns' => $headers_columns,
-            'controls' => false,
-            'buttons' => $buttons
+            'controls'        => false,
+            'buttons'         => $buttons
         );
 
-        return view('admin::datatable', array('settings' => $table_settings, 'datas' => $answer_datas));
+        return view('admin::datatable', array('settings' => $table_settings, 'datas' => $answer_datas,'survey_id' => $id));
     }
 
     public function downloadSurveyCSVFile($id)
     {
         $answer_datas = $this->getAnswerForSurveyBySurveyID($id);
+        $survey_name  = $this->surveyRepository->getNameSurvey($id);
+        if (strlen($survey_name) > 50)
+        {
+            $survey_name = substr($survey_name,0,50);
+        }
+
         $headers = [
             'Cache-Control'           => 'must-revalidate, post-check=0, pre-check=0'
             ,   'Content-type'        => 'text/csv'
-            ,   'Content-Disposition' => 'attachment; filename='.$this->surveyRepository->getNameSurvey($id).'.csv'
+            ,   'Content-Disposition' => 'attachment; filename='.$survey_name.'.csv'
             ,   'Expires'             => '0'
             ,   'Pragma'              => 'public'
         ];
@@ -413,6 +433,8 @@ class SurveyController extends Controller
                 }
             }
         }
+
+        return redirect()->route(Survey::NAME_URL_SURVEY_LIST)->with('alert_success',trans('adminlte_lang::survey.alert_success_create_survey'));
     }
 
     /**
@@ -421,23 +443,10 @@ class SurveyController extends Controller
      */
     public function preview(Request $request, $id)
     {
-        $survey = $this->surveyRepository->getSurveyById($id);
-        $survey['questions'] = $this->questionRepository->getQuestionSurveyBySurveyId($id);
-        foreach ($survey['questions'] as $key => $question) {
-            $question_choices = $this->questionChoiceRepository->getQuestionChoiceByQuestionId($question['id']);
-            if (count($question_choices) > 0) {
-                $survey['questions'][$key]['question_choices'] = $question_choices;
-            }
-        }
-
-        $group_question_survey = array();
-
-        foreach ($survey['questions'] as $question) {
-            $group_question_survey[$question['category']][] = $question;
-        }
-
-        $survey['questions'] = $group_question_survey;
-
+    	$survey_service           = new SurveyService();
+        $survey                   = $survey_service->getDataSurvey($id);
+        $encryption_service       = new EncryptionService();
+        $survey['encryption_url'] = $encryption_service->encrypt($id);
         return view('admin::preview', array('survey' => $survey, 'name_url' => $request->route()->getName()));
     }
 
@@ -472,25 +481,28 @@ class SurveyController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return bool
      */
-    public function store(Request $request)
+    public function clearDataBySurveyId($id)
     {
-        //
-    }
+        if ($id) {
+            try {
+                $this->surveyRepository->deleteSurvey($id);
+                $answers = $this->answerRepository->getAnswersBySurveyId($id);
+                foreach ($answers as $answer) {
+                    $this->answerQuestionRepository->clearDataByAnswerId($answer['id']);
+                }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+                $this->answerRepository->clearDataAnswersBySurveyId($id);
+
+                return redirect()->route(Survey::NAME_URL_DOWNLOAD_LIST)->with('alert_success', trans('adminlte_lang::survey.message_clear_data_success'));
+            }catch (\Exception $e) {
+                return redirect()->route(Survey::NAME_URL_DOWNLOAD_PAGE_SURVEY,['id' => $id])->with('alert_error', trans('adminlte_lang::survey.message_clear_data_not_success'));
+            }
+        }
+
+        return redirect()->route(Survey::NAME_URL_DOWNLOAD_PAGE_SURVEY,['id' => $id])->with('alert_error', trans('adminlte_lang::survey.message_clear_data_not_success'));
     }
 
     /**
@@ -505,14 +517,4 @@ class SurveyController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

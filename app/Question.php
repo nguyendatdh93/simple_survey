@@ -42,4 +42,6 @@ class Question extends Model
 
         return $question_categories;
     }
+    
+    const DELETE_FLG = 1;
 }

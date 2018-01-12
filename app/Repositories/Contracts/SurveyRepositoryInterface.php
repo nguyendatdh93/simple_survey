@@ -20,5 +20,5 @@ interface SurveyRepositoryInterface
     public function getNameSurvey($survey_id);
 //    public function find($filter);
     public function createEmptyObject();
-//    public function save(Survey $survey);
+    public function deleteSurvey($survey_id);
 }

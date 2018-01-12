@@ -12,4 +12,6 @@ interface AnswerRepositoryInterface
 {
     public function getNumberAnswersBySurveyId($survey_id);
     public function getAnswersBySurveyId($survey_id);
+    public function clearDataAnswersBySurveyId($survey_id);
+	public function save($survey_id);
 }

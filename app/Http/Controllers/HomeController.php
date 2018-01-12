@@ -9,6 +9,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use Config;
 
 /**
  * Class HomeController
@@ -26,23 +27,22 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return Response
-     */
-    public function index()
+    public function setupLanguage()
     {
-        return view('admin::home');
+        $language = trans('adminlte_lang::datatable');
+        return json_encode($language);die;
     }
 
-    public function form()
+    public function showImage($image_path, $image_name)
     {
-        return view('admin::form');
-    }
+        $fileDir = Config::get('config.upload_file_path');
 
-    public function table()
-    {
-        return view('admin::datatable');
+        if (file_exists($fileDir .'/'. $image_path.'/'. $image_name))
+        {
+            $contents = file_get_contents($fileDir .'/'. $image_path.'/'. $image_name);
+            header('Content-type: image/png');
+
+            echo $contents;
+        }
     }
 }

@@ -29,10 +29,20 @@ class QuestionChoiceRepository extends \EloquentRepository implements QuestionCh
     public function createEmptyObject() {
         return new QuestionChoice();
     }
-
-//    public function save(QuestionChoice $question_choice) {
-//        $question_choice->save();
-//
-//        return $question_choice;
-//    }
+    
+    public function getChoiceTextByChoiceId($choice_id)
+    {
+	    $result = $this->_model->select('text')
+		    ->where('id', $choice_id)->get()->first()->toArray();
+	
+	    return $result;
+    }
+    
+    public function getChoiceOfQuestionByChoiceId($choice_id)
+    {
+	    $result = $this->_model->select('*')
+		    ->where('id', $choice_id)->get()->first()->toArray();
+	
+	    return $result;
+    }
 }

@@ -1,23 +1,9 @@
 <script>
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
-        $('#users-table').DataTable({
-            'paging'      : true,
-            'lengthChange': false,
-            'searching'   : true,
-            'ordering'    : true,
-            'info'        : true,
-            'autoWidth'   : false,
-            "columnDefs": [
-                { "orderable": false, "targets": 0, "visible" : false },
-                { "orderable": true, "targets": 1 },
-                { "orderable": true, "targets": 2 },
-                { "orderable": false, "targets": 3 },
-            ],
-        });
-
         $('#survey-table').DataTable({
             'paging'      : true,
+            "order": [[ 0, "desc" ]],
             'lengthChange': true,
             'searching'   : true,
             'ordering'    : true,
@@ -34,8 +20,11 @@
                 { "targets": 4, "orderable" : false},
                 { "targets": 5, "orderable" : false},
                 { "targets": 6, "orderable" : false},
-                { "targets": 7,"orderable" : false},
+                { "targets": 7,"orderable" : false, "width": "135px"},
             ],
+            "language": {
+                "url" : "/setup-lang"
+            }
         });
 
         function changeColorRow(row,data)
@@ -55,7 +44,8 @@
         {
             var html            = '',
             url_redirect_detail = '',
-            url_redirect_copy   = '';
+            url_redirect_copy   = '',
+            url_edit_survey     = '';
 
             if(data.indexOf("{{ trans('adminlte_lang::survey.draf') }}") >= 0) {
                 url_redirect_detail = "{{ route("draf") }}/"+ data[0];
@@ -65,8 +55,11 @@
                 url_redirect_detail = "{{ route("close") }}/"+ data[0];
             }
 
-            html += '<a href="'+ url_redirect_detail +'" class="btn btn-default" data-toggle="tooltip" title="{{ trans('adminlte_lang::datatable.detail') }}"><i class="fa fa-list-alt"></i></a>';
+            html += '<a href="'+ url_redirect_detail +'" class="btn btn-default" data-toggle="tooltip" target="_blank" title="{{ trans('adminlte_lang::datatable.detail') }}"><i class="fa fa-list-alt"></i></a>';
             html += '<a href="'+ url_redirect_copy +'" class="btn btn-default" style="margin-left: 5px" data-toggle="tooltip" title="{{ trans('adminlte_lang::datatable.copy_survey') }}"><i class="fa fa-copy"></i></a>';
+            if(data.indexOf("{{ trans('adminlte_lang::survey.draf') }}") >= 0) {
+                html += '<a href="'+ url_edit_survey +'" class="btn btn-default" data-toggle="tooltip" style="margin-left: 5px" title="{{ trans('adminlte_lang::survey.edit_survey') }}"><i class="fa fa-pencil-square-o"></i></a>';
+            }
 
             return html;
         }
@@ -77,14 +70,14 @@
             class_button_status = '';
 
             if(data.indexOf("{{ trans('adminlte_lang::survey.draf') }}") >= 0) {
-                class_button_status = "btn-default";
-            } else if(data.indexOf("{{ trans('adminlte_lang::survey.published') }}") >= 0) {
                 class_button_status = "btn-info";
-            } else {
+            } else if(data.indexOf("{{ trans('adminlte_lang::survey.published') }}") >= 0) {
                 class_button_status = "btn-warning";
+            } else {
+                class_button_status = "btn-default";
             }
 
-            html += '<button type="button" class="btn btn-block '+ class_button_status +' btn-xs">'+data[1]+'</button>';
+            html += '<button type="button" class="btn '+ class_button_status +' btn-xs">'+data[1]+'</button>';
 
             return html;
         }
@@ -95,5 +88,9 @@
 <style>
     #survey-table tr td:not(.tbl-name) {
         text-align: center;
+    }
+
+    #survey-table td.tbl-control {
+        text-align: unset !important;
     }
 </style>
