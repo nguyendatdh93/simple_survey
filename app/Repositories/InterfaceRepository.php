@@ -14,7 +14,7 @@ interface InterfaceRepository {
      * @param $id
      * @return mixed
      */
-    public function find($id);
+//    public function find($id);
 
     /**
      * Create
@@ -37,5 +37,9 @@ interface InterfaceRepository {
      * @return mixed
      */
     public function delete($id);
-    
+
+    public function find($filter);
+    public function finds($filter);
+    public function remove($model);
+    public function save($model);
 }
