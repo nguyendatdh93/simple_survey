@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Services\EncryptionService;
 use App\Http\Services\SurveyService;
+use App\Http\Validators\SurveyValidator;
 use App\Question;
 use App\Repositories\Contracts\AnswerQuestionRepositoryInterface;
 use App\Repositories\Contracts\AnswerRepositoryInterface;
@@ -15,6 +16,7 @@ use App\Repositories\Contracts\SurveyRepositoryInterface;
 use App\Survey;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Validator;
 use OAuth\Common\Storage\Session;
 
 class AnswerSurveyController extends Controller
@@ -61,6 +63,11 @@ class AnswerSurveyController extends Controller
 	public function showFormConfirmAnswerSurvey(Request $request, $encrypt)
 	{
 		$input               = Input::get();
+		$surveyValidator     = new SurveyValidator();
+		if (!$surveyValidator->validateAnswerSurvey($input)) {
+			return redirect('404');
+		}
+		
 		$encryption_service  = new EncryptionService();
 		$id                  = $encryption_service->decrypt($encrypt);
 		$survey              = $this->surveyRepository->getSurveyById($id);

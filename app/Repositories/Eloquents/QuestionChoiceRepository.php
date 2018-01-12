@@ -43,4 +43,12 @@ class QuestionChoiceRepository extends \EloquentRepository implements QuestionCh
 	
 	    return $result;
     }
+    
+    public function getChoiceOfQuestionByChoiceId($choice_id)
+    {
+	    $result = $this->_model->select('*')
+		    ->where('id', $choice_id)->get()->first()->toArray();
+	
+	    return $result;
+    }
 }

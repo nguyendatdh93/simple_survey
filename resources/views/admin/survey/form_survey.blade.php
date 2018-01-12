@@ -19,19 +19,6 @@
 
                 <!-- /.headerWrap1 --></div>
             <!-- /.header --></div>
-
-        <script>
-            function agreeCheck(){
-//                var flg1 = document.getElementById('JChkCaution1').checked;
-//                if(!flg1){
-//                    alert('規約に承諾してください');
-//                    return false;
-//                } else {
-                    document.join_form.submit();
-//                }
-            }
-        </script>
-
         @include('admin::survey.partials.form_content')
 
         @include('admin::survey.partials.footer')

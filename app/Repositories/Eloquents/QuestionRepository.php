@@ -58,4 +58,15 @@ class QuestionRepository extends \EloquentRepository implements QuestionReposito
 
         return $question;
     }
+    
+    public function getTypeOfQuestion($question_id)
+    {
+	    $result = $this->_model->select('type')
+		    ->where('id',$question_id)
+		    ->where('del_flg', '!=', Question::DELETE_FLG)
+		    ->get()
+		    ->first();
+	
+	    return $result;
+    }
 }
