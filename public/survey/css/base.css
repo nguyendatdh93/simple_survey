@@ -1,0 +1,333 @@
+@charset "UTF-8";
+/* index
+******************************************
+1 initialize
+2 layout
+3 common
+4 page
+5 media queries
+*****************************************/
+
+/* 1 initialize
+******************************************/
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td {
+  margin: 0;
+  padding: 0;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+fieldset, img {
+  border: 0;
+}
+
+address, caption, cite, code, dfn, em, strong, th, var {
+  font-style: normal;
+  font-weight: normal;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+caption, th {
+  text-align: left;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+
+q:before, q:after {
+  content: '';
+}
+
+abbr, acronym {
+  border: 0;
+  font-variant: normal;
+}
+
+sup {
+  vertical-align: text-top;
+}
+
+sub {
+  vertical-align: text-bottom;
+}
+
+input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  *font-size: 100%;
+}
+
+input, textarea {
+  padding: 3px;
+  border-radius: 5px;
+}
+
+input[type='radio'],
+input[type='checkbox'] {
+  vertical-align: middle;
+  margin: 0 .25em 0 0;
+}
+label {
+  margin: 0 .5em 0 0;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+legend {
+  color: #000;
+}
+
+#yui3-css-stamp.cssreset {
+  display: none;
+}
+
+html, body {
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 15px;
+  font-family:ArialMT, "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3",'メイリオ',Meiryo;
+  line-height: 150%;
+  color: #333;
+}
+
+
+a {
+  color: #006DD9;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+img {
+  vertical-align: bottom;
+}
+
+.cf:after, header ul:after, .findArea1 .count1:after, .productBox1:after, .productBox4:after, .productDetail1:after, .productDetail1 .detail1 dl:after, .reviewBox1:after, .reviewForm1:after, .reviewForm1 ul:after, .sideCol .spSmall:after, .sideCol .appBox1 .toApp1:after {
+  display: block;
+  clear: both;
+  content: "";
+}
+
+.header img ,
+.footer img { max-width:100%; height:auto;}
+
+/* 2 layout
+******************************************/
+#layout {
+  min-width:320px;
+  margin:0 auto;
+}
+
+
+
+/* 3 common
+******************************************/
+.copy { font-size:11px; color:#666; text-align:center; border-top:1px solid #DDD; padding:10px 0; margin-top:30px;}
+
+.SALinkGlay {
+  border: 1px solid #666;
+		background: #666;
+		background: -webkit-gradient(linear, left top, left bottom, from(#999), to(#666));
+		padding: 3px 5px;
+		border-radius: 3px;
+		font-size: 11px;
+}
+a.SALinkGlay {
+	color: #fff;
+}
+
+.btnbox { text-align: center; }
+.btnbox .btn1 { margin-top: 10px; }
+.btnSet2 { text-align: center; }
+.btnSet2 > li { margin: 0 10px; display: inline-block; }
+
+.btn1 { text-align: center; margin-bottom:0.5em;}
+.btn1 a { display: inline-block; position: relative; box-shadow: 1px 1px 2px rgba(0,0,0,0.3); text-align: center; width: 160px; height: 34px; line-height: 34px; color: #fff; text-shadow: -1px -1px 1px #666; background: #3AC726; background: -ms-linear-gradient(top, #7CE72E 0%, #3AC726 80%); background: -moz-linear-gradient(top, #7CE72E 0%, #3AC726 80%); background: -webkit-gradient(linear, left top, left bottom, from(#7CE72E), to(#3AC726)); text-decoration: none; font-size: 15px; border-radius: 17px; border: 1px solid #999; border-top: 0; border-left: 0; }
+.btn1 a:hover { background: #63DB2B; background: -ms-linear-gradient(top, #9DE95D 0%, #63DB2B 80%); background: -moz-linear-gradient(top, #9DE95D 0%, #63DB2B 80%); background: -webkit-gradient(linear, left top, left bottom, from(#9DE95D), to(#63DB2B)); text-decoration: none; }
+
+.btn2 { margin-bottom:0.5em;}
+.btn2 a { display: inline-block; position: relative; box-shadow: 0px 0px 2px rgba(0,0,0,0.3); text-align: center; font-weight: bold; width: 160px; height: 34px; line-height: 34px; color: #666; text-shadow: -1px -1px 1px #fff; background: #F2F2F6; background: -ms-linear-gradient(top, #FFFFFF 0%, #F2F2F6 80%); background: -moz-linear-gradient(top, #FFFFFF 0%, #F2F2F6 80%); background: -webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#F2F2F6)); text-decoration: none; font-size: 15px; border-radius: 17px; border: 1px solid #999; border-top: 0; border-left: 0; }
+.btn2 a:hover { color: #8C8BA3; }
+
+/* 4 page
+******************************************/
+
+/* 4_1 form
+******************************************/
+.formArea {
+  margin:1em;
+}
+
+/* formTable */
+.formTable {
+	 margin:0 0 1em;
+  width: 100%;
+  border: 1px solid #e6e6e6;
+}
+.formTable th,
+.formTable td {
+  padding: 0.5em 1.5em 0.5em 1em;
+  display:block;
+}
+.formTable th {
+  padding-bottom:0;
+  background:#f6f6f6;
+}
+
+/* form parts */
+.validate {
+  color: #c00;
+  font-size: 85%;
+  padding-left: 0.5em;
+}
+
+.txt01 {
+  width: 100%;
+  height: 130px;
+}
+.ipt01 {
+  width: 100%;
+}
+
+.iptWidAuto {
+  width: auto;
+}
+.iptWid90 {
+  width: 90%;
+}
+.iptWid80 {
+  width: 80%;
+}
+.iptWid70 {
+  width: 70%;
+}
+.iptWid60 {
+  width: 60%;
+}
+.iptWid50 {
+  width: 50%;
+}
+.iptWid40 {
+  width: 50%;
+}
+.iptWid30 {
+  width: 50%;
+}
+.iptWid25 {
+  width: 25%;
+}
+.iptWid20 {
+  width: 20%;
+}
+.iptWid15 {
+  width: 15%;
+}
+.iptWid10 {
+  width: 10%;
+}
+
+/* form caution */
+.ruleArea1 {
+  display:none;
+  margin: 0 0 1em;
+  padding: 10px;
+  border: 1px solid #DDD;
+  font-size: 13px;
+}
+.ruleArea1.on {
+	display:block;
+}
+
+.txtCheck1 {
+	 text-align: center;
+}
+
+.btnRule1 {}
+.btnRule1 a { display:block; border:1px solid #ddd; position:relative; padding:5px; color:#333; background:#eee; margin-bottom:10px;}
+.btnRule1 a:after { content:""; display:block; position:absolute; right:10px; top:50%; margin-top:-1px; width:10px; height:2px; background:#333;}
+.btnRule1 a:before { content:""; display:block; position:absolute; right:14px; top:50%; margin-top:-5px; width:2px; height:10px; background:#333;}
+.btnRule1 a.on { margin-bottom:0; border-bottom:0;}
+.btnRule1 a.on:before { display:none;}
+
+/* 4-2 confirm
+******************************************/
+
+/* 4-3 thanks
+******************************************/
+.secThanks1 {
+  margin: 0 auto;
+		padding: 5em 0;
+		text-align: center;
+}
+
+
+
+/* 5 media queries
+******************************************/
+@media screen and (min-width: 481px) {
+
+  /* 2 layout
+  ******************************************/
+  #layout {
+    width:750px;
+    margin:0 auto;
+				padding:1em 0;
+  }
+
+/* 3 common
+******************************************/
+
+/* 4_1 form
+******************************************/
+.formArea {
+  margin:1em 0;
+}
+
+/* formTable */
+.formTable {
+  width: 100%;
+  border-right: 0;
+  border-bottom: 0;
+}
+.formTable th,
+.formTable td {
+  padding: 1em 1.5em 1em 1em;
+  display:table-cell;
+  border-bottom: 1px solid #e6e6e6;
+  border-right: 1px solid #e6e6e6;
+  vertical-align:middle;}
+.formTable th {
+  background:#f6f6f6;
+}
+
+.validate {
+  display: block;
+		padding-left:0;
+}
+
+.ruleArea1 {
+  display:block;
+  overflow-y: scroll;
+  height: 200px;
+}
+
+.btnRule1 { display:none;}
+
+}
+
+/*----------MV------------*/
+.mainVisual {
+  margin: 0 0 20px;
+  text-align: center;
+}
+/*//--------MV------------*/

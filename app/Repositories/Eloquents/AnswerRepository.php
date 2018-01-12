@@ -37,4 +37,16 @@ class AnswerRepository extends \EloquentRepository implements AnswerRepositoryIn
     {
         $this->_model->where('survey_id', $survey_id)->delete();
     }
+	
+	public function save($survey_id)
+	{
+		$id = $this->_model->insertGetId(
+			[
+				'survey_id'  => $survey_id,
+				'created_at' => date("Y-m-d h:i:s"),
+			]
+		);
+		
+		return $id;
+	}
 }

@@ -21,10 +21,23 @@ class QuestionRepository extends \EloquentRepository implements QuestionReposito
     public function getQuestionSurveyBySurveyId($survey_id)
     {
         $result = $this->_model->select('*')
-                    ->where('survey_id',$survey_id)->get()->toArray();
+                    ->where('survey_id',$survey_id)
+	                ->where('del_flg', '!=', Question::DELETE_FLG)
+	                ->get()->toArray();
 
         return $result;
     }
+	
+	public function getQuestionSurveyWithoutConfirmTypeBySurveyId($survey_id)
+	{
+		$result = $this->_model->select('*')
+			->where('survey_id',$survey_id)
+			->where('del_flg', '!=', Question::DELETE_FLG)
+			->where('type' , '!=' , Question::TYPE_CONFIRMATION)
+			->get()->toArray();
+		
+		return $result;
+	}
 
     public function getListQuestionBySurveyId($survey_id)
     {
@@ -44,5 +57,16 @@ class QuestionRepository extends \EloquentRepository implements QuestionReposito
         $question->save();
 
         return $question;
+    }
+    
+    public function getTypeOfQuestion($question_id)
+    {
+	    $result = $this->_model->select('type')
+		    ->where('id',$question_id)
+		    ->where('del_flg', '!=', Question::DELETE_FLG)
+		    ->get()
+		    ->first();
+	
+	    return $result;
     }
 }
