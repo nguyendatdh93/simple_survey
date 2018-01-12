@@ -29,12 +29,12 @@ abstract class EloquentRepository implements Repositories\InterfaceRepository
         return $this->_model->all();
     }
 
-    public function find($id)
-    {
-        $result = $this->_model->find($id);
-
-        return $result;
-    }
+//    public function find($id)
+//    {
+//        $result = $this->_model->find($id);
+//
+//        return $result;
+//    }
 
     public function create(array $attributes)
     {
@@ -64,5 +64,37 @@ abstract class EloquentRepository implements Repositories\InterfaceRepository
         }
 
         return false;
+    }
+
+    public function find($filter) {
+        $model = $this->_model;
+
+        foreach ($filter as $key => $value) {
+            $model = $model->where($key, $value);
+        }
+
+        return $model->where('del_flg', 0)
+            ->first();
+    }
+
+    public function finds($filter) {
+        $model = $this->_model;
+
+        foreach ($filter as $key => $value) {
+            $model = $model->where($key, $value);
+        }
+
+        return $model->where('del_flg', 0)
+            ->get();
+    }
+
+    public function remove($model) {
+        return $model->delete();
+    }
+
+    public function save($model) {
+        $model->save();
+
+        return $model;
     }
 }

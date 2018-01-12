@@ -49,9 +49,12 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
     public function getSurveyById($survey_id)
     {
         $result = $this->_model->select('*')
-                    ->where('id',$survey_id)->get()->toArray();
+            ->where('user_id', Auth::id())
+            ->where('id',$survey_id)
+            ->where('del_flg', 0)
+            ->first();
 
-        return $result[0];
+        return $result ? $result->toArray() : [];
     }
 
     /**
@@ -103,14 +106,20 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
         return $result[0]['name'];
     }
 
+//    public function find($filter) {
+//        $survey = $this->_model;
+//
+//        foreach ($filter as $key => $value) {
+//            $survey = $survey->where($key, $value);
+//        }
+//
+//        return $survey->where('user_id', Auth::id())
+//            ->where('del_flg', 0)
+//            ->first();
+//    }
+
     public function createEmptyObject() {
         return new Survey();
-    }
-
-    public function save(Survey $survey) {
-        $survey->save();
-
-        return $survey;
     }
 
     public function deleteSurvey($survey_id)
@@ -118,4 +127,5 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
         $this->_model->where('id',$survey_id)
                     ->update(['del_flg'=> Survey::DELETE_FLG]);
     }
+
 }
