@@ -20,4 +20,26 @@ class Question extends Model
 
     const REQUIRE_QUESTION_YES = 1;
     const REQUIRE_QUESTION_NO  = 0;
+
+    public static function getQuestionTypes() {
+        $question_types = [
+            self::TYPE_SINGLE_TEXT   => trans('survey.question_type_single_text'),
+            self::TYPE_MULTI_TEXT    => trans('survey.question_type_multi_text'),
+            self::TYPE_SINGLE_CHOICE => trans('survey.question_type_single_choice'),
+            self::TYPE_MULTI_CHOICE  => trans('survey.question_type_multi_choice'),
+            self::TYPE_CONFIRMATION  => trans('survey.question_type_confirmation'),
+        ];
+
+        return $question_types;
+    }
+
+    public static function getQuestionCategories() {
+        $question_categories = [
+            self::CATEGORY_HEADER  => 'header',
+            self::CATEGORY_CONTENT => 'content',
+            self::CATEGORY_FOOTER  => 'footer',
+        ];
+
+        return $question_categories;
+    }
 }

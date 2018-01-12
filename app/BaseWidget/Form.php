@@ -201,7 +201,7 @@ class Form
     public static function textarea($paramAttributes=array())
     {
         ob_start();
-        echo '<textarea '. self::getAttributes($paramAttributes).' rows="10" cols="80"> </textarea>';
+        echo '<textarea '. self::getAttributes($paramAttributes).' rows="10" cols="80">' . $paramAttributes['value'] . '</textarea>';
 
         if (isset($paramAttributes['help-block'])) {
             echo '<p class="help-block">'.$paramAttributes['help-block'].'</p>';

@@ -234,16 +234,55 @@ class SurveyController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for editing the specified resource.
      *
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function edit($id = null)
     {
+        $layout = 'admin.survey.edit';
+        $question_types = Question::getQuestionTypes();
 
+        if (!$id) {
+            return view($layout, ['question_types' => $question_types]);
+        }
+
+        $survey = $this->surveyRepository->getSurveyById($id);
+        if (!$survey) {
+            die('404');
+        }
+
+        $questions = $this->questionRepository->getQuestionsBySurveyId($survey['id']);
+
+        return view($layout, [
+            'survey'         => $survey,
+            'questions'      => $questions,
+            'question_types' => $question_types
+        ]);
+    }
+
+    public function duplicate($id) {
+        if (!$id) {
+            die('404 - no survey id for duplicate');
+        }
 
         $layout = 'admin.survey.edit';
-        return view($layout);
+        $question_types = Question::getQuestionTypes();
+
+        $survey = $this->surveyRepository->getSurveyById($id);
+        if (!$survey) {
+            die('404 - no survey for duplicate');
+        }
+
+        $questions = $this->questionRepository->getQuestionsBySurveyId($survey['id']);
+        unset($survey['id']);
+
+        return view($layout, [
+            'survey'         => $survey,
+            'questions'      => $questions,
+            'question_types' => $question_types
+        ]);
     }
 
     public function save() {
@@ -254,33 +293,69 @@ class SurveyController extends Controller
         // validate inputs
 
 
-        // create survey
-        $file_name       = $file->getClientOriginalName();
-        $destinationPath = Config::get('config.upload_file_path');
-
-        try {
-            $path = $destinationPath. '/' . time();
-            File::makeDirectory($path, $mode = 0777, true, true);
-            $file->move($path, $file_name);
-            $image_path = $path . '/' .$file_name;
-
+        // create or update survey
+        if (empty($input['survey_id'])) {
             $survey = $this->surveyRepository->createEmptyObject();
-            $survey->name        = $input['survey_name'];
-            $survey->user_id     = $user_id;
-            $survey->image_path  = $image_path;
-            $survey->description = $input['survey_description'];
-            $survey = $this->surveyRepository->save($survey);
-        } catch (\Exception $e) {
-            var_dump($e->getMessage());
-            die('Exception');
+        } else {
+            $filter = [
+                'id'      => $input['survey_id'],
+                'user_id' => $user_id
+            ];
+            $survey = $this->surveyRepository->find($filter);
+            if (!$survey) {
+                die('404 - no survey');
+            }
+
+            // remove all survey questions
+            $filter = ['survey_id' => $survey->id];
+            $survey_questions = $this->questionRepository->finds($filter);
+            foreach ($survey_questions as $question) {
+                $this->questionRepository->remove($question);
+
+                $confirmation = $this->confirmContentRepository->find(['question_id' => $question->id]);
+                if ($confirmation) {
+                    $this->confirmContentRepository->remove($confirmation);
+                }
+
+                $question_choices = $this->questionChoiceRepository->finds(['question_id' => $question->id]);
+                if ($question_choices) {
+                    foreach ($question_choices as $question_choice) {
+                        $this->questionChoiceRepository->remove($question_choice);
+                    }
+                }
+            }
         }
 
-        // create questions
+        $survey->name    = $input['survey_name'];
+        $survey->user_id = $user_id;
+        if ($file) {
+            // upload file
+            $file_name        = $file->getClientOriginalName();
+            $destination_path = Config::get('config.upload_file_path');
+            try {
+                $path = $destination_path. '/' . time();
+                File::makeDirectory($path, $mode = 0777, true, true);
+                $file->move($path, $file_name);
+                $image_path = $path . '/' .$file_name;
+                $survey->image_path = $image_path;
+            } catch (\Exception $e) {
+                var_dump($e->getMessage());
+                die('Exception');
+            }
+        }
+        $survey->description = $input['survey_description'];
+        $survey = $this->surveyRepository->save($survey);
+
+        // create new questions
         $new_questions = [];
         foreach ($input as $input_name => $value) {
             $split_input_name = explode('_', $input_name);
             if ($split_input_name[0] != 'question' || !$value) {
                 continue;
+            }
+
+            if ($split_input_name[2] == 'id') {
+                $new_questions[$split_input_name[1]]['id'] = $value;
             }
 
             if (count($split_input_name) == 3) {
@@ -315,7 +390,9 @@ class SurveyController extends Controller
             $question->no        = $i;
             $question = $this->questionRepository->save($question);
 
-            if ($question->type == Question::TYPE_SINGLE_CHOICE || $question->type == Question::TYPE_MULTI_CHOICE) {
+            if ($question->type == Question::TYPE_SINGLE_CHOICE
+                || $question->type == Question::TYPE_MULTI_CHOICE
+            ) {
                 foreach ($new_question['choice'] as $choice) {
                     $question_choice = $this->questionChoiceRepository->createEmptyObject();
                     $question_choice->question_id = $question->id;
@@ -412,17 +489,6 @@ class SurveyController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
     {
         //
     }
