@@ -74,21 +74,23 @@ class AnswerSurveyController extends Controller
 		$survey['questions'] = $this->questionRepository->getQuestionSurveyWithoutConfirmTypeBySurveyId($id);
 		
 		foreach ($survey['questions'] as $key => $question) {
-			if ($question['type'] == Question::TYPE_SINGLE_CHOICE) {
-				$answer = array(
-					$input[$question['id']] => $this->questionChoiceRepository->getChoiceTextByChoiceId($input[$question['id']]),
-				);
-				
-				$survey['questions'][$key]['answer'] = $answer;
-			} elseif ($question['type'] == Question::TYPE_MULTI_CHOICE) {
-				$answer = array();
-				foreach ($input[$question['id']] as $choice_id) {
-					$answer[$choice_id] = $this->questionChoiceRepository->getChoiceTextByChoiceId($choice_id);
+			if (in_array($question['id'], array_keys($input))) {
+				if ($question['type'] == Question::TYPE_SINGLE_CHOICE) {
+					$answer = array(
+						$input[$question['id']] => $this->questionChoiceRepository->getChoiceTextByChoiceId($input[$question['id']]),
+					);
+					
+					$survey['questions'][$key]['answer'] = $answer;
+				} elseif ($question['type'] == Question::TYPE_MULTI_CHOICE) {
+					$answer = array();
+					foreach ($input[$question['id']] as $choice_id) {
+						$answer[$choice_id] = $this->questionChoiceRepository->getChoiceTextByChoiceId($choice_id);
+					}
+					
+					$survey['questions'][$key]['answer'] = $answer;
+				} else {
+					$survey['questions'][$key]['answer'] = $input[$question['id']];
 				}
-				
-				$survey['questions'][$key]['answer'] = $answer;
-			} else {
-				$survey['questions'][$key]['answer'] = $input[$question['id']];
 			}
 		}
 		
