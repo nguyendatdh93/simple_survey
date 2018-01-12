@@ -6,7 +6,10 @@
                 @php
                     $identification = 'question_' . $question['id'] . '_' . $question['survey_id'] . '_choice_' . $choice['id'];
                 @endphp
-                <label><input type="radio" {!!  \App\BaseWidget\Form::getAttributes($data_attributes) !!} class="{{ $identification }}" value="{{ $choice['id'] }}">{{ $choice['text'] }}</label>
+                <label><input type="radio"
+                              {!!  \App\BaseWidget\Form::getAttributes($data_attributes) !!}
+                              class="{{ $identification }}" value="{{ $choice['id'] }}"
+                    @if(isset($question['require']) && $question['require'] == \App\Question::REQUIRE_QUESTION_YES)required @endif>{{ $choice['text'] }}</label>
             @endforeach
         @endif
     </td>

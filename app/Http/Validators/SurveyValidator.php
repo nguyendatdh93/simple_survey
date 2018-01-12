@@ -57,7 +57,7 @@ class SurveyValidator
 	
 	public function validateSingleText($text)
 	{
-		$validator = Validator::make(array($text), array('required|max:255'));
+		$validator = Validator::make(array($text), array('max:255'));
 		if ($validator->fails()) {
 			return false;
 		}
@@ -67,7 +67,7 @@ class SurveyValidator
 	
 	public function validateMultiText($text)
 	{
-		$validator = Validator::make(array($text), array('required|max:5000'));
+		$validator = Validator::make(array($text), array('max:5000'));
 		if ($validator->fails()) {
 			return false;
 		}

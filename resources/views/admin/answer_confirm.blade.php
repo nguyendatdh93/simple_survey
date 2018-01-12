@@ -16,16 +16,24 @@
                     <th class="CThWid175">{{ $answer['text'] }}</th>
                     <td>
                         <p>
-                            @if (!is_array($answer['answer']))
-                                {{ $answer['answer'] }}
+                            @if(!isset($answer['answer']))
+                                {!!  "-" !!}
                             @else
-                                @php $answer_text = "" @endphp
-                                @foreach($answer['answer'] as $text)
-                                    @php
-                                        $answer_text = $answer_text . ',' . $text['text']
-                                    @endphp
-                                @endforeach
-                                {{ trim($answer_text,',') }}
+                                @if (!is_array($answer['answer']))
+                                    @if (!\App\BaseWidget\Validator::isNullOrEmpty($answer['answer']))
+                                        {!!  "-" !!}
+                                    @else
+                                        {{ $answer['answer'] }}
+                                    @endif
+                                @else
+                                    @php $answer_text = "" @endphp
+                                    @foreach($answer['answer'] as $text)
+                                        @php
+                                            $answer_text = $answer_text . ',' . $text['text']
+                                        @endphp
+                                    @endforeach
+                                    {{ trim($answer_text,',') }}
+                                @endif
                             @endif
                         </p>
                     </td>
