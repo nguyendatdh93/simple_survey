@@ -12,7 +12,7 @@
                             if (elementForms.elements[i].parentElement.querySelectorAll(".validate").length == 0) {
                                 elChild = document.createElement('span');
                                 elChild.className = "validate";
-                                elChild.innerHTML = '{{ trans("adminlte_lang::survey.message_repquire_single") }}';
+                                elChild.innerHTML = '{{ trans("adminlte_lang::survey.message_repquire") }}';
                                 elementForms.elements[i].parentElement.appendChild(elChild);
                             }
                             flg_continue = false;
@@ -30,7 +30,7 @@
                             if (elementForms.elements[i].parentElement.parentElement.querySelectorAll(".validate").length == 0) {
                                 elChild = document.createElement('span');
                                 elChild.className = "validate";
-                                elChild.innerHTML = '{{ trans("adminlte_lang::survey.message_repquire_single") }}';
+                                elChild.innerHTML = '{{ trans("adminlte_lang::survey.message_repquire") }}';
                                 elementForms.elements[i].parentElement.parentElement.appendChild(elChild);
                             }
                         } else {
@@ -47,7 +47,12 @@
                             if (elementForms.elements[i].parentElement.parentElement.querySelectorAll(".validate").length == 0) {
                                 elChild = document.createElement('span');
                                 elChild.className = "validate";
-                                elChild.innerHTML = '{{ trans("adminlte_lang::survey.message_repquire_single") }}';
+                                if (nameCheckbox == 'optcheckbox_confirm') {
+                                    elChild.innerHTML = '{{ trans("adminlte_lang::survey.message_confirm_condition") }}';
+                                } else {
+                                    elChild.innerHTML = '{{ trans("adminlte_lang::survey.message_repquire") }}';
+                                }
+
                                 elementForms.elements[i].parentElement.parentElement.appendChild(elChild);
                             }
                         } else {
@@ -64,7 +69,7 @@
                             if (elementForms.elements[i].parentElement.querySelectorAll(".validate").length == 0) {
                                 elChild = document.createElement('span');
                                 elChild.className = "validate";
-                                elChild.innerHTML = '{{ trans("adminlte_lang::survey.message_repquire_single") }}';
+                                elChild.innerHTML = '{{ trans("adminlte_lang::survey.message_repquire") }}';
                                 elementForms.elements[i].parentElement.appendChild(elChild);
                             }
                         } else {

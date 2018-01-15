@@ -69,5 +69,6 @@ return [
     'alert_success_create_survey'  => 'Create survey success',
     'go_to_edit_survey'  => 'Go to edit survey',
     'button_coppy_url'  => 'Copy URL',
-	'message_repquire_single'  => '* Required',
+	'message_repquire'  => '必ず入力して下さい',
+	'message_confirm_condition' => '規約に承諾してください'
 ];
