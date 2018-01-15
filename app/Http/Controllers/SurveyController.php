@@ -76,7 +76,7 @@ class SurveyController extends Controller
             'buttons'  => array(
                 array(
                     'text'  => trans('adminlte_lang::survey.button_create_new_survey'),
-                    'href'  => \route(Survey::NAME_URL_CREATE_SURVEY),
+                    'href'  => \route(Survey::NAME_URL_EDIT_SURVEY),
                     'attributes' => array(
                         'class' => 'btn btn-success',
                         'icon'  => 'fa fa-plus-circle'
