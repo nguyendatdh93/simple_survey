@@ -137,6 +137,6 @@ class AnswerSurveyController extends Controller
 			$this->answerQuestionRepository->save($data);
 		}
 		
-		return view('admin::answer_confirm', array('survey' => $request->session()->get('answer')));
+		return view('admin::answer_confirm', array('survey' => $request->session()->get('answer' . $id)));
 	}
 }

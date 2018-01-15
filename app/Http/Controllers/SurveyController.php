@@ -191,23 +191,34 @@ class SurveyController extends Controller
 
     public function downloadSurveyCSVFile($id)
     {
-        $answer_datas = $this->getAnswerForSurveyBySurveyID($id);
-        $survey_name  = $this->surveyRepository->getNameSurvey($id);
-        if (strlen($survey_name) > 50)
-        {
-            $survey_name = substr($survey_name,0,50);
-        }
-
+	    $list_questions    = $this->questionRepository->getListQuestionBySurveyId($id);
+	    $headers_columns   = array_column($list_questions, 'text');
+	    $headers_columns[] = "created_at";
+        $answer_datas      = $this->getAnswerForSurveyBySurveyID($id);
+		foreach ($headers_columns as $column) {
+			foreach ($answer_datas as $key_answer => $answer) {
+				if (!in_array($column, array_keys($answer))) {
+					$answer_datas[$key_answer][$column] = '';
+				}
+			}
+		}
+		
+		foreach ($answer_datas as $key_answer => $answer) {
+			$answer_datas[$key_answer] = array_merge(array_flip(array_values($headers_columns)), $answer);
+		}
+	    
         $headers = [
             'Cache-Control'           => 'must-revalidate, post-check=0, pre-check=0'
             ,   'Content-type'        => 'text/csv'
-            ,   'Content-Disposition' => 'attachment; filename='.$survey_name.'.csv'
+            ,   'Content-Disposition' => 'attachment; filename='.time().'.csv'
             ,   'Expires'             => '0'
             ,   'Pragma'              => 'public'
+	        ,   'Content-Encoding'    => 'UTF-8'
+	        ,   'charset'             => 'UTF-8'
         ];
 
         # add headers for each column in the CSV download
-        array_unshift($answer_datas, array_keys($answer_datas[0]));
+        array_unshift($answer_datas, $headers_columns);
 
         $callback = function() use ($answer_datas)
         {
@@ -240,11 +251,15 @@ class SurveyController extends Controller
         $answer_datas = array();
         foreach ($list_answers as $key_list_answer => $list_answer) {
             foreach ($list_answer['answers'] as $key_answer => $answer) {
-                foreach ($answer_questions as $key_question => $question) {
-                    if ($key_question == $answer['question_id']) {
-                        $answer_datas[$key_list_answer][$question] = $answer['text'];
-                    }
-                }
+            	if (in_array($answer['question_id'],array_keys($answer_questions))) {
+		            $answer_datas[$key_list_answer][$answer_questions[$answer['question_id']]] = $answer['text'];
+	            }
+	            
+//                foreach ($answer_questions as $key_question => $question) {
+//                    if ($key_question == $answer['question_id']) {
+//                        $answer_datas[$key_list_answer][$question] = $answer['text'];
+//                    }
+//                }
             }
 
             $answer_datas[$key_list_answer]['created_at'] = $list_answer['created_at'];
