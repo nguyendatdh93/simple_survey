@@ -87,7 +87,7 @@ class SurveyController extends Controller
 
         $surveys = $this->surveyRepository->getAllSurvey();
         $surveys = $this->getDataSurveyForShowing($surveys);
-
+	    $surveys = array_reverse($surveys);
         return view('admin::datatable', array('settings' => $table_settings, 'datas' => $surveys));
     }
 
