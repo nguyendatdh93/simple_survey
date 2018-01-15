@@ -18,9 +18,9 @@
             "columnDefs": [
                 { "targets": 0, "visible" : false },
                 { "targets": 3, "orderable" : false},
-                { "targets": 4, "orderable" : false},
-                { "targets": 5, "orderable" : false},
-                { "targets": 6, "orderable" : false},
+                { "targets": 4, "orderable" : true},
+                { "targets": 5, "orderable" : true},
+                { "targets": 6, "orderable" : true},
                 { "targets": 7,"orderable" : false, "width": "135px"},
             ],
             "language": {
