@@ -1,7 +1,13 @@
 @section('form-header')
     <h1 class="headline1">{{ isset($survey['name']) ? $survey['name'] : "Survey must has name" }}</h1>
     <!-- ▼MV -->
-    <p class="mainVisual"><img src="{{ isset($survey['image_path']) ? $survey['image_path'] : "" }}" alt="mainVisual"></p>
+    <p class="mainVisual">
+       @if(isset($survey['image_path']) && $survey['image_path'] == route(\App\Survey::NAME_URL_SHOW_IMAGE).'/')
+            {{ '' }}
+       @else
+            <img src="{{ isset($survey['image_path']) ? $survey['image_path'] : "" }}" alt=" ">
+       @endif
+    </p>
     <!-- ▲MV-->
 
     <!-- ▼変更可能エリア※div（headFreeArea）は固定なので変更しないで下さい -->

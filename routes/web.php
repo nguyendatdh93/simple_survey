@@ -27,8 +27,8 @@ Route::prefix('survey')->group(function () {
     Route::get('/publish/{id?}', 'SurveyController@publishSurveyById')->name(\App\Survey::NAME_URL_PUBLISH_SURVEY);
     Route::get('/close/{id?}', 'SurveyController@closeSurveyById')->name(\App\Survey::NAME_URL_CLOSE_SURVEY);
     Route::get('/list', 'SurveyController@index')->name(\App\Survey::NAME_URL_SURVEY_LIST);
-    Route::get('/edit/{id?}', 'SurveyController@edit');
-    Route::get('/duplicate/{id?}', 'SurveyController@duplicate');
+    Route::get('/edit/{id?}', 'SurveyController@edit')->name(\App\Survey::NAME_URL_EDIT_SURVEY);
+    Route::get('/duplicate/{id?}', 'SurveyController@duplicate')->name(\App\Survey::NAME_URL_DUPLICATE_SURVEY);
     Route::get('/new', 'SurveyController@edit')->name(\App\Survey::NAME_URL_CREATE_SURVEY);
     Route::post('/save', 'SurveyController@save');
 });
@@ -51,7 +51,7 @@ Route::get('/404', function (){
 });
 
 Route::get('/setup-lang', 'HomeController@setupLanguage');
-Route::get('/image/{image_path?}/{image_name?}', 'HomeController@showImage')->name('show-image');
+Route::get('/image/{image_path?}/{image_name?}', 'HomeController@showImage')->name(\App\Survey::NAME_URL_SHOW_IMAGE);
 
 Route::get('/s/{encrypt?}', 'AnswerSurveyController@showQuestionSurvey')->name(\App\Survey::NAME_URL_ANSWER_SURVEY);
 Route::get('/s/{encrypt?}/confirm', 'AnswerSurveyController@showFormConfirmAnswerSurvey')->name(\App\Survey::NAME_URL_ANSWER_CONFIRM);

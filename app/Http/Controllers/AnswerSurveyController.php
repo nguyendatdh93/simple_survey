@@ -49,12 +49,22 @@ class AnswerSurveyController extends Controller
 		return view('admin::form_survey');
 	}
 	
-	public function showQuestionSurvey($encrypt)
+	public function showQuestionSurvey(Request $request, $encrypt)
 	{
 		$encryption_service    = new EncryptionService();
 		$id                    = $encryption_service->decrypt($encrypt);
 		$survey_service        = new SurveyService();
-		$survey                = $survey_service->getDataSurvey($id);
+		$answer                = array();
+		if ($request->session()->get('answer') != null) {
+			$answer = $request->session()->get('answer' . $id);
+		}
+		
+		$survey = $this->surveyRepository->getSurveyPublishedById($id);
+		if ($survey == false) {
+			return redirect('404');
+		}
+		
+		$survey                = $survey_service->getDataAnswerForSurvey($survey, $answer['questions']);
 		$survey['encrypt_url'] = $encrypt;
 		
 		return view('admin::answer', array('survey' => $survey));
@@ -95,40 +105,44 @@ class AnswerSurveyController extends Controller
 		}
 		
 		$survey['encrypt_url'] = $encrypt;
-		$request->session()->put('answer', $survey);
+		$request->session()->put('answer' . $id, $survey);
 		
 		return view('admin::answer_confirm', array('survey' => $survey));
 	}
 	
-	public function answerSurvey(Request $request)
+	public function answerSurvey(Request $request, $encrypt)
 	{
-		$survey = $request->session()->get('answer');
-		try {
-			$id_answer = $this->answerRepository->save($survey['id']);
-			foreach ($survey['questions'] as $question) {
-				if (is_array($question['answer'])) {
-					$answer_text = "";
-					foreach($question['answer'] as $text) {
-						$answer_text = $answer_text . ',' . $text['text'];
-					}
-					
-					$answer_text = trim($answer_text, ',');
-				} else {
-					$answer_text = $question['answer'];
+		$encryption_service  = new EncryptionService();
+		$id                  = $encryption_service->decrypt($encrypt);
+		
+		$survey    = $request->session()->get('answer' . $id);
+		$id_answer = $this->answerRepository->save($survey['id']);
+		foreach ($survey['questions'] as $question) {
+			if (!isset($question['answer'])) {
+				continue;
+			}
+			
+			if (is_array($question['answer'])) {
+				$answer_text = "";
+				foreach($question['answer'] as $text) {
+					$answer_text = $answer_text . ',' . $text['text'];
 				}
 				
-				$data = array(
-					'answer_id'   => $id_answer,
-					'question_id' => $question['id'],
-					'text'        => $answer_text,
-				);
-				
-				$this->answerQuestionRepository->save($data);
+				$answer_text = trim($answer_text, ',');
+			} else {
+				$answer_text = $question['answer'];
 			}
-		}catch (\Exception $e) {
-			return view('admin::answer_confirm', array('survey' => $request->session()->get('answer')));
+			
+			$data = array(
+				'answer_id'   => $id_answer,
+				'question_id' => $question['id'],
+				'text'        => $answer_text,
+			);
+			
+			$this->answerQuestionRepository->save($data);
 		}
 		
-		return view('admin::answer_confirm', array('survey' => $request->session()->get('answer')));
+		$request->session()->forget('answer' . $id);
+		return redirect()->route(Survey::NAME_URL_ANSWER_SURVEY,['encrypt' => $encrypt]);
 	}
 }
