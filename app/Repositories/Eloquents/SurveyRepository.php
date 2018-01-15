@@ -51,7 +51,7 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
         $result = $this->_model->select('*')
             ->where('user_id', Auth::id())
             ->where('id',$survey_id)
-            ->where('del_flg', 0)
+            ->where('del_flg','!=', Survey::DELETE_FLG)
             ->first();
 
         return $result ? $result->toArray() : [];

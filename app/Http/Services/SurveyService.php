@@ -55,6 +55,10 @@ class SurveyService
 	public function getDataSurvey($id, $answer = array())
 	{
 		$survey               = $this->surveyRepository->getSurveyById($id);
+		if ($survey == null) {
+			return false;
+		}
+		
 		$survey_service       = new SurveyService();
 		$survey['image_path'] = route('show-image').'/'.$survey_service->getImageName($survey['image_path']);
 		$survey['questions']  = $this->questionRepository->getQuestionSurveyBySurveyId($id);
