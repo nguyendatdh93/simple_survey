@@ -115,7 +115,7 @@ class SurveyController extends Controller
 
             $surveys[$key]['number_answers'] = $this->showNumberAnswers($survey);
             if ($survey['image_path'] != null) {
-	            $surveys[$key]['image_path']     = \route('show-image').'/'.$survey_service->getImageName($survey['image_path']);
+	            $surveys[$key]['image_path']     = \route(Survey::NAME_URL_SHOW_IMAGE).'/'.$survey_service->getImageName($survey['image_path']);
             }
         }
 

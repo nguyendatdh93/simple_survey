@@ -18,6 +18,7 @@ use App\Repositories\Eloquents\ConfirmContentsRepository;
 use App\Repositories\Eloquents\QuestionChoiceRepository;
 use App\Repositories\Eloquents\QuestionRepository;
 use App\Repositories\Eloquents\SurveyRepository;
+use App\Survey;
 use Response;
 use Config;
 use File;
@@ -54,7 +55,7 @@ class SurveyService
 	
 	public function getDataAnswerForSurvey($survey, $answer = array())
 	{
-		$survey['image_path'] = route('show-image').'/'.$this->getImageName($survey['image_path']);
+		$survey['image_path'] = route(Survey::NAME_URL_SHOW_IMAGE).'/'.$this->getImageName($survey['image_path']);
 		$survey['questions']  = $this->questionRepository->getQuestionSurveyBySurveyId($survey['id']);
 		foreach ($survey['questions'] as $key => $question) {
 			$question_choices = $this->questionChoiceRepository->getQuestionChoiceByQuestionId($question['id']);
