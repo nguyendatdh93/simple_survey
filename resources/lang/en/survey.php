@@ -69,4 +69,5 @@ return [
     'alert_success_create_survey'  => 'Create survey success',
     'go_to_edit_survey'  => 'Go to edit survey',
     'button_coppy_url'  => 'Copy URL',
+	'message_repquire_single'  => '* Required',
 ];

@@ -12,7 +12,7 @@
                             if (elementForms.elements[i].parentElement.querySelectorAll(".validate").length == 0) {
                                 elChild = document.createElement('span');
                                 elChild.className = "validate";
-                                elChild.innerHTML = '必須';
+                                elChild.innerHTML = '{{ trans("adminlte_lang::survey.message_repquire_single") }}';
                                 elementForms.elements[i].parentElement.appendChild(elChild);
                             }
                             flg_continue = false;
@@ -30,7 +30,7 @@
                             if (elementForms.elements[i].parentElement.parentElement.querySelectorAll(".validate").length == 0) {
                                 elChild = document.createElement('span');
                                 elChild.className = "validate";
-                                elChild.innerHTML = '必須';
+                                elChild.innerHTML = '{{ trans("adminlte_lang::survey.message_repquire_single") }}';
                                 elementForms.elements[i].parentElement.parentElement.appendChild(elChild);
                             }
                         } else {
@@ -47,7 +47,7 @@
                             if (elementForms.elements[i].parentElement.parentElement.querySelectorAll(".validate").length == 0) {
                                 elChild = document.createElement('span');
                                 elChild.className = "validate";
-                                elChild.innerHTML = '必須';
+                                elChild.innerHTML = '{{ trans("adminlte_lang::survey.message_repquire_single") }}';
                                 elementForms.elements[i].parentElement.parentElement.appendChild(elChild);
                             }
                         } else {
@@ -64,7 +64,7 @@
                             if (elementForms.elements[i].parentElement.querySelectorAll(".validate").length == 0) {
                                 elChild = document.createElement('span');
                                 elChild.className = "validate";
-                                elChild.innerHTML = '必須';
+                                elChild.innerHTML = '{{ trans("adminlte_lang::survey.message_repquire_single") }}';
                                 elementForms.elements[i].parentElement.appendChild(elChild);
                             }
                         } else {
