@@ -29,7 +29,7 @@ Route::prefix('survey')->group(function () {
     Route::get('/list', 'SurveyController@index')->name(\App\Survey::NAME_URL_SURVEY_LIST);
     Route::get('/edit/{id?}', 'SurveyController@edit')->name(\App\Survey::NAME_URL_EDIT_SURVEY);
     Route::get('/duplicate/{id?}', 'SurveyController@duplicate')->name(\App\Survey::NAME_URL_DUPLICATE_SURVEY);
-    Route::get('/new', 'SurveyController@create')->name(\App\Survey::NAME_URL_CREATE_SURVEY);
+    Route::get('/new', 'SurveyController@edit')->name(\App\Survey::NAME_URL_CREATE_SURVEY);
     Route::post('/save', 'SurveyController@save');
 });
 

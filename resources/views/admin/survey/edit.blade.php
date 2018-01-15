@@ -110,7 +110,7 @@
 								<div class="col-md-9">
 									@if(!empty($survey['image_path']))
 										<div style="width: 100%; margin-bottom: 5px;">
-											<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9kVANbd2dQjQpN4-3ztXmJ2lTSTsQeRlVfuy_pPVz0V9Nki419w" >
+											<img src="{{ $survey['image_path'] }}" style="max-height: 200px; max-width: 200px;">
 										</div>
 									@endif
 									{!! FormSimple::input(['type' => 'file', 'name' => 'survey_thumbnail', 'id' => 'survey_thumbnail', 'class' => 'form-control', 'help-block' => trans('survey.survey_thumbnail_help_block')]) !!}
@@ -173,7 +173,7 @@
 
 							<div class="form-group jsQuestion jsQuestionConfirmation row" style="display: none;">
 								<div class="col-md-12">
-									<textarea id="confirmation" class="form-control jsQuestionConfirmationText jsInputLimit5000" rows="10"></textarea>
+									<textarea id="confirmation" class="form-control jsQuestionConfirmationText required jsInputLimit5000" rows="10"></textarea>
 									<p class="help-block">{{ trans('survey.confirmation_help_block') }}</p>
 									<p class="jsError" style="color: red; display: none;"></p>
 								</div>
@@ -342,7 +342,7 @@
 															<div class="col-md-12">
 																<textarea id="question_{{ $question_number }}_confirmation_text"
 																		  name="question_{{ $question_number }}_confirmation_text"
-																		  class="form-control jsQuestionConfirmationText jsInputLimit5000"
+																		  class="form-control jsQuestionConfirmationText required jsInputLimit5000"
 																		  rows="10">{{ empty($question['confirm_text']) ? '' : $question['confirm_text'] }}</textarea>
 																<p class="help-block">{{ trans('survey.confirmation_help_block') }}</p>
 																<p class="jsError" style="color: red; display: none;"></p>
@@ -530,7 +530,7 @@
 															<div class="col-md-12">
 																<textarea id="question_{{ $question_number }}_confirmation_text"
 																		  name="question_{{ $question_number }}_confirmation_text"
-																		  class="form-control jsQuestionConfirmationText jsInputLimit5000"
+																		  class="form-control jsQuestionConfirmationText required jsInputLimit5000"
 																		  rows="10">{{ empty($question['confirm_text']) ? '' : $question['confirm_text'] }}</textarea>
 																<p class="help-block">{{ trans('survey.confirmation_help_block') }}</p>
 																<p class="jsError" style="color: red; display: none;"></p>
@@ -643,7 +643,7 @@
 
 			<div class="row" style="text-align: center;">
 				{!! FormSimple::button(trans('survey.button_submit'), ['type' => 'submit', 'class' => 'btn btn-primary', 'icon' => 'fa fa-plus']) !!}
-				<button onclick="return closeTab();" class="btn btn-default">{{ trans('survey.button_cancel') }}</button>
+				<button onclick="return false;" class="btn btn-default jsPreview"><i class="fa fa-eye"></i> {{ trans('survey.button_preview') }}</button>
 			</div>
 		</form>
 	</div>
@@ -829,65 +829,146 @@
 		validateOnChange(this);
 	});
 
-	$(document).on('change', 'input[name=survey_thumbnail]', function(event){
-		validateInputFile(this);
-	});
-
 	$(document).on('submit', '#survey_form', function(event) {
-		validateOnSubmit();
+		if (validateOnSubmit()) {
+            if (window.confirm('Are you sure？')) {
+                return true;
+            }
+        }
+
+        return false;
 	});
-
-	function closeTab() {
-		open(location, '_self').close();
-
-
-		return false;
-	}
 
 	function validateOnSubmit() {
+        var survey_name = $('input[name=survey_name]')[0];
+        if (!validateText(survey_name)) {
+            $(survey_name).focus();
+            return false;
+        }
 
+        var survey_thumbnail = $('input[name=survey_thumbnail]')[0];
+        if (!validateFile(survey_thumbnail)) {
+            $(survey_thumbnail).focus();
+            return false;
+        }
+
+        var survey_description = $('textarea[name=survey_description]')[0];
+        if (!validateText(survey_description)) {
+            $('html, body').animate({
+                scrollTop: $(survey_description).parent().offset().top
+            }, 500);
+            return false;
+        }
+
+        var question_valid = true;
+        $('.jsQuestionBox').each(function () {
+            var question_text = $(this).find('.jsQuestionText')[0];
+            if (!validateText(question_text)) {
+                $(question_text).focus();
+                question_valid = false;
+                return false;
+            }
+
+            var question_type = $($(this).find('.jsQuestionType')[0]).val();
+            if (question_type == 3 || question_type == 4) {
+                var question_choice_valid = true;
+                $(this).find('.jsQuestionChoiceBox').each(function () {
+                    var question_choice_text = $(this).find('.jsQuestionChoiceText')[0];
+                    if (!validateText(question_choice_text)) {
+                        $(question_choice_text).focus();
+                        question_choice_valid = false;
+                        question_valid = false;
+                        return false;
+                    }
+                });
+
+                return question_choice_valid;
+            } else if (question_type == 5) {
+                var question_confirmation_text = $(this).find('.jsQuestionConfirmationText')[0];
+                if (!validateText(question_confirmation_text)) {
+                    question_valid = false;
+                    $('html, body').animate({
+                        scrollTop: $(question_confirmation_text).parent().offset().top
+                    }, 500);
+                    return false;
+                }
+
+                var question_require = $($(this).find('.jsQuestionRequired')[0]).is(':checked');
+                if (question_require) {
+                    var question_agree_text = $(this).find('.jsQuestionConfirmationAgreeText')[0];
+                    if (!validateText(question_agree_text)) {
+                        $(question_agree_text).focus();
+                        question_valid = false;
+                        return false;
+                    }
+                }
+            }
+        });
+
+        return question_valid;
 	}
 	
 	function validateOnChange(target) {
-		var content = $(target).val(),
-			error = $(target).parent().children('.jsError');
+        if ($(target).attr('type') == 'file') {
+            return validateFile(target);
+        }
 
-		error.hide();
-
-		if ($(target).hasClass('required')) {
-			if (!content) {
-				error.html('Not allow empty.');
-				error.show();
-				return false;
-			}
-		}
-
-		if ($(target).hasClass('jsInputLimit255')) {
-			if (content.length > 255) {
-				error.html('Limit 255 characters.');
-				error.show();
-				return false;
-			}
-		}
-
-		if ($(target).hasClass('jsInputLimit5000')) {
-			if (content.length > 100) {
-				error.html('Limit 5000 characters.');
-				error.show();
-				return false;
-			}
-		}
+        return validateText(target);
 	}
 
-	function validateInputFile(target) {
+	function validateText(target) {
+        var content = $(target).val(),
+            error = $(target).parent().children('.jsError');
+
+        error.hide();
+
+        if ($(target).hasClass('required')) {
+            if (!content) {
+                error.html('Not allow empty.');
+                error.show();
+                return false;
+            }
+        }
+
+        if ($(target).hasClass('jsInputLimit255')) {
+            if (content.length > 255) {
+                error.html('Limit 255 characters.');
+                error.show();
+                return false;
+            }
+        }
+
+        if ($(target).hasClass('jsInputLimit5000')) {
+            if (content.length > 5000) {
+                error.html('Limit 5000 characters.');
+                error.show();
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+	function validateFile(target) {
 		var input_file = $(target)[0].files[0],
 			error = $(target).parent().children('.jsError');
 
 		error.hide();
-		if (input_file && input_file.size > 1024*1024*5) {
-			error.html('Limit 5MB');
-			error.show();
-			return false;
+
+		if (input_file) {
+			if (input_file.size > 1024*1024*5) {
+				error.html('Limit 5MB');
+				error.show();
+				return false;
+			}
+
+			if (input_file.type.split('/')[0] != 'image') {
+				error.html('Only allow image file');
+				error.show();
+				return false;
+			}
 		}
+
+		return true;
 	}
 </script>
