@@ -285,6 +285,11 @@ class SurveyController extends Controller
             die('404');
         }
 
+        $survey_service       = new SurveyService();
+        if ($survey['image_path']) {
+            $survey['image_path'] = \route('show-image'). '/' . $survey_service->getImageName($survey['image_path']);
+        }
+
         $questions = $this->questionRepository->getQuestionsBySurveyId($survey['id']);
 
         return view($layout, [
@@ -322,8 +327,27 @@ class SurveyController extends Controller
         $file    = Input::file('survey_thumbnail');
         $user_id = Auth::id();
 
-        // validate inputs
+        // validate file
+        if ($file && !$this->validateFile($file)) {
+            die('404 - file wrong');
+        }
 
+        // validate survey header input
+        if (!$this->validateText($input['survey_name'])) {
+            die('404 - survey name wrong');
+        }
+
+        if (!$this->validateText($input['survey_description'], false, 5000)) {
+            die('404 - survey description wrong');
+        }
+
+        // create new questions data from input text
+        $new_questions = $this->getQuestionsDataFromInput($input);
+
+        // validate questions input
+        if (!$this->validateQuestionsInput($new_questions)) {
+            die('404 - questions wrong');
+        }
 
         // create or update survey
         if (empty($input['survey_id'])) {
@@ -377,38 +401,6 @@ class SurveyController extends Controller
         }
         $survey->description = $input['survey_description'];
         $survey = $this->surveyRepository->save($survey);
-
-        // create new questions
-        $new_questions = [];
-        foreach ($input as $input_name => $value) {
-            $split_input_name = explode('_', $input_name);
-            if ($split_input_name[0] != 'question' || !$value) {
-                continue;
-            }
-
-            if ($split_input_name[2] == 'id') {
-                $new_questions[$split_input_name[1]]['id'] = $value;
-            }
-
-            if (count($split_input_name) == 3) {
-                $new_questions[$split_input_name[1]][$split_input_name[2]] = $value;
-                continue;
-            }
-
-            if ($split_input_name[2] == 'confirmation') {
-                if ($split_input_name[3] == 'text') {
-                    $new_questions[$split_input_name[1]]['confirmation_text'] = $value;
-                } else {
-                    $new_questions[$split_input_name[1]]['agree_text'] = $value;
-                }
-
-                continue;
-            }
-
-            if ($split_input_name[2] == 'choice') {
-                $new_questions[$split_input_name[1]]['choice'][] = $value;
-            }
-        }
 
         $i = 0;
         foreach ($new_questions as $new_question) {
@@ -530,4 +522,114 @@ class SurveyController extends Controller
         //
     }
 
+    public function getQuestionsDataFromInput($input) {
+        $new_questions = [];
+        foreach ($input as $input_name => $value) {
+            $split_input_name = explode('_', $input_name);
+            if ($split_input_name[0] != 'question') {
+                continue;
+            }
+
+            if ($split_input_name[2] == 'id') {
+                $new_questions[$split_input_name[1]]['id'] = $value;
+            }
+
+            if (count($split_input_name) == 3) {
+                $new_questions[$split_input_name[1]][$split_input_name[2]] = $value;
+                continue;
+            }
+
+            if ($split_input_name[2] == 'confirmation') {
+                if ($split_input_name[3] == 'text') {
+                    $new_questions[$split_input_name[1]]['confirmation_text'] = $value;
+                } else {
+                    $new_questions[$split_input_name[1]]['agree_text'] = $value;
+                }
+
+                continue;
+            }
+
+            if ($split_input_name[2] == 'choice') {
+                $new_questions[$split_input_name[1]]['choice'][] = $value;
+            }
+        }
+
+        return $new_questions;
+    }
+
+    public function validateQuestionsInput($questions) {
+        foreach ($questions as $question) {
+            if (empty($question['text']) || strlen($question['text']) > 255) {
+                return false;
+            }
+
+            if (empty($question['category']) || !$question['category']) {
+                return false;
+            }
+
+            if (empty($question['type']) || !$question['type']) {
+                return false;
+            }
+
+            if ($question['type'] == Question::TYPE_SINGLE_TEXT || $question['type'] == Question::TYPE_MULTI_TEXT) {
+                continue;
+            }
+
+            if ($question['type'] == Question::TYPE_CONFIRMATION) {
+                if (empty($question['confirmation_text']) || strlen($question['confirmation_text']) > 5000) {
+                    return false;
+                }
+
+                if (empty($question['required'])) {
+                    continue;
+                }
+
+                if (!$question['required']) {
+                    return false;
+                }
+
+                if (empty($question['agree_text']) || strlen($question['agree_text']) > 255) {
+                    return false;
+                }
+
+                continue;
+            }
+
+            if (empty($question['choice'])) {
+                return false;
+            }
+
+            foreach ($question['choice'] as $choice) {
+                if (!$choice || strlen($choice) > 255) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public function validateFile($file) {
+        if (!in_array(strtolower($file->clientExtension()), Config::get('config.file_types_allow'))) {
+            return false;
+        }
+
+        if ($file->getClientSize() > Config::get('config.max_file_upload_size')) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function validateText($text, $require = true, $limit = 255) {
+        if ($require && !$text) {
+            return false;
+        }
+
+        if (strlen($text) > $limit) {
+            return false;
+        }
+
+        return true;
+    }
 }
