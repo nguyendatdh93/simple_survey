@@ -51,11 +51,23 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
         $result = $this->_model->select('*')
             ->where('user_id', Auth::id())
             ->where('id',$survey_id)
-            ->where('del_flg', 0)
+            ->where('del_flg','!=', Survey::DELETE_FLG)
             ->first();
 
         return $result ? $result->toArray() : [];
     }
+	
+	public function getSurveyPublishedById($survey_id)
+	{
+		$result = $this->_model->select('*')
+			->where('user_id', Auth::id())
+			->where('id',$survey_id)
+			->where('del_flg','!=', Survey::DELETE_FLG)
+			->where('status', Survey::STATUS_SURVEY_PUBLISHED)
+			->first();
+		
+		return $result ? $result->toArray() : [];
+	}
 
     /**
      * @param $survey_id

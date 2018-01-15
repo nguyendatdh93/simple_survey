@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\BaseWidget\Validator;
 use App\Http\Middleware\SecureDownloadSurvey;
 use App\Http\Requests;
 use App\Http\Services\EncryptionService;
@@ -76,7 +77,7 @@ class SurveyController extends Controller
             'buttons'  => array(
                 array(
                     'text'  => trans('adminlte_lang::survey.button_create_new_survey'),
-                    'href'  => \route(Survey::NAME_URL_CREATE_SURVEY),
+                    'href'  => \route(Survey::NAME_URL_EDIT_SURVEY),
                     'attributes' => array(
                         'class' => 'btn btn-success',
                         'icon'  => 'fa fa-plus-circle'
@@ -87,7 +88,7 @@ class SurveyController extends Controller
 
         $surveys = $this->surveyRepository->getAllSurvey();
         $surveys = $this->getDataSurveyForShowing($surveys);
-
+	    $surveys = array_reverse($surveys);
         return view('admin::datatable', array('settings' => $table_settings, 'datas' => $surveys));
     }
 
@@ -102,6 +103,7 @@ class SurveyController extends Controller
 
     public function getDataSurveyForShowing($surveys)
     {
+	    $survey_service = new SurveyService();
         foreach ($surveys as $key => $survey) {
             if ($survey['status'] == Survey::STATUS_SURVEY_DRAF) {
                 $surveys[$key]['status'] = trans('adminlte_lang::survey.draf');
@@ -112,8 +114,9 @@ class SurveyController extends Controller
             }
 
             $surveys[$key]['number_answers'] = $this->showNumberAnswers($survey);
-	        $survey_service                  = new SurveyService();
-            $surveys[$key]['image_path']     = \route('show-image').'/'.$survey_service->getImageName($survey['image_path']);
+            if ($survey['image_path'] != null) {
+	            $surveys[$key]['image_path']     = \route(Survey::NAME_URL_SHOW_IMAGE).'/'.$survey_service->getImageName($survey['image_path']);
+            }
         }
 
         return $surveys;
@@ -191,23 +194,34 @@ class SurveyController extends Controller
 
     public function downloadSurveyCSVFile($id)
     {
-        $answer_datas = $this->getAnswerForSurveyBySurveyID($id);
-        $survey_name  = $this->surveyRepository->getNameSurvey($id);
-        if (strlen($survey_name) > 50)
-        {
-            $survey_name = substr($survey_name,0,50);
-        }
-
+	    $list_questions    = $this->questionRepository->getListQuestionBySurveyId($id);
+	    $headers_columns   = array_column($list_questions, 'text');
+	    $headers_columns[] = "created_at";
+        $answer_datas      = $this->getAnswerForSurveyBySurveyID($id);
+		foreach ($headers_columns as $column) {
+			foreach ($answer_datas as $key_answer => $answer) {
+				if (!in_array($column, array_keys($answer))) {
+					$answer_datas[$key_answer][$column] = '';
+				}
+			}
+		}
+		
+		foreach ($answer_datas as $key_answer => $answer) {
+			$answer_datas[$key_answer] = array_merge(array_flip(array_values($headers_columns)), $answer);
+		}
+	    
         $headers = [
             'Cache-Control'           => 'must-revalidate, post-check=0, pre-check=0'
             ,   'Content-type'        => 'text/csv'
-            ,   'Content-Disposition' => 'attachment; filename='.$survey_name.'.csv'
+            ,   'Content-Disposition' => 'attachment; filename='.time().'.csv'
             ,   'Expires'             => '0'
             ,   'Pragma'              => 'public'
+	        ,   'Content-Encoding'    => 'UTF-8'
+	        ,   'charset'             => 'UTF-8'
         ];
 
         # add headers for each column in the CSV download
-        array_unshift($answer_datas, array_keys($answer_datas[0]));
+        array_unshift($answer_datas, $headers_columns);
 
         $callback = function() use ($answer_datas)
         {
@@ -240,11 +254,9 @@ class SurveyController extends Controller
         $answer_datas = array();
         foreach ($list_answers as $key_list_answer => $list_answer) {
             foreach ($list_answer['answers'] as $key_answer => $answer) {
-                foreach ($answer_questions as $key_question => $question) {
-                    if ($key_question == $answer['question_id']) {
-                        $answer_datas[$key_list_answer][$question] = $answer['text'];
-                    }
-                }
+            	if (in_array($answer['question_id'],array_keys($answer_questions))) {
+		            $answer_datas[$key_list_answer][$answer_questions[$answer['question_id']]] = $answer['text'];
+	            }
             }
 
             $answer_datas[$key_list_answer]['created_at'] = $list_answer['created_at'];
@@ -444,7 +456,8 @@ class SurveyController extends Controller
     public function preview(Request $request, $id)
     {
     	$survey_service           = new SurveyService();
-        $survey                   = $survey_service->getDataSurvey($id);
+	    $survey                   = $this->surveyRepository->getSurveyById($id);
+        $survey                   = $survey_service->getDataAnswerForSurvey($survey);
         $encryption_service       = new EncryptionService();
         $survey['encryption_url'] = $encryption_service->encrypt($id);
         return view('admin::preview', array('survey' => $survey, 'name_url' => $request->route()->getName()));
