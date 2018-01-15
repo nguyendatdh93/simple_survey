@@ -9,7 +9,9 @@
                 <label><input type="radio"
                               {!!  \App\BaseWidget\Form::getAttributes($data_attributes) !!}
                               class="{{ $identification }}" value="{{ $choice['id'] }}"
-                    @if(isset($question['require']) && $question['require'] == \App\Question::REQUIRE_QUESTION_YES)required @endif>{{ $choice['text'] }}</label>
+                    @if(isset($question['require']) && $question['require'] == \App\Question::REQUIRE_QUESTION_YES)required @endif
+                    @if(isset($question['answer']) && array_key_exists($choice['id'], $question['answer'])) checked @endif
+                    >{{ $choice['text'] }}</label>
             @endforeach
         @endif
     </td>

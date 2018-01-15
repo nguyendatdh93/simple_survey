@@ -43,7 +43,7 @@
         <!-- ▲変更可能エリア 終わり -->
 
         <ul class="btnSet2">
-            <li><p class="btn2"><a onlick="goBack()">戻る</a></p></li>
+            <li><p class="btn2"><a href="{{ route(\App\Survey::NAME_URL_ANSWER_SURVEY,['encrypt' => $survey['encrypt_url']]) }}">戻る</a></p></li>
             <li><p class="btn1"><a href="javascript:;" onClick="document.join_form.submit();">送信する</a></p></li>
             <!-- /.btnSet2 --></ul>
         <script>

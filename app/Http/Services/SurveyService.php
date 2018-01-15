@@ -48,7 +48,7 @@ class SurveyService
 		return $explode_image_path[count($explode_image_path) - 2] . '/'. end($explode_image_path);
 	}
 	
-	public function getDataSurvey($id)
+	public function getDataSurvey($id, $answer = array())
 	{
 		$survey               = $this->surveyRepository->getSurveyById($id);
 		$survey_service       = new SurveyService();
@@ -69,10 +69,18 @@ class SurveyService
 		$group_question_survey = array();
 		
 		foreach ($survey['questions'] as $question) {
+			if (count($answer)) {
+				$key_answer = array_search($question['id'], array_column($answer, 'id'));
+				if (Question::TYPE_MULTI_TEXT == $question['type'] || Question::TYPE_SINGLE_TEXT == $question['type']) {
+					$question['answer'] = isset($answer[$key_answer]['answer']) ? $answer[$key_answer]['answer'] : '';
+				} else {
+					$question['answer'] = isset($answer[$key_answer]['answer']) ? $answer[$key_answer]['answer'] : array();
+				}
+			}
 			$group_question_survey[$question['category']][] = $question;
 		}
 		
-		$survey['questions']      = $group_question_survey;
+		$survey['questions'] = $group_question_survey;
 		
 		return $survey;
 	}
