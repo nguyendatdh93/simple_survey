@@ -456,7 +456,8 @@ class SurveyController extends Controller
     public function preview(Request $request, $id)
     {
     	$survey_service           = new SurveyService();
-        $survey                   = $survey_service->getDataSurvey($id);
+	    $survey                   = $this->surveyRepository->getSurveyById($id);
+        $survey                   = $survey_service->getDataAnswerForSurvey($survey);
         $encryption_service       = new EncryptionService();
         $survey['encryption_url'] = $encryption_service->encrypt($id);
         return view('admin::preview', array('survey' => $survey, 'name_url' => $request->route()->getName()));

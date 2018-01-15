@@ -14,6 +14,7 @@ interface SurveyRepositoryInterface
 {
     public function getAllSurvey();
     public function getSurveyById($survey_id);
+	public function getSurveyPublishedById($survey_id);
     public function publishSurveyById($survey_id);
     public function closeSurveyById($survey_id);
     public function getDownloadListSurvey();

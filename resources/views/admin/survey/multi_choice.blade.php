@@ -6,7 +6,7 @@
                 @php
                     $identification = 'question_' . $question['id'] . '_' . $question['survey_id'] . '_choice_' . $choice['id'];
                 @endphp
-                <label><input type="checkbox"
+                <label style="font-weight:unset"><input type="checkbox" style="vertical-align: middle;margin: 0 .25em 0 0;"
                               {!!  \App\BaseWidget\Form::getAttributes($data_attributes) !!}
                               class="{{ $identification }}" value="{{ $choice['id'] }}"
                               @if(isset($question['require']) && $question['require'] == \App\Question::REQUIRE_QUESTION_YES)required @endif

@@ -52,16 +52,10 @@ class SurveyService
 		return $explode_image_path[count($explode_image_path) - 2] . '/'. end($explode_image_path);
 	}
 	
-	public function getDataSurvey($id, $answer = array())
+	public function getDataAnswerForSurvey($survey, $answer = array())
 	{
-		$survey               = $this->surveyRepository->getSurveyById($id);
-		if ($survey == null) {
-			return false;
-		}
-		
-		$survey_service       = new SurveyService();
-		$survey['image_path'] = route('show-image').'/'.$survey_service->getImageName($survey['image_path']);
-		$survey['questions']  = $this->questionRepository->getQuestionSurveyBySurveyId($id);
+		$survey['image_path'] = route('show-image').'/'.$this->getImageName($survey['image_path']);
+		$survey['questions']  = $this->questionRepository->getQuestionSurveyBySurveyId($survey['id']);
 		foreach ($survey['questions'] as $key => $question) {
 			$question_choices = $this->questionChoiceRepository->getQuestionChoiceByQuestionId($question['id']);
 			if (count($question_choices) > 0) {
@@ -75,7 +69,6 @@ class SurveyService
 		}
 		
 		$group_question_survey = array();
-		
 		foreach ($survey['questions'] as $question) {
 			if (count($answer)) {
 				$key_answer = array_search($question['id'], array_column($answer, 'id'));
