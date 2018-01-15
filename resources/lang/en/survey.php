@@ -34,6 +34,7 @@ return [
     'button_clear_data' => 'Clear data',
     'button_submit' => 'Submit',
     'button_cancel' => 'Cancel',
+    'button_preview' => 'Preview',
     'confirm_clear_data_title' => 'Clear data',
     'confirm_clear_data_content' => 'Are you sure to clear data?',
     'time_created' => 'Time created',
