@@ -39,7 +39,7 @@
                         @if(is_array($key_column))
                             <td class="tbl-{{$key_column['column']}}">@if($key_column['type'] == \App\BaseWidget\Validator::TYPE_IMAGE) {!! \App\BaseWidget\Form::img($data[$key_column['column']], array("class" => "img-datatable","alt" => "Image")) !!} @endif </td>
                         @else
-                            <td class="tbl-{{$key_column}}">{{ $data[$key_column] }}</td>
+                            <td class="tbl-{{$key_column}}">{{ isset($data[$key_column]) ? $data[$key_column] : "-" }}</td>
                         @endif
                     @endforeach
                     @if(isset($settings['controls']) && $settings['controls'] == true)
