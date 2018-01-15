@@ -45,6 +45,10 @@ class SurveyService
 	public function getImageName($image_path)
 	{
 		$explode_image_path = explode('/', $image_path);
+		if (count($explode_image_path ) < 2) {
+			return '';
+		}
+		
 		return $explode_image_path[count($explode_image_path) - 2] . '/'. end($explode_image_path);
 	}
 	

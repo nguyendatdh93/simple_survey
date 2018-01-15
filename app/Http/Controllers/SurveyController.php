@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\BaseWidget\Validator;
 use App\Http\Middleware\SecureDownloadSurvey;
 use App\Http\Requests;
 use App\Http\Services\EncryptionService;
@@ -102,6 +103,7 @@ class SurveyController extends Controller
 
     public function getDataSurveyForShowing($surveys)
     {
+	    $survey_service = new SurveyService();
         foreach ($surveys as $key => $survey) {
             if ($survey['status'] == Survey::STATUS_SURVEY_DRAF) {
                 $surveys[$key]['status'] = trans('adminlte_lang::survey.draf');
@@ -112,8 +114,9 @@ class SurveyController extends Controller
             }
 
             $surveys[$key]['number_answers'] = $this->showNumberAnswers($survey);
-	        $survey_service                  = new SurveyService();
-            $surveys[$key]['image_path']     = \route('show-image').'/'.$survey_service->getImageName($survey['image_path']);
+            if ($survey['image_path'] != null) {
+	            $surveys[$key]['image_path']     = \route('show-image').'/'.$survey_service->getImageName($survey['image_path']);
+            }
         }
 
         return $surveys;
@@ -254,12 +257,6 @@ class SurveyController extends Controller
             	if (in_array($answer['question_id'],array_keys($answer_questions))) {
 		            $answer_datas[$key_list_answer][$answer_questions[$answer['question_id']]] = $answer['text'];
 	            }
-	            
-//                foreach ($answer_questions as $key_question => $question) {
-//                    if ($key_question == $answer['question_id']) {
-//                        $answer_datas[$key_list_answer][$question] = $answer['text'];
-//                    }
-//                }
             }
 
             $answer_datas[$key_list_answer]['created_at'] = $list_answer['created_at'];
