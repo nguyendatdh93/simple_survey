@@ -88,7 +88,7 @@
                 @endif
 
                 @if ($survey['status'] == \App\Survey::STATUS_SURVEY_DRAF)
-                    <a href="" class="btn btn-link jsLinkGoEditSurvey"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {{ trans('adminlte_lang::survey.go_to_edit') }}</a>
+                    <a href="{{ route(\App\Survey::NAME_URL_EDIT_SURVEY,['id' => $survey['id']]) }}" class="btn btn-link jsLinkGoEditSurvey"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {{ trans('adminlte_lang::survey.go_to_edit') }}</a>
                 @endif
             </div>
         </nav>

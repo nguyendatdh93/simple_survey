@@ -50,9 +50,11 @@ Route::get('/setup-lang', 'HomeController@setupLanguage');
 Route::get('/image/{image_path?}/{image_name?}', 'HomeController@showImage')->name(\App\Survey::NAME_URL_SHOW_IMAGE);
 
 Route::prefix('answer')->group(function () {
+	Route::get('/thank', 'AnswerSurveyController@showThankPage')->name(\App\Survey::NAME_URL_THANK_PAGE);
 	Route::get('/{encrypt?}', 'AnswerSurveyController@showQuestionSurvey')->name(\App\Survey::NAME_URL_ANSWER_SURVEY);
 	Route::get('/{encrypt?}/confirm', 'AnswerSurveyController@showFormConfirmAnswerSurvey')->name(\App\Survey::NAME_URL_ANSWER_CONFIRM);
 	Route::get('/{encrypt?}/answer', 'AnswerSurveyController@answerSurvey')->name(\App\Survey::NAME_URL_SUBMIT_CONFIRM);
 });
+
 
 Route::get('/form-survey', 'AnswerSurveyController@index');
