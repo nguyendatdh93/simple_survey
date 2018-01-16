@@ -67,7 +67,7 @@ class SurveyController extends Controller
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_name')  => 'name',
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_image') => array(
                     'column' => 'image_path',
-                    'type' => 'image'
+                    'type'   => 'image'
                 ),
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_published_at')   => 'published_at',
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_closed_at')      => 'closed_at',
@@ -89,6 +89,7 @@ class SurveyController extends Controller
         $surveys = $this->surveyRepository->getAllSurvey();
         $surveys = $this->getDataSurveyForShowing($surveys);
 	    $surveys = array_reverse($surveys);
+	    
         return view('admin::datatable', array('settings' => $table_settings, 'datas' => $surveys));
     }
 
@@ -175,8 +176,8 @@ class SurveyController extends Controller
 				$buttons[] = array(
 					'text' => trans('adminlte_lang::survey.button_clear_data'),
 					'attributes' => array(
-						'class' => 'btn bg-orange margin',
-						'icon' => 'fa fa-trash',
+						'class'       => 'btn bg-orange margin',
+						'icon'        => 'fa fa-trash',
 						'data-toggle' => "modal",
 						'data-target' => "#modal-confirm-clear-data-survey"
 					)
@@ -223,7 +224,6 @@ class SurveyController extends Controller
 	        ,   'charset'             => 'UTF-8'
         ];
 		
-        # add headers for each column in the CSV download
 	    $headers_columns[array_search('created_at', $headers_columns)] = trans('adminlte_lang::survey.column_csv_created_at');
         array_unshift($answer_datas, $headers_columns);
 		
