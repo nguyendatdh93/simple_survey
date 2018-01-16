@@ -140,7 +140,7 @@ class LoginController extends AuthService
         $classProperty->setAccessible(true);
         $accessToken = $classProperty->getValue($token);
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "https://accounts.google.com/o/oauth2/revoke?token=". $accessToken);
+        curl_setopt($ch, CURLOPT_URL, Config::get('config.url_sign_out_google') ."=". $accessToken);
         curl_exec($ch);
         curl_close($ch);
     }
