@@ -108,11 +108,9 @@
 									{!! FormSimple::label(trans('survey.survey_thumbnail_title'), ['for'=> 'survey_thumbnail']) !!}
 								</div>
 								<div class="col-md-9">
-									@if(!empty($survey['image_path']))
-										<div style="width: 100%; margin-bottom: 5px;">
-											<img src="{{ $survey['image_path'] }}" style="max-height: 200px; max-width: 200px;">
-										</div>
-									@endif
+                                    <div class="jsSurveyThumbnailPreviewBox" style="width: 100%; margin-bottom: 5px; @if(empty($survey['image_path'])) display: none; @endif">
+                                        <img class="jsSurveyThumbnailPreview" src="{{ empty($survey['image_path']) ? 'no-image' : $survey['image_path'] }}" style="max-height: 200px; max-width: 200px;">
+                                    </div>
 									{!! FormSimple::input(['type' => 'file', 'name' => 'survey_thumbnail', 'id' => 'survey_thumbnail', 'class' => 'form-control', 'help-block' => trans('survey.survey_thumbnail_help_block')]) !!}
 									<p class="jsError" style="color: red; display: none;"></p>
 								</div>
@@ -142,7 +140,7 @@
 					<div class="panel panel-default" style="margin-bottom: 0;">
 						<div class="box-header"></div>
 
-						<div class="box-body" style="padding-left: 40px; padding-right: 20px; ">
+						<div class="box-body" style="padding-left: 40px; padding-right: 20px;">
 							<div class="form-group row">
 								<div class="col-md-9">
 									<input type="hidden" class="jsQuestionCategory">
@@ -641,9 +639,38 @@
 				</div>
 			</div>
 
-			<div class="row" style="text-align: center;">
-				{!! FormSimple::button(trans('survey.button_submit'), ['type' => 'submit', 'class' => 'btn btn-primary', 'icon' => 'fa fa-plus']) !!}
-				<button onclick="return false;" class="btn btn-default jsPreview"><i class="fa fa-eye"></i> {{ trans('survey.button_preview') }}</button>
+			<div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="panel panel-default">
+                        <div class="box-header"></div>
+
+                        <div class="box-body" style="font-weight: bold; font-size: large;">
+                            <div class="row">
+                                <div class="col-md-10 col-md-offset-1">
+                                    <div class="form-group">
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="survey_status" value="{{ \App\Survey::STATUS_SURVEY_DRAF }}" checked="checked" style="line-height: 30px;">
+                                                {{ trans('survey.radio_label_choice_survey_draft_status') }}
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="survey_status" value="{{ \App\Survey::STATUS_SURVEY_PUBLISHED }}">
+                                                {{ trans('survey.radio_label_choice_survey_publish_status') }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="box-footer" style="padding: 5px; text-align: center;">
+                            {!! FormSimple::button(trans('survey.button_submit'), ['type' => 'submit', 'class' => 'btn btn-primary', 'icon' => 'fa fa-cloud-upload']) !!}
+                            <button onclick="preview(); return false;" class="btn btn-default jsPreview"><i class="fa fa-eye"></i> {{ trans('survey.button_preview') }}</button>
+                        </div>
+                    </div>
+                </div>
 			</div>
 		</form>
 	</div>
@@ -671,7 +698,9 @@
 			}
 		}
 
+        sessionStorage.preview_image = $('.jsSurveyThumbnailPreview').attr('src');
 
+        var preview_tab;
 	});
 
 	$(document).on('click','.jsRemoveChoice',function(){
@@ -829,15 +858,70 @@
 		validateOnChange(this);
 	});
 
+    $(document).on('change', 'input[name=survey_thumbnail]', function(event) {
+        var input_file = $(this)[0].files[0];
+
+        if (!input_file) {
+            $('.jsSurveyThumbnailPreview').attr('src', 'no-image');
+            $('.jsSurveyThumbnailPreviewBox').hide();
+            sessionStorage.preview_image = 'no-image';
+            return false;
+        }
+
+        if (validateFile(this)) {
+            previewImage(this);
+        }
+    });
+
 	$(document).on('submit', '#survey_form', function(event) {
 		if (validateOnSubmit()) {
             if (window.confirm('Are you sure？')) {
                 return true;
             }
+        } else {
+            alert('Error on input');
         }
 
         return false;
 	});
+
+    function preview() {
+        if (!validateOnSubmit()) {
+            alert('Error on input');
+            return false;
+        }
+
+        var form_serialize_array = $('#survey_form').serializeArray(),
+            form_data_length = form_serialize_array.length,
+            data = {};
+
+        for (var i = 0; i < form_data_length; i++) {
+            var item = form_serialize_array[i];
+            data[item.name] = item.value;
+        }
+
+        $.ajax({
+            type: "POST",
+            url : '/survey/editing/preview',
+            data: data,
+            success: function (data) {
+                if (data.success) {
+                    // open preview
+                    openPreviewTab();
+                } else {
+                    alert(data.message);
+                }
+            }
+        });
+    }
+
+    function openPreviewTab() {
+        preview_tab = window.open('/survey/editing/preview', '_blank');
+    }
+
+    function closePreviewTab() {
+        preview_tab.close();
+    }
 
 	function validateOnSubmit() {
         var survey_name = $('input[name=survey_name]')[0];
@@ -950,7 +1034,7 @@
     }
 
 	function validateFile(target) {
-		var input_file = $(target)[0].files[0],
+            var input_file = $(target)[0].files[0],
 			error = $(target).parent().children('.jsError');
 
 		error.hide();
@@ -971,4 +1055,18 @@
 
 		return true;
 	}
+
+    function previewImage(target) {
+        var reader = new FileReader(),
+            image = $(target)[0].files[0];
+
+        reader.onload = function(e) {
+            var image_data = e.target.result;
+            $('.jsSurveyThumbnailPreview').attr('src', image_data);
+            sessionStorage.preview_image = image_data;
+        };
+
+        reader.readAsDataURL(image);
+        $('.jsSurveyThumbnailPreviewBox').show();
+    }
 </script>
