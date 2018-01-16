@@ -22,4 +22,6 @@ interface SurveyRepositoryInterface
 //    public function find($filter);
     public function createEmptyObject();
     public function deleteSurvey($survey_id);
+	public function updateStatusDownloadedForSurvey($survey_id);
+	public function checkStatusSurveyIsDownloaded($survey_id);
 }
