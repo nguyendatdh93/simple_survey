@@ -4,14 +4,22 @@
     @if(is_array($confirms))
         @foreach($confirms as $confirm)
             <p>{!! $confirm['text'] !!} </p>
-    @endforeach
-@endif
+        @endforeach
+    @endif
 <!-- /.secCaution1 --></div>
 <!-- ▲変更可能エリア 終わり -->
 @if(isset($question['require']) && $question['require'] == \App\Question::REQUIRE_QUESTION_YES)
     @if(is_array($choices))
         @foreach($choices as $choice)
-            <p class="txtCheck1"><label style="font-weight:unset"><input type="checkbox" style="vertical-align: middle;margin: 0 .25em 0 0;" class="confirm_checkbox" required {!!  \App\BaseWidget\Form::getAttributes($data_attributes) !!}> {{ $choice['text'] }}</label></p>
+            <p class="txtCheck1">
+                <label style="font-weight:unset">
+                    <input type="checkbox"
+                           style="vertical-align: middle;margin: 0 .25em 0 0;"
+                           class="confirm_checkbox"
+                           required {!!  \App\BaseWidget\Form::getAttributes($data_attributes) !!}>
+                    {{ $choice['text'] }}
+                </label>
+            </p>
         @endforeach
     @endif
 @endif

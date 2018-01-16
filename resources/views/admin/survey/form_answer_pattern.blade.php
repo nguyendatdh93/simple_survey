@@ -12,7 +12,7 @@
         @elseif($survey_content['type'] == \App\Question::TYPE_MULTI_CHOICE)
             {!! \App\BaseWidget\Survey::multiChoice($survey_content, $survey_content['question_choices'], array("name" => "optcheckbox[]")) !!}
         @else
-            {!! \App\BaseWidget\Survey::termConfirm($survey_content, $survey_content['confirm_contents'],  $survey_content['question_choices'], array("name" => "optcheckbox_confirm")) !!}
+            {!! \App\BaseWidget\Survey::termConfirm($survey_content, $survey_content['confirm_contents'],  empty($survey_content['question_choices']) ? [] : $survey_content['question_choices'], array("name" => "optcheckbox_confirm")) !!}
         @endif
     @endif
 @endforeach

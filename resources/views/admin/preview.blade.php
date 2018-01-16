@@ -69,25 +69,31 @@
     @if ($survey['status'] != \App\Survey::STATUS_SURVEY_CLOSED)
         <nav class="navbar navbar-inverse navbar-fixed-top" style="background: #e6e6e6;border-bottom: 2px solid #e6e6e6">
             <div class="container-fluid">
-                <div class="jsButtonControls">
-                    @if ($survey['status'] == \App\Survey::STATUS_SURVEY_PUBLISHED)
-                        <a href="{{ route(\App\Survey::NAME_URL_CLOSE_SURVEY,['id' => $survey['id']]) }}" style="text-decoration: none" class="btn btn-danger btn-circle btn-xl">Close</a>
-                    @elseif ($survey['status'] == \App\Survey::STATUS_SURVEY_DRAF)
-                        <a href="{{ route(\App\Survey::NAME_URL_PUBLISH_SURVEY,['id' => $survey['id']]) }}" style="text-decoration: none" class="btn btn-warning btn-circle btn-xl">Publish</a>
-                    @endif
-                </div>
-                @if ($survey['status'] == \App\Survey::STATUS_SURVEY_PUBLISHED)
-                    <div class="navbar-form navbar-right jsCopyUrlForm">
-                        <div class="form-group" style="float: left">
-                            <label class="jsUrlDomainCopy">{{ route(\App\Survey::NAME_URL_ANSWER_SURVEY) }}</label>
-                            <input type="text" class="form-control jsUrlEncrypt" value="{{ $survey['encryption_url'] }}" placeholder="Search">
-                        </div>
-                        <p style="float: left; margin-left: 5px;color: #0072ef;cursor: pointer;" class="btn btn-link" style="color: dodgerblue" onclick="copyClipbroad()">Copy URL</p>
+                @if ($survey['id'] < 0)
+                    <div class="jsButtonControls">
+                        <a href="#" onclick="window.parent.close();" class="btn btn-circle btn-xl btn-danger"><i class="fa fa fa-close" aria-hidden="true"></i> Close</a>
                     </div>
-                @endif
+                @else
+                    <div class="jsButtonControls">
+                        @if ($survey['status'] == \App\Survey::STATUS_SURVEY_PUBLISHED)
+                            <a href="{{ route(\App\Survey::NAME_URL_CLOSE_SURVEY,['id' => $survey['id']]) }}" style="text-decoration: none" class="btn btn-danger btn-circle btn-xl">Close</a>
+                        @elseif ($survey['status'] == \App\Survey::STATUS_SURVEY_DRAF)
+                            <a href="{{ route(\App\Survey::NAME_URL_PUBLISH_SURVEY,['id' => $survey['id']]) }}" style="text-decoration: none" class="btn btn-warning btn-circle btn-xl">Publish</a>
+                        @endif
+                    </div>
+                    @if ($survey['status'] == \App\Survey::STATUS_SURVEY_PUBLISHED)
+                        <div class="navbar-form navbar-right jsCopyUrlForm">
+                            <div class="form-group" style="float: left">
+                                <label class="jsUrlDomainCopy">{{ route(\App\Survey::NAME_URL_ANSWER_SURVEY) }}</label>
+                                <input type="text" class="form-control jsUrlEncrypt" value="{{ $survey['encryption_url'] }}" placeholder="Search">
+                            </div>
+                            <p style="float: left; margin-left: 5px;color: #0072ef;cursor: pointer;" class="btn btn-link" style="color: dodgerblue" onclick="copyClipbroad()">Copy URL</p>
+                        </div>
+                    @endif
 
-                @if ($survey['status'] == \App\Survey::STATUS_SURVEY_DRAF)
-                    <a href="" class="btn btn-link jsLinkGoEditSurvey"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Go to edit</a>
+                    @if ($survey['status'] == \App\Survey::STATUS_SURVEY_DRAF)
+                        <a href="" class="btn btn-link jsLinkGoEditSurvey"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Go to edit</a>
+                    @endif
                 @endif
             </div>
         </nav>

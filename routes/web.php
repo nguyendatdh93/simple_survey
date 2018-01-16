@@ -31,6 +31,8 @@ Route::prefix('survey')->group(function () {
     Route::get('/duplicate/{id?}', 'SurveyController@duplicate')->name(\App\Survey::NAME_URL_DUPLICATE_SURVEY);
     Route::get('/new', 'SurveyController@edit')->name(\App\Survey::NAME_URL_CREATE_SURVEY);
     Route::post('/save', 'SurveyController@save');
+    Route::get('/editing/preview', 'SurveyController@editingPreview');
+    Route::post('/editing/preview', 'SurveyController@postEditingPreview');
 });
 
 Route::prefix('download')->group(function () {
