@@ -50,7 +50,7 @@ class AnswerSurveyController extends Controller
 		$id                    = $encryption_service->decrypt($encrypt);
 		$survey_service        = new SurveyService();
 		$answer                = array();
-		if ($request->session()->get('answer') != null) {
+		if ($request->session()->get('answer'. $id) != null) {
 			$answer = $request->session()->get('answer' . $id);
 		}
 		

@@ -15,9 +15,9 @@
             "columnDefs": [
                 { "targets": 0, "visible" : false },
                 { "targets": 3, "orderable" : false},
-                { "targets": 4, "orderable" : false},
-                { "targets": 5, "orderable" : false},
-                { "targets": 6, "orderable" : false},
+                { "targets": 4, "orderable" : true},
+                { "targets": 5, "orderable" : true},
+                { "targets": 6, "orderable" : true},
                 { "targets": 7,"orderable" : false},
             ],
         });
@@ -25,8 +25,7 @@
         function addControls(row,data)
         {
             var html                = '',
-                url_redirect_detail = '',
-                url_redirect_copy   = '';
+                url_redirect_detail = '';
 
             url_redirect_detail = "{{ route(\App\Survey::NAME_URL_DOWNLOAD_PAGE_SURVEY) }}/"+ data[0];
 
