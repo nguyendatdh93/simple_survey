@@ -7,7 +7,16 @@
                     'text'  => trans('adminlte_lang::survey.confirm_button_clear_data'),
                     'href'  => route(\App\Survey::NAME_URL_CLEAR_DATA_SURVEY).'/'. (isset($survey_id) ? $survey_id : ''),
                     'attributes' => array(
-                        'class' => 'btn btn-danger',
+                        'class' => 'btn btn-success',
+                    )
+                ),
+                array(
+                    'text'  => trans('adminlte_lang::survey.confirm_button_cancel'),
+                    'attributes' => array(
+                        'class'        => 'btn btn-danger',
+                        'data-dismiss' => "modal",
+                        'aria-label'   => "Close",
+                        "style"        => "float: left;"
                     )
                 )
              )
