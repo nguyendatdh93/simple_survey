@@ -37,6 +37,8 @@ return [
 	'copy_survey' => 'コピー',
 	'edit_survey'  => '編集',
 	'go_to_edit' => '編集画面へ',
+	'go_to_edit_survey'  => '編集画面へ',
+	'button_coppy_url'  => 'URLコピー',
 	
     'go_download_button' => 'ダウンロード画面へ',
 	'time_created' => '回答日時',
@@ -79,8 +81,6 @@ return [
     'confirmation_help_block' => '* The condition text for explain more about this question.',
     'agree_text_placeholder' => 'Agree text',
     'alert_success_create_survey'  => 'Create survey success',
-    'go_to_edit_survey'  => '編集画面へ',
-    'button_coppy_url'  => 'Copy URL',
 	'message_repquire'  => '必ず入力して下さい',
 	'message_confirm_condition' => '規約に承諾してください',
 	'alert_success_answer_survey' => 'Thank you for taking the survey',
