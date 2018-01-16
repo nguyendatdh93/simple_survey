@@ -36,11 +36,12 @@
             width: 60px;
             height: 60px;
             /* padding: 4px 10px; */
-            font-size: 15px;
-            line-height: 4.0;
+            font-size: 13px;
+            line-height: 4.7;
             border-radius: 35px;
             display: block;
             border-radius: 50%;
+            border: solid 2px #f7f7f7;
         }
         .jsCopyUrlForm {
             position: absolute;
@@ -67,7 +68,7 @@
         }
     </style>
     @if ($survey['status'] != \App\Survey::STATUS_SURVEY_CLOSED)
-        <nav class="navbar navbar-inverse navbar-fixed-top" style="background: #e6e6e6;border-bottom: 2px solid #e6e6e6">
+        <nav class="navbar navbar-inverse navbar-fixed-top" style="background: #e6e6e6;border-bottom: 2px solid #c7c7c7;">
             <div class="container-fluid">
                 @if ($survey['id'] < 0)
                     <div class="jsButtonControls">
@@ -87,12 +88,12 @@
                                 <label class="jsUrlDomainCopy">{{ route(\App\Survey::NAME_URL_ANSWER_SURVEY) }}</label>
                                 <input type="text" class="form-control jsUrlEncrypt" value="{{ $survey['encryption_url'] }}" placeholder="Search">
                             </div>
-                            <p style="float: left; margin-left: 5px;color: #0072ef;cursor: pointer;" class="btn btn-link" style="color: dodgerblue" onclick="copyClipbroad()">Copy URL</p>
+                            <a style="float: left; margin-left: 5px;color: #0072ef;cursor: pointer;" class="btn btn-link" style="color: dodgerblue" onclick="copyClipbroad()">{{ trans('adminlte_lang::survey.button_coppy_url') }}</a>
                         </div>
                     @endif
 
                     @if ($survey['status'] == \App\Survey::STATUS_SURVEY_DRAF)
-                        <a href="" class="btn btn-link jsLinkGoEditSurvey"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Go to edit</a>
+                        <a href="{{ route(\App\Survey::NAME_URL_EDIT_SURVEY,['id' => $survey['id']]) }}" class="btn btn-link jsLinkGoEditSurvey"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {{ trans('adminlte_lang::survey.go_to_edit') }}</a>
                     @endif
                 @endif
             </div>
@@ -115,6 +116,33 @@
             <!-- /.layout --></div>
             <!-- /.pagetop --></div>
     </div>
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('/css/modal.css') }}" />
+    <!-- Modal -->
+    <div id="open-modal-confirm-close" class="modal-window">
+        <div>
+            <a href="#modal-close" title="Close" class="modal-close"><i class="fa fa-times-circle" style="position: absolute;top: 2px;right: 3px;font-size: 18px;" aria-hidden="true"></i></a>
+            <h1>{{ trans('adminlte_lang::survey.confirm_close_survey_title') }}</h1>
+            <div>{{ trans('adminlte_lang::survey.confirm_close_survey_content') }}</div>
+            <div class="jsButtonModalControls">
+                <a href="#modal-close" title="Close" class="jsButton jsbutton-danger">{{ trans('adminlte_lang::survey.confirm_button_cancel') }}</a>
+                <a href="{{ route(\App\Survey::NAME_URL_CLOSE_SURVEY,['id' => $survey['id']]) }}" class="jsButton jsbutton-success">{{ trans('adminlte_lang::survey.confirm_close_survey_button_close') }}</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="open-modal-confirm-publish" class="modal-window">
+        <div>
+            <a href="#modal-close" title="Close" class="modal-close"><i class="fa fa-times-circle" style="position: absolute;top: 2px;right: 3px;font-size: 18px;" aria-hidden="true"></i></a>
+            <h1>{{ trans('adminlte_lang::survey.confirm_close_survey_title') }}</h1>
+            <div>{{ trans('adminlte_lang::survey.confirm_close_survey_content') }}</div>
+            <div class="jsButtonModalControls">
+                <a href="#modal-close" title="Close" class="jsButton jsbutton-danger">{{ trans('adminlte_lang::survey.confirm_button_cancel') }}</a>
+                <a href="{{ route(\App\Survey::NAME_URL_PUBLISH_SURVEY,['id' => $survey['id']]) }}" class="jsButton jsbutton-success">{{ trans('adminlte_lang::survey.confirm_close_survey_button_close') }}</a>
+            </div>
+        </div>
+    </div>
+    <!-- /Modal -->
 
     <script>
         function copyClipbroad() {

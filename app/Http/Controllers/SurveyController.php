@@ -67,7 +67,7 @@ class SurveyController extends Controller
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_name')  => 'name',
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_image') => array(
                     'column' => 'image_path',
-                    'type' => 'image'
+                    'type'   => 'image'
                 ),
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_published_at')   => 'published_at',
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_closed_at')      => 'closed_at',
@@ -89,6 +89,7 @@ class SurveyController extends Controller
         $surveys = $this->surveyRepository->getAllSurvey();
         $surveys = $this->getDataSurveyForShowing($surveys);
 	    $surveys = array_reverse($surveys);
+	    
         return view('admin::datatable', array('settings' => $table_settings, 'datas' => $surveys));
     }
 
@@ -169,16 +170,19 @@ class SurveyController extends Controller
                     'icon'  => 'fa fa-fw fa-download'
                 )
             );
-
-            $buttons[] = array(
-                'text'  => trans('adminlte_lang::survey.button_clear_data'),
-                'attributes' => array(
-                    'class'       => 'btn bg-orange margin',
-                    'icon'        => 'fa fa-trash',
-                    'data-toggle' => "modal",
-                    'data-target' => "#modal-confirm-clear-data-survey"
-                )
-            );
+            
+			$survey_is_downloaded = $this->surveyRepository->checkStatusSurveyIsDownloaded($id);
+			if ($survey_is_downloaded['downloaded'] == Survey::STATUS_SURVEY_DOWNLOADED) {
+				$buttons[] = array(
+					'text' => trans('adminlte_lang::survey.button_clear_data'),
+					'attributes' => array(
+						'class'       => 'btn bg-orange margin',
+						'icon'        => 'fa fa-trash',
+						'data-toggle' => "modal",
+						'data-target' => "#modal-confirm-clear-data-survey"
+					)
+				);
+			}
         }
 
         $table_settings = array(
@@ -219,10 +223,10 @@ class SurveyController extends Controller
 	        ,   'Content-Encoding'    => 'UTF-8'
 	        ,   'charset'             => 'UTF-8'
         ];
-
-        # add headers for each column in the CSV download
+		
+	    $headers_columns[array_search('created_at', $headers_columns)] = trans('adminlte_lang::survey.column_csv_created_at');
         array_unshift($answer_datas, $headers_columns);
-
+		
         $callback = function() use ($answer_datas)
         {
             $FH = fopen('php://output', 'w');
@@ -231,7 +235,8 @@ class SurveyController extends Controller
             }
             fclose($FH);
         };
-
+		
+        $this->surveyRepository->updateStatusDownloadedForSurvey($id);
         return Response::stream($callback, 200, $headers);
     }
 
@@ -560,10 +565,10 @@ class SurveyController extends Controller
         $result = $this->surveyRepository->publishSurveyById($id);
 
         if ($result) {
-            return redirect()->route(Survey::NAME_URL_PREVIEW_PUBLISH, ['id' => $id])->with('alert_success', trans('adminlte_lang::survey.message_publish_survey_success'));
+            return redirect()->route(Survey::NAME_URL_PREVIEW, ['id' => $id])->with('alert_success', trans('adminlte_lang::survey.message_publish_survey_success'));
         }
 
-        return redirect()->route(Survey::NAME_URL_PREVIEW_DRAF, ['id' => $id])->with('alert_error', trans('adminlte_lang::survey.message_publish_survey_not_success'));
+        return redirect()->route(Survey::NAME_URL_PREVIEW, ['id' => $id])->with('alert_error', trans('adminlte_lang::survey.message_publish_survey_not_success'));
     }
 
     /**
@@ -575,10 +580,10 @@ class SurveyController extends Controller
         $result = $this->surveyRepository->closeSurveyById($id);
 
         if ($result) {
-            return redirect()->route(Survey::NAME_URL_PREVIEW_CLOSE, ['id' => $id])->with('alert_success', trans('adminlte_lang::survey.message_close_survey_success'));
+            return redirect()->route(Survey::NAME_URL_PREVIEW, ['id' => $id])->with('alert_success', trans('adminlte_lang::survey.message_close_survey_success'));
         }
 
-        return redirect()->route(Survey::NAME_URL_PREVIEW_PUBLISH, ['id' => $id])->with('alert_error', trans('adminlte_lang::survey.message_close_survey_not_success'));
+        return redirect()->route(Survey::NAME_URL_PREVIEW, ['id' => $id])->with('alert_error', trans('adminlte_lang::survey.message_close_survey_not_success'));
     }
 
     /**

@@ -44,18 +44,13 @@ class AnswerSurveyController extends Controller
 		$this->confirmContentRepository = $confirmContentRepository;
 	}
 	
-	public function index()
-	{
-		return view('admin::form_survey');
-	}
-	
 	public function showQuestionSurvey(Request $request, $encrypt)
 	{
 		$encryption_service    = new EncryptionService();
 		$id                    = $encryption_service->decrypt($encrypt);
 		$survey_service        = new SurveyService();
 		$answer                = array();
-		if ($request->session()->get('answer') != null) {
+		if ($request->session()->get('answer'. $id) != null) {
 			$answer = $request->session()->get('answer' . $id);
 		}
 		
@@ -64,7 +59,7 @@ class AnswerSurveyController extends Controller
 			return redirect('404');
 		}
 		
-		$survey                = $survey_service->getDataAnswerForSurvey($survey, $answer['questions']);
+		$survey                = $survey_service->getDataAnswerForSurvey($survey, isset($answer['questions']) ? $answer['questions'] : array());
 		$survey['encrypt_url'] = $encrypt;
 		
 		return view('admin::answer', array('survey' => $survey));
@@ -78,8 +73,7 @@ class AnswerSurveyController extends Controller
 			return redirect('404');
 		}
 		
-		$encryption_service  = new EncryptionService();
-		$id                  = $encryption_service->decrypt($encrypt);
+		$id                  = $this->getIdSurveyFormEncryptCode($encrypt);
 		$survey              = $this->surveyRepository->getSurveyById($id);
 		$survey['questions'] = $this->questionRepository->getQuestionSurveyWithoutConfirmTypeBySurveyId($id);
 		
@@ -112,9 +106,7 @@ class AnswerSurveyController extends Controller
 	
 	public function answerSurvey(Request $request, $encrypt)
 	{
-		$encryption_service  = new EncryptionService();
-		$id                  = $encryption_service->decrypt($encrypt);
-		
+		$id        = $this->getIdSurveyFormEncryptCode($encrypt);
 		$survey    = $request->session()->get('answer' . $id);
 		$id_answer = $this->answerRepository->save($survey['id']);
 		foreach ($survey['questions'] as $question) {
@@ -143,6 +135,20 @@ class AnswerSurveyController extends Controller
 		}
 		
 		$request->session()->forget('answer' . $id);
-		return redirect()->route(Survey::NAME_URL_ANSWER_SURVEY,['encrypt' => $encrypt]);
+		
+		return redirect()->route(Survey::NAME_URL_THANK_PAGE);
+	}
+	
+	public function getIdSurveyFormEncryptCode($encrypt)
+	{
+		$encryption_service  = new EncryptionService();
+		$id                  = $encryption_service->decrypt($encrypt);
+		
+		return $id;
+	}
+	
+	public function showThankPage()
+	{
+		return view('admin::answer_thank');
 	}
 }

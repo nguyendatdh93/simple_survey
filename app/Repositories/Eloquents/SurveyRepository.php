@@ -139,5 +139,20 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
         $this->_model->where('id',$survey_id)
                     ->update(['del_flg'=> Survey::DELETE_FLG]);
     }
-
+    
+    public function updateStatusDownloadedForSurvey($survey_id)
+    {
+    	if ($survey_id) {
+		    $this->_model->where('id', $survey_id)->update(['downloaded' => Survey::STATUS_SURVEY_DOWNLOADED]);
+	    }
+    }
+	
+    public function checkStatusSurveyIsDownloaded($survey_id)
+    {
+	    $result = $this->_model->select('downloaded')
+		    ->where('id',$survey_id)
+		    ->first();
+	    
+	    return $result ? $result->toArray() : [];
+    }
 }

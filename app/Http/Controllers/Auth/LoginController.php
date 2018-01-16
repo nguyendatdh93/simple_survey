@@ -115,7 +115,8 @@ class LoginController extends AuthService
         $domain_name = substr(strrchr($result['email'], "@"), 1);
         if ($domain_name != Config::get('config.domain')) {
             $this->revolkeAccessTokenGoogle($token);
-            return redirect('/login')->with('error', Config::get('config.domain') . ' ドメインの Google アカウントでログインしてください。');
+            
+            return redirect('/login')->with('error', Config::get('config.domain') .' '. trans("adminlte_lang::survey.error_sign_google"));
         }
 
         $user_info = $this->userRepository->getUserInfoByEmail($result['email']);
@@ -139,7 +140,7 @@ class LoginController extends AuthService
         $classProperty->setAccessible(true);
         $accessToken = $classProperty->getValue($token);
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "https://accounts.google.com/o/oauth2/revoke?token=". $accessToken);
+        curl_setopt($ch, CURLOPT_URL, Config::get('config.url_sign_out_google') ."=". $accessToken);
         curl_exec($ch);
         curl_close($ch);
     }

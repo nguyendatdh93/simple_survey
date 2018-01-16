@@ -21,11 +21,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $title = 'Users';
-        $title_headers = array('ID','Name','Email','Created at');
-        $id_table = "users-table";
-        $users = $this->userRepository->getAll();
-        return view('admin::datatable', array('id_table' => $id_table, 'title' => $title, 'title_headers' => $title_headers, 'datas' => $users));
+    
     }
 
     /**

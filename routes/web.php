@@ -17,12 +17,6 @@ Route::prefix('auth')->group(function () {
     Route::get('/google', array('as' => 'auth.google', 'uses' => 'Auth\LoginController@loginWithGoogle'));
 });
 
-Route::prefix('preview')->group(function () {
-    Route::get('/publish/{id?}', 'SurveyController@preview')->name(\App\Survey::NAME_URL_PREVIEW_PUBLISH);
-    Route::get('/close/{id?}', 'SurveyController@preview')->name(\App\Survey::NAME_URL_PREVIEW_CLOSE);
-    Route::get('/draf/{id?}', 'SurveyController@preview')->name(\App\Survey::NAME_URL_PREVIEW_DRAF);
-});
-
 Route::prefix('survey')->group(function () {
     Route::get('/publish/{id?}', 'SurveyController@publishSurveyById')->name(\App\Survey::NAME_URL_PUBLISH_SURVEY);
     Route::get('/close/{id?}', 'SurveyController@closeSurveyById')->name(\App\Survey::NAME_URL_CLOSE_SURVEY);
@@ -33,6 +27,7 @@ Route::prefix('survey')->group(function () {
     Route::post('/save', 'SurveyController@save');
     Route::get('/editing/preview', 'SurveyController@editingPreview');
     Route::post('/editing/preview', 'SurveyController@postEditingPreview');
+	Route::get('/preview/{id?}', 'SurveyController@preview')->name(\App\Survey::NAME_URL_PREVIEW);
 });
 
 Route::prefix('download')->group(function () {
@@ -55,7 +50,12 @@ Route::get('/404', function (){
 Route::get('/setup-lang', 'HomeController@setupLanguage');
 Route::get('/image/{image_path?}/{image_name?}', 'HomeController@showImage')->name(\App\Survey::NAME_URL_SHOW_IMAGE);
 
-Route::get('/s/{encrypt?}', 'AnswerSurveyController@showQuestionSurvey')->name(\App\Survey::NAME_URL_ANSWER_SURVEY);
-Route::get('/s/{encrypt?}/confirm', 'AnswerSurveyController@showFormConfirmAnswerSurvey')->name(\App\Survey::NAME_URL_ANSWER_CONFIRM);
-Route::get('/s/{encrypt?}/answer', 'AnswerSurveyController@answerSurvey')->name(\App\Survey::NAME_URL_SUBMIT_CONFIRM);
+Route::prefix('answer')->group(function () {
+	Route::get('/thank', 'AnswerSurveyController@showThankPage')->name(\App\Survey::NAME_URL_THANK_PAGE);
+	Route::get('/{encrypt?}', 'AnswerSurveyController@showQuestionSurvey')->name(\App\Survey::NAME_URL_ANSWER_SURVEY);
+	Route::get('/{encrypt?}/confirm', 'AnswerSurveyController@showFormConfirmAnswerSurvey')->name(\App\Survey::NAME_URL_ANSWER_CONFIRM);
+	Route::get('/{encrypt?}/answer', 'AnswerSurveyController@answerSurvey')->name(\App\Survey::NAME_URL_SUBMIT_CONFIRM);
+});
+
+
 Route::get('/form-survey', 'AnswerSurveyController@index');
