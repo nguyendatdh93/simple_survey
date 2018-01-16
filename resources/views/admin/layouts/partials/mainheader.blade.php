@@ -31,7 +31,7 @@
                             <a style="color:white;display: block;" href="{{ url('/logout') }}"
                                onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">
-                                <i class="fa fa-fw fa-sign-out" data-toggle="tooltip" title="Logout" data-placement="bottom"></i>
+                                <i class="fa fa-fw fa-sign-out" data-toggle="tooltip" title="{{ trans('adminlte_lang::survey.logout') }}" data-placement="left"></i>
                             </a>
 
                             <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
