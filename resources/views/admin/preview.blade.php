@@ -74,7 +74,8 @@
                     @if ($survey['status'] == \App\Survey::STATUS_SURVEY_PUBLISHED)
                         <a href="#open-modal-confirm-close" style="text-decoration: none" class="btn btn-danger btn-circle btn-xl">{{ trans('adminlte_lang::survey.confirm_button_close') }}</a>
                     @elseif ($survey['status'] == \App\Survey::STATUS_SURVEY_DRAF)
-                        <a href="#open-modal-confirm-publish" style="text-decoration: none" class="btn btn-warning btn-circle btn-xl">{{ trans('adminlte_lang::survey.confirm_button_publish') }}</a>
+                        <a href="#open-modal-confirm-close" style="text-decoration: none;float:left" class="btn btn-danger btn-circle btn-xl">{{ trans('adminlte_lang::survey.confirm_button_close') }}</a>
+                        <a href="#open-modal-confirm-publish" style="text-decoration: none;float:left" class="btn btn-warning btn-circle btn-xl">{{ trans('adminlte_lang::survey.confirm_button_publish') }}</a>
                     @endif
                 </div>
                 @if ($survey['status'] == \App\Survey::STATUS_SURVEY_PUBLISHED)
