@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'controls' => 'Controls',
+    'controls' => '管理',
     'detail' => 'Detail',
     'copy_survey' => 'Copy Survey',
     "decimal" =>       "",

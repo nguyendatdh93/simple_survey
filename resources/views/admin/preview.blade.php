@@ -71,9 +71,10 @@
             <div class="container-fluid">
                 <div class="jsButtonControls">
                     @if ($survey['status'] == \App\Survey::STATUS_SURVEY_PUBLISHED)
-                        <a href="{{ route(\App\Survey::NAME_URL_CLOSE_SURVEY,['id' => $survey['id']]) }}" style="text-decoration: none" class="btn btn-danger btn-circle btn-xl">Close</a>
+                        <a href="#open-modal-confirm-close" style="text-decoration: none" class="btn btn-danger btn-circle btn-xl">{{ trans('adminlte_lang::survey.confirm_button_close') }}</a>
                     @elseif ($survey['status'] == \App\Survey::STATUS_SURVEY_DRAF)
-                        <a href="{{ route(\App\Survey::NAME_URL_PUBLISH_SURVEY,['id' => $survey['id']]) }}" style="text-decoration: none" class="btn btn-warning btn-circle btn-xl">Publish</a>
+                        {{--<a href="{{ route(\App\Survey::NAME_URL_PUBLISH_SURVEY,['id' => $survey['id']]) }}" style="text-decoration: none" class="btn btn-warning btn-circle btn-xl">{{ trans('adminlte_lang::survey.confirm_button_publish') }}</a>--}}
+                        <a href="#open-modal-confirm-publish" style="text-decoration: none" class="btn btn-warning btn-circle btn-xl">{{ trans('adminlte_lang::survey.confirm_button_publish') }}</a>
                     @endif
                 </div>
                 @if ($survey['status'] == \App\Survey::STATUS_SURVEY_PUBLISHED)
@@ -87,7 +88,7 @@
                 @endif
 
                 @if ($survey['status'] == \App\Survey::STATUS_SURVEY_DRAF)
-                    <a href="" class="btn btn-link jsLinkGoEditSurvey"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Go to edit</a>
+                    <a href="" class="btn btn-link jsLinkGoEditSurvey"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {{ trans('adminlte_lang::survey.go_to_edit') }}</a>
                 @endif
             </div>
         </nav>
@@ -109,6 +110,33 @@
             <!-- /.layout --></div>
             <!-- /.pagetop --></div>
     </div>
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('/css/modal.css') }}" />
+    <!-- Modal -->
+    <div id="open-modal-confirm-close" class="modal-window">
+        <div>
+            <a href="#modal-close" title="Close" class="modal-close"><i class="fa fa-times-circle" style="position: absolute;top: 2px;right: 3px;font-size: 18px;" aria-hidden="true"></i></a>
+            <h1>{{ trans('adminlte_lang::survey.confirm_close_survey_title') }}</h1>
+            <div>{{ trans('adminlte_lang::survey.confirm_close_survey_content') }}</div>
+            <div class="jsButtonModalControls">
+                <a href="#modal-close" title="Close" class="jsButton jsbutton-danger">{{ trans('adminlte_lang::survey.confirm_button_cancel') }}</a>
+                <a href="{{ route(\App\Survey::NAME_URL_CLOSE_SURVEY,['id' => $survey['id']]) }}" class="jsButton jsbutton-success">{{ trans('adminlte_lang::survey.confirm_close_survey_button_close') }}</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="open-modal-confirm-publish" class="modal-window">
+        <div>
+            <a href="#modal-close" title="Close" class="modal-close"><i class="fa fa-times-circle" style="position: absolute;top: 2px;right: 3px;font-size: 18px;" aria-hidden="true"></i></a>
+            <h1>{{ trans('adminlte_lang::survey.confirm_close_survey_title') }}</h1>
+            <div>{{ trans('adminlte_lang::survey.confirm_close_survey_content') }}</div>
+            <div class="jsButtonModalControls">
+                <a href="#modal-close" title="Close" class="jsButton jsbutton-danger">{{ trans('adminlte_lang::survey.confirm_button_cancel') }}</a>
+                <a href="{{ route(\App\Survey::NAME_URL_PUBLISH_SURVEY,['id' => $survey['id']]) }}" class="jsButton jsbutton-success">{{ trans('adminlte_lang::survey.confirm_close_survey_button_close') }}</a>
+            </div>
+        </div>
+    </div>
+    <!-- /Modal -->
 
     <script>
         function copyClipbroad() {

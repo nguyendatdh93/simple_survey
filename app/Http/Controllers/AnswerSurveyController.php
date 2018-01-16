@@ -78,8 +78,7 @@ class AnswerSurveyController extends Controller
 			return redirect('404');
 		}
 		
-		$encryption_service  = new EncryptionService();
-		$id                  = $encryption_service->decrypt($encrypt);
+		$id                  = $this->getIdSurveyFormEncryptCode($encrypt);
 		$survey              = $this->surveyRepository->getSurveyById($id);
 		$survey['questions'] = $this->questionRepository->getQuestionSurveyWithoutConfirmTypeBySurveyId($id);
 		
@@ -112,9 +111,7 @@ class AnswerSurveyController extends Controller
 	
 	public function answerSurvey(Request $request, $encrypt)
 	{
-		$encryption_service  = new EncryptionService();
-		$id                  = $encryption_service->decrypt($encrypt);
-		
+		$id        = $this->getIdSurveyFormEncryptCode($encrypt);
 		$survey    = $request->session()->get('answer' . $id);
 		$id_answer = $this->answerRepository->save($survey['id']);
 		foreach ($survey['questions'] as $question) {
@@ -146,5 +143,13 @@ class AnswerSurveyController extends Controller
 		$request->session()->put('answered', true);
 		
 		return redirect()->route(Survey::NAME_URL_ANSWER_SURVEY,['encrypt' => $encrypt]);
+	}
+	
+	public function getIdSurveyFormEncryptCode($encrypt)
+	{
+		$encryption_service  = new EncryptionService();
+		$id                  = $encryption_service->decrypt($encrypt);
+		
+		return $id;
 	}
 }

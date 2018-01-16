@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'logo' => 'Simple Survey System',
+    'logo' => 'アンケート管理システム',
 ];
