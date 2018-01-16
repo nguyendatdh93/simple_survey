@@ -87,9 +87,14 @@
             } else {
                 return;
             }
-
         }
     </script>
+
+    @if(isset($survey['answered']))
+        <script type="text/javascript">
+            alert('{{ trans("adminlte_lang::survey.alert_success_answer_survey") }}');
+        </script>
+    @endif
     <div class="btnbox">
         <p class="btn1 AMRt20"><a href="javascript:;" onclick="agreeCheck();">確認する</a></p>
     </div>
