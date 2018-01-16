@@ -222,10 +222,11 @@ class SurveyController extends Controller
 	        ,   'Content-Encoding'    => 'UTF-8'
 	        ,   'charset'             => 'UTF-8'
         ];
-
+		
         # add headers for each column in the CSV download
+	    $headers_columns[array_search('created_at', $headers_columns)] = trans('adminlte_lang::survey.column_csv_created_at');
         array_unshift($answer_datas, $headers_columns);
-
+		
         $callback = function() use ($answer_datas)
         {
             $FH = fopen('php://output', 'w');

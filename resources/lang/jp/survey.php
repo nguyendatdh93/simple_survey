@@ -72,5 +72,6 @@ return [
     'button_coppy_url'  => 'Copy URL',
 	'message_repquire'  => '必ず入力して下さい',
 	'message_confirm_condition' => '規約に承諾してください',
-	'alert_success_answer_survey' => 'Thank you for taking the survey'
+	'alert_success_answer_survey' => 'Thank you for taking the survey',
+	'column_csv_created_at' => 'Time answered',
 ];
