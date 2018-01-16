@@ -64,7 +64,7 @@ class AnswerSurveyController extends Controller
 			return redirect('404');
 		}
 		
-		$survey                = $survey_service->getDataAnswerForSurvey($survey, $answer['questions']);
+		$survey                = $survey_service->getDataAnswerForSurvey($survey, isset($answer['questions']) ? $answer['questions'] : array());
 		$survey['encrypt_url'] = $encrypt;
 		
 		return view('admin::answer', array('survey' => $survey));
