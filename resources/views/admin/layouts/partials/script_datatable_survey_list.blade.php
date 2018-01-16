@@ -18,9 +18,9 @@
             "columnDefs": [
                 { "targets": 0, "visible" : false },
                 { "targets": 3, "orderable" : false},
-                { "targets": 4, "orderable" : false},
-                { "targets": 5, "orderable" : false},
-                { "targets": 6, "orderable" : false},
+                { "targets": 4, "orderable" : true},
+                { "targets": 5, "orderable" : true},
+                { "targets": 6, "orderable" : true},
                 { "targets": 7,"orderable" : false, "width": "135px"},
             ],
             "language": {
@@ -49,13 +49,13 @@
             url_edit_survey     = '';
 
             if(data.indexOf("{{ trans('adminlte_lang::survey.draf') }}") >= 0) {
-                url_redirect_detail = "{{ route(\App\Survey::NAME_URL_PREVIEW_DRAF) }}/"+ data[0];
+                url_redirect_detail = "{{ route(\App\Survey::NAME_URL_PREVIEW) }}/"+ data[0];
                 url_edit_survey = "{{ route(\App\Survey::NAME_URL_EDIT_SURVEY) }}/"+ data[0];
             } else if(data.indexOf("{{ trans('adminlte_lang::survey.published') }}") >= 0) {
-                url_redirect_detail = "{{ route(\App\Survey::NAME_URL_PREVIEW_PUBLISH) }}/"+ data[0];
+                url_redirect_detail = "{{ route(\App\Survey::NAME_URL_PREVIEW) }}/"+ data[0];
                 url_redirect_copy   = "{{ route(\App\Survey::NAME_URL_DUPLICATE_SURVEY) }}/"+ data[0];
             } else {
-                url_redirect_detail = "{{ route(\App\Survey::NAME_URL_PREVIEW_CLOSE) }}/"+ data[0];
+                url_redirect_detail = "{{ route(\App\Survey::NAME_URL_PREVIEW) }}/"+ data[0];
                 url_redirect_copy   = "{{ route(\App\Survey::NAME_URL_DUPLICATE_SURVEY) }}/"+ data[0];
             }
 
