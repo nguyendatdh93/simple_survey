@@ -7,7 +7,7 @@
 <meta name="format-detection" content="telephone=no">
 <link href="{{ asset('/survey/css/base.css') }}" rel="stylesheet" media="screen">
 <!--[if lt IE 9]><link rel="stylesheet" href="{{ asset('/survey/css/ltIE9.css') }}" type="text/css"><![endif]-->
-<title>当選フォーム</title>
+<title>@yield('htmlheader_title')</title>
 @section('bootstrap')
 
 @show

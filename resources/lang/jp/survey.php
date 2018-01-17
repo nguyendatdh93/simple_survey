@@ -23,7 +23,8 @@ return [
     'confirm_close_survey_button_publish' => "Publish",
 	'confirm_button_cancel' => "キャンセール",
 	
-    'survey_list_table_title' => "",
+    'survey_list_table_title' => "アンケート一覧",
+	'survey_list_table_download_title' => "アンケート一覧",
 	'button_create_new_survey'  => 'アンケート作成',
 	'survey_create_page_title' => 'アンケート作成',
     'survey_list_table_header_column_id' => "Id",
@@ -45,7 +46,7 @@ return [
 	
     'button_more' => 'More',
     'button_less' => 'Less',
-    'answer_download_table' => "",
+    'answer_download_table' => "Survey answer download",
     'button_download_csv' => 'CSVダウンロード',
     'button_clear_data' => 'データ削除',
 	'confirm_button_clear_data' => '削除する',
@@ -88,4 +89,11 @@ return [
 	
 	'radio_label_choice_survey_draft_status' => '下書き',
 	'radio_label_choice_survey_publish_status' => '公開する',
+	'htmlheader_title_preview_draf' => 'Preview draft survey',
+	'htmlheader_title_preview_publish' => 'Preview publish survey',
+	'htmlheader_title_preview_close' => 'Preview close survey',
+	'htmlheader_title_preview' => 'Preview survey',
+	'htmlheader_title_answer_survey' => 'Answer survey - simple survey',
+	'message_255_characters' => 'The length of answer < 255 characters',
+	'message_5000_characters' => 'The length of answer < 5000 characters',
 ];

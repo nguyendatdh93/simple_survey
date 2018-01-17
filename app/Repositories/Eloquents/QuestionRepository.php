@@ -164,4 +164,14 @@ class QuestionRepository extends \EloquentRepository implements QuestionReposito
 	
 	    return $result;
     }
+	
+	public function checkQuestionIsRequire($question_id)
+	{
+		$result = $this->_model->select('require')
+			->where('id',$question_id)
+			->get()
+			->first();
+		
+		return $result;
+	}
 }
