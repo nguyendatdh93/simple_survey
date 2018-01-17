@@ -21,6 +21,8 @@ use App\Repositories\Eloquents\ConfirmContentRepository;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Dusk\DuskServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 class AppServiceProvider extends ServiceProvider
 {
