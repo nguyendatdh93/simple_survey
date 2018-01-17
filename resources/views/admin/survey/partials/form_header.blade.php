@@ -5,7 +5,7 @@
        @if(isset($survey['image_path']) && $survey['image_path'] == route(\App\Survey::NAME_URL_SHOW_IMAGE).'/')
             {{ '' }}
        @else
-            <img src="{{ isset($survey['image_path']) ? $survey['image_path'] : "" }}" alt=" ">
+            <img id="survey_thumbnail" src="{{ isset($survey['image_path']) ? $survey['image_path'] : "" }}" alt=" ">
        @endif
     </p>
     <!-- ▲MV-->
@@ -18,3 +18,12 @@
         {!! \App\BaseWidget\Survey::formAnswerPattern($survey['questions'][\App\Question::CATEGORY_HEADER]) !!}
     @endif
 @show
+
+<script>
+    var image_data = sessionStorage.preview_image;
+    if (image_data == 'no-image') {
+        $('#survey_thumbnail').remove();
+    } else {
+        $('#survey_thumbnail').attr('src', image_data);
+    }
+</script>

@@ -72,5 +72,7 @@ return [
     'button_coppy_url'  => 'Copy URL',
 	'message_repquire'  => '必ず入力して下さい',
 	'message_confirm_condition' => '規約に承諾してください',
-	'alert_success_answer_survey' => 'Thank you for taking the survey'
+	'alert_success_answer_survey' => 'Thank you for taking the survey',
+	'radio_label_choice_survey_draft_status' => 'Draft',
+	'radio_label_choice_survey_publish_status' => 'Publish',
 ];

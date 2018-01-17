@@ -287,10 +287,14 @@ class SurveyController extends Controller
 
         $survey = $this->surveyRepository->getSurveyById($id);
         if (!$survey) {
-            die('404');
+            die('404 - no survey');
         }
 
-        $survey_service       = new SurveyService();
+        if ($survey['status'] != Survey::STATUS_SURVEY_DRAF) {
+            die('404 - could not edit this survey');
+        }
+
+        $survey_service = new SurveyService();
         if ($survey['image_path']) {
             $survey['image_path'] = \route('show-image'). '/' . $survey_service->getImageName($survey['image_path']);
         }
@@ -325,6 +329,98 @@ class SurveyController extends Controller
             'questions'      => $questions,
             'question_types' => $question_types
         ]);
+    }
+
+    public function editingPreview(Request $request) {
+        $survey    = $request->session()->get('preview_survey');
+        $questions = $request->session()->get('preview_questions');
+
+        if (empty($questions)) {
+            return view('admin::preview', ['survey' => $survey]);
+        }
+
+        foreach ($questions as $key => $question) {
+            $survey['questions'][$key]['id'] = 0 - $key;
+            $survey['questions'][$key]['survey_id'] = $survey['id'];
+            $survey['questions'][$key]['text'] = $question['text'];
+            $survey['questions'][$key]['type'] = $question['type'];
+            $survey['questions'][$key]['category'] = $question['category'];
+            $survey['questions'][$key]['require'] = empty($question['required']) ? Question::REQUIRE_QUESTION_NO : Question::REQUIRE_QUESTION_YES;
+
+            $question_choices = empty($question['choice']) ? [] : $question['choice'];
+            if (count($question_choices) > 0) {
+                $choices = [];
+                foreach ($question_choices as $choice_key => $question_choice) {
+                    $choices[] = [
+                        'id' => 0 - $choice_key,
+                        'text' => $question_choice
+                    ];
+                }
+
+                $survey['questions'][$key]['question_choices'] = $choices;
+            }
+
+            if (!empty($question['required']) && !empty($question['agree_text'])) {
+                $survey['questions'][$key]['question_choices'] = [['text' => $question['agree_text']]];
+            }
+
+            $confirm_content = empty($question['confirmation_text']) ? '' : $question['confirmation_text'];
+            if ($confirm_content) {
+                $survey['questions'][$key]['confirm_contents'] = [['text' => $confirm_content]];
+            }
+        }
+
+        $group_question_survey = [];
+        foreach ($survey['questions'] as $question) {
+            $group_question_survey[$question['category']][] = $question;
+        }
+
+        $survey['questions'] = $group_question_survey;
+
+        return view('admin::preview', ['survey' => $survey]);
+    }
+
+    public function postEditingPreview(Request $request) {
+        $input   = Input::all();
+        $user_id = Auth::id();
+        $valid   = true;
+
+        // validate file
+        if (!$this->validateText($input['survey_name'])) {
+            $valid = false;
+        }elseif (!$this->validateText($input['survey_description'], false, 5000)) {
+            $valid = false;
+        }
+
+        // create new questions data from input text
+        $new_questions = $this->getQuestionsDataFromInput($input);
+
+        // validate questions input
+        if (!$this->validateQuestionsInput($new_questions)) {
+            $valid = false;
+        }
+
+        if ($valid) {
+            $message = 'OK';
+
+            $survey = [
+                'id'          => -1,
+                'name'        => $input['survey_name'],
+                'image_path'  => '',
+                'description' => $input['survey_description'],
+                'status'      => Survey::STATUS_SURVEY_DRAF
+            ];
+
+            $request->session()->put('preview_survey', $survey);
+            $request->session()->put('preview_questions', $new_questions);
+        } else {
+            $message = 'Error input';
+        }
+
+        return Response::json([
+                    'success' => $valid,
+                    'message' => $message
+                ]);
     }
 
     public function save() {
