@@ -157,6 +157,7 @@ class SurveyController extends Controller
         foreach ($list_questions as $question) {
             $headers_columns[$question['text']] = $question['text'];
         }
+        
         $headers_columns[trans('adminlte_lang::survey.time_created')] = 'created_at';
 
         $buttons = array();
@@ -233,10 +234,12 @@ class SurveyController extends Controller
             foreach ($answer_datas as $key => $row) {
                 fputcsv($FH, $row);
             }
+            
             fclose($FH);
         };
 		
         $this->surveyRepository->updateStatusDownloadedForSurvey($id);
+        
         return Response::stream($callback, 200, $headers);
     }
 
@@ -553,6 +556,7 @@ class SurveyController extends Controller
         $survey                   = $survey_service->getDataAnswerForSurvey($survey);
         $encryption_service       = new EncryptionService();
         $survey['encryption_url'] = $encryption_service->encrypt($id);
+        
         return view('admin::preview', array('survey' => $survey, 'name_url' => $request->route()->getName()));
     }
 
