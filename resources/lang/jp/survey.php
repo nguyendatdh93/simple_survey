@@ -23,7 +23,8 @@ return [
     'confirm_close_survey_button_publish' => "Publish",
 	'confirm_button_cancel' => "キャンセール",
 	
-    'survey_list_table_title' => "",
+    'survey_list_table_title' => "アンケート一覧",
+	'survey_list_table_download_title' => "アンケート一覧",
 	'button_create_new_survey'  => 'アンケート作成',
 	'survey_create_page_title' => 'アンケート作成',
     'survey_list_table_header_column_id' => "Id",
@@ -45,7 +46,7 @@ return [
 	
     'button_more' => 'More',
     'button_less' => 'Less',
-    'answer_download_table' => "",
+    'answer_download_table' => "Survey answer download",
     'button_download_csv' => 'CSVダウンロード',
     'button_clear_data' => 'データ削除',
 	'confirm_button_clear_data' => '削除する',
