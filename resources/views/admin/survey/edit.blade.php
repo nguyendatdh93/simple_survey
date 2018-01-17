@@ -63,6 +63,11 @@
 	.slider.round:before {
 		border-radius: 50%;
 	}
+	.jsValidate {
+		display: block;
+		padding-left: 0px;
+		color: red;
+	}
 </style>
 
 @section('main-content-form')
@@ -90,6 +95,7 @@
 							<div class="form-group row">
 								<div class="col-md-3">
 									{!! FormSimple::label(trans('survey.survey_name_title'), ['for' => 'survey_name']) !!}
+									<span class="jsValidate">※必須</span>
 								</div>
 								<div class="col-md-9">
 									{!! FormSimple::input([
