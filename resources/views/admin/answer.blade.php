@@ -10,37 +10,51 @@
             var elementForms = document.getElementById("form-answer-survey"),
                 flg_continue = true;
             for (var i = 0; i < elementForms.elements.length; i++) {
-                if (elementForms.elements[i].required) {
-                    if (elementForms.elements[i].type == 'text') {
+                if (elementForms.elements[i].type == 'text') {
+                    if (elementForms.elements[i].value.length > 255)
+                    {
+                        removeErrorForAnswerText(elementForms.elements[i]);
+                        addErrorForAnswerText(elementForms.elements[i], '{{ trans("adminlte_lang::survey.message_255_characters") }}');
+                        flg_continue = false;
+                    } else if(elementForms.elements[i].required) {
                         if (elementForms.elements[i].value == '') {
-                            if (elementForms.elements[i].parentElement.querySelectorAll(".validate").length == 0) {
-                                elChild = document.createElement('span');
-                                elChild.className = "validate";
-                                elChild.innerHTML = '{{ trans("adminlte_lang::survey.message_repquire") }}';
-                                elementForms.elements[i].parentElement.appendChild(elChild);
-                            }
+                            removeErrorForAnswerText(elementForms.elements[i]);
+                            addErrorForAnswerText(elementForms.elements[i], '{{ trans("adminlte_lang::survey.message_repquire") }}');
                             flg_continue = false;
                         } else {
-                            if (elementForms.elements[i].parentElement.querySelectorAll(".validate").length > 0) {
-                                elementForms.elements[i].parentElement.querySelectorAll(".validate")[0].remove();
-                            }
+                            removeErrorForAnswerText(elementForms.elements[i]);
                         }
+                    } else {
+                        removeErrorForAnswerText(elementForms.elements[i]);
                     }
+                } else if (elementForms.elements[i].type == 'textarea') {
+                    if (elementForms.elements[i].value.length > 5000)
+                    {
+                        removeErrorForAnswerText(elementForms.elements[i]);
+                        addErrorForAnswerText(elementForms.elements[i], '{{ trans("adminlte_lang::survey.message_5000_characters") }}');
+                        flg_continue = false;
+                    } else if(elementForms.elements[i].required) {
+                        if (elementForms.elements[i].value == '') {
+                            removeErrorForAnswerText(elementForms.elements[i]);
+                            addErrorForAnswerText(elementForms.elements[i], '{{ trans("adminlte_lang::survey.message_repquire") }}');
+                            flg_continue = false;
+                        } else {
+                            removeErrorForAnswerText(elementForms.elements[i]);
+                        }
+                    } else {
+                        removeErrorForAnswerText(elementForms.elements[i]);
+                    }
+                }
 
+                if (elementForms.elements[i].required) {
                     if (elementForms.elements[i].type == 'radio') {
                         var nameRadio = elementForms.elements[i].name;
                         if($("[name='"+nameRadio+"']:checked").length == 0) {
                             flg_continue = false;
-                            if (elementForms.elements[i].parentElement.parentElement.querySelectorAll(".validate").length == 0) {
-                                elChild = document.createElement('span');
-                                elChild.className = "validate";
-                                elChild.innerHTML = '{{ trans("adminlte_lang::survey.message_repquire") }}';
-                                elementForms.elements[i].parentElement.parentElement.appendChild(elChild);
-                            }
+                            removeErrorForAnswerChoice(elementForms.elements[i]);
+                            addErrorForAnswerChoice(elementForms.elements[i],'{{ trans("adminlte_lang::survey.message_repquire") }}');
                         } else {
-                            if (elementForms.elements[i].parentElement.parentElement.querySelectorAll(".validate").length > 0) {
-                                elementForms.elements[i].parentElement.parentElement.querySelectorAll(".validate")[0].remove();
-                            }
+                            removeErrorForAnswerChoice(elementForms.elements[i]);
                         }
                     }
 
@@ -48,39 +62,14 @@
                         var nameCheckbox = elementForms.elements[i].name;
                         if($('input[name="'+nameCheckbox+'"]:checked').length == 0) {
                             flg_continue = false;
-                            if (elementForms.elements[i].parentElement.parentElement.querySelectorAll(".validate").length == 0) {
-                                elChild = document.createElement('span');
-                                elChild.className = "validate";
-                                if (nameCheckbox == 'optcheckbox_confirm') {
-                                    elChild.innerHTML = '{{ trans("adminlte_lang::survey.message_confirm_condition") }}';
-                                } else {
-                                    elChild.innerHTML = '{{ trans("adminlte_lang::survey.message_repquire") }}';
-                                }
-
-                                elementForms.elements[i].parentElement.parentElement.appendChild(elChild);
+                            removeErrorForAnswerChoice(elementForms.elements[i]);
+                            if (nameCheckbox == 'optcheckbox_confirm') {
+                                addErrorForAnswerChoice(elementForms.elements[i],'{{ trans("adminlte_lang::survey.message_confirm_condition") }}');
+                            } else {
+                                addErrorForAnswerChoice(elementForms.elements[i],'{{ trans("adminlte_lang::survey.message_repquire") }}');
                             }
                         } else {
-                            if (elementForms.elements[i].parentElement.parentElement.querySelectorAll(".validate").length > 0) {
-                                elementForms.elements[i].parentElement.parentElement.querySelectorAll(".validate")[0].remove();
-                            }
-                        }
-                    }
-
-                    if (elementForms.elements[i].type == 'textarea') {
-                        var nameCheckbox = elementForms.elements[i].name;
-                        if(elementForms.elements[i].value == '') {
-                            flg_continue = false;
-                            if (elementForms.elements[i].parentElement.querySelectorAll(".validate").length == 0) {
-                                elChild = document.createElement('span');
-                                elChild.className = "validate";
-                                elChild.innerHTML = '{{ trans("adminlte_lang::survey.message_repquire") }}';
-                                elementForms.elements[i].parentElement.appendChild(elChild);
-                            }
-                        } else {
-                            console.log(elementForms.elements[i].parentElement.querySelectorAll(".validate").length);
-                            if (elementForms.elements[i].parentElement.querySelectorAll(".validate").length > 0) {
-                                elementForms.elements[i].parentElement.querySelectorAll(".validate")[0].remove();
-                            }
+                            removeErrorForAnswerChoice(elementForms.elements[i]);
                         }
                     }
                 }
@@ -91,6 +80,36 @@
             } else {
                 return;
             }
+        }
+
+        function removeErrorForAnswerText(element)
+        {
+            if (element.parentElement.querySelectorAll(".validate").length > 0) {
+                element.parentElement.querySelectorAll(".validate")[0].remove();
+            }
+        }
+
+        function removeErrorForAnswerChoice(element)
+        {
+            if (element.parentElement.parentElement.querySelectorAll(".validate").length > 0) {
+                element.parentElement.parentElement.querySelectorAll(".validate")[0].remove();
+            }
+        }
+
+        function addErrorForAnswerChoice(element, error)
+        {
+            elChild = document.createElement('span');
+            elChild.className = "validate";
+            elChild.innerHTML = error;
+            element.parentElement.parentElement.appendChild(elChild);
+        }
+
+        function addErrorForAnswerText(element, error)
+        {
+            elChild = document.createElement('span');
+            elChild.className = "validate";
+            elChild.innerHTML = error;
+            element.parentElement.appendChild(elChild);
         }
     </script>
 

@@ -94,4 +94,6 @@ return [
 	'htmlheader_title_preview_close' => 'Preview close survey',
 	'htmlheader_title_preview' => 'Preview survey',
 	'htmlheader_title_answer_survey' => 'Answer survey - simple survey',
+	'message_255_characters' => 'The length of answer < 255 characters',
+	'message_5000_characters' => 'The length of answer < 5000 characters',
 ];
