@@ -56,7 +56,7 @@ class SurveyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function showListSurvey()
     {
         $table_settings = array(
             'title' => trans('adminlte_lang::survey.survey_list_table_title'),
@@ -123,10 +123,10 @@ class SurveyController extends Controller
         return $surveys;
     }
 
-    public function downloadListSurvey()
+    public function showDownloadListSurvey()
     {
         $table_settings = array(
-            'title' => trans('adminlte_lang::survey.survey_list_table_title'),
+            'title' => trans('adminlte_lang::survey.survey_list_table_download_title'),
             'id' => 'download-table',
             'headers_columns' => array(
                 trans('adminlte_lang::survey.survey_list_table_header_column_id')           => 'id',
@@ -149,7 +149,7 @@ class SurveyController extends Controller
         return view('admin::datatable', array('settings' => $table_settings, 'datas' => $surveys));
     }
 
-    public function downloadPageSurveyBySurveyId($id)
+    public function showDownloadPageSurveyBySurveyId($id)
     {
         $list_questions = $this->questionRepository->getListQuestionBySurveyId($id);
         $answer_datas   = $this->getAnswerForSurveyBySurveyID($id, $list_questions);

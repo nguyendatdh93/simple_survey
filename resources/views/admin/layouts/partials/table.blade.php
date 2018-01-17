@@ -1,7 +1,7 @@
 @include('admin::layouts.partials.alert_message')
 <div class="box">
     <div class="box-header">
-        <h3 class="box-title">{{ isset($settings['title']) ? $settings['title'] : "" }}</h3>
+        {{--<h3 class="box-title">{{ isset($settings['title']) ? $settings['title'] : "" }}</h3>--}}
         <div class="pull-right">
             @if(isset($settings['buttons']))
                 @foreach($settings['buttons'] as $button)
