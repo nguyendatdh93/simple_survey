@@ -1,5 +1,17 @@
 @extends('admin::survey.form_survey')
 
+@section('htmlheader_title')
+    @if ($survey['status'] == \App\Survey::STATUS_SURVEY_PUBLISHED)
+        {{ trans('adminlte_lang::survey.htmlheader_title_preview_publish') }}
+    @elseif ($survey['status'] == \App\Survey::STATUS_SURVEY_DRAF)
+        {{ trans('adminlte_lang::survey.htmlheader_title_preview_draf') }}
+    @elseif ($survey['status'] == \App\Survey::STATUS_SURVEY_CLOSED)
+        {{ trans('adminlte_lang::survey.htmlheader_title_preview_close') }}
+    @else
+        {{ trans('adminlte_lang::survey.htmlheader_title_preview') }}
+    @endif
+@endsection
+
 @section('bootstrap')
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 @endsection
@@ -72,14 +84,14 @@
             <div class="container-fluid">
                 @if ($survey['id'] < 0)
                     <div class="jsButtonControls">
-                        <a href="#" onclick="window.parent.close();" class="btn btn-circle btn-xl btn-danger"><i class="fa fa fa-close" aria-hidden="true"></i> Close</a>
+                        <a href="#" onclick="window.parent.close();" class="btn btn-circle btn-xl btn-danger"><i class="fa fa fa-close" aria-hidden="true"></i> {{ trans('adminlte_lang::survey.confirm_button_close') }}</a>
                     </div>
                 @else
                     <div class="jsButtonControls">
                         @if ($survey['status'] == \App\Survey::STATUS_SURVEY_PUBLISHED)
-                            <a href="{{ route(\App\Survey::NAME_URL_CLOSE_SURVEY,['id' => $survey['id']]) }}" style="text-decoration: none" class="btn btn-danger btn-circle btn-xl">Close</a>
+                            <a href="#open-modal-confirm-close" style="text-decoration: none" class="btn btn-danger btn-circle btn-xl">{{ trans('adminlte_lang::survey.confirm_button_close') }}</a>
                         @elseif ($survey['status'] == \App\Survey::STATUS_SURVEY_DRAF)
-                            <a href="{{ route(\App\Survey::NAME_URL_PUBLISH_SURVEY,['id' => $survey['id']]) }}" style="text-decoration: none" class="btn btn-warning btn-circle btn-xl">Publish</a>
+                            <a href="#open-modal-confirm-publish" style="text-decoration: none" class="btn btn-warning btn-circle btn-xl">{{ trans('adminlte_lang::survey.confirm_button_publish') }}</a>
                         @endif
                     </div>
                     @if ($survey['status'] == \App\Survey::STATUS_SURVEY_PUBLISHED)

@@ -89,4 +89,9 @@ return [
 	
 	'radio_label_choice_survey_draft_status' => '下書き',
 	'radio_label_choice_survey_publish_status' => '公開する',
+	'htmlheader_title_preview_draf' => 'Preview draft survey',
+	'htmlheader_title_preview_publish' => 'Preview publish survey',
+	'htmlheader_title_preview_close' => 'Preview close survey',
+	'htmlheader_title_preview' => 'Preview survey',
+	'htmlheader_title_answer_survey' => 'Answer survey - simple survey',
 ];
