@@ -29,13 +29,6 @@ abstract class EloquentRepository implements Repositories\InterfaceRepository
         return $this->_model->all();
     }
 
-//    public function find($id)
-//    {
-//        $result = $this->_model->find($id);
-//
-//        return $result;
-//    }
-
     public function create(array $attributes)
     {
         return $this->_model->create($attributes);
