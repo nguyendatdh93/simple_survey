@@ -85,4 +85,7 @@ return [
 	'message_confirm_condition' => '規約に承諾してください',
 	'alert_success_answer_survey' => 'Thank you for taking the survey',
 	'column_csv_created_at' => 'Time answered',
+	
+	'radio_label_choice_survey_draft_status' => '下書き',
+	'radio_label_choice_survey_publish_status' => '公開する',
 ];
