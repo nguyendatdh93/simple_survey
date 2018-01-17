@@ -79,5 +79,12 @@ class AppServiceProvider extends ServiceProvider
             AnswerQuestionRepositoryInterface::class,
             AnswerQuestionRepository::class
         );
+
+        $this->app->instance('log', new \Illuminate\Log\Writer(
+                (new Logger(
+                    $this->app->environment()
+                ))->pushHandler(new StreamHandler(env('CONFIG_LOG_PATH').'/log-'.date('Y-m-d')))
+            )
+        );
     }
 }
