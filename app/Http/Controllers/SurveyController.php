@@ -614,18 +614,6 @@ class SurveyController extends Controller
         return redirect()->route(Survey::NAME_URL_DOWNLOAD_PAGE_SURVEY,['id' => $id])->with('alert_error', trans('adminlte_lang::survey.message_clear_data_not_success'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
     public function getQuestionsDataFromInput($input) {
         $new_questions = [];
         foreach ($input as $input_name => $value) {
