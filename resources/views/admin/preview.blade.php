@@ -19,34 +19,28 @@
 @section('body')
     <link rel="stylesheet" href="{{ asset('css/styleusers.css') }}">
 
-    @if ($survey['status'] != \App\Survey::STATUS_SURVEY_CLOSED)
+    @if ($survey['status'] != \App\Survey::STATUS_SURVEY_CLOSED && $survey['id'] > 0)
         <nav class="navbar navbar-inverse navbar-fixed-top" style="background: #e6e6e6;border-bottom: 2px solid #c7c7c7;">
             <div class="container-fluid">
-                @if ($survey['id'] < 0)
-                    <div class="jsButtonControls">
-                        <a href="#" onclick="window.parent.close();" class="btn btn-circle btn-xl btn-danger"><i class="fa fa fa-close" aria-hidden="true"></i> {{ trans('adminlte_lang::survey.confirm_button_close') }}</a>
-                    </div>
-                @else
-                    <div class="jsButtonControls">
-                        @if ($survey['status'] == \App\Survey::STATUS_SURVEY_PUBLISHED)
-                            <a href="#open-modal-confirm-close" style="text-decoration: none" class="btn btn-danger btn-circle btn-xl">{{ trans('adminlte_lang::survey.confirm_button_close') }}</a>
-                        @elseif ($survey['status'] == \App\Survey::STATUS_SURVEY_DRAF)
-                            <a href="#open-modal-confirm-publish" style="text-decoration: none" class="btn btn-warning btn-circle btn-xl">{{ trans('adminlte_lang::survey.confirm_button_publish') }}</a>
-                        @endif
-                    </div>
+                <div class="jsButtonControls">
                     @if ($survey['status'] == \App\Survey::STATUS_SURVEY_PUBLISHED)
-                        <div class="navbar-form navbar-right jsCopyUrlForm">
-                            <div class="form-group" style="float: left">
-                                <label class="jsUrlDomainCopy">{{ route(\App\Survey::NAME_URL_ANSWER_SURVEY) }}</label>
-                                <input type="text" class="form-control jsUrlEncrypt" value="{{ $survey['encryption_url'] }}" placeholder="Search">
-                            </div>
-                            <a style="float: left; margin-left: 5px;color: #0072ef;cursor: pointer;" class="btn btn-link" style="color: dodgerblue" onclick="copyClipbroad()">{{ trans('adminlte_lang::survey.button_coppy_url') }}</a>
+                        <a href="#open-modal-confirm-close" style="text-decoration: none" class="btn btn-danger btn-circle btn-xl">{{ trans('adminlte_lang::survey.confirm_button_close') }}</a>
+                    @elseif ($survey['status'] == \App\Survey::STATUS_SURVEY_DRAF)
+                        <a href="#open-modal-confirm-publish" style="text-decoration: none" class="btn btn-warning btn-circle btn-xl">{{ trans('adminlte_lang::survey.confirm_button_publish') }}</a>
+                    @endif
+                </div>
+                @if ($survey['status'] == \App\Survey::STATUS_SURVEY_PUBLISHED)
+                    <div class="navbar-form navbar-right jsCopyUrlForm">
+                        <div class="form-group" style="float: left">
+                            <label class="jsUrlDomainCopy">{{ route(\App\Survey::NAME_URL_ANSWER_SURVEY) }}</label>
+                            <input type="text" class="form-control jsUrlEncrypt" value="{{ $survey['encryption_url'] }}" placeholder="Search">
                         </div>
-                    @endif
+                        <a style="float: left; margin-left: 5px;color: #0072ef;cursor: pointer;" class="btn btn-link" style="color: dodgerblue" onclick="copyClipbroad()">{{ trans('adminlte_lang::survey.button_coppy_url') }}</a>
+                    </div>
+                @endif
 
-                    @if ($survey['status'] == \App\Survey::STATUS_SURVEY_DRAF)
-                        <a href="{{ route(\App\Survey::NAME_URL_EDIT_SURVEY,['id' => $survey['id']]) }}" class="btn btn-link jsLinkGoEditSurvey"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {{ trans('adminlte_lang::survey.go_to_edit') }}</a>
-                    @endif
+                @if ($survey['status'] == \App\Survey::STATUS_SURVEY_DRAF)
+                    <a href="{{ route(\App\Survey::NAME_URL_EDIT_SURVEY,['id' => $survey['id']]) }}" class="btn btn-link jsLinkGoEditSurvey"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {{ trans('adminlte_lang::survey.go_to_edit') }}</a>
                 @endif
             </div>
         </nav>
