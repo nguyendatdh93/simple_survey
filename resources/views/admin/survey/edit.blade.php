@@ -116,12 +116,12 @@
 									<p class="help-block">{{ trans('survey.confirmation_help_block') }}</p>
 									<p class="jsError" style="color: red; display: none;"></p>
 								</div>
-								<div class="col-md-12 jsQuestionConfirmationAgreeBox" style="margin-bottom: 5px; display: none;">
+								<div class="col-md-12 jsQuestionConfirmationAgreeBox" style="margin-bottom: 5px;">
 									<div class="col-md-1">
 										<i class="fa fa-square-o" style="font-size: x-large; line-height: 36px;"></i>
 									</div>
 									<div class="col-md-10">
-										<input type="text" class="form-control jsQuestionConfirmationAgreeText required jsInputLimit255" placeholder="{{ trans('survey.agree_text_placeholder') }}">
+										<input type="text" class="form-control jsQuestionConfirmationAgreeText jsInputLimit255" placeholder="{{ trans('survey.agree_text_placeholder') }}">
 										<p class="jsError" style="color: red; display: none;"></p>
 									</div>
 								</div>
@@ -141,7 +141,7 @@
 											<p class="jsError" style="color: red; display: none;"></p>
 										</div>
 										<div class="col-md-1">
-											<i class="fa fa-minus-circle jsRemoveChoice" style="font-size: large; line-height: 36px; color:red;"></i>
+											<i class="fa fa-minus-circle jsRemoveChoice" data-widget="remove" data-toggle="tooltip" title="{{ trans('survey.tooltip_remove_question_choice') }}" style="font-size: large; line-height: 36px; color:red;"></i>
 										</div>
 									</div>
 
@@ -157,7 +157,7 @@
 											<p class="jsError" style="color: red; display: none;"></p>
 										</div>
 										<div class="col-md-1">
-											<i class="fa fa-minus-circle jsRemoveChoice" style="font-size: large; line-height: 36px; color:red;"></i>
+											<i class="fa fa-minus-circle jsRemoveChoice" data-widget="remove" data-toggle="tooltip" title="{{ trans('survey.tooltip_remove_question_choice') }}" style="font-size: large; line-height: 36px; color:red;"></i>
 										</div>
 									</div>
 
@@ -173,13 +173,13 @@
 											<p class="jsError" style="color: red; display: none;"></p>
 										</div>
 										<div class="col-md-1">
-											<i class="fa fa-minus-circle jsRemoveChoice" style="font-size: large; line-height: 36px; color:red;"></i>
+											<i class="fa fa-minus-circle jsRemoveChoice" data-widget="remove" data-toggle="tooltip" title="{{ trans('survey.tooltip_remove_question_choice') }}" style="font-size: large; line-height: 36px; color:red;"></i>
 										</div>
 									</div>
 
 									<div class="row">
 										<div class="col-md-10 col-md-offset-1">
-											<i class="fa fa-plus-square jsAddChoice" style="font-size: x-large; line-height: 36px; color:green;"></i>
+											<i class="fa fa-plus-square jsAddChoice" data-widget="add" data-toggle="tooltip" title="{{ trans('survey.tooltip_add_question_choice') }}" style="font-size: x-large; line-height: 36px; color:green;"></i>
 										</div>
 									</div>
 								</div>
@@ -190,14 +190,16 @@
 							<div class="box-tools pull-right">
 								<button type="button" class="btn btn-box-tool jsDuplicateQuestion" style="padding: 0px; margin: 0 5px; display: none;">
 									<i class="fa fa-clone" style="font-size: x-large;"></i></button>
-								<button type="button" class="btn btn-box-tool jsRemoveQuestion" style="padding: 0px; margin: 0 5px;">
+								<button type="button" data-widget="remove" data-toggle="tooltip" title="{{ trans('survey.tooltip_remove_question') }}" class="btn btn-box-tool jsRemoveQuestion" style="padding: 0px; margin: 0 5px;">
 									<i class="fa fa-trash-o" style="font-size: x-large;"></i></button>
-								<span class="btn btn-box-tool" style="padding: 0px; margin: 0 20px; font-size: x-large;">|</span>
-								<span style="margin: 0 5px; vertical-align: middle; font-size: large;">{{ trans('survey.require_toggle') }}</span>
-								<label class="switch" style="margin: 0; vertical-align: middle;">
-									<input type="checkbox" class="jsQuestionRequired" value="1">
-									<span class="slider round"></span>
-								</label>
+								<div class="jsQuestionRequiredBox" style="display: inline;">
+									<span class="btn btn-box-tool" style="padding: 0px; margin: 0 20px; font-size: x-large;">|</span>
+									<span style="margin: 0 5px; vertical-align: middle; font-size: large;">{{ trans('survey.require_toggle') }}</span>
+									<label class="switch" style="margin: 0; vertical-align: middle;">
+										<input type="checkbox" class="jsQuestionRequired" value="1">
+										<span class="slider round"></span>
+									</label>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -288,7 +290,7 @@
 																<p class="help-block">{{ trans('survey.confirmation_help_block') }}</p>
 																<p class="jsError" style="color: red; display: none;"></p>
 															</div>
-															<div class="col-md-12 jsQuestionConfirmationAgreeBox" style="margin-bottom: 5px; {{ $question['require'] == \App\Question::REQUIRE_QUESTION_YES ? '' : 'display: none;' }}">
+															<div class="col-md-12 jsQuestionConfirmationAgreeBox" style="margin-bottom: 5px;">
 																<div class="col-md-1">
 																	<i class="fa fa-square-o" style="font-size: x-large; line-height: 36px;"></i>
 																</div>
@@ -317,7 +319,7 @@
 																		<p class="jsError" style="color: red; display: none;"></p>
 																	</div>
 																	<div class="col-md-1">
-																		<i class="fa fa-minus-circle jsRemoveChoice" style="font-size: large; line-height: 36px; color:red;"></i>
+																		<i class="fa fa-minus-circle jsRemoveChoice" data-widget="remove" data-toggle="tooltip" title="{{ trans('survey.tooltip_remove_question_choice') }}" style="font-size: large; line-height: 36px; color:red;"></i>
 																	</div>
 																</div>
 
@@ -341,7 +343,7 @@
 																				<p class="jsError" style="color: red; display: none;"></p>
 																			</div>
 																			<div class="col-md-1">
-																				<i class="fa fa-minus-circle jsRemoveChoice" style="font-size: large; line-height: 36px; color:red;"></i>
+																				<i class="fa fa-minus-circle jsRemoveChoice" data-widget="remove" data-toggle="tooltip" title="{{ trans('survey.tooltip_remove_question_choice') }}" style="font-size: large; line-height: 36px; color:red;"></i>
 																			</div>
 																		</div>
 																	@endforeach
@@ -349,7 +351,7 @@
 
 																<div class="row">
 																	<div class="col-md-10 col-md-offset-1">
-																		<i class="fa fa-plus-square jsAddChoice" style="font-size: x-large; line-height: 36px; color:green;"></i>
+																		<i class="fa fa-plus-square jsAddChoice" data-widget="add" data-toggle="tooltip" title="{{ trans('survey.tooltip_add_question_choice') }}" style="font-size: x-large; line-height: 36px; color:green;"></i>
 																	</div>
 																</div>
 															</div>
@@ -360,17 +362,19 @@
 														<div class="box-tools pull-right">
 															<button type="button" class="btn btn-box-tool jsDuplicateQuestion" style="padding: 0px; margin: 0 5px; display: none;">
 																<i class="fa fa-clone" style="font-size: x-large;"></i></button>
-															<button type="button" class="btn btn-box-tool jsRemoveQuestion" style="padding: 0px; margin: 0 5px;">
+															<button type="button" data-widget="remove" data-toggle="tooltip" title="{{ trans('survey.tooltip_remove_question') }}" class="btn btn-box-tool jsRemoveQuestion" style="padding: 0px; margin: 0 5px;">
 																<i class="fa fa-trash-o" style="font-size: x-large;"></i></button>
-															<span class="btn btn-box-tool" style="padding: 0px; margin: 0 20px; font-size: x-large;">|</span>
-															<span style="margin: 0 5px; vertical-align: middle; font-size: large;">{{ trans('survey.require_toggle') }}</span>
-															<label class="switch" style="margin: 0; vertical-align: middle;">
-																<input type="checkbox"
-																	   name="question_{{ $question_number }}_required"
-																	   class="jsQuestionRequired"
-																	   value="1" {{ $question['require'] == \App\Question::REQUIRE_QUESTION_YES ? 'checked="checked"' : '' }}>
-																<span class="slider round"></span>
-															</label>
+															<div class="jsQuestionRequiredBox" style="display: inline;">
+																<span class="btn btn-box-tool" style="padding: 0px; margin: 0 20px; font-size: x-large;">|</span>
+																<span style="margin: 0 5px; vertical-align: middle; font-size: large;">{{ trans('survey.require_toggle') }}</span>
+																<label class="switch" style="margin: 0; vertical-align: middle;">
+																	<input type="checkbox"
+																		   name="question_{{ $question_number }}_required"
+																		   class="jsQuestionRequired"
+																		   value="1" {{ $question['require'] == \App\Question::REQUIRE_QUESTION_YES ? 'checked="checked"' : '' }}>
+																	<span class="slider round"></span>
+																</label>
+															</div>
 														</div>
 													</div>
 												</div>
@@ -478,14 +482,14 @@
 																<p class="help-block">{{ trans('survey.confirmation_help_block') }}</p>
 																<p class="jsError" style="color: red; display: none;"></p>
 															</div>
-															<div class="col-md-12 jsQuestionConfirmationAgreeBox" style="margin-bottom: 5px; {{ $question['require'] == \App\Question::REQUIRE_QUESTION_YES ? '' : 'display: none;' }}">
+															<div class="col-md-12 jsQuestionConfirmationAgreeBox" style="margin-bottom: 5px;">
 																<div class="col-md-1">
 																	<i class="fa fa-square-o" style="font-size: x-large; line-height: 36px;"></i>
 																</div>
 																<div class="col-md-10">
 																	<input type="text"
 																		   name="question_{{ $question_number }}_confirmation_agree_text"
-																		   class="form-control jsQuestionConfirmationAgreeText required jsInputLimit255"
+																		   class="form-control jsQuestionConfirmationAgreeText jsInputLimit255"
 																		   value="{{ empty($question['agree_text']) ? '' : $question['agree_text'] }}"
 																		   placeholder="{{ trans('survey.agree_text_placeholder') }}">
 																	<p class="jsError" style="color: red; display: none;"></p>
@@ -531,7 +535,7 @@
 																				<p class="jsError" style="color: red; display: none;"></p>
 																			</div>
 																			<div class="col-md-1">
-																				<i class="fa fa-minus-circle jsRemoveChoice" style="font-size: large; line-height: 36px; color:red;"></i>
+																				<i class="fa fa-minus-circle jsRemoveChoice" data-widget="remove" data-toggle="tooltip" title="{{ trans('survey.tooltip_remove_question_choice') }}" style="font-size: large; line-height: 36px; color:red;"></i>
 																			</div>
 																		</div>
 																	@endforeach
@@ -539,7 +543,7 @@
 
 																<div class="row">
 																	<div class="col-md-10 col-md-offset-1">
-																		<i class="fa fa-plus-square jsAddChoice" style="font-size: x-large; line-height: 36px; color:green;"></i>
+																		<i class="fa fa-plus-square jsAddChoice" data-widget="add" data-toggle="tooltip" title="{{ trans('survey.tooltip_add_question_choice') }}" style="font-size: x-large; line-height: 36px; color:green;"></i>
 																	</div>
 																</div>
 															</div>
@@ -550,17 +554,20 @@
 														<div class="box-tools pull-right">
 															<button type="button" class="btn btn-box-tool jsDuplicateQuestion" style="padding: 0px; margin: 0 5px; display: none;">
 																<i class="fa fa-clone" style="font-size: x-large;"></i></button>
-															<button type="button" class="btn btn-box-tool jsRemoveQuestion" style="padding: 0px; margin: 0 5px;">
+															<button type="button" data-widget="remove" data-toggle="tooltip" title="{{ trans('survey.tooltip_remove_question') }}" class="btn btn-box-tool jsRemoveQuestion" style="padding: 0px; margin: 0 5px;">
 																<i class="fa fa-trash-o" style="font-size: x-large;"></i></button>
-															<span class="btn btn-box-tool" style="padding: 0px; margin: 0 20px; font-size: x-large;">|</span>
-															<span style="margin: 0 5px; vertical-align: middle; font-size: large;">{{ trans('survey.require_toggle') }}</span>
-															<label class="switch" style="margin: 0; vertical-align: middle;">
-																<input type="checkbox"
-																	   name="question_{{ $question_number }}_required"
-																	   class="jsQuestionRequired"
-																	   value="1" {{ $question['require'] == \App\Question::REQUIRE_QUESTION_YES ? 'checked="checked"' : '' }}>
-																<span class="slider round"></span>
-															</label>
+															<div class="jsQuestionRequiredBox" style="display: none;">
+																<span class="btn btn-box-tool" style="padding: 0px; margin: 0 20px; font-size: x-large;">|</span>
+																<span style="margin: 0 5px; vertical-align: middle; font-size: large;">{{ trans('survey.require_toggle') }}</span>
+																<label class="switch" style="margin: 0; vertical-align: middle;">
+																	<input type="checkbox"
+																		   name="question_{{ $question_number }}_required"
+																		   class="jsQuestionRequired"
+																		   value="1"
+																		   checked="checked">
+																	<span class="slider round"></span>
+																</label>
+															</div>
 														</div>
 													</div>
 												</div>
@@ -621,6 +628,27 @@
 	</div>
 @endsection
 
+<div class="modal fade" id="modal-confirm-box" style="display: none;">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span></button>
+				<h4 class="modal-title"></h4>
+			</div>
+			<div class="modal-body">
+				<p></p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modal-confirm-box-btn-no" class="btn btn-default pull-left" data-dismiss="modal">No</button>
+				<button type="button" id="modal-confirm-box-btn-yes" class="btn btn-primary">Yes</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script>
 	$( document ).ready(function() {
@@ -648,12 +676,14 @@
         var preview_tab;
 	});
 
-	$(document).on('click','.jsRemoveChoice',function(){
+	$(document).on('click', '.jsRemoveChoice',function(){
 		$(this).parent().parent().remove();
+		$('.tooltip').tooltip('destroy');
 	});
 
 	$(document).on('click', '.jsRemoveQuestion', function () {
 		$(this).parent().parent().parent().parent().parent().parent().remove();
+		$('.tooltip').tooltip('destroy');
 	});
 
 	$(document).on('change', '.jsChoiceQuestionType', function () {
@@ -796,11 +826,13 @@
 
 			new_question.find('.jsQuestion').hide();
 			new_question.find('.jsQuestionConfirmation').show();
+			new_question.find('.jsQuestionRequiredBox').hide();
+			new_question.find('.jsQuestionRequired').attr('checked', 'checked');
 		}
 	});
 
 	$(document).on('click', '.jsQuestionRequired', function () {
-		var agree_box = $(this).parent().parent().parent().parent().find('.jsQuestionConfirmationAgreeBox');
+		var agree_box = $(this).parent().parent().parent().parent().parent().find('.jsQuestionConfirmationAgreeBox');
 
 		if ($(this).is(':checked')) {
 			agree_box.show();
@@ -837,11 +869,22 @@
 
 	$(document).on('submit', '#survey_form', function(event) {
 		if (validateOnSubmit()) {
-            if (window.confirm('Are you sure？')) {
-                return true;
-            }
+			var survey_status = $('input[name=survey_status]:checked').val();
+			var survey_status_text = '';
+
+			if (survey_status == '{{ \App\Survey::STATUS_SURVEY_DRAF }}') {
+				console.log(survey_status);
+				survey_status_text = '{{ trans('survey.radio_label_choice_survey_draft_status') }}';
+			} else if (survey_status == {{ \App\Survey::STATUS_SURVEY_PUBLISHED }}) {
+				console.log(survey_status);
+				survey_status_text = '{{ trans('survey.radio_label_choice_survey_publish_status') }}';
+			}
+
+			var confirm_message = 'You choice save survey to ' + survey_status_text + '.<br/>Are you sure?';
+
+			showConfirmBox('', confirm_message, 'yes', 'no', "$('#survey_form').submit();");
         } else {
-            alert('{{ trans('adminlte_lang::survey.error_input_wrong_create_survey') }}');
+			showConfirmBox('', '{{ trans('adminlte_lang::survey.error_input_wrong_create_survey') }}');
         }
 
         return false;
@@ -849,7 +892,7 @@
 
     function preview() {
         if (!validateOnSubmit()) {
-            alert('{{ trans('adminlte_lang::survey.error_input_wrong_create_survey') }}');
+			showConfirmBox('', '{{ trans('adminlte_lang::survey.error_input_wrong_create_survey') }}');
             return false;
         }
 
@@ -1031,4 +1074,41 @@
         reader.readAsDataURL(image);
         $('.jsSurveyThumbnailPreviewBox').show();
     }
+
+    function showConfirmBox(title, content, btn_yes_text, btn_no_text, btn_yes_action) {
+    	title = title || '';
+    	content = content || '';
+		btn_yes_text = btn_yes_text || '';
+		btn_no_text = btn_no_text || '';
+		btn_yes_action = btn_yes_action || '';
+
+    	var modal = $('#modal-confirm-box');
+		modal.find('.modal-title').html(title);
+		modal.find('.modal-body').find('p').html(content);
+
+		modal.find('.modal-footer').show();
+		if (!btn_yes_text) {
+			modal.find('#modal-confirm-box-btn-yes').hide();
+		} else {
+			if (!btn_yes_action) {
+				modal.find('#modal-confirm-box-btn-yes').attr('onclick', '');
+			} else {
+				modal.find('#modal-confirm-box-btn-yes').attr('onclick', btn_yes_action);
+			}
+
+			modal.find('#modal-confirm-box-btn-yes').html(btn_yes_text);
+			modal.find('#modal-confirm-box-btn-yes').show();
+		}
+		if (!btn_no_text) {
+			modal.find('#modal-confirm-box-btn-no').hide();
+		} else {
+			modal.find('#modal-confirm-box-btn-no').html(btn_no_text);
+			modal.find('#modal-confirm-box-btn-no').show();
+		}
+		if (!btn_yes_text && !btn_no_text) {
+			modal.find('.modal-footer').hide();
+		}
+
+		modal.modal('show');
+	}
 </script>

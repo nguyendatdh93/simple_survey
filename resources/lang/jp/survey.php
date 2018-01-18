@@ -97,6 +97,10 @@ return [
 	'column_csv_created_at' => 'Time answered',
 	'radio_label_choice_survey_draft_status' => '下書き',
 	'radio_label_choice_survey_publish_status' => '公開する',
+
+    'tooltip_remove_question' => 'Remove question',
+    'tooltip_remove_question_choice' => 'Remove question choice',
+    'tooltip_add_question_choice' => 'Add question choice',
 	
 	//preview page
 	'htmlheader_title_preview_draf' => 'プレビュー画面',
