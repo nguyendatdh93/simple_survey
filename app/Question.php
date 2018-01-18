@@ -20,6 +20,8 @@ class Question extends Model
 
     const REQUIRE_QUESTION_YES = 1;
     const REQUIRE_QUESTION_NO  = 0;
+	
+	const DELETE_FLG = 1;
 
     public static function getQuestionTypes() {
         $question_types = [
@@ -42,6 +44,4 @@ class Question extends Model
 
         return $question_categories;
     }
-    
-    const DELETE_FLG = 1;
 }

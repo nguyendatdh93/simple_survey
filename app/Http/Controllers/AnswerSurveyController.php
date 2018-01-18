@@ -27,6 +27,7 @@ class AnswerSurveyController extends Controller
 	protected $confirmContentRepository;
 	protected $answerRepository;
 	protected $answerQuestionRepository;
+	protected $encryption_service;
 	
 	public function __construct(SurveyRepositoryInterface $surveyRepository,
 	                            QuestionRepositoryInterface $questionRepository,
@@ -42,14 +43,14 @@ class AnswerSurveyController extends Controller
 		$this->answerRepository         = $answerRepository;
 		$this->answerQuestionRepository = $answerQuestionRepository;
 		$this->confirmContentRepository = $confirmContentRepository;
+		$this->encryption_service       = new EncryptionService();
 	}
 	
 	public function showQuestionSurvey(Request $request, $encrypt)
 	{
-		$encryption_service    = new EncryptionService();
-		$id                    = $encryption_service->decrypt($encrypt);
-		$survey_service        = new SurveyService();
-		$answer                = array();
+		$id             = $this->getIdSurveyFormEncryptCode($encrypt);
+		$survey_service = new SurveyService();
+		$answer         = array();
 		if ($request->session()->get('answer'. $id) != null) {
 			$answer = $request->session()->get('answer' . $id);
 		}
@@ -141,8 +142,7 @@ class AnswerSurveyController extends Controller
 	
 	public function getIdSurveyFormEncryptCode($encrypt)
 	{
-		$encryption_service  = new EncryptionService();
-		$id                  = $encryption_service->decrypt($encrypt);
+		$id = $this->encryption_service->decrypt($encrypt);
 		
 		return $id;
 	}
