@@ -1,8 +1,3 @@
-<style>
-    a.jsLogout:hover {
-        background: #4f9ecc;
-    }
-</style>
 <!-- Main Header -->
 <header class="main-header">
 
