@@ -28,6 +28,7 @@ return [
 	'survey_list_table_download_title' => "アンケート一覧",
 	'button_create_new_survey'  => 'アンケート作成',
 	'survey_create_page_title' => 'アンケート作成',
+	'survey_edit_page_title' => 'Edit survey',
     'survey_list_table_header_column_id' => "Id",
     'survey_list_table_header_column_status' => "ステータス",
     'survey_list_table_header_column_survey_name' => "アンケート名",
