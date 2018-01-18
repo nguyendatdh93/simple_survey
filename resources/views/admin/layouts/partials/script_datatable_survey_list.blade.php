@@ -29,8 +29,6 @@
 
         function addControls(row,data)
         {
-            console.log(row);
-            console.log(data);
             var html            = '',
             url_redirect_detail = '',
             url_redirect_copy   = '',
