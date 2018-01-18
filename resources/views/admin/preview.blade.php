@@ -51,9 +51,23 @@
             </div>
         </nav>
     @endif
+
     <div class="container">
-        <div id="pagetop" @if ($survey['status'] != \App\Survey::STATUS_SURVEY_CLOSED) style="margin-top: 120px" @endif>
+        <div id="pagetop" @if ($survey['status'] != \App\Survey::STATUS_SURVEY_CLOSED) style="margin-top: 90px" @endif>
             <div id="layout">
+                @if($message = Session::get('alert_error'))
+                    <div class="alert alert-success">
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                        <strong>{{ $message }}</strong>
+                    </div>
+                @endif
+                @if($message = Session::get('alert_success'))
+                    <div class="alert alert-success">
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                        <strong>{{ $message }}</strong>
+                    </div>
+                @endif
+
                 <div class="header">
                     <div class="headerWrap1">
                     @include('admin::survey.partials.script')

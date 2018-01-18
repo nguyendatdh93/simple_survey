@@ -841,7 +841,7 @@
                 return true;
             }
         } else {
-            alert('Error on input');
+            alert('{{ trans('adminlte_lang::survey.error_input_wrong_create_survey') }}');
         }
 
         return false;
@@ -849,7 +849,7 @@
 
     function preview() {
         if (!validateOnSubmit()) {
-            alert('Error on input');
+            alert('{{ trans('adminlte_lang::survey.error_input_wrong_create_survey') }}');
             return false;
         }
 
@@ -970,7 +970,7 @@
 
         if ($(target).hasClass('required')) {
             if (!content) {
-                error.html('Not allow empty.');
+                error.html('{{ trans('adminlte_lang::survey.error_not_allow_empty') }}');
                 error.show();
                 return false;
             }
@@ -978,7 +978,7 @@
 
         if ($(target).hasClass('jsInputLimit255')) {
             if (content.length > 255) {
-                error.html('Limit 255 characters.');
+                error.html('{{ trans('adminlte_lang::survey.error_length_255_characters') }}');
                 error.show();
                 return false;
             }
@@ -986,7 +986,7 @@
 
         if ($(target).hasClass('jsInputLimit5000')) {
             if (content.length > 5000) {
-                error.html('Limit 5000 characters.');
+                error.html('{{ trans('adminlte_lang::survey.error_length_5000_characters') }}');
                 error.show();
                 return false;
             }
@@ -1003,13 +1003,13 @@
 
 		if (input_file) {
 			if (input_file.size > 1024*1024*5) {
-				error.html('Limit 5MB');
+				error.html('{{ trans('adminlte_lang::survey.error_limit_5mb') }}');
 				error.show();
 				return false;
 			}
 
 			if (input_file.type.split('/')[0] != 'image') {
-				error.html('Only allow image file');
+				error.html('{{ trans('adminlte_lang::survey.error_only_allow_file') }}');
 				error.show();
 				return false;
 			}

@@ -61,3 +61,7 @@ input:checked + .slider:before {
     padding-left: 0px;
     color: red;
 }
+
+.help-block {
+    font-size: 10px;
+}
