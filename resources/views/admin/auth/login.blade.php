@@ -9,7 +9,7 @@
     <div id="app" v-cloak>
         <div class="login-box">
             <div class="login-logo">
-                <a href="{{ url('/home') }}"><b> @if(trans('adminlte_lang::header.logo') != '') {{ trans('adminlte_lang::header.logo') }} @endif</b></a>
+                <a href="{{ url('/home') }}"><b style="font-size: 34px;"> @if(trans('adminlte_lang::header.logo') != '') {{ trans('adminlte_lang::header.logo') }} @endif</b></a>
             </div><!-- /.login-logo -->
 
         @if (count($errors) > 0)
