@@ -1,3 +1,8 @@
+<style>
+    a.jsLogout:hover {
+        background: #4f9ecc;
+    }
+</style>
 <!-- Main Header -->
 <header class="main-header">
 
@@ -24,14 +29,15 @@
                 @else
                     <!-- User Account Menu -->
                     <li class="dropdown user user-menu" id="user_menu">
-                        <div class="col-md-10">
+                        <div class="col-md-8">
                             <span style="color:white">{{ Auth::user()->email }}</span>
                         </div>
-                        <div class="col-md-2">
-                            <a style="color:white;display: block;" href="{{ url('/logout') }}"
+                        <div class="col-md-4">
+                            <a class="jsLogout" style="color:white;display: block;" href="{{ url('/logout') }}"
                                onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">
-                                <i class="fa fa-fw fa-sign-out" data-toggle="tooltip" title="{{ trans('adminlte_lang::survey.logout') }}" data-placement="left"></i>
+                                <i class="fa fa-fw fa-sign-out"></i>
+                                {{ trans('adminlte_lang::survey.logout') }}
                             </a>
 
                             <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
