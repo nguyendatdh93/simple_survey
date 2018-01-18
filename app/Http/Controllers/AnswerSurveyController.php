@@ -48,61 +48,70 @@ class AnswerSurveyController extends Controller
 	
 	public function showQuestionSurvey(Request $request, $encrypt)
 	{
-		$id             = $this->getIdSurveyFormEncryptCode($encrypt);
-		$survey_service = new SurveyService();
-		$answer         = array();
-		if ($request->session()->get('answer'. $id) != null) {
-			$answer = $request->session()->get('answer' . $id);
-		}
-		
-		$survey = $this->surveyRepository->getSurveyPublishedById($id);
-		if ($survey == false) {
+		try {
+			$id             = $this->getIdSurveyFormEncryptCode($encrypt);
+			$survey_service = new SurveyService();
+			$answer         = array();
+			if ($request->session()->get('answer'. $id) != null) {
+				$answer = $request->session()->get('answer' . $id);
+			}
+			
+			$survey = $this->surveyRepository->getSurveyPublishedById($id);
+			if ($survey == false) {
+				return redirect('404');
+			}
+			
+			$survey                = $survey_service->getDataAnswerForSurvey($survey, isset($answer['questions']) ? $answer['questions'] : array());
+			$survey['encrypt_url'] = $encrypt;
+			
+			return view('admin::answer', array('survey' => $survey));
+		} catch (\Exception $e) {
 			return redirect('404');
 		}
-		
-		$survey                = $survey_service->getDataAnswerForSurvey($survey, isset($answer['questions']) ? $answer['questions'] : array());
-		$survey['encrypt_url'] = $encrypt;
-		
-		return view('admin::answer', array('survey' => $survey));
 	}
 	
 	public function showFormConfirmAnswerSurvey(Request $request, $encrypt)
 	{
-		$input               = Input::get();
-		$surveyValidator     = new SurveyValidator();
-		if (!$surveyValidator->validateAnswerSurvey($input)) {
+		try {
+			$input               = Input::get();
+			$surveyValidator     = new SurveyValidator();
+			if (!$surveyValidator->validateAnswerSurvey($input)) {
+				return redirect('404');
+			}
+			
+			$id                  = $this->getIdSurveyFormEncryptCode($encrypt);
+			$survey              = $this->surveyRepository->getSurveyPublishedById($id);
+			$survey['questions'] = $this->questionRepository->getQuestionSurveyWithoutConfirmTypeBySurveyId($id);
+			
+			foreach ($survey['questions'] as $key => $question) {
+				if (in_array($question['id'], array_keys($input))) {
+					if ($question['type'] == Question::TYPE_SINGLE_CHOICE) {
+						$answer = array(
+							$input[$question['id']] => $this->questionChoiceRepository->getChoiceTextByChoiceId($input[$question['id']]),
+						);
+						
+						$survey['questions'][$key]['answer'] = $answer;
+					} elseif ($question['type'] == Question::TYPE_MULTI_CHOICE) {
+						$answer = array();
+						foreach ($input[$question['id']] as $choice_id) {
+							$answer[$choice_id] = $this->questionChoiceRepository->getChoiceTextByChoiceId($choice_id);
+						}
+						
+						$survey['questions'][$key]['answer'] = $answer;
+					} else {
+						$survey['questions'][$key]['answer'] = $input[$question['id']];
+					}
+				}
+			}
+			
+			$survey['encrypt_url'] = $encrypt;
+			$request->session()->put('answer' . $id, $survey);
+			
+			return view('admin::answer_confirm', array('survey' => $survey));
+		} catch (\Exception $e) {
 			return redirect('404');
 		}
 		
-		$id                  = $this->getIdSurveyFormEncryptCode($encrypt);
-		$survey              = $this->surveyRepository->getSurveyPublishedById($id);
-		$survey['questions'] = $this->questionRepository->getQuestionSurveyWithoutConfirmTypeBySurveyId($id);
-		
-		foreach ($survey['questions'] as $key => $question) {
-			if (in_array($question['id'], array_keys($input))) {
-				if ($question['type'] == Question::TYPE_SINGLE_CHOICE) {
-					$answer = array(
-						$input[$question['id']] => $this->questionChoiceRepository->getChoiceTextByChoiceId($input[$question['id']]),
-					);
-					
-					$survey['questions'][$key]['answer'] = $answer;
-				} elseif ($question['type'] == Question::TYPE_MULTI_CHOICE) {
-					$answer = array();
-					foreach ($input[$question['id']] as $choice_id) {
-						$answer[$choice_id] = $this->questionChoiceRepository->getChoiceTextByChoiceId($choice_id);
-					}
-					
-					$survey['questions'][$key]['answer'] = $answer;
-				} else {
-					$survey['questions'][$key]['answer'] = $input[$question['id']];
-				}
-			}
-		}
-		
-		$survey['encrypt_url'] = $encrypt;
-		$request->session()->put('answer' . $id, $survey);
-		
-		return view('admin::answer_confirm', array('survey' => $survey));
 	}
 	
 	public function answerSurvey(Request $request, $encrypt)
