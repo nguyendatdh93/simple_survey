@@ -1,3 +1,6 @@
  #user_menu {
      margin-top: 15px;
  }
+ a.jsLogout:hover {
+     background: #4f9ecc;
+ }

@@ -82,9 +82,8 @@ return [
     'confirmation_help_block' => '* The condition text for explain more about this question.',
     'agree_text_placeholder' => 'Agree text',
     'alert_success_create_survey'  => 'Create survey success',
-	'message_repquire'  => '必ず入力して下さい',
+	'message_repquire'  => '必ず選択してください',
 	'message_confirm_condition' => '規約に承諾してください',
-	'alert_success_answer_survey' => 'Thank you for taking the survey',
 	'column_csv_created_at' => 'Time answered',
 	
 	'radio_label_choice_survey_draft_status' => '下書き',
