@@ -390,9 +390,8 @@ class SurveyController extends Controller
     }
 
     public function postEditingPreview(Request $request) {
-        $input   = Input::all();
-        $user_id = Auth::id();
-        $valid   = true;
+        $input = Input::all();
+        $valid = true;
 
         // validate file
         if (!$this->validateText($input['survey_name'])) {
@@ -539,7 +538,7 @@ class SurveyController extends Controller
                 $confirm_content->text        = $new_question['confirmation_text'];
                 $this->confirmContentRepository->save($confirm_content);
 
-                if ($question->require == Question::REQUIRE_QUESTION_YES) {
+                if ($question->require == Question::REQUIRE_QUESTION_YES && !empty($new_question['agree_text'])) {
                     $question_choice = $this->questionChoiceRepository->createEmptyObject();
                     $question_choice->question_id = $question->id;
                     $question_choice->text        = $new_question['agree_text'];
@@ -687,7 +686,7 @@ class SurveyController extends Controller
                     return false;
                 }
 
-                if (empty($question['agree_text']) || strlen($question['agree_text']) > 255) {
+                if (!empty($question['agree_text']) && strlen($question['agree_text']) > 255) {
                     return false;
                 }
 

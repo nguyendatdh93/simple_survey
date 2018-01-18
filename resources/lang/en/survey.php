@@ -75,4 +75,5 @@ return [
 	'alert_success_answer_survey' => 'Thank you for taking the survey',
 	'radio_label_choice_survey_draft_status' => 'Draft',
 	'radio_label_choice_survey_publish_status' => 'Publish',
+	'tooltip_remove_question' => 'Remove question',
 ];

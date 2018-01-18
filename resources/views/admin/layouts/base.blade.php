@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ Config::get('app.locale') }}">
 
 @section('htmlheader')
     @include('admin::layouts.partials.htmlheader')
