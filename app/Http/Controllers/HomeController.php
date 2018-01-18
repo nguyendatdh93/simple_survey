@@ -30,7 +30,8 @@ class HomeController extends Controller
     public function setupLanguage()
     {
         $language = trans('adminlte_lang::datatable');
-        return json_encode($language);die;
+        
+        return json_encode($language);
     }
 
     public function showImage($image_path, $image_name)
