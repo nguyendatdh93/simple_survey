@@ -11,12 +11,11 @@
             'info'        : true,
             'autoWidth'   : true,
             'createdRow' : function( row, data, dataIndex ) {
-                $( row ).addClass(changeColorRow(row,data));
                 $(row).children(".tbl-control").html(addControls(row,data));
                 $(row).children(".tbl-status").html(buttonForStatus(data));
             },
             "columnDefs": [
-                { "targets": 0, "visible" : false },
+//                { "targets": 0, "visible" : false },
                 { "targets": 3, "orderable" : false},
                 { "targets": 4, "orderable" : true},
                 { "targets": 5, "orderable" : true},
@@ -27,19 +26,6 @@
                 "url" : "/setup-lang"
             }
         });
-
-        function changeColorRow(row,data)
-        {
-            if(data.indexOf("{{ trans('adminlte_lang::survey.draf') }}") >= 0) {
-                return "row-draf";
-            } else if(data.indexOf("{{ trans('adminlte_lang::survey.published') }}") >= 0) {
-                return "row-published";
-            } else {
-                return "row-closed";
-            }
-
-            return '';
-        }
 
         function addControls(row,data)
         {

@@ -62,7 +62,10 @@ class SurveyController extends Controller
             'title' => trans('adminlte_lang::survey.survey_list_table_title'),
             'id'    => 'survey-table',
             'headers_columns' => array(
-                trans('adminlte_lang::survey.survey_list_table_header_column_id')           => 'id',
+                trans('adminlte_lang::survey.survey_list_table_header_column_id')           => array(
+                	'column' => 'id',
+	                'type'   => 'hidden'
+                ),
                 trans('adminlte_lang::survey.survey_list_table_header_column_status')       => 'status',
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_name')  => 'name',
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_image') => array(
@@ -77,7 +80,7 @@ class SurveyController extends Controller
             'buttons'  => array(
                 array(
                     'text'  => trans('adminlte_lang::survey.button_create_new_survey'),
-                    'href'  => \route(Survey::NAME_URL_EDIT_SURVEY),
+                    'href'  => \route(Survey::NAME_URL_CREATE_SURVEY),
                     'attributes' => array(
                         'class' => 'btn btn-success',
                         'icon'  => 'fa fa-plus-circle'
@@ -129,7 +132,10 @@ class SurveyController extends Controller
             'title' => trans('adminlte_lang::survey.survey_list_table_download_title'),
             'id' => 'download-table',
             'headers_columns' => array(
-                trans('adminlte_lang::survey.survey_list_table_header_column_id')           => 'id',
+                trans('adminlte_lang::survey.survey_list_table_header_column_id')           => array(
+	                'column' => 'id',
+	                'type'   => 'hidden'
+                ),
                 trans('adminlte_lang::survey.survey_list_table_header_column_status')       => 'status',
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_name')  => 'name',
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_image') => array(

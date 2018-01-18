@@ -21,7 +21,15 @@
             <tr>
                 @if(!isset($settings['headers_columns']['Id'])) <th style="text-align: center">{{ "ID" }}</th> @endif
                 @foreach($settings['headers_columns'] as $key => $key_column)
-                    <th style="text-align: center">{{ $key }}</th>
+                    @if(is_array($key_column))
+                        @if($key_column['type'] == \App\BaseWidget\Validator::TYPE_HIDDEN)
+                            <th style="text-align: center;display: none" >{{ $key }}</th>
+                        @else
+                            <th style="text-align: center;" >{{ $key }}</th>
+                        @endif
+                    @else
+                        <th style="text-align: center" >{{ $key }}</th>
+                    @endif
                 @endforeach
                 @if(isset($settings['controls']) && $settings['controls'] == true)
                     <th style="text-align: center">{{ trans('adminlte_lang::datatable.controls') }}</th>
@@ -32,12 +40,16 @@
             @php $stt = 1; @endphp
             @foreach($datas as $data)
                 <tr>
-
                     @if(!isset($settings['headers_columns']['Id'])) <td>{{ $stt }}</td> @endif
                     @php $stt++; @endphp
                     @foreach($settings['headers_columns'] as $key => $key_column)
                         @if(is_array($key_column))
-                            <td class="tbl-{{$key_column['column']}}">@if($key_column['type'] == \App\BaseWidget\Validator::TYPE_IMAGE) {!! \App\BaseWidget\Form::img($data[$key_column['column']], array("class" => "img-datatable","alt" => "")) !!} @endif </td>
+                            @if($key_column['type'] == \App\BaseWidget\Validator::TYPE_IMAGE)
+                                <td class="tbl-{{$key_column['column']}}"> {!! \App\BaseWidget\Form::img($data[$key_column['column']], array("class" => "img-datatable","alt" => "")) !!} </td>
+                            @endif
+                            @if($key_column['type'] == \App\BaseWidget\Validator::TYPE_HIDDEN)
+                                <td class="tbl-{{$key_column['column']}}" style="display: none"> {{ $data[$key_column['column']] }} </td>
+                            @endif
                         @else
                             <td class="tbl-{{$key_column}}">{{ isset($data[$key_column]) ? $data[$key_column] : "-" }}</td>
                         @endif
@@ -48,17 +60,17 @@
                 </tr>
             @endforeach
             </tbody>
-            <tfoot>
-            <tr>
-                @if(!isset($settings['headers_columns']['Id'])) <th style="text-align: center">{{ "ID" }}</th> @endif
-                @foreach($settings['headers_columns'] as $key => $title)
-                    <th style="text-align: center">{{ $key }}</th>
-                @endforeach
-                @if(isset($settings['controls']) && $settings['controls'] == true)
-                    <th style="text-align: center">{{ trans('adminlte_lang::datatable.controls') }}</th>
-                @endif
-            </tr>
-            </tfoot>
+            {{--<tfoot>--}}
+            {{--<tr>--}}
+                {{--@if(!isset($settings['headers_columns']['Id'])) <th style="text-align: center">{{ "ID" }}</th> @endif--}}
+                {{--@foreach($settings['headers_columns'] as $key => $title)--}}
+                    {{--<th style="text-align: center">{{ $key }}</th>--}}
+                {{--@endforeach--}}
+                {{--@if(isset($settings['controls']) && $settings['controls'] == true)--}}
+                    {{--<th style="text-align: center">{{ trans('adminlte_lang::datatable.controls') }}</th>--}}
+                {{--@endif--}}
+            {{--</tr>--}}
+            {{--</tfoot>--}}
         </table>
     </div>
     <!-- /.box-body -->

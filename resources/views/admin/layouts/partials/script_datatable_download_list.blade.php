@@ -20,6 +20,9 @@
                 { "targets": 6, "orderable" : true},
                 { "targets": 7,"orderable" : false},
             ],
+            "language": {
+                "url" : "/setup-lang"
+            }
         });
 
         function addControls(row,data)
