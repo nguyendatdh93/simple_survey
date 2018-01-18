@@ -285,7 +285,7 @@
 								<div class="row">
 									<div class="col-md-10 col-md-offset-1" style="margin-top: 10px; margin-bottom: 10px;">
 										<div class="pull-right">
-											<button type="button" class="btn btn-success btn-sm jsAddQuestion" data-question-category="2">
+											<button type="button" class="btn btn-success btn-sm jsAddQuestion" data-question-category="{{ \App\Question::CATEGORY_CONTENT }}">
 												<i class="fa fa-plus"></i> {{ trans('survey.survey_add_question_button') }}
 											</button>
 										</div>
@@ -324,7 +324,9 @@
 															<div class="col-md-3">
 																<select name="question_{{ $question_number }}_type" class="form-control jsChoiceQuestionType jsQuestionType">
 																	@foreach($question_types as $val => $question_type)
-																		<option value="{{ $val }}" @if($question['type'] == $val) selected="selected" @endif>{{ $question_type }}</option>
+																		@if($val != \App\Question::TYPE_CONFIRMATION)
+																			<option value="{{ $val }}" @if($question['type'] == $val) selected="selected" @endif>{{ $question_type }}</option>
+																		@endif
 																	@endforeach
 																</select>
 															</div>
@@ -443,7 +445,7 @@
 										<div class="row">
 											<div class="col-md-10 col-md-offset-1" style="margin-top: 10px; margin-bottom: 10px;">
 												<div class="pull-right">
-													<button type="button" class="btn btn-success btn-sm jsAddQuestion" data-question-category="2">
+													<button type="button" class="btn btn-success btn-sm jsAddQuestion" data-question-category="{{ \App\Question::CATEGORY_CONTENT }}">
 														<i class="fa fa-plus"></i> {{ trans('survey.survey_add_question_button') }}
 													</button>
 												</div>
@@ -473,7 +475,7 @@
 								<div class="row">
 									<div class="col-md-10 col-md-offset-1" style="margin-top: 10px; margin-bottom: 10px;">
 										<div class="pull-right">
-											<button type="button" class="btn btn-success btn-sm jsAddQuestion" data-question-category="3">
+											<button type="button" class="btn btn-success btn-sm jsAddQuestion" data-question-category="{{ \App\Question::CATEGORY_FOOTER }}">
 												<i class="fa fa-plus"></i> {{ trans('survey.survey_add_question_button') }}
 											</button>
 										</div>
@@ -512,7 +514,9 @@
 															<div class="col-md-3">
 																<select name="question_{{ $question_number }}_type" class="form-control jsChoiceQuestionType jsQuestionType">
 																	@foreach($question_types as $val => $question_type)
-																		<option value="{{ $val }}" @if($question['type'] == $val) selected="selected" @endif>{{ $question_type }}</option>
+																		@if($val == \App\Question::TYPE_CONFIRMATION)
+																			<option value="{{ $val }}" @if($question['type'] == $val) selected="selected" @endif>{{ $question_type }}</option>
+																		@endif
 																	@endforeach
 																</select>
 															</div>
@@ -631,7 +635,7 @@
 										<div class="row">
 											<div class="col-md-10 col-md-offset-1" style="margin-top: 10px; margin-bottom: 10px;">
 												<div class="pull-right">
-													<button type="button" class="btn btn-success btn-sm jsAddQuestion" data-question-category="2">
+													<button type="button" class="btn btn-success btn-sm jsAddQuestion" data-question-category="{{ \App\Question::CATEGORY_FOOTER }}">
 														<i class="fa fa-plus"></i> {{ trans('survey.survey_add_question_button') }}
 													</button>
 												</div>
@@ -841,6 +845,23 @@
 			var question_choice_number = $(this).data('choice-number');
 			$(this).find('.jsQuestionChoiceText').attr('name', 'question_' + max_number + '_choice_' + question_choice_number + '_text');
         });
+
+		if (question_category_value == {{ \App\Question::CATEGORY_CONTENT }}) {
+			$(question_type).find('option').each(function () {
+				if ($(this).val() == {{ \App\Question::TYPE_CONFIRMATION }}) {
+					$(this).remove();
+				}
+			});
+		} else if (question_category_value == {{ \App\Question::CATEGORY_FOOTER }}) {
+			$(question_type).find('option').each(function () {
+				if ($(this).val() != {{ \App\Question::TYPE_CONFIRMATION }}) {
+					$(this).remove();
+				}
+			});
+
+			new_question.find('.jsQuestion').hide();
+			new_question.find('.jsQuestionConfirmation').show();
+		}
 	});
 
 	$(document).on('click', '.jsQuestionRequired', function () {
