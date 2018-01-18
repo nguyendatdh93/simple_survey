@@ -17,68 +17,8 @@
 @endsection
 
 @section('body')
-    <style>
-        nav.navbar.navbar-inverse.navbar-fixed-top {
-            position: fixed;
-            width: 100%;
-            top: 0;
-            background: #b5b5b5;
-        }
+    <link rel="stylesheet" href="{{ asset('css/styleusers.css') }}">
 
-        .navbar .jsButtonControls {
-            display: inline-block;
-            float: none;
-            margin-bottom: 10px;
-            margin-top: 10px;
-        }
-
-        .navbar .container-fluid {
-            text-align: center;
-        }
-
-        .btn-circle {
-            width: 30px;
-            height: 30px;
-            text-align: center;
-            font-size: 12px;
-            line-height: 1.428571429;
-            border-radius: 15px;
-        }
-        .btn-circle.btn-xl {
-            width: 60px;
-            height: 60px;
-            /* padding: 4px 10px; */
-            font-size: 13px;
-            line-height: 4.7;
-            border-radius: 35px;
-            display: block;
-            border-radius: 50%;
-            border: solid 2px #f7f7f7;
-        }
-        .jsCopyUrlForm {
-            position: absolute;
-            right: 0px;
-            top: 27px;
-            right: 24px;
-        }
-        .jsLinkGoEditSurvey {
-            position: absolute;
-            left: 10px;
-            top: 21px;
-            background: #d9534f;
-            padding: 6px;
-            border-radius: 5px;
-            color: white;
-        }
-        .btn-danger {
-            background-color: #d9534f;
-            color : #fff;
-        }
-        .btn-warning {
-            background-color: #428bca;
-            color : #fff;
-        }
-    </style>
     @if ($survey['status'] != \App\Survey::STATUS_SURVEY_CLOSED)
         <nav class="navbar navbar-inverse navbar-fixed-top" style="background: #e6e6e6;border-bottom: 2px solid #c7c7c7;">
             <div class="container-fluid">
