@@ -53,11 +53,11 @@
                 url_edit_survey = "{{ route(\App\Survey::NAME_URL_EDIT_SURVEY) }}/"+ data[0];
             } else if(data.indexOf("{{ trans('adminlte_lang::survey.published') }}") >= 0) {
                 url_redirect_detail = "{{ route(\App\Survey::NAME_URL_PREVIEW) }}/"+ data[0];
-                url_redirect_copy   = "{{ route(\App\Survey::NAME_URL_DUPLICATE_SURVEY) }}/"+ data[0];
             } else {
                 url_redirect_detail = "{{ route(\App\Survey::NAME_URL_PREVIEW) }}/"+ data[0];
-                url_redirect_copy   = "{{ route(\App\Survey::NAME_URL_DUPLICATE_SURVEY) }}/"+ data[0];
             }
+
+            url_redirect_copy   = "{{ route(\App\Survey::NAME_URL_DUPLICATE_SURVEY) }}/"+ data[0];
 
             html += '<a href="'+ url_redirect_detail +'" class="btn btn-default" data-toggle="tooltip" target="_blank" title="{{ trans('adminlte_lang::survey.detail') }}"><i class="fa fa-list-alt"></i></a>';
             html += '<a href="'+ url_redirect_copy +'" class="btn btn-default" style="margin-left: 5px" data-toggle="tooltip" title="{{ trans('adminlte_lang::survey.copy_survey') }}"><i class="fa fa-copy"></i></a>';
