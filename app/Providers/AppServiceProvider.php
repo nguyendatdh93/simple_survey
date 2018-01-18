@@ -21,6 +21,8 @@ use App\Repositories\Eloquents\ConfirmContentRepository;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Dusk\DuskServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -78,6 +80,13 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             AnswerQuestionRepositoryInterface::class,
             AnswerQuestionRepository::class
+        );
+
+        $this->app->instance('log', new \Illuminate\Log\Writer(
+                (new Logger(
+                    $this->app->environment()
+                ))->pushHandler(new StreamHandler(env('CONFIG_LOG_PATH').'/log-'.date('Y-m-d')))
+            )
         );
     }
 }
