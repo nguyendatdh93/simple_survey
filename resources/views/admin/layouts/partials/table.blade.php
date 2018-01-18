@@ -48,17 +48,17 @@
                 </tr>
             @endforeach
             </tbody>
-            <tfoot>
-            <tr>
-                @if(!isset($settings['headers_columns']['Id'])) <th style="text-align: center">{{ "ID" }}</th> @endif
-                @foreach($settings['headers_columns'] as $key => $title)
-                    <th style="text-align: center">{{ $key }}</th>
-                @endforeach
-                @if(isset($settings['controls']) && $settings['controls'] == true)
-                    <th style="text-align: center">{{ trans('adminlte_lang::datatable.controls') }}</th>
-                @endif
-            </tr>
-            </tfoot>
+            {{--<tfoot>--}}
+            {{--<tr>--}}
+                {{--@if(!isset($settings['headers_columns']['Id'])) <th style="text-align: center">{{ "ID" }}</th> @endif--}}
+                {{--@foreach($settings['headers_columns'] as $key => $title)--}}
+                    {{--<th style="text-align: center">{{ $key }}</th>--}}
+                {{--@endforeach--}}
+                {{--@if(isset($settings['controls']) && $settings['controls'] == true)--}}
+                    {{--<th style="text-align: center">{{ trans('adminlte_lang::datatable.controls') }}</th>--}}
+                {{--@endif--}}
+            {{--</tr>--}}
+            {{--</tfoot>--}}
         </table>
     </div>
     <!-- /.box-body -->
