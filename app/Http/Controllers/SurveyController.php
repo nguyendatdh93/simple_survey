@@ -290,11 +290,11 @@ class SurveyController extends Controller
 
         $survey = $this->surveyRepository->getSurveyById($id);
         if (!$survey) {
-            die('404 - no survey');
+            return view('admin::errors.404');
         }
 
         if ($survey['status'] != Survey::STATUS_SURVEY_DRAF) {
-            die('404 - could not edit this survey');
+            return view('admin::errors.404');
         }
 
         $survey_service = new SurveyService();
@@ -313,7 +313,7 @@ class SurveyController extends Controller
 
     public function duplicate($id) {
         if (!$id) {
-            die('404 - no survey id for duplicate');
+            return view('admin::errors.404');
         }
 
         $layout = 'admin.survey.edit';
@@ -321,7 +321,7 @@ class SurveyController extends Controller
 
         $survey = $this->surveyRepository->getSurveyById($id);
         if (!$survey) {
-            die('404 - no survey for duplicate');
+            return view('admin::errors.404');
         }
 
         $questions = $this->questionRepository->getQuestionsBySurveyId($survey['id']);
@@ -433,16 +433,16 @@ class SurveyController extends Controller
 
         // validate file
         if ($file && !$this->validateFile($file)) {
-            die('404 - file wrong');
+            return view('admin::errors.404');
         }
 
         // validate survey header input
         if (!$this->validateText($input['survey_name'])) {
-            die('404 - survey name wrong');
+            return view('admin::errors.404');
         }
 
         if (!$this->validateText($input['survey_description'], false, 5000)) {
-            die('404 - survey description wrong');
+            return view('admin::errors.404');
         }
 
         // create new questions data from input text
@@ -450,7 +450,7 @@ class SurveyController extends Controller
 
         // validate questions input
         if (!$this->validateQuestionsInput($new_questions)) {
-            die('404 - questions wrong');
+            return view('admin::errors.404');
         }
 
         // create or update survey
@@ -463,7 +463,7 @@ class SurveyController extends Controller
             ];
             $survey = $this->surveyRepository->find($filter);
             if (!$survey) {
-                die('404 - no survey');
+                return view('admin::errors.404');
             }
 
             // remove all survey questions
@@ -500,7 +500,7 @@ class SurveyController extends Controller
                 $survey->image_path = $image_path;
             } catch (\Exception $e) {
                 var_dump($e->getMessage());
-                die('Exception');
+                return view('admin::errors.500');
             }
         }
         $survey->description = $input['survey_description'];
