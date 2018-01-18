@@ -24,4 +24,5 @@ interface SurveyRepositoryInterface
     public function deleteSurvey($survey_id);
 	public function updateStatusDownloadedForSurvey($survey_id);
 	public function checkStatusSurveyIsDownloaded($survey_id);
+	public function getStatusSurvey($survey_id);
 }

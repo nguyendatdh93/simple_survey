@@ -11,6 +11,7 @@ use App\Repositories\Contracts\SurveyRepositoryInterface;
 use App\Survey;
 use Illuminate\Support\Facades\Auth;
 use Mockery\Exception;
+use DB;
 
 class SurveyRepository extends \EloquentRepository implements SurveyRepositoryInterface
 {
@@ -37,7 +38,6 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
             ->where('status', '!=', Survey::STATUS_SURVEY_DRAF)
             ->where('del_flg', 0)
             ->get()->toArray();
-
 
         return $result;
     }
@@ -152,6 +152,15 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
 		    ->where('id',$survey_id)
 		    ->first();
 	    
+	    return $result ? $result->toArray() : [];
+    }
+    
+    public function getStatusSurvey($survey_id)
+    {
+	    $result = $this->_model->select('status')
+		    ->where('id',$survey_id)
+		    ->first();
+	
 	    return $result ? $result->toArray() : [];
     }
 }
