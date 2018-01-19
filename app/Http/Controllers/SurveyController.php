@@ -315,13 +315,19 @@ class SurveyController extends Controller
             return view('admin::errors.404');
         }
 
-        if ($survey['status'] != Survey::STATUS_SURVEY_DRAF) {
+        if ($survey['status'] == Survey::STATUS_SURVEY_CLOSED) {
             return view('admin::errors.404');
         }
 
         $survey_service = new SurveyService();
         if ($survey['image_path']) {
             $survey['image_path'] = \route('show-image'). '/' . $survey_service->getImageName($survey['image_path']);
+        }
+
+        if ($survey['status'] == Survey::STATUS_SURVEY_PUBLISHED) {
+            $encryption_service       = new EncryptionService();
+            $survey['preview_url']    = \route(Survey::NAME_URL_PREVIEW) . '/' . $survey['id'];
+            $survey['encryption_url'] = $encryption_service->encrypt($survey['id']);
         }
 
         $questions = $this->questionRepository->getQuestionsBySurveyId($survey['id']);
@@ -525,6 +531,7 @@ class SurveyController extends Controller
             }
         }
         $survey->description = $input['survey_description'];
+        $survey->status = empty($input['survey_status']) ? Survey::STATUS_SURVEY_DRAF : $input['survey_status'] ;
         $survey = $this->surveyRepository->save($survey);
 
         $i = 0;
