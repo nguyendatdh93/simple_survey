@@ -28,6 +28,7 @@ class AnswerSurveyController extends Controller
 	protected $answerRepository;
 	protected $answerQuestionRepository;
 	protected $encryption_service;
+	protected $survey_service;
 	
 	public function __construct(SurveyRepositoryInterface $surveyRepository,
 	                            QuestionRepositoryInterface $questionRepository,
@@ -44,6 +45,7 @@ class AnswerSurveyController extends Controller
 		$this->answerQuestionRepository = $answerQuestionRepository;
 		$this->confirmContentRepository = $confirmContentRepository;
 		$this->encryption_service       = new EncryptionService();
+		$this->survey_service           = new SurveyService();
 	}
 	
 	public function showQuestionSurvey(Request $request, $encrypt)
@@ -77,6 +79,12 @@ class AnswerSurveyController extends Controller
 			$surveyValidator     = new SurveyValidator();
 			if (!$surveyValidator->validateAnswerSurvey($input)) {
 				return redirect('404');
+			}
+			
+			foreach ($input as $key => $text) {
+				if (is_string($text)) {
+					$input[$key] = $this->survey_service->convertTextWithXSSSafe($text);
+				}
 			}
 			
 			$id                  = $this->getIdSurveyFormEncryptCode($encrypt);
