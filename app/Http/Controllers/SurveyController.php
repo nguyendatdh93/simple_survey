@@ -125,6 +125,20 @@ class SurveyController extends Controller
 
         return $surveys;
     }
+	
+    public function getSurveyForShowingDownloadList($surveys)
+    {
+	    foreach ($surveys as $key => $survey) {
+		    if ($this->answerRepository->getNumberAnswersBySurveyId($survey['id']) > 0) {
+			    $surveys[$key]['number_answers'] =  $this->answerRepository->getNumberAnswersBySurveyId($survey['id']);
+		    } else {
+			    unset($surveys[$key]);
+			    continue;
+		    }
+	    }
+	
+	    return $surveys;
+    }
 
     public function showDownloadListSurvey()
     {
@@ -150,6 +164,7 @@ class SurveyController extends Controller
         );
 
         $surveys = $this->surveyRepository->getDownloadListSurvey();
+        $surveys = $this->getSurveyForShowingDownloadList($surveys);
         $surveys = $this->getDataSurveyForShowing($surveys);
 
         return view('admin::datatable', array('settings' => $table_settings, 'datas' => $surveys));
@@ -179,7 +194,8 @@ class SurveyController extends Controller
             );
             
 			$survey_is_downloaded = $this->surveyRepository->checkStatusSurveyIsDownloaded($id);
-			if ($survey_is_downloaded['downloaded'] == Survey::STATUS_SURVEY_DOWNLOADED) {
+			$status_survey        = $this->surveyRepository->getStatusSurvey($id);
+			if ($survey_is_downloaded['downloaded'] == Survey::STATUS_SURVEY_DOWNLOADED && $status_survey['status'] == Survey::STATUS_SURVEY_CLOSED) {
 				$buttons[] = array(
 					'text' => trans('adminlte_lang::survey.button_clear_data'),
 					'attributes' => array(
@@ -610,7 +626,7 @@ class SurveyController extends Controller
     {
         if ($id) {
             try {
-                $this->surveyRepository->deleteSurvey($id);
+//                $this->surveyRepository->deleteSurvey($id);
                 $answers = $this->answerRepository->getAnswersBySurveyId($id);
                 foreach ($answers as $answer) {
                     $this->answerQuestionRepository->clearDataByAnswerId($answer['id']);
