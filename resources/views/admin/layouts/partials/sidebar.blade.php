@@ -12,7 +12,7 @@
             @if($menus)
                 @foreach($menus as $menu)
                     @if(!isset($menu['child']))
-                        <li class="@if(strpos(trim($menu['url']),Request::path()) != false) active @endif" @if(isset($menu['hidden'])) hidden @endif><a href="{{ $menu['url'] }}"><i class='{{ $menu['icon'] }}'></i> <span>{{ $menu['text'] }}</span></a></li>
+                        <li class="@if(strpos(trim($menu['url']),explode('/',Request::path())[0]) != false) active @endif" @if(isset($menu['hidden'])) hidden @endif><a href="{{ $menu['url'] }}"><i class='{{ $menu['icon'] }}'></i> <span>{{ $menu['text'] }}</span></a></li>
                     @else
                         <li class="treeview @if(strpos(trim($menu['url']),Request::path()) != false) active @endif" @if(isset($menu['hidden'])) hidden @endif>
                             <a href="{{ $menu['url'] }}"><i class='{{ $menu['icon'] }}'></i> <span>{{ $menu['text'] }}</span> <i class="fa fa-angle-left pull-right"></i></a>

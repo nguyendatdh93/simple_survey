@@ -17,10 +17,6 @@ class SurveyValidator
 {
 	public function validateAnswerSurvey($answerSurvey)
 	{
-		if (isset($answerSurvey['csrf_token'])) {
-			unset($answerSurvey['csrf_token']);
-		}
-		
 		$questionRepository       = new QuestionRepository();
 		$questionChoiceRepository = new QuestionChoiceRepository();
 		foreach ($answerSurvey as $question_id => $answer) {
