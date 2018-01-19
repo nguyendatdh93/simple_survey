@@ -36,7 +36,7 @@ return [
     'survey_list_table_header_column_survey_published_at' => "公開日",
     'survey_list_table_header_column_survey_closed_at' => "終了日",
     'survey_list_table_header_column_survey_number_answers' => "回答人数",
-	'detail' => '詳細へ',
+	'detail' => 'プレビュー',
 	'copy_survey' => 'コピー',
 	'edit_survey'  => '編集',
 	'go_to_edit' => '編集画面へ',
