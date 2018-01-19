@@ -8,14 +8,6 @@
             $('textarea').attr('disabled', 'disabled');
         }
 
-        var current_url = window.location.href,
-            pattern = /duplicate/,
-            is_duplicate_page = pattern.test(current_url),
-            is_edit_page = {{ empty($survey['id']) ? 'false' : 'true' }};
-        if (!is_edit_page && !is_duplicate_page) {
-            $('.jsAddQuestion').click();
-        }
-
 		CKEDITOR.on("instanceCreated", function(event) {
 			event.editor.on("blur", function () {
 				event.editor.updateElement();
@@ -34,6 +26,14 @@
 				CKEDITOR.replace(editor_id);
 			}
 		}
+
+        var current_url = window.location.href,
+                pattern = /duplicate/,
+                is_duplicate_page = pattern.test(current_url),
+                is_edit_page = {{ empty($survey['id']) ? 'false' : 'true' }};
+        if (!is_edit_page && !is_duplicate_page) {
+            $('.jsAddQuestion').click();
+        }
 
         sessionStorage.preview_image = $('.jsSurveyThumbnailPreview').attr('src');
 

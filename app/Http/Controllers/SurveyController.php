@@ -354,6 +354,12 @@ class SurveyController extends Controller
 
         $questions = $this->questionRepository->getQuestionsBySurveyId($survey['id']);
         unset($survey['id']);
+        unset($survey['status']);
+
+        if ($survey['image_path']) {
+            $survey_service = new SurveyService();
+            $survey['image_path'] = \route('show-image'). '/' . $survey_service->getImageName($survey['image_path']);
+        }
 
         return view($layout, [
             'survey'         => $survey,
@@ -391,7 +397,11 @@ class SurveyController extends Controller
                 $survey['questions'][$key]['question_choices'] = $choices;
             }
 
-            if (!empty($question['required']) && !empty($question['agree_text'])) {
+            if ($question['type'] == Question::TYPE_CONFIRMATION) {
+                $survey['questions'][$key]['question_choices'] = [];
+            }
+
+            if (!empty($question['agree_text'])) {
                 $survey['questions'][$key]['question_choices'] = [['text' => $question['agree_text']]];
             }
 
