@@ -231,7 +231,14 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'FormSimple' => App\BaseWidget\Form::class,
-        'OAuth'     => Artdarek\OAuth\Facade\OAuth::class
+        'OAuth'     => Artdarek\OAuth\Facade\OAuth::class,
+	    'App\Survey' => App\Models\Survey::class,
+	    'App\Answer' => App\Models\Answer::class,
+	    'App\AnswerQuestion' => App\Models\AnswerQuestion::class,
+	    'App\ConfirmContent' => App\Models\ConfirmContent::class,
+	    'App\Question' => App\Models\Question::class,
+	    'App\QuestionChoice' => App\Models\QuestionChoice::class,
+	    'App\User' => App\Models\User::class
     ],
 
 ];
