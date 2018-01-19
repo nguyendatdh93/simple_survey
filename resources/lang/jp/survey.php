@@ -92,8 +92,8 @@ return [
     'single_text_placeholder' => '回答者の入力欄',
     'multi_text_placeholder' => '回答者の入力欄',
     'confirmation_help_block' => '',
-    'agree_text_placeholder' => 'Agree text',
-    'alert_success_create_survey'  => 'Create survey success',
+    'agree_text_placeholder' => '利用規約の内容を入力してください',
+    'alert_success_create_survey'  => 'アンケートを設定しました。',
 	'message_repquire'  => '必ず選択してください',
 	'message_confirm_condition' => '規約に承諾してください',
 	
