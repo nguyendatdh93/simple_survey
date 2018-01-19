@@ -353,6 +353,7 @@ class SurveyController extends Controller
         }
 
         $questions = $this->questionRepository->getQuestionsBySurveyId($survey['id']);
+        $survey['duplicate_id'] = $survey['id'];
         unset($survey['id']);
         unset($survey['status']);
 
@@ -539,6 +540,9 @@ class SurveyController extends Controller
                 var_dump($e->getMessage());
                 return view('admin::errors.500');
             }
+        } elseif (!empty($input['duplicate_id'])) {
+            $duplicate_survey = $this->surveyRepository->getSurveyById($input['duplicate_id']);
+            $survey->image_path = $duplicate_survey['image_path'];
         }
         $survey->description = $input['survey_description'];
         $survey->status = empty($input['survey_status']) ? Survey::STATUS_SURVEY_DRAF : $input['survey_status'] ;
