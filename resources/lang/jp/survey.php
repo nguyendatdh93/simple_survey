@@ -15,6 +15,8 @@ return [
     'menu_survey_list' => 'アンケート一覧',
     'menu_survey_download' => 'アンケート一覧',
     'confirm_publish_survey_content' => "このアンケートを公開しますか？",
+    'save_publish_survey' => "終了する",
+    'cancel_publish_survey' => "キャンセル",
     'confirm_publish_survey_title' => "確認",
     'confirm_button_close' => "終了する",
     'confirm_button_publish' => "公開する",
@@ -85,6 +87,7 @@ return [
 	'error_not_allow_empty' => '必ず入力してください',
 	'error_only_allow_file' => '画像のみアップロードしてください',
 	'error_limit_5mb' => '最大5MB',
+	'error_no_choice' => 'Not allow no choices for this question',
     'choice_default_text' => '設問分を入力してください ',
     'single_text_placeholder' => '回答者の入力欄',
     'multi_text_placeholder' => '回答者の入力欄',
@@ -96,8 +99,9 @@ return [
 	
 	
 	'column_csv_created_at' => 'Time answered',
-	'radio_label_choice_survey_draft_status' => '下書き',
-	'radio_label_choice_survey_publish_status' => '公開する',
+	'label_choice_survey_draft_status' => '下書き',
+	'label_choice_survey_publish_status' => '公開する',
+	'label_choice_survey_close_status' => '終了する',
 
     'tooltip_remove_question' => 'Remove question',
     'tooltip_remove_question_choice' => 'Remove question choice',

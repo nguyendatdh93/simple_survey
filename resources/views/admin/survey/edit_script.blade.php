@@ -1,5 +1,21 @@
 <script>
 	$( document ).ready(function() {
+	    var survey_status = {{ empty($survey['status']) ? \App\Survey::STATUS_SURVEY_DRAF : $survey['status'] }};
+        if (survey_status == {{ \App\Survey::STATUS_SURVEY_PUBLISHED }}) {
+            $('input').attr('disabled', 'disabled');
+            $('select').attr('disabled', 'disabled');
+            $('button.jsAddQuestion').attr('disabled', 'disabled');
+            $('textarea').attr('disabled', 'disabled');
+        }
+
+        var current_url = window.location.href,
+            pattern = /duplicate/,
+            is_duplicate_page = pattern.test(current_url),
+            is_edit_page = {{ empty($survey['id']) ? 'false' : 'true' }};
+        if (!is_edit_page && !is_duplicate_page) {
+            $('.jsAddQuestion').click();
+        }
+
 		CKEDITOR.on("instanceCreated", function(event) {
 			event.editor.on("blur", function () {
 				event.editor.updateElement();
@@ -25,6 +41,12 @@
 	});
 
 	$(document).on('click', '.jsRemoveChoice',function(){
+	    var choices = $(this).parent().parent().parent().parent();
+        if(choices.find('.jsQuestionChoiceBox').length == 1) {
+            var error_html = '<p class="jsError jsErrorNoChoice" style="color: red;">' + '{{ trans('survey.error_no_choice') }}' + '</p>';
+            $(error_html).insertAfter(choices);
+        }
+
 		$(this).parent().parent().remove();
 		$('.tooltip').tooltip('destroy');
 	});
@@ -96,6 +118,8 @@
 		new_choice.attr('data-choice-number', max_choice_number);
 		new_choice_text.attr('name', 'question_' + question_number + '_choice_' + max_choice_number + "_text")
 				.attr('placeholder', '{{ trans('survey.choice_default_text') }}' + ' ' + max_choice_number);
+
+        question.parent().find('.jsErrorNoChoice').remove();
 	});
 
 	$(document).on('click', '.jsAddQuestion', function () {
@@ -215,30 +239,41 @@
         }
     });
 
-	$(document).on('submit', '#survey_form', function(event) {
-		if (validateOnSubmit()) {
-			var survey_status = $('input[name=survey_status]:checked').val();
-			var survey_status_text = '';
+    $(document).on('click', '.jsSaveSurvey', function () {
+        if (validateOnSubmit()) {
+            var survey_status = $(this).data('status'),
+                survey_form = $('#survey_form'),
+                input = $("<input>").attr("type", "hidden").attr("name", 'survey_status').val(survey_status);
 
-			if (survey_status == '{{ \App\Survey::STATUS_SURVEY_DRAF }}') {
-				console.log(survey_status);
-				survey_status_text = '{{ trans('survey.radio_label_choice_survey_draft_status') }}';
-			} else if (survey_status == {{ \App\Survey::STATUS_SURVEY_PUBLISHED }}) {
-				console.log(survey_status);
-				survey_status_text = '{{ trans('survey.radio_label_choice_survey_publish_status') }}';
-			}
-
-			var confirm_message = 'You choice save survey to ' + survey_status_text + '.<br/>Are you sure?';
-
-			showConfirmBox('', confirm_message, 'yes', 'no', "$('#survey_form').submit();");
+            survey_form.append($(input));
+            if (survey_status == '{{ \App\Survey::STATUS_SURVEY_DRAF }}') {
+                survey_form.submit();
+            } else if (survey_status == {{ \App\Survey::STATUS_SURVEY_PUBLISHED }}) {
+                showConfirmBox('', '{{ trans('survey.confirm_publish_survey_content') }}', '{{ trans('survey.save_publish_survey') }}', '{{ trans('survey.cancel_publish_survey') }}', "$('#survey_form').submit();");
+            }
         } else {
-			showConfirmBox('', '{{ trans('adminlte_lang::survey.error_input_wrong_create_survey') }}');
+            showConfirmBox('', '{{ trans('survey.error_input_wrong_create_survey') }}');
+        }
+    });
+
+    $(document).on('click', '.jsCloseSurvey', function () {
+        showConfirmBox(
+                '',
+                '{{ trans('survey.confirm_close_survey_content') }}',
+                '{{ trans('survey.confirm_button_close') }}',
+                '{{ trans('survey.cancel_publish_survey') }}',
+                'window.open("{{ route(\App\Survey::NAME_URL_CLOSE_SURVEY,['id' => empty($survey['id']) ? '' : $survey['id']]) }}", "_self");'
+        );
+    });
+
+    function preview(preview_url) {
+        preview_url = preview_url || '';
+
+        if (preview_url) {
+            preview_tab = window.open(preview_url, '_blank');
+            return false;
         }
 
-        return false;
-	});
-
-    function preview() {
         if (!validateOnSubmit()) {
 			showConfirmBox('', '{{ trans('adminlte_lang::survey.error_input_wrong_create_survey') }}');
             return false;
@@ -308,18 +343,23 @@
 
             var question_type = $($(this).find('.jsQuestionType')[0]).val();
             if (question_type == 3 || question_type == 4) {
-                var question_choice_valid = true;
+                if($(this).find('.jsQuestionChoiceBox').length == 0) {
+                    question_valid = false;
+                    var question_box_body = $(this).find('.box-body')[0];
+                    $('html, body').animate({
+                        scrollTop: $(question_box_body).offset().top
+                    }, 500);
+                    return false;
+                }
+
                 $(this).find('.jsQuestionChoiceBox').each(function () {
                     var question_choice_text = $(this).find('.jsQuestionChoiceText')[0];
                     if (!validateText(question_choice_text)) {
                         $(question_choice_text).focus();
-                        question_choice_valid = false;
                         question_valid = false;
                         return false;
                     }
                 });
-
-                return question_choice_valid;
             } else if (question_type == 5) {
                 var question_confirmation_text = $(this).find('.jsQuestionConfirmationText')[0];
                 if (!validateText(question_confirmation_text)) {
@@ -459,4 +499,31 @@
 
 		modal.modal('show');
 	}
+
+    function copyClipbroad() {
+        var urlCopy = $('.jsUrlDomainCopy').html() +'/'+ $('.jsUrlEncrypt').val();
+        copyToClipboard(urlCopy);
+    }
+
+    function copyToClipboard(text) {
+        if (window.clipboardData && window.clipboardData.setData) {
+            // IE specific code path to prevent textarea being shown while dialog is visible.
+            return clipboardData.setData("Text", text);
+
+        } else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
+            var textarea = document.createElement("textarea");
+            textarea.textContent = text;
+            textarea.style.position = "fixed";  // Prevent scrolling to bottom of page in MS Edge.
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                return document.execCommand("copy");  // Security exception may be thrown by some browsers.
+            } catch (ex) {
+                console.warn("Copy to clipboard failed.", ex);
+                return false;
+            } finally {
+                document.body.removeChild(textarea);
+            }
+        }
+    }
 </script>
