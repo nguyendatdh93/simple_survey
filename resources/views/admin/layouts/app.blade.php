@@ -29,7 +29,7 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="skin-blue sidebar-mini">
+<body class="skin-blue sidebar-mini" style="background: #222e32;">
 <div id="app" v-html>
     {!! \App\BaseWidget\Menu::setLogo(new \App\BaseWidget\Menu()) !!}
 
