@@ -58,7 +58,7 @@ return [
 	'message_clear_data_success' => 'データを削除しました。',
     'button_submit' => '内容確定',
     'button_cancel' => 'Cancel',
-    'button_preview' => 'Preview',
+    'button_preview' => 'プレビュー',
     'confirm_clear_data_title' => '確認',
     'confirm_clear_data_content' => 'このアンケートのデータを削除しますか？',
     
