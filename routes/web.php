@@ -11,8 +11,6 @@
 |
 */
 
-Route::get('/', 'SurveyController@index');
-
 Route::prefix('auth')->group(function () {
     Route::get('/google', array('as' => 'auth.google', 'uses' => 'Auth\LoginController@loginWithGoogle'));
 });
@@ -50,7 +48,7 @@ Route::get('/404', function (){
 Route::get('/setup-lang', 'HomeController@setupLanguage');
 Route::get('/image/{image_path?}/{image_name?}', 'HomeController@showImage')->name(\App\Survey::NAME_URL_SHOW_IMAGE);
 
-Route::prefix('answer')->group(function () {
+Route::prefix('/')->group(function () {
 	Route::get('/thank', 'AnswerSurveyController@showThankPage')->name(\App\Survey::NAME_URL_THANK_PAGE);
 	Route::get('/{encrypt?}', 'AnswerSurveyController@showQuestionSurvey')->name(\App\Survey::NAME_URL_ANSWER_SURVEY);
 	Route::get('/{encrypt?}/confirm', 'AnswerSurveyController@showFormConfirmAnswerSurvey')->name(\App\Survey::NAME_URL_ANSWER_CONFIRM);

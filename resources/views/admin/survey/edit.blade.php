@@ -23,7 +23,7 @@
                                 <div class="box-body" style="padding-left: 30px; padding-right: 30px;">
                                     <div class="navbar-form navbar-right jsCopyUrlForm">
                                         <div class="form-group" style="float: left">
-                                            <label class="jsUrlDomainCopy">{{ route(\App\Survey::NAME_URL_ANSWER_SURVEY) }}</label>
+                                            <label class="jsUrlDomainCopy">{{ route(\App\Survey::NAME_URL_ANSWER_SURVEY) . '/' }}</label>
                                             <input type="text" class="form-control jsUrlEncrypt" value="{{ $survey['encryption_url'] }}" placeholder="Search">
                                         </div>
                                         <a style="float: left; margin-left: 5px;color: #0072ef;cursor: pointer;" class="btn btn-link" style="color: dodgerblue" onclick="copyClipbroad()">{{ trans('adminlte_lang::survey.button_coppy_url') }}</a>
