@@ -44,7 +44,7 @@ Route::get('/users', 'UserController@index');
 
 Route::get('/404', function (){
     return view('admin::errors.404');
-});
+})->name('404');
 
 Route::get('/setup-lang', 'HomeController@setupLanguage');
 Route::get('/image/{image_path?}/{image_name?}', 'HomeController@showImage')->name(\App\Survey::NAME_URL_SHOW_IMAGE);
