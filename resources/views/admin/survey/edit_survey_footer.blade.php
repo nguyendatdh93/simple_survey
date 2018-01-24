@@ -23,7 +23,7 @@
 				</div>
 
 				@if(!empty($questions['footer']))
-					@php($question_number = count($questions['content']))
+					@php($question_number = isset($questions['content']) ? count($questions['content']) : 0)
 					@foreach($questions['footer'] as $question_id => $question)
 						@php($question_number++)
 						<div class="jsQuestionBox" data-number="{{ $question_number }}" id="jsQuestionBox_{{ $question_number }}">

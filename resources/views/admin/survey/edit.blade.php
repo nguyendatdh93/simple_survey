@@ -35,6 +35,10 @@
                 @endif
             @endif
 
+            @if (!empty($survey['duplicate_id']))
+                <input type="hidden" name="duplicate_id" value="{{ $survey['duplicate_id'] }}">
+            @endif
+
             @include('admin::survey.edit_survey_question_template')
 
             @include('admin::survey.edit_survey_header')
