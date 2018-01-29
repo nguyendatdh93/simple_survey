@@ -56,7 +56,7 @@
                             {!! FormSimple::button(trans('survey.label_choice_survey_publish_status'), ['data-status' => \App\Survey::STATUS_SURVEY_PUBLISHED, 'class' => 'btn btn-primary jsSaveSurvey', 'icon' => 'fa fa-cloud-upload']) !!}
                         @endif
 
-                        @if(isset($survey['status']))
+                        @if(isset($survey['status']) && $survey['status'] == \App\Survey::STATUS_SURVEY_PUBLISHED)
                             {!! FormSimple::button(trans('survey.label_choice_survey_close_status'), ['data-status' => \App\Survey::STATUS_SURVEY_CLOSED, 'class' => 'btn btn-danger jsCloseSurvey']) !!}
                         @endif
                     </div>
