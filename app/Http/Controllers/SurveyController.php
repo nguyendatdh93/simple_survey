@@ -192,7 +192,7 @@ class SurveyController extends Controller
         return view('admin::datatable', array('settings' => $table_settings, 'datas' => $surveys));
     }
 
-    public function showDownloadPageSurveyBySurveyId($id)
+    public function showDownloadPageSurveyBySurveyId(Request $request, $id)
     {
         $list_questions = $this->questionRepository->getListQuestionBySurveyId($id);
         $answer_datas   = $this->getAnswerForSurveyBySurveyID($id, $list_questions);
@@ -202,6 +202,10 @@ class SurveyController extends Controller
         }
         
         $headers_columns[trans('adminlte_lang::survey.time_created')] = 'created_at';
+	
+	    if (!$request->session()->get('tokenDownload')) {
+		    $request->session()->put('tokenDownload', time());
+	    }
 
         $buttons = array();
         if ($this->answerRepository->getNumberAnswersBySurveyId($id) > 0)
@@ -283,12 +287,10 @@ class SurveyController extends Controller
         };
 	    
         $this->surveyRepository->updateStatusDownloadedForSurvey($id);
-	
-	    $request->session()->put('tokenDownload', time());
         
         return Response::stream($callback, 200, $headers);
     }
-
+    
     public function getAnswerForSurveyBySurveyID($survey_id, $list_questions = array())
     {
         if (count($list_questions) == 0) {
