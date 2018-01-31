@@ -146,7 +146,7 @@ class Form
 
     /**
      * @param $settings
-     * @param $datas
+     * @param $data
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public static function table($settings, $data)

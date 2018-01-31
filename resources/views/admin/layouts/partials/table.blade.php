@@ -38,20 +38,20 @@
             </thead>
             <tbody>
             @php $stt = 1; @endphp
-            @foreach($datas as $data)
+            @foreach($data as $item)
                 <tr>
                     @if(!isset($settings['headers_columns']['Id'])) <td>{{ $stt }}</td> @endif
                     @php $stt++; @endphp
                     @foreach($settings['headers_columns'] as $key => $key_column)
                         @if(is_array($key_column))
                             @if($key_column['type'] == \App\BaseWidget\Validator::TYPE_IMAGE)
-                                <td class="tbl-{{$key_column['column']}}"> {!! \App\BaseWidget\Form::img($data[$key_column['column']], array("class" => "img-datatable","alt" => "")) !!} </td>
+                                <td class="tbl-{{$key_column['column']}}"> {!! \App\BaseWidget\Form::img($item[$key_column['column']], array("class" => "img-datatable","alt" => "")) !!} </td>
                             @endif
                             @if($key_column['type'] == \App\BaseWidget\Validator::TYPE_HIDDEN)
-                                <td class="tbl-{{$key_column['column']}}" style="display: none"> {{ $data[$key_column['column']] }} </td>
+                                <td class="tbl-{{$key_column['column']}}" style="display: none"> {{ $item[$key_column['column']] }} </td>
                             @endif
                         @else
-                            <td class="tbl-{{$key_column}}">{{ isset($data[$key_column]) ? $data[$key_column] : "-" }}</td>
+                            <td class="tbl-{{$key_column}}">{{ isset($item[$key_column]) ? $item[$key_column] : "-" }}</td>
                         @endif
                     @endforeach
                     @if(isset($settings['controls']) && $settings['controls'] == true)
