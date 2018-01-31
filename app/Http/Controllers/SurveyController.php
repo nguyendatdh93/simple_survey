@@ -114,8 +114,8 @@ class SurveyController extends Controller
         $surveys = $this->surveyRepository->getAllSurvey();
         $surveys = $this->getDataSurveyForShowing($surveys);
 	    $surveys = array_reverse($surveys);
-	    
-        return view('admin::datatable', array('settings' => $table_settings, 'datas' => $surveys));
+
+        return view('admin::datatable', array('settings' => $table_settings, 'data' => $surveys));
     }
 
     public function showNumberAnswers($survey)
@@ -188,13 +188,13 @@ class SurveyController extends Controller
         $surveys = $this->getSurveyForShowingDownloadList($surveys);
         $surveys = $this->getDataSurveyForShowing($surveys);
 
-        return view('admin::datatable', array('settings' => $table_settings, 'datas' => $surveys));
+        return view('admin::datatable', array('settings' => $table_settings, 'data' => $surveys));
     }
 
     public function showDownloadPageSurveyBySurveyId($id)
     {
         $list_questions = $this->questionRepository->getListQuestionBySurveyId($id);
-        $answer_datas   = $this->getAnswerForSurveyBySurveyID($id, $list_questions);
+        $answer_data    = $this->getAnswerForSurveyBySurveyID($id, $list_questions);
 
         foreach ($list_questions as $question) {
             $headers_columns[$question['text']] = $question['text'];
@@ -237,7 +237,7 @@ class SurveyController extends Controller
             'buttons'         => $buttons
         );
 
-        return view('admin::datatable', array('settings' => $table_settings, 'datas' => $answer_datas,'survey_id' => $id));
+        return view('admin::datatable', array('settings' => $table_settings, 'data' => $answer_data,'survey_id' => $id));
     }
 
     public function downloadSurveyCSVFile($id)
@@ -245,17 +245,17 @@ class SurveyController extends Controller
 	    $list_questions    = $this->questionRepository->getListQuestionBySurveyId($id);
 	    $headers_columns   = array_column($list_questions, 'text');
 	    $headers_columns[] = "created_at";
-        $answer_datas      = $this->getAnswerForSurveyBySurveyID($id);
+        $answer_data       = $this->getAnswerForSurveyBySurveyID($id);
 		foreach ($headers_columns as $column) {
-			foreach ($answer_datas as $key_answer => $answer) {
+			foreach ($answer_data as $key_answer => $answer) {
 				if (!in_array($column, array_keys($answer))) {
-					$answer_datas[$key_answer][$column] = '';
+					$answer_data[$key_answer][$column] = '';
 				}
 			}
 		}
 		
-		foreach ($answer_datas as $key_answer => $answer) {
-			$answer_datas[$key_answer] = array_merge(array_flip(array_values($headers_columns)), $answer);
+		foreach ($answer_data as $key_answer => $answer) {
+			$answer_data[$key_answer] = array_merge(array_flip(array_values($headers_columns)), $answer);
 		}
 	    
         $headers = [
@@ -269,12 +269,12 @@ class SurveyController extends Controller
         ];
 		
 	    $headers_columns[array_search('created_at', $headers_columns)] = trans('adminlte_lang::survey.column_csv_created_at');
-        array_unshift($answer_datas, $headers_columns);
+        array_unshift($answer_data, $headers_columns);
 		
-        $callback = function() use ($answer_datas)
+        $callback = function() use ($answer_data)
         {
             $FH = fopen('php://output', 'w');
-            foreach ($answer_datas as $key => $row) {
+            foreach ($answer_data as $key => $row) {
                 fputcsv($FH, $row);
             }
             
@@ -302,18 +302,18 @@ class SurveyController extends Controller
             $answer_questions[$question['id']] = $question['text'];
         }
 
-        $answer_datas = array();
+        $answer_data = array();
         foreach ($list_answers as $key_list_answer => $list_answer) {
             foreach ($list_answer['answers'] as $key_answer => $answer) {
             	if (in_array($answer['question_id'],array_keys($answer_questions))) {
-		            $answer_datas[$key_list_answer][$answer_questions[$answer['question_id']]] = $answer['text'];
+		            $answer_data[$key_list_answer][$answer_questions[$answer['question_id']]] = $answer['text'];
 	            }
             }
 
-            $answer_datas[$key_list_answer]['created_at'] = $list_answer['created_at'];
+            $answer_data[$key_list_answer]['created_at'] = $list_answer['created_at'];
         }
 
-        return $answer_datas;
+        return $answer_data;
     }
 
     /**
