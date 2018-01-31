@@ -30,7 +30,7 @@ return [
 	'survey_list_table_download_title' => "アンケート一覧",
 	'button_create_new_survey'  => 'アンケート作成',
 	'survey_create_page_title' => 'アンケート作成',
-	'survey_edit_page_title' => 'Edit survey',
+	'survey_edit_page_title' => 'アンケート編集',
     'survey_list_table_header_column_id' => "Id",
     'survey_list_table_header_column_status' => "ステータス",
     'survey_list_table_header_column_survey_name' => "アンケート名",
@@ -87,13 +87,14 @@ return [
 	'error_not_allow_empty' => '必ず入力してください',
 	'error_only_allow_file' => '画像のみアップロードしてください',
 	'error_limit_5mb' => '最大5MB',
-	'error_no_choice' => 'Not allow no choices for this question',
+	'error_no_choice' => '選択肢を設定ください',
     'choice_default_text' => '設問分を入力してください ',
     'single_text_placeholder' => '回答者の入力欄',
     'multi_text_placeholder' => '回答者の入力欄',
     'confirmation_help_block' => '',
     'agree_text_placeholder' => '利用規約の内容を入力してください',
     'alert_success_create_survey'  => 'アンケートを設定しました。',
+    'alert_fail_create_survey'  => 'アンケード作成が失敗しました。',
 	'message_repquire'  => '必ず選択してください',
 	'message_confirm_condition' => '規約に承諾してください',
 	
@@ -105,9 +106,9 @@ return [
 	'radio_label_choice_survey_draft_status' => '下書き',
 	'radio_label_choice_survey_publish_status' => '公開する',
 
-    'tooltip_remove_question' => 'Remove question',
-    'tooltip_remove_question_choice' => 'Remove question choice',
-    'tooltip_add_question_choice' => 'Add question choice',
+    'tooltip_remove_question' => '削除する',
+    'tooltip_remove_question_choice' => '選択肢を削除する',
+    'tooltip_add_question_choice' => '選択肢を追加する',
 	
 	//preview page
 	'htmlheader_title_preview_draf' => 'プレビュー画面',

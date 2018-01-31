@@ -146,12 +146,12 @@ class Form
 
     /**
      * @param $settings
-     * @param $datas
+     * @param $data
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public static function table($settings, $datas)
+    public static function table($settings, $data)
     {
-        return view('admin::layouts.partials.table', array('settings' => $settings, 'datas' => $datas));
+        return view('admin::layouts.partials.table', array('settings' => $settings, 'data' => $data));
     }
 
     /**
