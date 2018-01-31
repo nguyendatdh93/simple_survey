@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Auth;
 use Response;
 use Config;
 use File;
+use App\Http\Validators\SurveyValidator;
 
 class SurveyController extends Controller
 {
@@ -32,14 +33,33 @@ class SurveyController extends Controller
     protected $confirmContentRepository;
     protected $answerRepository;
     protected $answerQuestionRepository;
+    protected $surveyService;
+    protected $encryptionService;
+    protected $surveyValidator;
 
-    public function __construct(SurveyRepositoryInterface $surveyRepository,
-                                QuestionRepositoryInterface $questionRepository,
-                                QuestionChoiceRepositoryInterface $questionChoiceRepository,
-                                ConfirmContentsRepositoryInterface $confirmContentRepository,
-                                AnswerRepositoryInterface $answerRepository,
-                                AnswerQuestionRepositoryInterface $answerQuestionRepository)
-    {
+    /**
+     * SurveyController constructor.
+     * @param SurveyRepositoryInterface $surveyRepository
+     * @param QuestionRepositoryInterface $questionRepository
+     * @param QuestionChoiceRepositoryInterface $questionChoiceRepository
+     * @param ConfirmContentsRepositoryInterface $confirmContentRepository
+     * @param AnswerRepositoryInterface $answerRepository
+     * @param AnswerQuestionRepositoryInterface $answerQuestionRepository
+     * @param SurveyService $surveyService
+     * @param EncryptionService $encryptionService
+     * @param SurveyValidator $surveyValidator
+     */
+    public function __construct(
+        SurveyRepositoryInterface $surveyRepository,
+        QuestionRepositoryInterface $questionRepository,
+        QuestionChoiceRepositoryInterface $questionChoiceRepository,
+        ConfirmContentsRepositoryInterface $confirmContentRepository,
+        AnswerRepositoryInterface $answerRepository,
+        AnswerQuestionRepositoryInterface $answerQuestionRepository,
+        SurveyService $surveyService,
+        EncryptionService $encryptionService,
+        SurveyValidator $surveyValidator
+    ) {
         $this->middleware('auth');
         $this->middleware(SecureDownloadSurvey::class);
         $this->surveyRepository         = $surveyRepository;
@@ -48,7 +68,9 @@ class SurveyController extends Controller
         $this->confirmContentRepository = $confirmContentRepository;
         $this->answerRepository         = $answerRepository;
         $this->answerQuestionRepository = $answerQuestionRepository;
-        $this->confirmContentRepository = $confirmContentRepository;
+        $this->surveyService            = $surveyService;
+        $this->encryptionService        = $encryptionService;
+        $this->surveyValidator          = $surveyValidator;
     }
 
     /**
@@ -107,7 +129,6 @@ class SurveyController extends Controller
 
     public function getDataSurveyForShowing($surveys)
     {
-	    $survey_service = new SurveyService();
         foreach ($surveys as $key => $survey) {
             if ($survey['status'] == Survey::STATUS_SURVEY_DRAF) {
                 $surveys[$key]['status'] = trans('adminlte_lang::survey.draf');
@@ -119,7 +140,7 @@ class SurveyController extends Controller
 
             $surveys[$key]['number_answers'] = $this->showNumberAnswers($survey);
             if ($survey['image_path'] != null) {
-	            $surveys[$key]['image_path']     = \route(Survey::NAME_URL_SHOW_IMAGE).'/'.$survey_service->getImageName($survey['image_path']);
+	            $surveys[$key]['image_path']     = \route(Survey::NAME_URL_SHOW_IMAGE).'/'.$this->surveyService->getImageName($survey['image_path']);
             }
         }
 
@@ -301,8 +322,7 @@ class SurveyController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $layout = 'admin.survey.edit';
         $question_types = Question::getQuestionTypes();
 
@@ -311,23 +331,17 @@ class SurveyController extends Controller
         }
 
         $survey = $this->surveyRepository->getSurveyById($id);
-        if (!$survey) {
+        if (!$survey || $survey['status'] == Survey::STATUS_SURVEY_CLOSED) {
             return view('admin::errors.404');
         }
 
-        if ($survey['status'] == Survey::STATUS_SURVEY_CLOSED) {
-            return view('admin::errors.404');
-        }
-
-        $survey_service = new SurveyService();
         if ($survey['image_path']) {
-            $survey['image_path'] = \route('show-image'). '/' . $survey_service->getImageName($survey['image_path']);
+            $survey['image_path'] = \route('show-image'). '/' . $this->surveyService->getImageName($survey['image_path']);
         }
 
         if ($survey['status'] == Survey::STATUS_SURVEY_PUBLISHED) {
-            $encryption_service       = new EncryptionService();
             $survey['preview_url']    = \route(Survey::NAME_URL_PREVIEW) . '/' . $survey['id'];
-            $survey['encryption_url'] = $encryption_service->encrypt($survey['id']);
+            $survey['encryption_url'] = $this->encryptionService->encrypt($survey['id']);
         }
 
         $questions = $this->questionRepository->getQuestionsBySurveyId($survey['id']);
@@ -353,13 +367,12 @@ class SurveyController extends Controller
         }
 
         $questions = $this->questionRepository->getQuestionsBySurveyId($survey['id']);
+
         $survey['duplicate_id'] = $survey['id'];
         unset($survey['id']);
         unset($survey['status']);
-
         if ($survey['image_path']) {
-            $survey_service = new SurveyService();
-            $survey['image_path'] = \route('show-image'). '/' . $survey_service->getImageName($survey['image_path']);
+            $survey['image_path'] = \route('show-image'). '/' . $this->surveyService->getImageName($survey['image_path']);
         }
 
         return view($layout, [
@@ -426,10 +439,9 @@ class SurveyController extends Controller
         $input = Input::all();
         $valid = true;
 
-        // validate file
-        if (!$this->validateText($input['survey_name'])) {
+        if (!$this->surveyValidator->validateText($input['survey_name'])) {
             $valid = false;
-        }elseif (!$this->validateText($input['survey_description'], false, 5000)) {
+        } elseif (!$this->surveyValidator->validateText($input['survey_description'], false, 5000)) {
             $valid = false;
         }
 
@@ -455,7 +467,7 @@ class SurveyController extends Controller
             $request->session()->put('preview_survey', $survey);
             $request->session()->put('preview_questions', $new_questions);
         } else {
-            $message = 'Error input';
+            $message = trans('survey.error_input_wrong_create_survey');
         }
 
         return Response::json([
@@ -467,19 +479,18 @@ class SurveyController extends Controller
     public function save() {
         $input   = Input::all();
         $file    = Input::file('survey_thumbnail');
-        $user_id = Auth::id();
 
         // validate file
-        if ($file && !$this->validateFile($file)) {
+        if ($file && !$this->surveyValidator->validateFile($file)) {
             return view('admin::errors.404');
         }
 
         // validate survey header input
-        if (!$this->validateText($input['survey_name'])) {
+        if (!$this->surveyValidator->validateText($input['survey_name'])) {
             return view('admin::errors.404');
         }
 
-        if (!$this->validateText($input['survey_description'], false, 5000)) {
+        if (!$this->surveyValidator->validateText($input['survey_description'], false, 5000)) {
             return view('admin::errors.404');
         }
 
@@ -492,6 +503,54 @@ class SurveyController extends Controller
         }
 
         // create or update survey
+        $survey = $this->createOrUpdateSurvey($input, $file);
+        // create questions of survey
+        $this->createQuestions($new_questions, $survey);
+
+        return redirect()->route(Survey::NAME_URL_SURVEY_LIST)->with('alert_success',trans('survey.alert_success_create_survey'));
+    }
+
+    public function createQuestions($new_questions, $survey) {
+        $i = 0;
+        foreach ($new_questions as $new_question) {
+            $i++;
+            $question = $this->questionRepository->createEmptyObject();
+            $question->survey_id = $survey->id;
+            $question->text      = $new_question['text'];
+            $question->type      = $new_question['type'];
+            $question->require   = empty($new_question['required']) ? Question::REQUIRE_QUESTION_NO : Question::REQUIRE_QUESTION_YES;
+            $question->category  = $new_question['category'];
+            $question->no        = $i;
+            $question = $this->questionRepository->save($question);
+
+            if ($question->type == Question::TYPE_SINGLE_CHOICE
+                || $question->type == Question::TYPE_MULTI_CHOICE
+            ) {
+                foreach ($new_question['choice'] as $choice) {
+                    $question_choice = $this->questionChoiceRepository->createEmptyObject();
+                    $question_choice->question_id = $question->id;
+                    $question_choice->text        = $choice;
+                    $this->questionChoiceRepository->save($question_choice);
+                }
+            } elseif ($question->type == Question::TYPE_CONFIRMATION) {
+                $confirm_content = $this->confirmContentRepository->createEmptyObject();
+                $confirm_content->question_id = $question->id;
+                $confirm_content->text        = $new_question['confirmation_text'];
+                $this->confirmContentRepository->save($confirm_content);
+
+                if ($question->require == Question::REQUIRE_QUESTION_YES && !empty($new_question['agree_text'])) {
+                    $question_choice = $this->questionChoiceRepository->createEmptyObject();
+                    $question_choice->question_id = $question->id;
+                    $question_choice->text        = $new_question['agree_text'];
+                    $this->questionChoiceRepository->save($question_choice);
+                }
+            }
+        }
+    }
+
+    public function createOrUpdateSurvey($input, $file) {
+        $user_id = Auth::id();
+
         if (empty($input['survey_id'])) {
             $survey = $this->surveyRepository->createEmptyObject();
         } else {
@@ -548,43 +607,7 @@ class SurveyController extends Controller
         $survey->status = empty($input['survey_status']) ? Survey::STATUS_SURVEY_DRAF : $input['survey_status'] ;
         $survey = $this->surveyRepository->save($survey);
 
-        $i = 0;
-        foreach ($new_questions as $new_question) {
-            $i++;
-            $question = $this->questionRepository->createEmptyObject();
-            $question->survey_id = $survey->id;
-            $question->text      = $new_question['text'];
-            $question->type      = $new_question['type'];
-            $question->require   = empty($new_question['required']) ? Question::REQUIRE_QUESTION_NO : Question::REQUIRE_QUESTION_YES;
-            $question->category  = $new_question['category'];
-            $question->no        = $i;
-            $question = $this->questionRepository->save($question);
-
-            if ($question->type == Question::TYPE_SINGLE_CHOICE
-                || $question->type == Question::TYPE_MULTI_CHOICE
-            ) {
-                foreach ($new_question['choice'] as $choice) {
-                    $question_choice = $this->questionChoiceRepository->createEmptyObject();
-                    $question_choice->question_id = $question->id;
-                    $question_choice->text        = $choice;
-                    $this->questionChoiceRepository->save($question_choice);
-                }
-            } elseif ($question->type == Question::TYPE_CONFIRMATION) {
-                $confirm_content = $this->confirmContentRepository->createEmptyObject();
-                $confirm_content->question_id = $question->id;
-                $confirm_content->text        = $new_question['confirmation_text'];
-                $this->confirmContentRepository->save($confirm_content);
-
-                if ($question->require == Question::REQUIRE_QUESTION_YES && !empty($new_question['agree_text'])) {
-                    $question_choice = $this->questionChoiceRepository->createEmptyObject();
-                    $question_choice->question_id = $question->id;
-                    $question_choice->text        = $new_question['agree_text'];
-                    $this->questionChoiceRepository->save($question_choice);
-                }
-            }
-        }
-
-        return redirect()->route(Survey::NAME_URL_SURVEY_LIST)->with('alert_success',trans('adminlte_lang::survey.alert_success_create_survey'));
+        return $survey;
     }
 
     /**
@@ -593,11 +616,9 @@ class SurveyController extends Controller
      */
     public function preview(Request $request, $id)
     {
-    	$survey_service           = new SurveyService();
 	    $survey                   = $this->surveyRepository->getSurveyById($id);
-        $survey                   = $survey_service->getDataAnswerForSurvey($survey);
-        $encryption_service       = new EncryptionService();
-        $survey['encryption_url'] = $encryption_service->encrypt($id);
+        $survey                   = $this->surveyService->getDataAnswerForSurvey($survey);
+        $survey['encryption_url'] = $this->encryptionService->encrypt($id);
         
         return view('admin::preview', array('survey' => $survey, 'name_url' => $request->route()->getName()));
     }
@@ -626,10 +647,10 @@ class SurveyController extends Controller
         $result = $this->surveyRepository->closeSurveyById($id);
 
         if ($result) {
-            return redirect()->route(Survey::NAME_URL_PREVIEW, ['id' => $id])->with('alert_success', trans('adminlte_lang::survey.message_close_survey_success'));
+            return redirect()->route(Survey::NAME_URL_SURVEY_LIST)->with('alert_success',trans('adminlte_lang::survey.message_close_survey_success'));
         }
 
-        return redirect()->route(Survey::NAME_URL_PREVIEW, ['id' => $id])->with('alert_error', trans('adminlte_lang::survey.message_close_survey_not_success'));
+        return redirect()->route(\App\Models\Survey::NAME_URL_EDIT_SURVEY, ['id' => $id])->with('alert_error', trans('adminlte_lang::survey.message_close_survey_not_success'));
     }
 
     /**
@@ -694,15 +715,15 @@ class SurveyController extends Controller
 
     public function validateQuestionsInput($questions) {
         foreach ($questions as $question) {
-            if (empty($question['text']) || strlen($question['text']) > 255) {
+            if (!$this->surveyValidator->validateText($question['text'])) {
                 return false;
             }
 
-            if (empty($question['category']) || !$question['category']) {
+            if (empty($question['category'])) {
                 return false;
             }
 
-            if (empty($question['type']) || !$question['type']) {
+            if (empty($question['type'])) {
                 return false;
             }
 
@@ -711,16 +732,12 @@ class SurveyController extends Controller
             }
 
             if ($question['type'] == Question::TYPE_CONFIRMATION) {
-                if (empty($question['confirmation_text']) || strlen($question['confirmation_text']) > 5000) {
+                if (!$this->surveyValidator->validateText($question['confirmation_text'], true, 5000)) {
                     return false;
                 }
 
                 if (empty($question['required'])) {
                     continue;
-                }
-
-                if (!$question['required']) {
-                    return false;
                 }
 
                 if (!empty($question['agree_text']) && strlen($question['agree_text']) > 255) {
@@ -735,34 +752,10 @@ class SurveyController extends Controller
             }
 
             foreach ($question['choice'] as $choice) {
-                if (!$choice || strlen($choice) > 255) {
+                if (!$this->surveyValidator->validateText($choice)) {
                     return false;
                 }
             }
-        }
-
-        return true;
-    }
-
-    public function validateFile($file) {
-        if (!in_array(strtolower($file->clientExtension()), Config::get('config.file_types_allow'))) {
-            return false;
-        }
-
-        if ($file->getClientSize() > Config::get('config.max_file_upload_size')) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public function validateText($text, $require = true, $limit = 255) {
-        if ($require && !$text) {
-            return false;
-        }
-
-        if (strlen($text) > $limit) {
-            return false;
         }
 
         return true;

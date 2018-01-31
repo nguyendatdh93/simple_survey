@@ -5,6 +5,7 @@ use App\Repositories\Eloquents\QuestionChoiceRepository;
 use App\Repositories\Eloquents\QuestionRepository;
 use App\Survey;
 use Illuminate\Support\Facades\Validator;
+use Config;
 
 /**
  * Created by PhpStorm.
@@ -78,8 +79,7 @@ class SurveyValidator
 		
 		return true;
 	}
-	
-	
+
 	public function validateRequired($text)
 	{
 		$validator = Validator::make(array($text), array('required'));
@@ -89,4 +89,30 @@ class SurveyValidator
 		
 		return true;
 	}
+
+    public function validateText($text, $require = true, $limit = 255) {
+        $filter = 'max:' . $limit;
+        if ($require) {
+            $filter = 'required|' . $filter;
+        }
+
+        $validator = Validator::make([$text], [$filter]);
+        if ($validator->fails()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function validateFile($file) {
+        if (!in_array(strtolower($file->clientExtension()), Config::get('config.file_types_allow'))) {
+            return false;
+        }
+
+        if ($file->getClientSize() > Config::get('config.max_file_upload_size')) {
+            return false;
+        }
+
+        return true;
+    }
 }
