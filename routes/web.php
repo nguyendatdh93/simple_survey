@@ -10,8 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', 'SurveyController@index');
+Route::get('/login', 'Auth\LoginController@showLoginForm')->name(\App\Survey::NAME_URL_LOGIN_PAGE);
 
 Route::prefix('auth')->group(function () {
     Route::get('/google', array('as' => 'auth.google', 'uses' => 'Auth\LoginController@loginWithGoogle'));
@@ -45,12 +44,14 @@ Route::get('/users', 'UserController@index');
 
 Route::get('/404', function (){
     return view('admin::errors.404');
-});
+})->name('404');
 
 Route::get('/setup-lang', 'HomeController@setupLanguage');
 Route::get('/image/{image_path?}/{image_name?}', 'HomeController@showImage')->name(\App\Survey::NAME_URL_SHOW_IMAGE);
 
-Route::prefix('answer')->group(function () {
+Route::get('/', 'Auth\LoginController@showLoginForm');
+
+Route::prefix('/')->group(function () {
 	Route::get('/thank', 'AnswerSurveyController@showThankPage')->name(\App\Survey::NAME_URL_THANK_PAGE);
 	Route::get('/{encrypt?}', 'AnswerSurveyController@showQuestionSurvey')->name(\App\Survey::NAME_URL_ANSWER_SURVEY);
 	Route::get('/{encrypt?}/confirm', 'AnswerSurveyController@showFormConfirmAnswerSurvey')->name(\App\Survey::NAME_URL_ANSWER_CONFIRM);

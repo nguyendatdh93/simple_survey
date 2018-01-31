@@ -75,8 +75,8 @@ class AnswerSurveyController extends Controller
 	public function showFormConfirmAnswerSurvey(Request $request, $encrypt)
 	{
 		try {
-			$input               = Input::get();
-			$surveyValidator     = new SurveyValidator();
+			$input           = Input::get();
+			$surveyValidator = new SurveyValidator();
 			if (!$surveyValidator->validateAnswerSurvey($input)) {
 				return redirect('404');
 			}

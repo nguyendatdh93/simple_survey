@@ -25,6 +25,7 @@ class Survey extends Model
 	const NAME_URL_DUPLICATE_SURVEY = 'duplicate-survey';
 	const NAME_URL_SHOW_IMAGE       = 'show-image';
 	const NAME_URL_THANK_PAGE       = 'thank-page';
+	const NAME_URL_LOGIN_PAGE       = 'login-page';
 
     const NAME_URL_DOWNLOAD_LIST          = 'download-list';
     const NAME_URL_DOWNLOAD_SURVEY        = 'download-survey';

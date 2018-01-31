@@ -140,7 +140,7 @@ class SurveyController extends Controller
 
             $surveys[$key]['number_answers'] = $this->showNumberAnswers($survey);
             if ($survey['image_path'] != null) {
-	            $surveys[$key]['image_path']     = \route(Survey::NAME_URL_SHOW_IMAGE).'/'.$this->surveyService->getImageName($survey['image_path']);
+	            $surveys[$key]['image_path'] = \route(Survey::NAME_URL_SHOW_IMAGE).'/'.$this->surveyService->getImageName($survey['image_path']);
             }
         }
 
@@ -151,7 +151,7 @@ class SurveyController extends Controller
     {
 	    foreach ($surveys as $key => $survey) {
 		    if ($this->answerRepository->getNumberAnswersBySurveyId($survey['id']) > 0) {
-			    $surveys[$key]['number_answers'] =  $this->answerRepository->getNumberAnswersBySurveyId($survey['id']);
+			    $surveys[$key]['number_answers'] = $this->answerRepository->getNumberAnswersBySurveyId($survey['id']);
 		    } else {
 			    unset($surveys[$key]);
 			    continue;
@@ -292,7 +292,7 @@ class SurveyController extends Controller
             $list_questions = $this->questionRepository->getListQuestionBySurveyId($survey_id);
         }
 
-        $list_answers   = $this->answerRepository->getAnswersBySurveyId($survey_id);
+        $list_answers = $this->answerRepository->getAnswersBySurveyId($survey_id);
         foreach ($list_answers as $key_list_answer => $list_answer) {
             $list_answers[$key_list_answer]['answers'] = $this->answerQuestionRepository->getAnswersByAnswerId($list_answer['id']);
         }

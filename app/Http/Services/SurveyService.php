@@ -19,6 +19,7 @@ use App\Repositories\Eloquents\QuestionChoiceRepository;
 use App\Repositories\Eloquents\QuestionRepository;
 use App\Repositories\Eloquents\SurveyRepository;
 use App\Survey;
+use Illuminate\Support\Facades\Request;
 use Response;
 use Config;
 use File;
@@ -90,5 +91,28 @@ class SurveyService
 	function convertTextWithXSSSafe($text,$encoding='UTF-8')
 	{
 		return htmlspecialchars($text,ENT_QUOTES | ENT_HTML401,$encoding);
+	}
+	
+	public function redirectIfAuthenticated($request)
+	{
+		$prefix       =  trim($request->route()->getPrefix(),"/");
+		$auth_service = new AuthService();
+		if ($auth_service->isSecurePrivateRange($request->ip())) {
+			if ($prefix == '' || $prefix == 'home') {
+				return Survey::NAME_URL_DOWNLOAD_LIST;
+			}
+			
+			if (!in_array($prefix,array('download'))) {
+				return '404';
+			}
+		} else {
+			if ($prefix == '' || $prefix == 'home') {
+				return Survey::NAME_URL_SURVEY_LIST;
+			}
+			
+			if (in_array($prefix,array('download'))) {
+				return '404';
+			}
+		}
 	}
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Http\Services\AuthService;
+use App\Http\Services\SurveyService;
 use App\Survey;
 use Closure;
 use Config;
@@ -18,25 +19,12 @@ class SecureDownloadSurvey
      */
     public function handle($request, Closure $next)
     {
-        $prefix       =  trim($request->route()->getPrefix(),"/");
-        $auth_service = new AuthService();
-        if ($auth_service->isSecurePrivateRange($request->ip())) {
-            if ($prefix == '' || $prefix == 'home') {
-                return redirect()->route(Survey::NAME_URL_DOWNLOAD_LIST);
-            }
-
-            if (!in_array($prefix,array('download'))) {
-                return redirect('404');
-            }
-        } else {
-            if ($prefix == '' || $prefix == 'home') {
-                return redirect()->route(Survey::NAME_URL_SURVEY_LIST);
-            }
-
-            if (in_array($prefix,array('download'))) {
-                return redirect('404');
-            }
-        }
+	    $survey_service = new SurveyService();
+	    $url_redirect   = $survey_service->redirectIfAuthenticated($request);
+	    
+	    if ($url_redirect != '') {
+		    return redirect()->route($url_redirect);
+	    }
 
         return $next($request);
     }

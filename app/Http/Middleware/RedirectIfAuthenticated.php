@@ -2,8 +2,11 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Services\AuthService;
+use App\Http\Services\SurveyService;
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use App\Survey;
 
 class RedirectIfAuthenticated
 {
@@ -18,8 +21,10 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-
-            return redirect('/home');
+            $survey_service = new SurveyService();
+	        $url_redirect   = $survey_service->redirectIfAuthenticated($request);
+	        
+	        return redirect()->route($url_redirect);
         }
 
         return $next($request);
