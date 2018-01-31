@@ -23,7 +23,7 @@ class SurveyValidator
 		foreach ($answerSurvey as $question_id => $answer) {
 			$require = $questionRepository->checkQuestionIsRequire($question_id);
 			if ($require['require'] == Question::REQUIRE_QUESTION_YES) {
-				if (!$this->validateRequired($answer)) {
+				if (!$this->validateText($answer, true)) {
 					return false;
 				}
 			}
@@ -35,11 +35,11 @@ class SurveyValidator
 			}
 			
 			if ($type['type'] == Question::TYPE_SINGLE_TEXT) {
-				if (!$this->validateSingleText($answer)) {
+				if (!$this->validateText($answer, false, 255)) {
 					return false;
 				}
 			} elseif ($type['type'] == Question::TYPE_MULTI_TEXT) {
-				if (!$this->validateMultiText($answer)) {
+				if (!$this->validateText($answer, false, 5000)) {
 					return false;
 				}
 			} elseif ($type['type'] == Question::TYPE_SINGLE_CHOICE) {
@@ -55,36 +55,6 @@ class SurveyValidator
 					}
 				}
 			}
-		}
-		
-		return true;
-	}
-	
-	public function validateSingleText($text)
-	{
-		$validator = Validator::make(array($text), array('max:255'));
-		if ($validator->fails()) {
-			return false;
-		}
-		
-		return true;
-	}
-	
-	public function validateMultiText($text)
-	{
-		$validator = Validator::make(array($text), array('max:5000'));
-		if ($validator->fails()) {
-			return false;
-		}
-		
-		return true;
-	}
-
-	public function validateRequired($text)
-	{
-		$validator = Validator::make(array($text), array('required'));
-		if ($validator->fails()) {
-			return false;
 		}
 		
 		return true;

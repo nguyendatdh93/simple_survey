@@ -501,7 +501,7 @@
 	}
 
     function copyClipbroad() {
-        var urlCopy = $('.jsUrlDomainCopy').html() +'/'+ $('.jsUrlEncrypt').val();
+        var urlCopy = $('.jsUrlDomainCopy').html() + $('.jsUrlEncrypt').val();
         copyToClipboard(urlCopy);
     }
 
