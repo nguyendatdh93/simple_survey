@@ -16,7 +16,7 @@
                 <section class="content">
                     <div class="row">
                         <div class="col-xs-12">
-                            {!! \App\BaseWidget\Form::table($settings, $datas) !!}
+                            {!! \App\BaseWidget\Form::table($settings, $data) !!}
                             <!-- /.box -->
                         </div>
                         <!-- /.col -->
