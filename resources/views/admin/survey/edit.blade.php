@@ -9,6 +9,8 @@
 @endsection
 
 @section('main-content-form')
+    @include('admin::layouts.partials.alert_message')
+
     <link rel="stylesheet" href="{{ asset('css/styleedituser.css') }}">
 	<div class="container-fluid spark-screen">
 		<form method="post" action="/survey/save" enctype="multipart/form-data" id="survey_form">
@@ -24,7 +26,7 @@
                                     <div class="navbar-form navbar-right jsCopyUrlForm">
                                         <div class="form-group" style="float: left">
                                             <label class="jsUrlDomainCopy">{{ route(\App\Survey::NAME_URL_ANSWER_SURVEY) }}</label>
-                                            <input type="text" class="form-control jsUrlEncrypt" value="{{ $survey['encryption_url'] }}" placeholder="Search">
+                                            <input type="text" class="form-control jsUrlEncrypt" style="cursor: pointer;" value="{{ $survey['encryption_url'] }}" placeholder="Search">
                                         </div>
                                         <a style="float: left; margin-left: 5px;color: #0072ef;cursor: pointer;" class="btn btn-link" style="color: dodgerblue" onclick="copyClipbroad()">{{ trans('adminlte_lang::survey.button_coppy_url') }}</a>
                                     </div>
@@ -52,12 +54,12 @@
                     <div class="box-header"></div>
                     <div class="box-body" style="padding: 5px; text-align: center;">
                         @if(empty($survey['status']) || $survey['status'] == \App\Survey::STATUS_SURVEY_DRAF)
-                            {!! FormSimple::button(trans('survey.label_choice_survey_draft_status'), ['data-status' => \App\Survey::STATUS_SURVEY_DRAF, 'class' => 'btn bg-olive jsSaveSurvey', 'icon' => 'fa fa-save']) !!}
-                            {!! FormSimple::button(trans('survey.label_choice_survey_publish_status'), ['data-status' => \App\Survey::STATUS_SURVEY_PUBLISHED, 'class' => 'btn btn-primary jsSaveSurvey', 'icon' => 'fa fa-cloud-upload']) !!}
+                            {!! FormSimple::button(trans('survey.label_choice_survey_draft_status'), ['data-status' => \App\Survey::STATUS_SURVEY_DRAF, 'class' => 'btn btn-info jsSaveSurvey', 'icon' => 'fa fa-save']) !!}
+                            {!! FormSimple::button(trans('survey.label_choice_survey_publish_status'), ['data-status' => \App\Survey::STATUS_SURVEY_PUBLISHED, 'class' => 'btn btn-warning jsSaveSurvey', 'icon' => 'fa fa-cloud-upload']) !!}
                         @endif
 
-                        @if(isset($survey['status']))
-                            {!! FormSimple::button(trans('survey.label_choice_survey_close_status'), ['data-status' => \App\Survey::STATUS_SURVEY_CLOSED, 'class' => 'btn btn-danger jsCloseSurvey']) !!}
+                        @if(isset($survey['status']) && $survey['status'] == \App\Survey::STATUS_SURVEY_PUBLISHED)
+                            {!! FormSimple::button(trans('survey.label_choice_survey_close_status'), ['data-status' => \App\Survey::STATUS_SURVEY_CLOSED, 'class' => 'btn btn-default jsCloseSurvey']) !!}
                         @endif
                     </div>
                     <div class="box-footer" style="border: none;"></div>
