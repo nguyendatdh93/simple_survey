@@ -65,6 +65,40 @@
             event.preventDefault();
             $(this).parent().hide().prev().show().prev().show();
         });
+
+        $(".jsButtonDownload").click(function () {
+            var survey_status = '{{ isset($survey_status) ? $survey_status : -1 }}';
+            if ($('.jsButtonClearData').length == 0 && survey_status == '{{ \App\Models\Survey::STATUS_SURVEY_CLOSED }}') {
+                timer();
+            }
+        });
+
+        var flgRefreshPage = false;
+        function timer() {
+            var downloadTimer = window.setInterval(function () {
+                var token = getTokenDownload();
+                if (token) {
+                    window.clearInterval(downloadTimer);
+                    flgRefreshPage = true;
+                }
+            }, 1000);
+        }
+
+        function getTokenDownload() {
+            var tokenDownload = '{{ Session::get('tokenDownload') }}';
+
+            return tokenDownload;
+        }
+
+        var stopMouseMove = false;
+        $('body').mousemove(function () {
+            if (stopMouseMove == false) {
+                if (flgRefreshPage == true) {
+                    location.reload();
+                    stopMouseMove = true;
+                }
+            }
+        });
     });
 
 </script>

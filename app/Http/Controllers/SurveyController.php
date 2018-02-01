@@ -20,6 +20,7 @@ use App\Repositories\Contracts\AnswerRepositoryInterface;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
+use OAuth\Common\Storage\Session;
 use Response;
 use Config;
 use File;
@@ -191,7 +192,7 @@ class SurveyController extends Controller
         return view('admin::datatable', array('settings' => $table_settings, 'data' => $surveys));
     }
 
-    public function showDownloadPageSurveyBySurveyId($id)
+    public function showDownloadPageSurveyBySurveyId(Request $request, $id)
     {
         $list_questions = $this->questionRepository->getListQuestionBySurveyId($id);
         $answer_data    = $this->getAnswerForSurveyBySurveyID($id, $list_questions);
@@ -201,6 +202,10 @@ class SurveyController extends Controller
         }
         
         $headers_columns[trans('adminlte_lang::survey.time_created')] = 'created_at';
+	
+	    if (!$request->session()->get('tokenDownload')) {
+		    $request->session()->put('tokenDownload', time());
+	    }
 
         $buttons = array();
         if ($this->answerRepository->getNumberAnswersBySurveyId($id) > 0)
@@ -209,7 +214,7 @@ class SurveyController extends Controller
                 'text'  => trans('adminlte_lang::survey.button_download_csv'),
                 'href'  => \route(Survey::NAME_URL_DOWNLOAD_SURVEY).'/'.$id,
                 'attributes' => array(
-                    'class' => 'btn btn-primary',
+                    'class' => 'btn btn-primary jsButtonDownload',
                     'icon'  => 'fa fa-fw fa-download'
                 )
             );
@@ -220,7 +225,7 @@ class SurveyController extends Controller
 				$buttons[] = array(
 					'text' => trans('adminlte_lang::survey.button_clear_data'),
 					'attributes' => array(
-						'class'       => 'btn bg-orange margin',
+						'class'       => 'btn bg-orange margin jsButtonClearData',
 						'icon'        => 'fa fa-trash',
 						'data-toggle' => "modal",
 						'data-target' => "#modal-confirm-clear-data-survey"
@@ -237,10 +242,10 @@ class SurveyController extends Controller
             'buttons'         => $buttons
         );
 
-        return view('admin::datatable', array('settings' => $table_settings, 'data' => $answer_data,'survey_id' => $id));
+        return view('admin::datatable', array('settings' => $table_settings, 'data' => $answer_data,'survey_id' => $id, 'survey_status' => $status_survey['status']));
     }
 
-    public function downloadSurveyCSVFile($id)
+    public function downloadSurveyCSVFile(Request $request, $id)
     {
 	    $list_questions    = $this->questionRepository->getListQuestionBySurveyId($id);
 	    $headers_columns   = array_column($list_questions, 'text');
@@ -280,12 +285,12 @@ class SurveyController extends Controller
             
             fclose($FH);
         };
-		
+	    
         $this->surveyRepository->updateStatusDownloadedForSurvey($id);
         
         return Response::stream($callback, 200, $headers);
     }
-
+    
     public function getAnswerForSurveyBySurveyID($survey_id, $list_questions = array())
     {
         if (count($list_questions) == 0) {

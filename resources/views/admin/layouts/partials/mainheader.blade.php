@@ -24,22 +24,18 @@
                 @else
                     <!-- User Account Menu -->
                     <li class="dropdown user user-menu" id="user_menu">
-                        <div class="col-md-8">
-                            <span style="color:white">{{ Auth::user()->email }}</span>
-                        </div>
-                        <div class="col-md-4">
-                            <a class="jsLogout" style="color:white;display: block;font-size: 12px" href="{{ url('/logout') }}"
-                               onclick="event.preventDefault();
-                                         document.getElementById('logout-form').submit();">
-                                <i class="fa fa-fw fa-sign-out"></i>
-                                {{ trans('adminlte_lang::survey.logout') }}
-                            </a>
+                        <span style="color:white;float: left;padding-top: 14px;">{{ Auth::user()->email }}</span>
+                        <a class="jsLogout" style="color:white;display: block;font-size: 12px;float: left;" href="{{ url('/logout') }}"
+                           onclick="event.preventDefault();
+                                     document.getElementById('logout-form').submit();">
+                            <i class="fa fa-fw fa-sign-out"></i>
+                            {{ trans('adminlte_lang::survey.logout') }}
+                        </a>
 
-                            <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                                {{ csrf_field() }}
-                                <input type="submit" value="logout" style="display: none;">
-                            </form>
-                        </div>
+                        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                            <input type="submit" value="logout" style="display: none;">
+                        </form>
 
                     </li>
                 @endif
