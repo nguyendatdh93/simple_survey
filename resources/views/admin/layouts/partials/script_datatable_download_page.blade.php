@@ -30,7 +30,7 @@
             'info'        : true,
             'autoWidth'   : true,
             "columnDefs": [
-                { "targets": 0, "visible" : false },
+//                { "targets": 0, "visible" : false },
                 {
                     targets: '_all',
                     render: function (data, type, full, meta) {
@@ -104,7 +104,7 @@
 </script>
 
 <style>
-    table#download-page-table {
+    #download-page-table_wrapper {
         display: block;
         overflow-x: auto;
     }
