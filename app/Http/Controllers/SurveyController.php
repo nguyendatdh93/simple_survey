@@ -632,21 +632,6 @@ class SurveyController extends Controller
      * @param $id
      * @return mixed
      */
-    public function publishSurveyById($id)
-    {
-        $result = $this->surveyRepository->publishSurveyById($id);
-
-        if ($result) {
-            return redirect()->route(Survey::NAME_URL_PREVIEW, ['id' => $id])->with('alert_success', trans('adminlte_lang::survey.message_publish_survey_success'));
-        }
-
-        return redirect()->route(Survey::NAME_URL_PREVIEW, ['id' => $id])->with('alert_error', trans('adminlte_lang::survey.message_publish_survey_not_success'));
-    }
-
-    /**
-     * @param $id
-     * @return mixed
-     */
     public function closeSurveyById($id)
     {
         $result = $this->surveyRepository->closeSurveyById($id);
@@ -666,7 +651,6 @@ class SurveyController extends Controller
     {
         if ($id) {
             try {
-//                $this->surveyRepository->deleteSurvey($id);
                 $answers = $this->answerRepository->getAnswersBySurveyId($id);
                 foreach ($answers as $answer) {
                     $this->answerQuestionRepository->clearDataByAnswerId($answer['id']);
@@ -683,6 +667,10 @@ class SurveyController extends Controller
         return redirect()->route(Survey::NAME_URL_DOWNLOAD_PAGE_SURVEY,['id' => $id])->with('alert_error', trans('adminlte_lang::survey.message_clear_data_not_success'));
     }
 
+    /**
+     * @param $input
+     * @return array
+     */
     public function getQuestionsDataFromInput($input) {
         $new_questions = [];
         foreach ($input as $input_name => $value) {
@@ -718,6 +706,10 @@ class SurveyController extends Controller
         return $new_questions;
     }
 
+    /**
+     * @param $questions
+     * @return bool
+     */
     public function validateQuestionsInput($questions) {
         foreach ($questions as $question) {
             if (!$this->surveyValidator->validateText($question['text'])) {

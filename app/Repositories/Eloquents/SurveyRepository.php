@@ -72,26 +72,6 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
      * @param $survey_id
      * @return int
      */
-    public function publishSurveyById($survey_id)
-    {
-        if ($survey_id) {
-            try {
-                $result = $this->_model->where('id', $survey_id)->update(['published_at' => date("Y-m-d h:i:s"), 'status' => Survey::STATUS_SURVEY_PUBLISHED]);
-
-                return $result;
-            }catch (\Exception $e) {
-                return 0;
-            }
-
-        }
-
-        return 0;
-    }
-
-    /**
-     * @param $survey_id
-     * @return int
-     */
     public function closeSurveyById($survey_id)
     {
         if ($survey_id) {
@@ -131,12 +111,6 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
 
     public function createEmptyObject() {
         return new Survey();
-    }
-
-    public function deleteSurvey($survey_id)
-    {
-        $this->_model->where('id',$survey_id)
-                    ->update(['del_flg'=> Survey::DELETE_FLG]);
     }
     
     public function updateStatusDownloadedForSurvey($survey_id)
