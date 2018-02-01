@@ -54,8 +54,6 @@
 
             return html;
         }
-
-
     });
 </script>
 

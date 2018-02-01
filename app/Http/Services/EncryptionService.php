@@ -43,7 +43,7 @@ class EncryptionService extends Controller
 	 */
 	public function base32_decode($d)
 	{
-		list($t, $b, $r) = array("ABCDEFGHIJKLMNOPQRSTUVWXYZ234567", "", "");
+		list($t, $b, $r) = array("abcdefghijklmnopqrstuvwxyz345769", "", "");
 		
 		foreach(str_split($d) as $c) {
 			$b = $b . sprintf("%05b", strpos($t, $c));
@@ -62,7 +62,7 @@ class EncryptionService extends Controller
 	 */
 	public function base32_encode($d)
 	{
-		list($t, $b, $r) = array("ABCDEFGHIJKLMNOPQRSTUVWXYZ234567", "", "");
+		list($t, $b, $r) = array("abcdefghijklmnopqrstuvwxyz345769", "", "");
 		
 		foreach(str_split($d) as $c) {
 			$b = $b . sprintf("%08b", ord($c));

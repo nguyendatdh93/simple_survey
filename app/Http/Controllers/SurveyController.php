@@ -166,7 +166,7 @@ class SurveyController extends Controller
     {
         $table_settings = array(
             'title' => trans('adminlte_lang::survey.survey_list_table_download_title'),
-            'id' => 'download-table',
+            'id'    => 'download-table',
             'headers_columns' => array(
                 trans('adminlte_lang::survey.survey_list_table_header_column_id')           => array(
 	                'column' => 'id',
