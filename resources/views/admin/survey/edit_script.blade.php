@@ -4,12 +4,18 @@
         if (survey_status == {{ \App\Survey::STATUS_SURVEY_PUBLISHED }}) {
             $('input').attr('disabled', 'disabled');
             $('select').attr('disabled', 'disabled');
-            $('button.jsAddQuestion').attr('disabled', 'disabled');
+            $('button.jsAddQuestion').hide();
+            $('button.jsRemoveQuestion').hide();
+            $('.jsAddChoice').hide();
+            $('.jsRemoveChoice').hide();
+            $('.jsQuestionBox').find('span.btn-box-tool').hide();
+            $('.jsQuestionBox').find('.box-footer').attr('style', 'padding: 0px 5px;');
             $('textarea').attr('disabled', 'disabled');
         }
 
 		CKEDITOR.on("instanceCreated", function(event) {
-			event.editor.on("blur", function () {
+			event.editor.on("change", function () {
+//			event.editor.on("blur", function () {
 				event.editor.updateElement();
 
 				var textarea_name = event.editor.name;
