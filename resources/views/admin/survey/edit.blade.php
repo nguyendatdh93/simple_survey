@@ -54,8 +54,8 @@
                     <div class="box-header"></div>
                     <div class="box-body" style="padding: 5px; text-align: center;">
                         @if(empty($survey['status']) || $survey['status'] == \App\Survey::STATUS_SURVEY_DRAF)
-                            {!! FormSimple::button(trans('survey.label_choice_survey_draft_status'), ['data-status' => \App\Survey::STATUS_SURVEY_DRAF, 'class' => 'btn btn-info jsSaveSurvey', 'icon' => 'fa fa-save']) !!}
-                            {!! FormSimple::button(trans('survey.label_choice_survey_publish_status'), ['data-status' => \App\Survey::STATUS_SURVEY_PUBLISHED, 'class' => 'btn btn-warning jsSaveSurvey', 'icon' => 'fa fa-cloud-upload']) !!}
+                            {!! FormSimple::button(trans('survey.label_choice_survey_draft_status'), ['data-status' => \App\Survey::STATUS_SURVEY_DRAF, 'class' => 'btn btn-info jsSaveSurvey', 'icon' => 'glyphicon glyphicon-floppy-disk']) !!}
+                            {!! FormSimple::button(trans('survey.label_choice_survey_publish_status'), ['data-status' => \App\Survey::STATUS_SURVEY_PUBLISHED, 'class' => 'btn btn-warning jsSaveSurvey', 'icon' => 'glyphicon glyphicon-cloud-upload']) !!}
                         @endif
 
                         @if(isset($survey['status']) && $survey['status'] == \App\Survey::STATUS_SURVEY_PUBLISHED)
@@ -74,7 +74,7 @@
                 data-toggle="tooltip"
                 title="{{ trans('survey.button_preview') }}"
                 class="btn fly-button jsPreview">
-            <i class="fa fa-eye" style="font-size: xx-large;"></i>
+            <i class="glyphicon glyphicon-eye-open" style="font-size: xx-large;"></i>
         </button>
     </div>
 
