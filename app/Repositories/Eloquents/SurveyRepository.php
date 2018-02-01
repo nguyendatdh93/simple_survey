@@ -8,19 +8,24 @@
 namespace App\Repositories\Eloquents;
 
 use App\Repositories\Contracts\SurveyRepositoryInterface;
-use App\Survey;
+use App\Models\Survey;
 use Illuminate\Support\Facades\Auth;
-use Mockery\Exception;
 use DB;
 
 class SurveyRepository extends \EloquentRepository implements SurveyRepositoryInterface
 {
 
+    /**
+     * @return mixed
+     */
     public function getModel()
     {
         return Survey::class;
     }
 
+    /**
+     * @return mixed
+     */
     public function getAllSurvey()
     {
         $result = $this->_model->select('*')
@@ -31,6 +36,9 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
         return $result;
     }
 
+    /**
+     * @return mixed
+     */
     public function getDownloadListSurvey()
     {
         $result = $this->_model->select('*')
@@ -56,8 +64,12 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
 
         return $result ? $result->toArray() : [];
     }
-	
-	public function getSurveyPublishedById($survey_id)
+
+    /**
+     * @param $survey_id
+     * @return array
+     */
+    public function getSurveyPublishedById($survey_id)
 	{
 		$result = $this->_model->select('*')
 			->where('id',$survey_id)
@@ -88,6 +100,10 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
         return 0;
     }
 
+    /**
+     * @param $survey_id
+     * @return mixed
+     */
     public function getNameSurvey($survey_id)
     {
         $result = $this->_model->select('name')
@@ -97,29 +113,27 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
         return $result[0]['name'];
     }
 
-//    public function find($filter) {
-//        $survey = $this->_model;
-//
-//        foreach ($filter as $key => $value) {
-//            $survey = $survey->where($key, $value);
-//        }
-//
-//        return $survey->where('user_id', Auth::id())
-//            ->where('del_flg', 0)
-//            ->first();
-//    }
-
+    /**
+     * @return Survey
+     */
     public function createEmptyObject() {
         return new Survey();
     }
-    
+
+    /**
+     * @param $survey_id
+     */
     public function updateStatusDownloadedForSurvey($survey_id)
     {
     	if ($survey_id) {
 		    $this->_model->where('id', $survey_id)->update(['downloaded' => Survey::STATUS_SURVEY_DOWNLOADED]);
 	    }
     }
-	
+
+    /**
+     * @param $survey_id
+     * @return array
+     */
     public function checkStatusSurveyIsDownloaded($survey_id)
     {
 	    $result = $this->_model->select('downloaded')
@@ -128,7 +142,11 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
 	    
 	    return $result ? $result->toArray() : [];
     }
-    
+
+    /**
+     * @param $survey_id
+     * @return array
+     */
     public function getStatusSurvey($survey_id)
     {
 	    $result = $this->_model->select('status')

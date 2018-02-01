@@ -8,16 +8,22 @@
 namespace App\Repositories\Eloquents;
 
 use App\Repositories\Contracts\UserRepositoryInterface;
-use App\User;
+use App\Models\User;
 
 class UserRepository extends \EloquentRepository implements UserRepositoryInterface
 {
 
+    /**
+     * @return mixed
+     */
     public function getModel()
     {
         return User::class;
     }
 
+    /**
+     * @return mixed
+     */
     public function getAll()
     {
         $result = $this->_model->select('id','name','email','created_at')->get()->toArray();
@@ -25,6 +31,10 @@ class UserRepository extends \EloquentRepository implements UserRepositoryInterf
         return $result;
     }
 
+    /**
+     * @param $email
+     * @return User
+     */
     public function saveUser($email)
     {
         $user = new User();
@@ -34,6 +44,10 @@ class UserRepository extends \EloquentRepository implements UserRepositoryInterf
         return $user;
     }
 
+    /**
+     * @param $email
+     * @return mixed
+     */
     public function getUserInfoByEmail($email)
     {
         return User::where('email', $email)

@@ -10,13 +10,6 @@ interface InterfaceRepository {
     public function getAll();
 
     /**
-     * Get one
-     * @param $id
-     * @return mixed
-     */
-//    public function find($id);
-
-    /**
      * Create
      * @param array $attributes
      * @return mixed
@@ -38,8 +31,28 @@ interface InterfaceRepository {
      */
     public function delete($id);
 
+    /**
+     * @param $filter
+     * @return mixed
+     */
+
     public function find($filter);
+
+    /**
+     * @param $filter
+     * @return mixed
+     */
     public function finds($filter);
+
+    /**
+     * @param $model
+     * @return mixed
+     */
     public function remove($model);
+
+    /**
+     * @param $model
+     * @return mixed
+     */
     public function save($model);
 }

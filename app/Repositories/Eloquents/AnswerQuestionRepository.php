@@ -13,11 +13,18 @@ use App\Repositories\Contracts\AnswerQuestionRepositoryInterface;
 class AnswerQuestionRepository extends \EloquentRepository implements AnswerQuestionRepositoryInterface
 {
 
+    /**
+     * @return mixed
+     */
     public function getModel()
     {
         return AnswerQuestion::class;
     }
 
+    /**
+     * @param $answer_id
+     * @return mixed
+     */
     public function getAnswersByAnswerId($answer_id)
     {
         $answers = $this->_model->select("*")
@@ -26,14 +33,22 @@ class AnswerQuestionRepository extends \EloquentRepository implements AnswerQues
         return $answers;
     }
 
+    /**
+     * @param $answer_id
+     * @return mixed
+     */
     public function clearDataByAnswerId($answer_id)
     {
-        $this->_model->where('answer_id', $answer_id)->delete();
+        return $this->_model->where('answer_id', $answer_id)->delete();
     }
-    
+
+    /**
+     * @param $data
+     * @return mixed
+     */
     public function save($data)
     {
-	    $this->_model->insert(
+	    return $this->_model->insert(
 		    [
 		    	'answer_id'   => $data['answer_id'],
 			    'question_id' => $data['question_id'],

@@ -10,8 +10,27 @@ namespace App\Repositories\Contracts;
 
 interface AnswerRepositoryInterface
 {
+    /**
+     * @param $survey_id
+     * @return mixed
+     */
     public function getNumberAnswersBySurveyId($survey_id);
+
+    /**
+     * @param $survey_id
+     * @return mixed
+     */
     public function getAnswersBySurveyId($survey_id);
+
+    /**
+     * @param $survey_id
+     * @return mixed
+     */
     public function clearDataAnswersBySurveyId($survey_id);
-	public function save($survey_id);
+
+    /**
+     * @param $survey_id
+     * @return mixed
+     */
+    public function save($survey_id);
 }

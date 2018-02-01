@@ -7,17 +7,24 @@
  */
 namespace App\Repositories\Eloquents;
 
-use App\QuestionChoice;
+use App\Models\QuestionChoice;
 use App\Repositories\Contracts\QuestionChoiceRepositoryInterface;
 
 class QuestionChoiceRepository extends \EloquentRepository implements QuestionChoiceRepositoryInterface
 {
 
+    /**
+     * @return mixed
+     */
     public function getModel()
     {
         return QuestionChoice::class;
     }
 
+    /**
+     * @param $question_id
+     * @return mixed
+     */
     public function getQuestionChoiceByQuestionId($question_id)
     {
         $result = $this->_model->select('*')
@@ -26,10 +33,17 @@ class QuestionChoiceRepository extends \EloquentRepository implements QuestionCh
         return $result;
     }
 
+    /**
+     * @return QuestionChoice
+     */
     public function createEmptyObject() {
         return new QuestionChoice();
     }
-    
+
+    /**
+     * @param $choice_id
+     * @return mixed
+     */
     public function getChoiceTextByChoiceId($choice_id)
     {
 	    $result = $this->_model->select('text')
@@ -37,7 +51,11 @@ class QuestionChoiceRepository extends \EloquentRepository implements QuestionCh
 	
 	    return $result;
     }
-    
+
+    /**
+     * @param $choice_id
+     * @return mixed
+     */
     public function getChoiceOfQuestionByChoiceId($choice_id)
     {
 	    $result = $this->_model->select('*')
