@@ -39,7 +39,12 @@
             <tbody>
             {{--@php $stt = 1; @endphp--}}
             @foreach($data as $item)
-                <tr>
+                @if ($loop->iteration <= 10)
+                    <tr>
+                @else
+                    <tr style="display: none;">
+                @endif
+
                     {{--@if(!isset($settings['headers_columns']['Id'])) <td>{{ $stt }}</td> @endif--}}
                     {{--@php $stt++; @endphp--}}
                     @foreach($settings['headers_columns'] as $key => $key_column)
@@ -60,19 +65,7 @@
                 </tr>
             @endforeach
             </tbody>
-            {{--<tfoot>--}}
-            {{--<tr>--}}
-                {{--@if(!isset($settings['headers_columns']['Id'])) <th style="text-align: center">{{ "ID" }}</th> @endif--}}
-                {{--@foreach($settings['headers_columns'] as $key => $title)--}}
-                    {{--<th style="text-align: center">{{ $key }}</th>--}}
-                {{--@endforeach--}}
-                {{--@if(isset($settings['controls']) && $settings['controls'] == true)--}}
-                    {{--<th style="text-align: center">{{ trans('adminlte_lang::datatable.controls') }}</th>--}}
-                {{--@endif--}}
-            {{--</tr>--}}
-            {{--</tfoot>--}}
         </table>
     </div>
     <!-- /.box-body -->
 </div>
-

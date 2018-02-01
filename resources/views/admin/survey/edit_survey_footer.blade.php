@@ -15,7 +15,7 @@
 						<div class="col-md-10 col-md-offset-1" style="margin-top: 10px; margin-bottom: 10px;">
 							<div class="pull-right">
 								<button type="button" class="btn btn-success btn-sm jsAddQuestion" data-question-category="{{ \App\Question::CATEGORY_FOOTER }}">
-									<i class="fa fa-plus"></i> {{ trans('survey.survey_add_question_button') }}
+									<i class="glyphicon glyphicon-plus"></i> {{ trans('survey.survey_add_question_button') }}
 								</button>
 							</div>
 						</div>
@@ -84,7 +84,7 @@
 												</div>
 												<div class="col-md-12 jsQuestionConfirmationAgreeBox" style="margin-bottom: 5px;">
 													<div class="col-md-1">
-														<i class="fa fa-square-o" style="font-size: x-large; line-height: 36px;"></i>
+														<i class="glyphicon glyphicon-unchecked" style="font-size: x-large; line-height: 36px;"></i>
 													</div>
 													<div class="col-md-10">
 														<input type="text"
@@ -101,7 +101,7 @@
 												<div class="col-md-10">
 													<div class="row jsChoiceTemplate" style="display: none;">
 														<div class="col-md-1 jsQuestionChoice jsQuestionMultiSelect" @if($question['type'] != \App\Question::TYPE_MULTI_CHOICE) style="display: none;" @endif >
-															<i class="fa fa-square-o" style="font-size: x-large; line-height: 36px;"></i>
+															<i class="glyphicon glyphicon-unchecked" style="font-size: x-large; line-height: 36px;"></i>
 														</div>
 														<div class="col-md-1 jsQuestionChoice jsQuestionSingleChoice" @if($question['type'] != \App\Question::TYPE_SINGLE_CHOICE) style="display: none;" @endif >
 															<i class="fa fa-circle-o" style="font-size: x-large; line-height: 36px;"></i>
@@ -111,7 +111,7 @@
 															<p class="jsError" style="color: red; display: none;"></p>
 														</div>
 														<div class="col-md-1">
-															<i class="fa fa-minus-circle jsRemoveChoice" style="font-size: large; line-height: 36px; color:red;"></i>
+															<i class="glyphicon glyphicon-minus-sign jsRemoveChoice" style="font-size: large; line-height: 36px; color:red;"></i>
 														</div>
 													</div>
 
@@ -121,7 +121,7 @@
 															@php($choice_no++)
 															<div class="row jsQuestionChoiceBox" data-choice-number="{{ $choice_no }}"  style="margin-bottom: 5px;">
 																<div class="col-md-1 jsQuestionChoice jsQuestionMultiSelect" @if($question['type'] != \App\Question::TYPE_MULTI_CHOICE) style="display: none;" @endif >
-																	<i class="fa fa-square-o" style="font-size: x-large; line-height: 36px;"></i>
+																	<i class="glyphicon glyphicon-unchecked" style="font-size: x-large; line-height: 36px;"></i>
 																</div>
 																<div class="col-md-1 jsQuestionChoice jsQuestionSingleChoice" @if($question['type'] != \App\Question::TYPE_SINGLE_CHOICE) style="display: none;" @endif >
 																	<i class="fa fa-circle-o" style="font-size: x-large; line-height: 36px;"></i>
@@ -135,7 +135,7 @@
 																	<p class="jsError" style="color: red; display: none;"></p>
 																</div>
 																<div class="col-md-1">
-																	<i class="fa fa-minus-circle jsRemoveChoice" data-widget="remove" data-toggle="tooltip" title="{{ trans('survey.tooltip_remove_question_choice') }}" style="font-size: large; line-height: 36px; color:red;"></i>
+																	<i class="glyphicon glyphicon-minus-sign jsRemoveChoice" data-widget="remove" data-toggle="tooltip" title="{{ trans('survey.tooltip_remove_question_choice') }}" style="font-size: large; line-height: 36px; color:red;"></i>
 																</div>
 															</div>
 														@endforeach
@@ -143,7 +143,7 @@
 
 													<div class="row">
 														<div class="col-md-10 col-md-offset-1">
-															<i class="fa fa-plus-square jsAddChoice" data-widget="add" data-toggle="tooltip" title="{{ trans('survey.tooltip_add_question_choice') }}" style="font-size: x-large; line-height: 36px; color:green;"></i>
+															<i class="glyphicon glyphicon-plus jsAddChoice" data-widget="add" data-toggle="tooltip" title="{{ trans('survey.tooltip_add_question_choice') }}" style="font-size: x-large; line-height: 36px; color:green;"></i>
 														</div>
 													</div>
 												</div>
@@ -153,9 +153,9 @@
 										<div class="box-footer" style="padding: 5px;">
 											<div class="box-tools pull-right">
 												<button type="button" class="btn btn-box-tool jsDuplicateQuestion" style="padding: 0px; margin: 0 5px; display: none;">
-													<i class="fa fa-clone" style="font-size: x-large;"></i></button>
+													<i class="glyphicon glyphicon-duplicate" style="font-size: x-large;"></i></button>
 												<button type="button" data-widget="remove" data-toggle="tooltip" title="{{ trans('survey.tooltip_remove_question') }}" class="btn btn-box-tool jsRemoveQuestion" style="padding: 0px; margin: 0 5px;">
-													<i class="fa fa-trash-o" style="font-size: x-large;"></i></button>
+													<i class="glyphicon glyphicon-trash" style="font-size: x-large;"></i></button>
 												<div class="jsQuestionRequiredBox" style="display: none;">
 													<span class="btn btn-box-tool" style="padding: 0px; margin: 0 20px; font-size: x-large;">|</span>
 													<span style="margin: 0 5px; vertical-align: middle; font-size: large;">{{ trans('survey.require_toggle') }}</span>
@@ -178,7 +178,7 @@
 								<div class="col-md-10 col-md-offset-1" style="margin-top: 10px; margin-bottom: 10px;">
 									<div class="pull-right">
 										<button type="button" class="btn btn-success btn-sm jsAddQuestion" data-question-category="{{ \App\Question::CATEGORY_FOOTER }}">
-											<i class="fa fa-plus"></i> {{ trans('survey.survey_add_question_button') }}
+											<i class="glyphicon glyphicon-plus"></i> {{ trans('survey.survey_add_question_button') }}
 										</button>
 									</div>
 								</div>

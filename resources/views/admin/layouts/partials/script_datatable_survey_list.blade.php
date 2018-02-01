@@ -60,7 +60,7 @@
 
             if (data[3] != '')
             {
-                html += '<img style="width: 90px" src="'+data[3]+'" alt="Image"></img>';
+                html += '<img style="height: 50px;" src="'+data[3]+'" alt="Image"></img>';
             }
 
             return html;
@@ -83,6 +83,12 @@
 
             return html;
         }
+    });
+
+    $(document).on('click', '.paginate_button', function() {
+        $('tr').show();
+    }).on('change', 'select[name=survey-table_length]', function() {
+        $('tr').show();
     });
 
 </script>
