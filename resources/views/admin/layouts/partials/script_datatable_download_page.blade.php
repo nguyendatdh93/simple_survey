@@ -48,7 +48,7 @@
             if(data.length < 100)
                 return data;
 
-            var html = data.slice(0,100) + '<span>... </span><a href="#" class="more">{{ trans('adminlte_lang::survey.button_more') }}</a>'+
+            var html = data.slice(0,100) + '<span>... </span><br/><a href="#" class="more">{{ trans('adminlte_lang::survey.button_more') }}</a>'+
                 '<span style="display:none;">'+ data.slice(100,data.length)+'<br><a href="#" class="less">{{ trans('adminlte_lang::survey.button_less') }}</a></span>'
             ;
 
