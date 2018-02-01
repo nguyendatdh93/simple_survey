@@ -23,7 +23,7 @@ class SurveyValidator
 		foreach ($answerSurvey as $question_id => $answer) {
 			$require = $questionRepository->checkQuestionIsRequire($question_id);
 			if ($require['require'] == Question::REQUIRE_QUESTION_YES) {
-				if (!$this->validateText($answer, true)) {
+				if (!$this->validateText($answer, true, 5000)) {
 					return false;
 				}
 			}

@@ -67,7 +67,7 @@
         });
 
         $(".jsButtonDownload").click(function () {
-            var survey_status = '{{ $survey_status }}';
+            var survey_status = '{{ isset($survey_status) ? $survey_status : -1 }}';
             if ($('.jsButtonClearData').length == 0 && survey_status == '{{ \App\Models\Survey::STATUS_SURVEY_CLOSED }}') {
                 timer();
             }
