@@ -28,7 +28,7 @@
                         <a class="jsLogout" style="color:white;display: block;font-size: 12px;float: left;" href="{{ url('/logout') }}"
                            onclick="event.preventDefault();
                                      document.getElementById('logout-form').submit();">
-                            <i class="fa fa-fw fa-sign-out"></i>
+                            <i class="glyphicon glyphicon-log-out"></i>
                             {{ trans('adminlte_lang::survey.logout') }}
                         </a>
 

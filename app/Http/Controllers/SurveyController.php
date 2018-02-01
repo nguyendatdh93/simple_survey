@@ -106,7 +106,7 @@ class SurveyController extends Controller
                     'href'  => \route(Survey::NAME_URL_CREATE_SURVEY),
                     'attributes' => array(
                         'class' => 'btn btn-success',
-                        'icon'  => 'fa fa-plus-circle'
+                        'icon'  => 'glyphicon glyphicon-plus'
                     )
                 )
             )
@@ -215,7 +215,7 @@ class SurveyController extends Controller
                 'href'  => \route(Survey::NAME_URL_DOWNLOAD_SURVEY).'/'.$id,
                 'attributes' => array(
                     'class' => 'btn btn-primary jsButtonDownload',
-                    'icon'  => 'fa fa-fw fa-download'
+                    'icon'  => 'glyphicon glyphicon-cloud-download'
                 )
             );
             
@@ -226,7 +226,7 @@ class SurveyController extends Controller
 					'text' => trans('adminlte_lang::survey.button_clear_data'),
 					'attributes' => array(
 						'class'       => 'btn bg-orange margin jsButtonClearData',
-						'icon'        => 'fa fa-trash',
+						'icon'        => 'glyphicon glyphicon-trash',
 						'data-toggle' => "modal",
 						'data-target' => "#modal-confirm-clear-data-survey"
 					)

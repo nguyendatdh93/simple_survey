@@ -21,14 +21,14 @@ class Menu
         $ip_address = $_SERVER['REMOTE_ADDR'];
         $menus['survey_list'] = Array(
             "text"   => trans('adminlte_lang::survey.menu_survey_list'),
-            "icon"   => "fa fa-table",
+            "icon"   => "glyphicon glyphicon-th-list",
             "active" => false,
             "url"    => '/survey/list',
         );
 
         $menus['survey_list_download'] = Array(
             "text"   => trans('adminlte_lang::survey.menu_survey_download'),
-            "icon"   => "fa fa-cloud-download",
+            "icon"   => "glyphicon glyphicon-download-alt",
             "active" => false,
             "url"    => '/download/list',
         );
