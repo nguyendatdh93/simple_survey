@@ -15,11 +15,13 @@
                     {
                         removeErrorForAnswerText(elementForms.elements[i]);
                         addErrorForAnswerText(elementForms.elements[i], '{{ trans("adminlte_lang::survey.message_255_characters") }}');
+                        elementForms.elements[i].focus();
                         flg_continue = false;
                     } else if(elementForms.elements[i].required) {
                         if (elementForms.elements[i].value == '') {
                             removeErrorForAnswerText(elementForms.elements[i]);
                             addErrorForAnswerText(elementForms.elements[i], '{{ trans("adminlte_lang::survey.message_repquire") }}');
+                            elementForms.elements[i].focus();
                             flg_continue = false;
                         } else {
                             removeErrorForAnswerText(elementForms.elements[i]);
@@ -32,11 +34,13 @@
                     {
                         removeErrorForAnswerText(elementForms.elements[i]);
                         addErrorForAnswerText(elementForms.elements[i], '{{ trans("adminlte_lang::survey.message_5000_characters") }}');
+                        elementForms.elements[i].focus();
                         flg_continue = false;
                     } else if(elementForms.elements[i].required) {
                         if (elementForms.elements[i].value == '') {
                             removeErrorForAnswerText(elementForms.elements[i]);
                             addErrorForAnswerText(elementForms.elements[i], '{{ trans("adminlte_lang::survey.message_repquire") }}');
+                            elementForms.elements[i].focus();
                             flg_continue = false;
                         } else {
                             removeErrorForAnswerText(elementForms.elements[i]);
@@ -53,6 +57,7 @@
                             flg_continue = false;
                             removeErrorForAnswerChoice(elementForms.elements[i]);
                             addErrorForAnswerChoice(elementForms.elements[i],'{{ trans("adminlte_lang::survey.message_repquire") }}');
+                            elementForms.elements[i].focus();
                         } else {
                             removeErrorForAnswerChoice(elementForms.elements[i]);
                         }
@@ -65,8 +70,10 @@
                             removeErrorForAnswerChoice(elementForms.elements[i]);
                             if (nameCheckbox == 'optcheckbox_confirm') {
                                 addErrorForAnswerChoice(elementForms.elements[i],'{{ trans("adminlte_lang::survey.message_confirm_condition") }}');
+                                elementForms.elements[i].focus();
                             } else {
                                 addErrorForAnswerChoice(elementForms.elements[i],'{{ trans("adminlte_lang::survey.message_repquire") }}');
+                                elementForms.elements[i].focus();
                             }
                         } else {
                             removeErrorForAnswerChoice(elementForms.elements[i]);
