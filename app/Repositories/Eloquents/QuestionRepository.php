@@ -7,20 +7,27 @@
  */
 namespace App\Repositories\Eloquents;
 
-use App\ConfirmContent;
-use App\Question;
-use App\QuestionChoice;
+use App\Models\ConfirmContent;
+use App\Models\Question;
+use App\Models\QuestionChoice;
 use App\Repositories\Contracts\QuestionRepositoryInterface;
 use Illuminate\Support\Facades\DB;
 
 class QuestionRepository extends \EloquentRepository implements QuestionRepositoryInterface
 {
 
+    /**
+     * @return mixed
+     */
     public function getModel()
     {
         return Question::class;
     }
 
+    /**
+     * @param $survey_id
+     * @return mixed
+     */
     public function getQuestionSurveyBySurveyId($survey_id)
     {
         $result = $this->_model->select('*')
@@ -30,8 +37,12 @@ class QuestionRepository extends \EloquentRepository implements QuestionReposito
 
         return $result;
     }
-	
-	public function getQuestionSurveyWithoutConfirmTypeBySurveyId($survey_id)
+
+    /**
+     * @param $survey_id
+     * @return mixed
+     */
+    public function getQuestionSurveyWithoutConfirmTypeBySurveyId($survey_id)
 	{
 		$result = $this->_model->select('*')
 			->where('survey_id',$survey_id)
@@ -42,6 +53,10 @@ class QuestionRepository extends \EloquentRepository implements QuestionReposito
 		return $result;
 	}
 
+    /**
+     * @param $survey_id
+     * @return mixed
+     */
     public function getListQuestionBySurveyId($survey_id)
     {
         $result = $this->_model->select('id','text')
@@ -52,6 +67,10 @@ class QuestionRepository extends \EloquentRepository implements QuestionReposito
         return $result;
     }
 
+    /**
+     * @param $survey_id
+     * @return mixed
+     */
     public function getQuestionsDataBySurveyId($survey_id) {
         $question_table_name        = with(new Question)->getTable();
         $question_choice_table_name = with(new QuestionChoice)->getTable();
@@ -77,6 +96,10 @@ class QuestionRepository extends \EloquentRepository implements QuestionReposito
         return $questions;
     }
 
+    /**
+     * @param $survey_id
+     * @return array
+     */
     public function getQuestionsBySurveyId($survey_id) {
         $questions_data = $this->getQuestionsDataBySurveyId($survey_id);
         if (!$questions_data) {
@@ -112,6 +135,10 @@ class QuestionRepository extends \EloquentRepository implements QuestionReposito
         return $questions;
     }
 
+    /**
+     * @param $survey_id
+     * @return mixed
+     */
     public function getQuestionIdsWithTypeBySurveyId($survey_id) {
         $result = $this->_model->select('id', 'type')
             ->where('survey_id', $survey_id)
@@ -122,38 +149,17 @@ class QuestionRepository extends \EloquentRepository implements QuestionReposito
         return $result;
     }
 
-//    public function find($filter) {
-//        $question = $this->_model;
-//
-//        foreach ($filter as $key => $value) {
-//            $question = $question->where($key, $value);
-//        }
-//
-//        return $question->where('del_flg', 0)
-//            ->first();
-//    }
-//
-//    public function finds($filter) {
-//        $question = $this->_model;
-//
-//        foreach ($filter as $key => $value) {
-//            $question = $question->where($key, $value);
-//        }
-//
-//        return $question->where('del_flg', 0)
-//            ->get();
-//    }
-
+    /**
+     * @return Question
+     */
     public function createEmptyObject() {
         return new Question();
     }
 
-//    public function save(Question $question) {
-//        $question->save();
-//
-//        return $question;
-//    }
-    
+    /**
+     * @param $question_id
+     * @return mixed
+     */
     public function getTypeOfQuestion($question_id)
     {
 	    $result = $this->_model->select('type')
@@ -164,8 +170,12 @@ class QuestionRepository extends \EloquentRepository implements QuestionReposito
 	
 	    return $result;
     }
-	
-	public function checkQuestionIsRequire($question_id)
+
+    /**
+     * @param $question_id
+     * @return mixed
+     */
+    public function checkQuestionIsRequire($question_id)
 	{
 		$result = $this->_model->select('require')
 			->where('id',$question_id)

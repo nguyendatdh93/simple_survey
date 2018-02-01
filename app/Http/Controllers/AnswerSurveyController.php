@@ -29,13 +29,22 @@ class AnswerSurveyController extends Controller
 	protected $answerQuestionRepository;
 	protected $encryption_service;
 	protected $survey_service;
-	
-	public function __construct(SurveyRepositoryInterface $surveyRepository,
-	                            QuestionRepositoryInterface $questionRepository,
-	                            QuestionChoiceRepositoryInterface $questionChoiceRepository,
-	                            ConfirmContentsRepositoryInterface $confirmContentRepository,
-	                            AnswerRepositoryInterface $answerRepository,
-	                            AnswerQuestionRepositoryInterface $answerQuestionRepository)
+
+    /**
+     * AnswerSurveyController constructor.
+     * @param SurveyRepositoryInterface $surveyRepository
+     * @param QuestionRepositoryInterface $questionRepository
+     * @param QuestionChoiceRepositoryInterface $questionChoiceRepository
+     * @param ConfirmContentsRepositoryInterface $confirmContentRepository
+     * @param AnswerRepositoryInterface $answerRepository
+     * @param AnswerQuestionRepositoryInterface $answerQuestionRepository
+     */
+    public function __construct(SurveyRepositoryInterface $surveyRepository,
+                                QuestionRepositoryInterface $questionRepository,
+                                QuestionChoiceRepositoryInterface $questionChoiceRepository,
+                                ConfirmContentsRepositoryInterface $confirmContentRepository,
+                                AnswerRepositoryInterface $answerRepository,
+                                AnswerQuestionRepositoryInterface $answerQuestionRepository)
 	{
 		$this->surveyRepository         = $surveyRepository;
 		$this->questionRepository       = $questionRepository;

@@ -8,18 +8,46 @@
 
 namespace App\Repositories\Contracts;
 
-use App\Question;
-
 interface QuestionRepositoryInterface
 {
+    /**
+     * @param $survey_id
+     * @return mixed
+     */
     public function getQuestionSurveyBySurveyId($survey_id);
+
+    /**
+     * @param $survey_id
+     * @return mixed
+     */
     public function getListQuestionBySurveyId($survey_id);
+
+    /**
+     * @param $survey_id
+     * @return mixed
+     */
     public function getQuestionsDataBySurveyId($survey_id);
+
+    /**
+     * @param $survey_id
+     * @return mixed
+     */
     public function getQuestionsBySurveyId($survey_id);
+
+    /**
+     * @param $survey_id
+     * @return mixed
+     */
+    public function getQuestionSurveyWithoutConfirmTypeBySurveyId($survey_id);
+
+    /**
+     * @param $survey_id
+     * @return mixed
+     */
     public function getQuestionIdsWithTypeBySurveyId($survey_id);
-//    public function find($filter);
-//    public function finds($filter);
+
+    /**
+     * @return mixed
+     */
     public function createEmptyObject();
-//    public function save(Question $question);
-//    public function remove(Question $question);
 }

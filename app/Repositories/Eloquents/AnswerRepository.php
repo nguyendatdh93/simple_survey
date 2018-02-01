@@ -7,17 +7,24 @@
  */
 namespace App\Repositories\Eloquents;
 
-use App\Answer;
+use App\Models\Answer;
 use App\Repositories\Contracts\AnswerRepositoryInterface;
 
 class AnswerRepository extends \EloquentRepository implements AnswerRepositoryInterface
 {
 
+    /**
+     * @return mixed
+     */
     public function getModel()
     {
         return Answer::class;
     }
 
+    /**
+     * @param $survey_id
+     * @return mixed
+     */
     public function getNumberAnswersBySurveyId($survey_id)
     {
         $number_answers = $this->_model->where('survey_id', $survey_id)->count();
@@ -25,6 +32,10 @@ class AnswerRepository extends \EloquentRepository implements AnswerRepositoryIn
         return $number_answers;
     }
 
+    /**
+     * @param $survey_id
+     * @return mixed
+     */
     public function getAnswersBySurveyId($survey_id)
     {
         $answers = $this->_model->select("*")
@@ -33,12 +44,20 @@ class AnswerRepository extends \EloquentRepository implements AnswerRepositoryIn
         return $answers;
     }
 
+    /**
+     * @param $survey_id
+     * @return mixed
+     */
     public function clearDataAnswersBySurveyId($survey_id)
     {
-        $this->_model->where('survey_id', $survey_id)->delete();
+        return $this->_model->where('survey_id', $survey_id)->delete();
     }
-	
-	public function save($survey_id)
+
+    /**
+     * @param $survey_id
+     * @return mixed
+     */
+    public function save($survey_id)
 	{
 		$id = $this->_model->insertGetId(
 			[
