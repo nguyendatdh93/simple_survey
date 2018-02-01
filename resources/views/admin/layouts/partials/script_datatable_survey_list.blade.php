@@ -4,18 +4,17 @@
         $('#survey-table').DataTable({
             'paging'      : true,
             "order": [[ 0, "desc" ]],
-            'lengthChange': true,
             'searching'   : true,
-            "processing"  : true,
             'ordering'    : true,
-            'info'        : true,
             'autoWidth'   : true,
             'createdRow' : function( row, data, dataIndex ) {
+                console.log(data);
                 $(row).children(".tbl-control").html(addControls(row,data));
                 $(row).children(".tbl-status").html(buttonForStatus(data));
+                $(row).children(".tbl-image_path").html(addImageSurvey(data));
             },
             "columnDefs": [
-                { "targets": 0, "visible" : false },
+//                { "targets": 0, "visible" : false },
                 { "targets": 3, "orderable" : false},
                 { "targets": 4, "orderable" : true},
                 { "targets": 5, "orderable" : true},
@@ -50,6 +49,18 @@
             html += '<a href="'+ url_redirect_copy +'" class="btn btn-default" style="margin-left: 5px" data-toggle="tooltip" title="{{ trans('adminlte_lang::survey.copy_survey') }}"><i class="glyphicon glyphicon-duplicate"></i></a>';
             if(data.indexOf("{{ trans('adminlte_lang::survey.draf') }}") >= 0 || data.indexOf("{{ trans('adminlte_lang::survey.published') }}") >= 0) {
                 html += '<a href="'+ url_edit_survey +'" class="btn btn-default" data-toggle="tooltip" style="margin-left: 5px" title="{{ trans('adminlte_lang::survey.edit_survey') }}"><i class="glyphicon glyphicon-edit"></i></a>';
+            }
+
+            return html;
+        }
+
+        function addImageSurvey(data)
+        {
+            var html            = '';
+
+            if (data[3] != '')
+            {
+                html += '<img style="width: 90px" src="'+data[3]+'" alt="Image"></img>';
             }
 
             return html;
