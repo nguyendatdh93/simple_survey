@@ -32,7 +32,7 @@
 
             url_redirect_detail = "{{ route(\App\Survey::NAME_URL_DOWNLOAD_PAGE_SURVEY) }}/"+ data[0];
 
-            html += '<a href="'+ url_redirect_detail +'" class="btn btn-default bg-olive" data-toggle="tooltip" title="{{ trans('adminlte_lang::survey.go_download_button') }}"><i class="fa fa-download"></i></a>';
+            html += '<a href="'+ url_redirect_detail +'" class="btn btn-default bg-olive" data-toggle="tooltip" title="{{ trans('adminlte_lang::survey.go_download_button') }}"><i class="glyphicon glyphicon-download-alt"></i></a>';
 
             return html;
         }
@@ -54,8 +54,6 @@
 
             return html;
         }
-
-
     });
 </script>
 

@@ -15,7 +15,7 @@
                 $(row).children(".tbl-status").html(buttonForStatus(data));
             },
             "columnDefs": [
-//                { "targets": 0, "visible" : false },
+                { "targets": 0, "visible" : false },
                 { "targets": 3, "orderable" : false},
                 { "targets": 4, "orderable" : true},
                 { "targets": 5, "orderable" : true},
@@ -46,10 +46,10 @@
 
             url_redirect_copy   = "{{ route(\App\Survey::NAME_URL_DUPLICATE_SURVEY) }}/"+ data[0];
 
-            html += '<a href="'+ url_redirect_detail +'" class="btn btn-default" data-toggle="tooltip" target="_blank" title="{{ trans('adminlte_lang::survey.detail') }}"><i class="fa fa-eye"></i></a>';
-            html += '<a href="'+ url_redirect_copy +'" class="btn btn-default" style="margin-left: 5px" data-toggle="tooltip" title="{{ trans('adminlte_lang::survey.copy_survey') }}"><i class="fa fa-copy"></i></a>';
+            html += '<a href="'+ url_redirect_detail +'" class="btn btn-default" data-toggle="tooltip" target="_blank" title="{{ trans('adminlte_lang::survey.detail') }}"><i class="glyphicon glyphicon-eye-open"></i></a>';
+            html += '<a href="'+ url_redirect_copy +'" class="btn btn-default" style="margin-left: 5px" data-toggle="tooltip" title="{{ trans('adminlte_lang::survey.copy_survey') }}"><i class="glyphicon glyphicon-duplicate"></i></a>';
             if(data.indexOf("{{ trans('adminlte_lang::survey.draf') }}") >= 0 || data.indexOf("{{ trans('adminlte_lang::survey.published') }}") >= 0) {
-                html += '<a href="'+ url_edit_survey +'" class="btn btn-default" data-toggle="tooltip" style="margin-left: 5px" title="{{ trans('adminlte_lang::survey.edit_survey') }}"><i class="fa fa-pencil-square-o"></i></a>';
+                html += '<a href="'+ url_edit_survey +'" class="btn btn-default" data-toggle="tooltip" style="margin-left: 5px" title="{{ trans('adminlte_lang::survey.edit_survey') }}"><i class="glyphicon glyphicon-edit"></i></a>';
             }
 
             return html;
