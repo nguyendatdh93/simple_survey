@@ -12,7 +12,20 @@ use App\QuestionChoice;
 
 interface QuestionChoiceRepositoryInterface
 {
+    /**
+     * @param $question_id
+     * @return mixed
+     */
     public function getQuestionChoiceByQuestionId($question_id);
+
+    /**
+     * @return mixed
+     */
     public function createEmptyObject();
-	public function getChoiceTextByChoiceId($choice_id);
+
+    /**
+     * @param $choice_id
+     * @return mixed
+     */
+    public function getChoiceTextByChoiceId($choice_id);
 }

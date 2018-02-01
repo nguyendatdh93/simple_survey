@@ -12,6 +12,14 @@ use App\ConfirmContent;
 
 interface ConfirmContentsRepositoryInterface
 {
+    /**
+     * @return mixed
+     */
     public function createEmptyObject();
+
+    /**
+     * @param $question_id
+     * @return mixed
+     */
     public function getConfirmContentByQuestionId($question_id);
 }
