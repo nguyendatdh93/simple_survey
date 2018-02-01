@@ -245,7 +245,7 @@ class SurveyController extends Controller
         return view('admin::datatable', array('settings' => $table_settings, 'data' => $answer_data,'survey_id' => $id, 'survey_status' => $status_survey['status']));
     }
 
-    public function downloadSurveyCSVFile(Request $request, $id)
+    public function downloadSurveyCSVFile($id)
     {
 	    $list_questions    = $this->questionRepository->getListQuestionBySurveyId($id);
 	    $headers_columns   = array_column($list_questions, 'text');
@@ -264,13 +264,13 @@ class SurveyController extends Controller
 		}
 	    
         $headers = [
-            'Cache-Control'           => 'must-revalidate, post-check=0, pre-check=0'
-            ,   'Content-type'        => 'text/csv'
-            ,   'Content-Disposition' => 'attachment; filename='.time().'.csv'
-            ,   'Expires'             => '0'
-            ,   'Pragma'              => 'public'
-	        ,   'Content-Encoding'    => 'UTF-8'
-	        ,   'charset'             => 'UTF-8'
+            'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0',
+	        'Content-type'        => 'text/csv',
+	        'Content-Disposition' => 'attachment; filename='.time().'.csv',
+	        'Expires'             => '0',
+	        'Pragma'              => 'public',
+	        'Content-Encoding'    => 'UTF-8',
+	        'charset'             => 'UTF-8'
         ];
 		
 	    $headers_columns[array_search('created_at', $headers_columns)] = trans('adminlte_lang::survey.column_csv_created_at');

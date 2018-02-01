@@ -26,7 +26,7 @@
                                     <div class="navbar-form navbar-right jsCopyUrlForm">
                                         <div class="form-group" style="float: left">
                                             <label class="jsUrlDomainCopy">{{ route(\App\Survey::NAME_URL_ANSWER_SURVEY) }}/</label>
-                                            <input type="text" class="form-control jsUrlEncrypt" style="cursor: pointer;" value="{{ $survey['encryption_url'] }}" placeholder="Search">
+                                            <input type="text" class="form-control jsUrlEncrypt" style="cursor: copy;" value="{{ $survey['encryption_url'] }}" placeholder="Search">
                                         </div>
                                         <a style="float: left; margin-left: 5px;color: #0072ef;cursor: pointer;" class="btn btn-link" style="color: dodgerblue" onclick="copyClipbroad()">{{ trans('adminlte_lang::survey.button_coppy_url') }}</a>
                                     </div>
@@ -59,7 +59,7 @@
                         @endif
 
                         @if(isset($survey['status']) && $survey['status'] == \App\Survey::STATUS_SURVEY_PUBLISHED)
-                            {!! FormSimple::button(trans('survey.label_choice_survey_close_status'), ['data-status' => \App\Survey::STATUS_SURVEY_CLOSED, 'class' => 'btn btn-default jsCloseSurvey']) !!}
+                            {!! FormSimple::button(trans('survey.label_choice_survey_close_status'), ['data-status' => \App\Survey::STATUS_SURVEY_CLOSED, 'class' => 'btn btn-danger jsCloseSurvey']) !!}
                         @endif
                     </div>
                     <div class="box-footer" style="border: none;"></div>
