@@ -9,7 +9,7 @@
             <div class="modal-body">
                 <p>{{ $settings['content'] }}</p>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer" style="text-align: center">
                 @foreach($settings['buttons'] as $button)
                     @if(\App\BaseWidget\Validator::checkIsButtonTag($button))
                         {!! \App\BaseWidget\Form::button($button['text'], $button['attributes']) !!}
