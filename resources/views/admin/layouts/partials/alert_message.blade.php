@@ -6,7 +6,7 @@
         </div>
     @endif
     @if($message = Session::get('alert_success'))
-        <div class="alert alert-success alert-dismissible">
+        <div class="alert alert-info alert-dismissible">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
             {{ $message }}
         </div>

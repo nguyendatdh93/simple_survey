@@ -98,7 +98,7 @@
 
         function addErrorForAnswerChoice(element, error)
         {
-            elChild = document.createElement('span');
+            elChild = document.createElement('p');
             elChild.className = "validate";
             elChild.innerHTML = error;
             element.parentElement.parentElement.appendChild(elChild);
