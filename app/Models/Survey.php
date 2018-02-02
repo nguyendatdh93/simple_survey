@@ -27,10 +27,10 @@ class Survey extends Model
 	const NAME_URL_THANK_PAGE       = 'thank-page';
 	const NAME_URL_LOGIN_PAGE       = 'login-page';
 
-    const NAME_URL_DOWNLOAD_LIST          = 'download-list';
-    const NAME_URL_DOWNLOAD_SURVEY        = 'download-survey';
-    const NAME_URL_DOWNLOAD_PAGE_SURVEY   = 'download-page-survey';
-    const NAME_URL_CLEAR_DATA_SURVEY      = 'clear-data-survey';
+    const NAME_URL_DOWNLOAD_LIST        = 'download-list';
+    const NAME_URL_DOWNLOAD_SURVEY      = 'download-survey';
+    const NAME_URL_DOWNLOAD_PAGE_SURVEY = 'download-page-survey';
+    const NAME_URL_CLEAR_DATA_SURVEY    = 'clear-data-survey';
 
     const DELETE_FLG = 1;
 }

@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\View;
 
 class Form
 {
+	const SETTING_LENGHT_MENU_DATATABLE = [25, 50, 100];
+	
     /**
      * @param array $paramAttributes
      * @param $name
