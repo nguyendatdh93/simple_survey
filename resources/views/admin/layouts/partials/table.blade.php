@@ -39,7 +39,7 @@
             <tbody>
             {{--@php $stt = 1; @endphp--}}
             @foreach($data as $item)
-                @if ($loop->iteration <= 10)
+                @if ($loop->iteration <= \App\BaseWidget\Form::SETTING_LENGHT_MENU_DATATABLE[0])
                     <tr>
                 @else
                     <tr style="display: none;">
@@ -50,7 +50,7 @@
                     @foreach($settings['headers_columns'] as $key => $key_column)
                         @if(is_array($key_column))
                             @if($key_column['type'] == \App\BaseWidget\Validator::TYPE_IMAGE)
-                                <td class="tbl-{{$key_column['column']}}">{!! $item[$key_column['column']] !!}</td>
+                                <td class="tbl-{{$key_column['column']}}"><span style="display: none">{!! $item[$key_column['column']] !!}</span></td>
                             @endif
                             @if($key_column['type'] == \App\BaseWidget\Validator::TYPE_HIDDEN)
                                 <td class="tbl-{{$key_column['column']}}" style="display: none"> {{ $item[$key_column['column']] }} </td>

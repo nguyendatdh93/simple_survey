@@ -7,10 +7,12 @@
             'searching'   : true,
             'ordering'    : true,
             'info'        : true,
+            'lengthMenu'  : [ {!! implode(',', \App\BaseWidget\Form::SETTING_LENGHT_MENU_DATATABLE)  !!}],
             'autoWidth'   : true,
             'createdRow' : function( row, data, dataIndex ) {
                 $(row).children(".tbl-control").html(addControls(row,data));
                 $(row).children(".tbl-status").html(buttonForStatus(data));
+                $(row).children(".tbl-image_path").html(addImageSurvey(data));
             },
             "columnDefs": [
                 { "targets": 0, "visible" : false },
@@ -18,7 +20,7 @@
                 { "targets": 4, "orderable" : true},
                 { "targets": 5, "orderable" : true},
                 { "targets": 6, "orderable" : true},
-                { "targets": 7,"orderable" : false},
+                { "targets": 7,"orderable" : false, "width": "50px"},
             ],
             "language": {
                 "url" : "/setup-lang"
@@ -32,7 +34,19 @@
 
             url_redirect_detail = "{{ route(\App\Survey::NAME_URL_DOWNLOAD_PAGE_SURVEY) }}/"+ data[0];
 
-            html += '<a href="'+ url_redirect_detail +'" class="btn btn-default bg-olive" data-toggle="tooltip" title="{{ trans('adminlte_lang::survey.go_download_button') }}"><i class="glyphicon glyphicon-download-alt"></i></a>';
+            html += '<a href="'+ url_redirect_detail +'" class="btn btn-default bg-olive jsbtn-controll" data-toggle="tooltip" title="{{ trans('adminlte_lang::survey.go_download_button') }}"><i class="glyphicon glyphicon-download-alt"></i></a>';
+
+            return html;
+        }
+
+        function addImageSurvey(data)
+        {
+            var html            = '';
+
+            if ($(data[3]).html() != '')
+            {
+                html += '<img style="height: 35px;" src="'+$(data[3]).html()+'" alt="Image"></img>';
+            }
 
             return html;
         }

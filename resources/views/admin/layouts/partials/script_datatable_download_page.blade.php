@@ -28,6 +28,7 @@
             'searching'   : true,
             'ordering'    : true,
             'info'        : true,
+            'lengthMenu'  : [ {!! implode(',', \App\BaseWidget\Form::SETTING_LENGHT_MENU_DATATABLE)  !!}],
             'autoWidth'   : true,
             "columnDefs": [
 //                { "targets": 0, "visible" : false },
