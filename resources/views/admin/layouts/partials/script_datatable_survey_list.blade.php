@@ -4,18 +4,17 @@
         $('#survey-table').DataTable({
             'paging'      : true,
             "order": [[ 0, "desc" ]],
-            'lengthChange': true,
             'searching'   : true,
-            "processing"  : true,
             'ordering'    : true,
-            'info'        : true,
             'autoWidth'   : true,
             'createdRow' : function( row, data, dataIndex ) {
+                console.log(data);
                 $(row).children(".tbl-control").html(addControls(row,data));
                 $(row).children(".tbl-status").html(buttonForStatus(data));
+                $(row).children(".tbl-image_path").html(addImageSurvey(data));
             },
             "columnDefs": [
-                { "targets": 0, "visible" : false },
+//                { "targets": 0, "visible" : false },
                 { "targets": 3, "orderable" : false},
                 { "targets": 4, "orderable" : true},
                 { "targets": 5, "orderable" : true},
@@ -55,6 +54,18 @@
             return html;
         }
 
+        function addImageSurvey(data)
+        {
+            var html            = '';
+
+            if (data[3] != '')
+            {
+                html += '<img style="height: 50px;" src="'+data[3]+'" alt="Image"></img>';
+            }
+
+            return html;
+        }
+
         function buttonForStatus(data)
         {
             var html            = '',
@@ -72,6 +83,12 @@
 
             return html;
         }
+    });
+
+    $(document).on('click', '.paginate_button', function() {
+        $('tr').show();
+    }).on('change', 'select[name=survey-table_length]', function() {
+        $('tr').show();
     });
 
 </script>

@@ -19,7 +19,7 @@
         <table id="{{ isset($settings['id']) ? $settings['id'] : "table-default" }}" class="table table-bordered table-striped" data-setting-searching="false">
             <thead>
             <tr>
-                @if(!isset($settings['headers_columns']['Id'])) <th style="text-align: center">{{ "ID" }}</th> @endif
+                {{--@if(!isset($settings['headers_columns']['Id'])) <th style="text-align: center">{{ "ID" }}</th> @endif--}}
                 @foreach($settings['headers_columns'] as $key => $key_column)
                     @if(is_array($key_column))
                         @if($key_column['type'] == \App\BaseWidget\Validator::TYPE_HIDDEN)
@@ -37,15 +37,20 @@
             </tr>
             </thead>
             <tbody>
-            @php $stt = 1; @endphp
+            {{--@php $stt = 1; @endphp--}}
             @foreach($data as $item)
-                <tr>
-                    @if(!isset($settings['headers_columns']['Id'])) <td>{{ $stt }}</td> @endif
-                    @php $stt++; @endphp
+                @if ($loop->iteration <= 10)
+                    <tr>
+                @else
+                    <tr style="display: none;">
+                @endif
+
+                    {{--@if(!isset($settings['headers_columns']['Id'])) <td>{{ $stt }}</td> @endif--}}
+                    {{--@php $stt++; @endphp--}}
                     @foreach($settings['headers_columns'] as $key => $key_column)
                         @if(is_array($key_column))
                             @if($key_column['type'] == \App\BaseWidget\Validator::TYPE_IMAGE)
-                                <td class="tbl-{{$key_column['column']}}"> {!! \App\BaseWidget\Form::img($item[$key_column['column']], array("class" => "img-datatable","alt" => "")) !!} </td>
+                                <td class="tbl-{{$key_column['column']}}">{!! $item[$key_column['column']] !!}</td>
                             @endif
                             @if($key_column['type'] == \App\BaseWidget\Validator::TYPE_HIDDEN)
                                 <td class="tbl-{{$key_column['column']}}" style="display: none"> {{ $item[$key_column['column']] }} </td>
@@ -60,19 +65,7 @@
                 </tr>
             @endforeach
             </tbody>
-            {{--<tfoot>--}}
-            {{--<tr>--}}
-                {{--@if(!isset($settings['headers_columns']['Id'])) <th style="text-align: center">{{ "ID" }}</th> @endif--}}
-                {{--@foreach($settings['headers_columns'] as $key => $title)--}}
-                    {{--<th style="text-align: center">{{ $key }}</th>--}}
-                {{--@endforeach--}}
-                {{--@if(isset($settings['controls']) && $settings['controls'] == true)--}}
-                    {{--<th style="text-align: center">{{ trans('adminlte_lang::datatable.controls') }}</th>--}}
-                {{--@endif--}}
-            {{--</tr>--}}
-            {{--</tfoot>--}}
         </table>
     </div>
     <!-- /.box-body -->
 </div>
-
