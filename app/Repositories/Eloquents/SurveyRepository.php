@@ -45,6 +45,7 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
             ->where('user_id', Auth::id())
             ->where('status', '!=', Survey::STATUS_SURVEY_DRAF)
             ->where('del_flg', 0)
+	        ->orderBy('id','desc')
             ->get()->toArray();
 
         return $result;
