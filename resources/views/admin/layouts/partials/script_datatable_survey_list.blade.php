@@ -7,19 +7,18 @@
             'searching'   : true,
             'ordering'    : true,
             'autoWidth'   : true,
+            'lengthMenu'  : [ {!! implode(',', \App\BaseWidget\Form::SETTING_LENGHT_MENU_DATATABLE)  !!}],
             'createdRow' : function( row, data, dataIndex ) {
-                console.log(data);
                 $(row).children(".tbl-control").html(addControls(row,data));
                 $(row).children(".tbl-status").html(buttonForStatus(data));
                 $(row).children(".tbl-image_path").html(addImageSurvey(data));
             },
             "columnDefs": [
-//                { "targets": 0, "visible" : false },
                 { "targets": 3, "orderable" : false},
                 { "targets": 4, "orderable" : true},
                 { "targets": 5, "orderable" : true},
                 { "targets": 6, "orderable" : true},
-                { "targets": 7,"orderable" : false, "width": "135px"},
+                { "targets": 7,"orderable" : false, "width": "95px"},
             ],
             "language": {
                 "url" : "/setup-lang"
@@ -45,10 +44,10 @@
 
             url_redirect_copy   = "{{ route(\App\Survey::NAME_URL_DUPLICATE_SURVEY) }}/"+ data[0];
 
-            html += '<a href="'+ url_redirect_detail +'" class="btn btn-default" data-toggle="tooltip" target="_blank" title="{{ trans('adminlte_lang::survey.detail') }}"><i class="glyphicon glyphicon-eye-open"></i></a>';
-            html += '<a href="'+ url_redirect_copy +'" class="btn btn-default" style="margin-left: 5px" data-toggle="tooltip" title="{{ trans('adminlte_lang::survey.copy_survey') }}"><i class="glyphicon glyphicon-duplicate"></i></a>';
+            html += '<a href="'+ url_redirect_detail +'" class="btn btn-default jsbtn-controll" data-toggle="tooltip" target="_blank" title="{{ trans('adminlte_lang::survey.detail') }}"><i class="glyphicon glyphicon-eye-open"></i></a>';
+            html += '<a href="'+ url_redirect_copy +'" class="btn btn-default jsbtn-controll" style="margin-left: 5px" data-toggle="tooltip" title="{{ trans('adminlte_lang::survey.copy_survey') }}"><i class="glyphicon glyphicon-duplicate"></i></a>';
             if(data.indexOf("{{ trans('adminlte_lang::survey.draf') }}") >= 0 || data.indexOf("{{ trans('adminlte_lang::survey.published') }}") >= 0) {
-                html += '<a href="'+ url_edit_survey +'" class="btn btn-default" data-toggle="tooltip" style="margin-left: 5px" title="{{ trans('adminlte_lang::survey.edit_survey') }}"><i class="glyphicon glyphicon-edit"></i></a>';
+                html += '<a href="'+ url_edit_survey +'" class="btn btn-default jsbtn-controll" data-toggle="tooltip" style="margin-left: 5px" title="{{ trans('adminlte_lang::survey.edit_survey') }}"><i class="glyphicon glyphicon-edit"></i></a>';
             }
 
             return html;
@@ -58,9 +57,9 @@
         {
             var html            = '';
 
-            if (data[3] != '')
+            if ($(data[3]).html() != '')
             {
-                html += '<img style="height: 50px;" src="'+data[3]+'" alt="Image"></img>';
+                html += '<img style="height: 35px;" src="'+$(data[3]).html()+'" alt="Image"></img>';
             }
 
             return html;
@@ -85,9 +84,7 @@
         }
     });
 
-    $(document).on('click', '.paginate_button', function() {
-        $('tr').show();
-    }).on('change', 'select[name=survey-table_length]', function() {
+    $(document).ready(function() {
         $('tr').show();
     });
 
