@@ -28,3 +28,8 @@
     </div>
 @endsection
 
+@section('scripts')
+    @parent
+    @includeIf("{$datatable_script}")
+@stop
+
