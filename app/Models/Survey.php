@@ -14,11 +14,13 @@ class Survey extends Model
 	const STATUS_SURVEY_DOWNLOADED = 1;
 
     const NAME_URL_PREVIEW          = 'preview';
+    const NAME_URL_EDITING_PREVIEW  = 'editing-preview';
     const NAME_URL_SURVEY_LIST      = 'survey-list';
     const NAME_URL_PUBLISH_SURVEY   = 'publish-survey';
     const NAME_URL_CLOSE_SURVEY     = 'close-survey';
     const NAME_URL_CREATE_SURVEY    = 'create-new-survey';
 	const NAME_URL_EDIT_SURVEY      = 'edit-survey';
+	const NAME_URL_SAVE_SURVEY      = 'save-survey';
     const NAME_URL_ANSWER_SURVEY    = 'answer-survey';
 	const NAME_URL_ANSWER_CONFIRM   = 'answer-survey-confirm';
 	const NAME_URL_SUBMIT_CONFIRM   = 'answer-survey-submit';

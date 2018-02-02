@@ -1,4 +1,4 @@
-@section('form-header')
+@section('survey-header')
     <h1 class="headline1">{{ isset($survey['name']) ? $survey['name'] : "Survey must has name" }}</h1>
     <!-- ▼MV -->
     <p class="mainVisual">
@@ -19,16 +19,5 @@
     @endif
 @show
 
-<script>
-    var current_url = window.location.href,
-        pattern = /editing\/preview/;
-
-    if (pattern.test(current_url)) {
-        var image_data = sessionStorage.preview_image;
-        if (image_data == 'no-image') {
-            $('#survey_thumbnail').remove();
-        } else {
-            $('#survey_thumbnail').attr('src', image_data);
-        }
-    }
-</script>
+@section('preview_script')
+@show
