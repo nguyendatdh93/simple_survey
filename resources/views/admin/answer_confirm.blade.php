@@ -4,14 +4,14 @@
     {{ trans('adminlte_lang::survey.htmlheader_title_answer_survey') }}
 @endsection
 
-@section('form-header')
+@section('survey-header')
     <h1 class="headline1"></h1>
 
     <!-- ▼変更可能エリア※div（headFreeArea）は固定なので変更しないで下さい -->
     <div class="headFreeArea">内容をご確認のうえ、「送信する」ボタンを押してください。</div>
 @endsection
 
-@section("form-content")
+@section("content")
     <form action="{{ route(\App\Survey::NAME_URL_SUBMIT_CONFIRM, ['encrypt' => isset($survey['encrypt_url']) ? $survey['encrypt_url'] : ""]) }}" method="GET" name="join_form">
         <!-- ▼変更可能エリア※div（hruleArea1）は固定なので変更しないでください -->
         <table class="formTable">

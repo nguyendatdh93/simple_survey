@@ -296,7 +296,7 @@
 
         $.ajax({
             type: "POST",
-            url : '/survey/editing/preview',
+            url : '{{ route(\App\Models\Survey::NAME_URL_EDITING_PREVIEW) }}',
             data: data,
             success: function (data) {
                 if (data.success) {
@@ -310,7 +310,7 @@
     }
 
     function openPreviewTab() {
-        preview_tab = window.open('/survey/editing/preview', '_blank');
+        preview_tab = window.open('{{ route(\App\Models\Survey::NAME_URL_EDITING_PREVIEW) }}', '_blank');
     }
 
     function closePreviewTab() {
