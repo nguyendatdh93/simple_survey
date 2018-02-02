@@ -55,12 +55,14 @@
 
         function addImageSurvey(data)
         {
-            var html            = '';
+            var html = '<div style="min-height: 35px;">';
 
             if ($(data[3]).html() != '')
             {
-                html += '<img style="height: 35px;" src="'+$(data[3]).html()+'" alt="Image"></img>';
+                html += '<img style="height: 35px;" src="'+$(data[3]).html()+'" alt="Image" />';
             }
+
+            html += '</div>';
 
             return html;
         }
@@ -84,7 +86,11 @@
         }
     });
 
-    $(document).ready(function() {
+    $(document).on('change', 'select[name=survey-table_length]', function () {
+        $('tr').show();
+    }).on('keyup', 'div#survey-table_filter :input', function () {
+        $('tr').show();
+    }).on('click', '.paginate_button', function () {
         $('tr').show();
     });
 
