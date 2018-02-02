@@ -7,7 +7,7 @@
 @section('content')
 <body class="hold-transition login-page">
     <div id="app" v-cloak>
-        <div class="login-box">
+        <div class="login-box" style="width: 500px">
             <div class="login-logo">
                 <a href="{{ url('/home') }}"><b style="font-size: 34px;"> @if(trans('adminlte_lang::header.logo') != '') {{ trans('adminlte_lang::header.logo') }} @endif</b></a>
             </div><!-- /.login-logo -->
@@ -23,10 +23,9 @@
             </div>
         @endif
 
-        <div class="login-box-body">
-        @include('admin::auth.partials.social_login')
-
-    </div>
+        <div class="login-box-body" style="width: 80%;margin: 0px auto;">
+            @include('admin::auth.partials.social_login')
+        </div>
 
     </div>
     </div>
