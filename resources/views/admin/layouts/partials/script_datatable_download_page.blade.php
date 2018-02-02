@@ -21,6 +21,8 @@
              )
         )) !!}
 <script>
+    var surveyService = new SurveyService();
+
     $(function () {
         $('#download-page-table').DataTable({
             'paging'      : true,
@@ -31,40 +33,16 @@
             'lengthMenu'  : [ {!! implode(',', \App\BaseWidget\Form::SETTING_LENGHT_MENU_DATATABLE)  !!}],
             'autoWidth'   : true,
             "columnDefs": [
-//                { "targets": 0, "visible" : false },
                 {
                     targets: '_all',
                     render: function (data, type, full, meta) {
-                        return cutLineText(data);
+                        return surveyService.cutLineText(data,['{{ trans('adminlte_lang::survey.button_more') }}' , '{{ trans('adminlte_lang::survey.button_less') }}']);
                     }
                 }
             ],
             "language": {
                 "url" : "/setup-lang"
             }
-        });
-
-        function cutLineText(data)
-        {
-            if(data.length < 100)
-                return data;
-
-            var html = data.slice(0,100) + '<span>... </span><br/><a href="#" class="more">{{ trans('adminlte_lang::survey.button_more') }}</a>'+
-                '<span style="display:none;">'+ data.slice(100,data.length)+'<br><a href="#" class="less">{{ trans('adminlte_lang::survey.button_less') }}</a></span>'
-            ;
-
-            return html;
-        }
-
-        $('a.more').click(function(event){
-            event.preventDefault();
-            $(this).hide().prev().hide();
-            $(this).next().show();
-        });
-
-        $('a.less').click(function(event){
-            event.preventDefault();
-            $(this).parent().hide().prev().show().prev().show();
         });
 
         $(".jsButtonDownload").click(function () {
