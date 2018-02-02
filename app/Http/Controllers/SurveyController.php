@@ -116,7 +116,11 @@ class SurveyController extends Controller
         $surveys = $this->getDataSurveyForShowing($surveys);
 	    $surveys = array_reverse($surveys);
 
-        return view('admin::datatable', array('settings' => $table_settings, 'data' => $surveys));
+        return view('admin::datatable', array(
+            'settings' => $table_settings,
+            'data' => $surveys,
+            'datatable_script' => 'admin::layouts.partials.script_datatable_survey_list'
+        ));
     }
 
     public function showNumberAnswers($survey)
@@ -189,7 +193,11 @@ class SurveyController extends Controller
         $surveys = $this->getSurveyForShowingDownloadList($surveys);
         $surveys = $this->getDataSurveyForShowing($surveys);
 
-        return view('admin::datatable', array('settings' => $table_settings, 'data' => $surveys));
+        return view('admin::datatable', array(
+            'settings' => $table_settings,
+            'data' => $surveys,
+            'datatable_script' => 'admin::layouts.partials.script_datatable_download_list'
+        ));
     }
 
     public function showDownloadPageSurveyBySurveyId(Request $request, $id)
@@ -242,7 +250,12 @@ class SurveyController extends Controller
             'buttons'         => $buttons
         );
 
-        return view('admin::datatable', array('settings' => $table_settings, 'data' => $answer_data,'survey_id' => $id, 'survey_status' => $status_survey['status']));
+        return view('admin::datatable', array(
+            'settings' => $table_settings,
+            'data' => $answer_data,'survey_id' => $id,
+            'survey_status' => $status_survey['status'],
+            'datatable_script' => 'admin::layouts.partials.script_datatable_download_page'
+        ));
     }
 
     public function downloadSurveyCSVFile($id)
