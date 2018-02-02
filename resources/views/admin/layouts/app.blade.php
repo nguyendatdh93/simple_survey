@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 
 @section('htmlheader')
     @include('admin::layouts.partials.htmlheader')

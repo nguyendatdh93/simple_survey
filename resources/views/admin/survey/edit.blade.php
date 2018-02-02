@@ -13,7 +13,7 @@
 
     <link rel="stylesheet" href="{{ asset('css/styleedituser.css') }}">
 	<div class="container-fluid spark-screen">
-		<form method="post" action="/survey/save" enctype="multipart/form-data" id="survey_form">
+		<form method="POST" action="{{ route(\App\Models\Survey::NAME_URL_SAVE_SURVEY) }}" enctype="multipart/form-data" id="survey_form">
 		    {{ csrf_field() }}
             @if (!empty($survey['id']))
                 <input type="hidden" name="survey_id" value="{{ $survey['id'] }}">
@@ -100,6 +100,6 @@
 @endsection
 
 @section('scripts')
-    @include('admin::layouts.partials.scripts')
+    @parent
     @include('admin::survey.edit_script')
 @endsection

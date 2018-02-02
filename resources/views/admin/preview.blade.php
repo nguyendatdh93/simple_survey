@@ -1,52 +1,21 @@
 @extends('admin::survey.form_survey')
 
 @section('htmlheader_title')
-    @if ($survey['status'] == \App\Survey::STATUS_SURVEY_PUBLISHED)
-        {{ trans('adminlte_lang::survey.htmlheader_title_preview_publish') }}
-    @elseif ($survey['status'] == \App\Survey::STATUS_SURVEY_DRAF)
-        {{ trans('adminlte_lang::survey.htmlheader_title_preview_draf') }}
-    @elseif ($survey['status'] == \App\Survey::STATUS_SURVEY_CLOSED)
-        {{ trans('adminlte_lang::survey.htmlheader_title_preview_close') }}
-    @else
-        {{ trans('adminlte_lang::survey.htmlheader_title_preview') }}
-    @endif
+    {{ trans('adminlte_lang::survey.htmlheader_title_preview') }}
 @endsection
 
-@section('bootstrap')
-    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
-@endsection
+@section('preview_script')
+    <script>
+        var current_url = window.location.href,
+                pattern = /editing\/preview/;
 
-@section('body')
-    <link rel="stylesheet" href="{{ asset('css/styleusers.css') }}">
-
-    <div class="container">
-        <div id="pagetop">
-            <div id="layout">
-                @if($message = Session::get('alert_error'))
-                    <div class="alert alert-success">
-                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                        <strong>{{ $message }}</strong>
-                    </div>
-                @endif
-                @if($message = Session::get('alert_success'))
-                    <div class="alert alert-success">
-                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                        <strong>{{ $message }}</strong>
-                    </div>
-                @endif
-
-                <div class="header">
-                    <div class="headerWrap1">
-                    @include('admin::survey.partials.script')
-
-                    @include('admin::survey.partials.form_header')
-                        <!-- /.headerWrap1 --></div>
-                    <!-- /.header --></div>
-            @include('admin::survey.partials.form_content')
-
-            @include('admin::survey.partials.footer')
-
-            <!-- /.layout --></div>
-            <!-- /.pagetop --></div>
-    </div>
-@endsection
+        if (pattern.test(current_url)) {
+            var image_data = sessionStorage.preview_image;
+            if (image_data == 'no-image') {
+                $('#survey_thumbnail').remove();
+            } else {
+                $('#survey_thumbnail').attr('src', image_data);
+            }
+        }
+    </script>
+@stop

@@ -123,6 +123,10 @@ class SurveyController extends Controller
         ));
     }
 
+    /**
+     * @param $survey
+     * @return mixed|string
+     */
     public function showNumberAnswers($survey)
     {
         if ($this->answerRepository->getNumberAnswersBySurveyId($survey['id']) > 0) {
@@ -132,6 +136,10 @@ class SurveyController extends Controller
         return '-';
     }
 
+    /**
+     * @param $surveys
+     * @return mixed
+     */
     public function getDataSurveyForShowing($surveys)
     {
         foreach ($surveys as $key => $survey) {
@@ -151,7 +159,11 @@ class SurveyController extends Controller
 
         return $surveys;
     }
-	
+
+    /**
+     * @param $surveys
+     * @return mixed
+     */
     public function getSurveyForShowingDownloadList($surveys)
     {
 	    foreach ($surveys as $key => $survey) {
@@ -166,6 +178,9 @@ class SurveyController extends Controller
 	    return $surveys;
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function showDownloadListSurvey()
     {
         $table_settings = array(
@@ -200,6 +215,11 @@ class SurveyController extends Controller
         ));
     }
 
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function showDownloadPageSurveyBySurveyId(Request $request, $id)
     {
         $list_questions = $this->questionRepository->getListQuestionBySurveyId($id);
@@ -258,6 +278,10 @@ class SurveyController extends Controller
         ));
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function downloadSurveyCSVFile($id)
     {
 	    $list_questions    = $this->questionRepository->getListQuestionBySurveyId($id);
@@ -303,7 +327,12 @@ class SurveyController extends Controller
         
         return Response::stream($callback, 200, $headers);
     }
-    
+
+    /**
+     * @param $survey_id
+     * @param array $list_questions
+     * @return array
+     */
     public function getAnswerForSurveyBySurveyID($survey_id, $list_questions = array())
     {
         if (count($list_questions) == 0) {
@@ -371,6 +400,10 @@ class SurveyController extends Controller
         ]);
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function duplicate($id) {
         if (!$id) {
             return view('admin::errors.404');
@@ -400,6 +433,10 @@ class SurveyController extends Controller
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function editingPreview(Request $request) {
         $survey    = $request->session()->get('preview_survey');
         $questions = $request->session()->get('preview_questions');
@@ -453,6 +490,10 @@ class SurveyController extends Controller
         return view('admin::preview', ['survey' => $survey]);
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function postEditingPreview(Request $request) {
         $input = Input::all();
         $valid = true;
@@ -494,6 +535,9 @@ class SurveyController extends Controller
                 ]);
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
     public function save() {
         $input   = Input::all();
         $file    = Input::file('survey_thumbnail');
@@ -528,6 +572,10 @@ class SurveyController extends Controller
         return redirect()->route(Survey::NAME_URL_SURVEY_LIST)->with('alert_success',trans('survey.alert_success_create_survey'));
     }
 
+    /**
+     * @param $new_questions
+     * @param $survey
+     */
     public function createQuestions($new_questions, $survey) {
         $i = 0;
         foreach ($new_questions as $new_question) {
@@ -566,6 +614,11 @@ class SurveyController extends Controller
         }
     }
 
+    /**
+     * @param $input
+     * @param $file
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
+     */
     public function createOrUpdateSurvey($input, $file) {
         $user_id = Auth::id();
 
