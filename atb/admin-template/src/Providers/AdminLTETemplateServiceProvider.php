@@ -49,10 +49,8 @@ class AdminLTETemplateServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->defineRoutes();
-
         //Publish
         $this->publishHomeController();
-
         $this->changeRegisterController();
         $this->changeLoginController();
         $this->changeForgotPasswordController();
@@ -61,14 +59,12 @@ class AdminLTETemplateServiceProvider extends ServiceProvider
         $this->publishViews();
         $this->publishResourceAssets();
         $this->publishTests();
-
         $this->publishLanguages();
         $this->publishConfig();
         $this->publishWebRoutes();
         $this->publishApiRoutes();
         $this->publishDusk();
         $this->publishDatabaseConfig();
-
         $this->enableSpatieMenu();
     }
 
@@ -79,7 +75,6 @@ class AdminLTETemplateServiceProvider extends ServiceProvider
     {
         if (!$this->app->routesAreCached()) {
             $router = app('router');
-
             $router->group(['namespace' => $this->getAppNamespace().'Http\Controllers'], function () {
                 require __DIR__.'/../Http/routes.php';
             });
@@ -187,7 +182,6 @@ class AdminLTETemplateServiceProvider extends ServiceProvider
     private function publishLanguages()
     {
         $this->loadTranslationsFrom(resource_path('lang'), 'adminlte_lang');
-
         $this->publishes(AdminLTE::languages(), 'adminlte_lang');
     }
 

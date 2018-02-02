@@ -26,7 +26,10 @@ class UserRepository extends \EloquentRepository implements UserRepositoryInterf
      */
     public function getAll()
     {
-        $result = $this->_model->select('id','name','email','created_at')->get()->toArray();
+        $result = $this->_model
+	                   ->select('id','name','email','created_at')
+	                   ->get()
+	                   ->toArray();
 
         return $result;
     }
@@ -37,7 +40,7 @@ class UserRepository extends \EloquentRepository implements UserRepositoryInterf
      */
     public function saveUser($email)
     {
-        $user = new User();
+        $user        = new User();
         $user->email = $email;
         $user->save();
 
@@ -51,6 +54,7 @@ class UserRepository extends \EloquentRepository implements UserRepositoryInterf
     public function getUserInfoByEmail($email)
     {
         return User::where('email', $email)
-            ->where('del_flg', 0)->first();
+                    ->where('del_flg', 0)
+	                ->first();
     }
 }
