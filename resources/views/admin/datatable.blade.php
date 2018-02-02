@@ -2,10 +2,6 @@
 
 @section('htmlheader_title', $settings['title'])
 
-@section('datatable')
-    {{--<script src="{{ url ('datatableservice.js') }}"></script>--}}
-@stop
-
 @section('main-content-form')
     <div class="container-fluid spark-screen">
         <!-- Main content -->
