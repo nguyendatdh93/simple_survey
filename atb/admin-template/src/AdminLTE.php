@@ -156,8 +156,8 @@ class AdminLTE
     public function resourceAssets()
     {
         return [
-            ADMINLTETEMPLATE_PATH.'/resources/assets/css' => resource_path('assets/css'),
-            ADMINLTETEMPLATE_PATH.'/resources/assets/img' => resource_path('assets/img'),
+            ADMINLTETEMPLATE_PATH.'/resources/assets/css'  => resource_path('assets/css'),
+            ADMINLTETEMPLATE_PATH.'/resources/assets/img'  => resource_path('assets/img'),
             ADMINLTETEMPLATE_PATH.'/resources/assets/less' => resource_path('assets/less'),
             ADMINLTETEMPLATE_PATH.'/resources/assets/sass' => resource_path('assets/sass'),
             ADMINLTETEMPLATE_PATH.'/resources/assets/js'   => resource_path('assets/js'),
@@ -286,8 +286,8 @@ class AdminLTE
     public function duskEnvironment()
     {
         return [
-            ADMINLTETEMPLATE_PATH.'/.env.dusk.local'        => base_path('.env.dusk.local'),
-            ADMINLTETEMPLATE_PATH.'/.env.dusk.testing'      => base_path('.env.dusk.testing'),
+            ADMINLTETEMPLATE_PATH.'/.env.dusk.local'   => base_path('.env.dusk.local'),
+            ADMINLTETEMPLATE_PATH.'/.env.dusk.testing' => base_path('.env.dusk.testing'),
         ];
     }
 
@@ -299,7 +299,7 @@ class AdminLTE
     public function databaseConfig()
     {
         return [
-            ADMINLTETEMPLATE_PATH.'/config/database.php'    => config_path('database.php'),
+            ADMINLTETEMPLATE_PATH.'/config/database.php' => config_path('database.php'),
         ];
     }
 }

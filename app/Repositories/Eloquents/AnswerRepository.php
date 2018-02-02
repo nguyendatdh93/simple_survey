@@ -27,7 +27,9 @@ class AnswerRepository extends \EloquentRepository implements AnswerRepositoryIn
      */
     public function getNumberAnswersBySurveyId($survey_id)
     {
-        $number_answers = $this->_model->where('survey_id', $survey_id)->count();
+        $number_answers = $this->_model
+	                           ->where('survey_id', $survey_id)
+	                           ->count();
 
         return $number_answers;
     }
@@ -38,8 +40,11 @@ class AnswerRepository extends \EloquentRepository implements AnswerRepositoryIn
      */
     public function getAnswersBySurveyId($survey_id)
     {
-        $answers = $this->_model->select("*")
-            ->where('survey_id', $survey_id)->get()->toArray();
+        $answers = $this->_model
+	                    ->select("*")
+                        ->where('survey_id', $survey_id)
+	                    ->get()
+	                    ->toArray();
 
         return $answers;
     }
@@ -50,7 +55,9 @@ class AnswerRepository extends \EloquentRepository implements AnswerRepositoryIn
      */
     public function clearDataAnswersBySurveyId($survey_id)
     {
-        return $this->_model->where('survey_id', $survey_id)->delete();
+        return $this->_model
+	                ->where('survey_id', $survey_id)
+	                ->delete();
     }
 
     /**
@@ -59,12 +66,13 @@ class AnswerRepository extends \EloquentRepository implements AnswerRepositoryIn
      */
     public function save($survey_id)
 	{
-		$id = $this->_model->insertGetId(
-			[
-				'survey_id'  => $survey_id,
-				'created_at' => date("Y-m-d h:i:s"),
-			]
-		);
+		$id = $this->_model
+					->insertGetId(
+						[
+							'survey_id'  => $survey_id,
+							'created_at' => date("Y-m-d h:i:s"),
+						]
+					);
 		
 		return $id;
 	}

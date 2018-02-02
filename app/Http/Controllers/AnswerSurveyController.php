@@ -27,8 +27,8 @@ class AnswerSurveyController extends Controller
 	protected $confirmContentRepository;
 	protected $answerRepository;
 	protected $answerQuestionRepository;
-	protected $encryption_service;
-	protected $survey_service;
+	protected $encryptionService;
+	protected $surveyService;
 
     /**
      * AnswerSurveyController constructor.
@@ -53,15 +53,15 @@ class AnswerSurveyController extends Controller
 		$this->answerRepository         = $answerRepository;
 		$this->answerQuestionRepository = $answerQuestionRepository;
 		$this->confirmContentRepository = $confirmContentRepository;
-		$this->encryption_service       = new EncryptionService();
-		$this->survey_service           = new SurveyService();
+		$this->encryptionService        = new EncryptionService();
+		$this->surveyService            = new SurveyService();
 	}
 	
 	public function showQuestionSurvey(Request $request, $encrypt)
 	{
 		try {
-			$id             = $this->getIdSurveyFormEncryptCode($encrypt);
-			$survey_service = new SurveyService();
+			$id             = $this->getIdSurveyFromEncryptCode($encrypt);
+			$surveyService  = new SurveyService();
 			$answer         = array();
 			if ($request->session()->get('answer'. $id) != null) {
 				$answer = $request->session()->get('answer' . $id);
@@ -72,7 +72,7 @@ class AnswerSurveyController extends Controller
 				return redirect('404');
 			}
 			
-			$survey                = $survey_service->getDataAnswerForSurvey($survey, isset($answer['questions']) ? $answer['questions'] : array());
+			$survey                = $surveyService->getDataAnswerForSurvey($survey, isset($answer['questions']) ? $answer['questions'] : array());
 			$survey['encrypt_url'] = $encrypt;
 			
 			return view('admin::answer', array('survey' => $survey));
@@ -92,11 +92,11 @@ class AnswerSurveyController extends Controller
 			
 			foreach ($input as $key => $text) {
 				if (is_string($text)) {
-					$input[$key] = $this->survey_service->convertTextWithXSSSafe($text);
+					$input[$key] = $this->surveyService->convertTextWithXssSafe($text);
 				}
 			}
 			
-			$id                  = $this->getIdSurveyFormEncryptCode($encrypt);
+			$id                  = $this->getIdSurveyFromEncryptCode($encrypt);
 			$survey              = $this->surveyRepository->getSurveyPublishedById($id);
 			$survey['questions'] = $this->questionRepository->getQuestionSurveyWithoutConfirmTypeBySurveyId($id);
 			
@@ -134,7 +134,7 @@ class AnswerSurveyController extends Controller
 	public function answerSurvey(Request $request, $encrypt)
 	{
 		try {
-			$id        = $this->getIdSurveyFormEncryptCode($encrypt);
+			$id        = $this->getIdSurveyFromEncryptCode($encrypt);
 			$survey    = $request->session()->get('answer' . $id);
 			$id_answer = $this->answerRepository->save($survey['id']);
 			foreach ($survey['questions'] as $question) {
@@ -171,10 +171,10 @@ class AnswerSurveyController extends Controller
 		
 	}
 	
-	public function getIdSurveyFormEncryptCode($encrypt)
+	public function getIdSurveyFromEncryptCode($encrypt)
 	{
 		try {
-			$id = $this->encryption_service->decrypt($encrypt);
+			$id = $this->encryptionService->decrypt($encrypt);
 			
 			return $id;
 		} catch (\Exception $e) {

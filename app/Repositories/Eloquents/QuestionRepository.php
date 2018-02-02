@@ -30,10 +30,12 @@ class QuestionRepository extends \EloquentRepository implements QuestionReposito
      */
     public function getQuestionSurveyBySurveyId($survey_id)
     {
-        $result = $this->_model->select('*')
-                    ->where('survey_id',$survey_id)
-	                ->where('del_flg', '!=', Question::DELETE_FLG)
-	                ->get()->toArray();
+        $result = $this->_model
+	                   ->select('*')
+	                   ->where('survey_id',$survey_id)
+	                   ->where('del_flg', '!=', Question::DELETE_FLG)
+	                   ->get()
+	                   ->toArray();
 
         return $result;
     }
@@ -44,11 +46,13 @@ class QuestionRepository extends \EloquentRepository implements QuestionReposito
      */
     public function getQuestionSurveyWithoutConfirmTypeBySurveyId($survey_id)
 	{
-		$result = $this->_model->select('*')
-			->where('survey_id',$survey_id)
-			->where('del_flg', '!=', Question::DELETE_FLG)
-			->where('type' , '!=' , Question::TYPE_CONFIRMATION)
-			->get()->toArray();
+		$result = $this->_model
+			           ->select('*')
+			           ->where('survey_id',$survey_id)
+			           ->where('del_flg', '!=', Question::DELETE_FLG)
+			           ->where('type' , '!=' , Question::TYPE_CONFIRMATION)
+			           ->get()
+			           ->toArray();
 		
 		return $result;
 	}
@@ -59,10 +63,12 @@ class QuestionRepository extends \EloquentRepository implements QuestionReposito
      */
     public function getListQuestionBySurveyId($survey_id)
     {
-        $result = $this->_model->select('id','text')
-            ->where('survey_id',$survey_id)
-            ->where('type', '!=' , Question::TYPE_CONFIRMATION)
-            ->get()->toArray();
+        $result = $this->_model
+	                   ->select('id','text')
+                       ->where('survey_id',$survey_id)
+                       ->where('type', '!=' , Question::TYPE_CONFIRMATION)
+                       ->get()
+	                   ->toArray();
 
         return $result;
     }
@@ -106,14 +112,14 @@ class QuestionRepository extends \EloquentRepository implements QuestionReposito
             return [];
         }
 
-        $questions = [];
+        $questions            = [];
         $questions_categories = Question::getQuestionCategories();
         foreach ($questions_data as $question) {
             $category = $questions_categories[$question->category];
             if (empty($questions[$category][$question->id])) {
-                $questions[$category][$question->id]['text'] = $question->text;
-                $questions[$category][$question->id]['type'] = $question->type;
-                $questions[$category][$question->id]['require'] = $question->require;
+                $questions[$category][$question->id]['text']     = $question->text;
+                $questions[$category][$question->id]['type']     = $question->type;
+                $questions[$category][$question->id]['require']  = $question->require;
                 $questions[$category][$question->id]['category'] = $question->category;
             }
 
@@ -140,11 +146,12 @@ class QuestionRepository extends \EloquentRepository implements QuestionReposito
      * @return mixed
      */
     public function getQuestionIdsWithTypeBySurveyId($survey_id) {
-        $result = $this->_model->select('id', 'type')
-            ->where('survey_id', $survey_id)
-            ->where('del_flg', 0)
-            ->get()
-            ->toArray();
+        $result = $this->_model
+	                   ->select('id', 'type')
+	                   ->where('survey_id', $survey_id)
+                       ->where('del_flg', 0)
+                       ->get()
+                       ->toArray();
 
         return $result;
     }
@@ -162,11 +169,12 @@ class QuestionRepository extends \EloquentRepository implements QuestionReposito
      */
     public function getTypeOfQuestion($question_id)
     {
-	    $result = $this->_model->select('type')
-		    ->where('id',$question_id)
-		    ->where('del_flg', '!=', Question::DELETE_FLG)
-		    ->get()
-		    ->first();
+	    $result = $this->_model
+		               ->select('type')
+		               ->where('id',$question_id)
+		               ->where('del_flg', '!=', Question::DELETE_FLG)
+		               ->get()
+		               ->first();
 	
 	    return $result;
     }
@@ -177,10 +185,11 @@ class QuestionRepository extends \EloquentRepository implements QuestionReposito
      */
     public function checkQuestionIsRequire($question_id)
 	{
-		$result = $this->_model->select('require')
-			->where('id',$question_id)
-			->get()
-			->first();
+		$result = $this->_model
+			           ->select('require')
+			           ->where('id',$question_id)
+			           ->get()
+			           ->first();
 		
 		return $result;
 	}

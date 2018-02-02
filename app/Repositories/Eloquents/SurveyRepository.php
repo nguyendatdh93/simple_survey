@@ -28,10 +28,12 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
      */
     public function getAllSurvey()
     {
-        $result = $this->_model->select('*')
-            ->where('user_id', Auth::id())
-            ->where('del_flg', 0)
-            ->get()->toArray();
+        $result = $this->_model
+	                   ->select('*')
+	                   ->where('user_id', Auth::id())
+                       ->where('del_flg', 0)
+                       ->get()
+	                   ->toArray();
 
         return $result;
     }
@@ -41,12 +43,14 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
      */
     public function getDownloadListSurvey()
     {
-        $result = $this->_model->select('*')
-            ->where('user_id', Auth::id())
-            ->where('status', '!=', Survey::STATUS_SURVEY_DRAF)
-            ->where('del_flg', 0)
-	        ->orderBy('id','desc')
-            ->get()->toArray();
+        $result = $this->_model
+	                   ->select('*')
+                       ->where('user_id', Auth::id())
+                       ->where('status', '!=', Survey::STATUS_SURVEY_DRAF)
+                       ->where('del_flg', 0)
+	                   ->orderBy('id','desc')
+                       ->get()
+	                   ->toArray();
 
         return $result;
     }
@@ -57,11 +61,12 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
      */
     public function getSurveyById($survey_id)
     {
-        $result = $this->_model->select('*')
-            ->where('user_id', Auth::id())
-            ->where('id',$survey_id)
-            ->where('del_flg','!=', Survey::DELETE_FLG)
-            ->first();
+        $result = $this->_model
+	                   ->select('*')
+                       ->where('user_id', Auth::id())
+                       ->where('id',$survey_id)
+                       ->where('del_flg','!=', Survey::DELETE_FLG)
+                       ->first();
 
         return $result ? $result->toArray() : [];
     }
@@ -72,11 +77,12 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
      */
     public function getSurveyPublishedById($survey_id)
 	{
-		$result = $this->_model->select('*')
-			->where('id',$survey_id)
-			->where('del_flg','!=', Survey::DELETE_FLG)
-			->where('status', Survey::STATUS_SURVEY_PUBLISHED)
-			->first();
+		$result = $this->_model
+			           ->select('*')
+			           ->where('id',$survey_id)
+			           ->where('del_flg','!=', Survey::DELETE_FLG)
+			           ->where('status', Survey::STATUS_SURVEY_PUBLISHED)
+			           ->first();
 		
 		return $result ? $result->toArray() : [];
 	}
@@ -89,7 +95,12 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
     {
         if ($survey_id) {
             try {
-                $result = $this->_model->where('id', $survey_id)->update(['closed_at' => date("Y-m-d h:i:s"), 'status' => Survey::STATUS_SURVEY_CLOSED]);
+                $result = $this->_model
+	                           ->where('id', $survey_id)
+	                           ->update([
+	                           	     'closed_at' => date("Y-m-d h:i:s"),
+		                             'status' => Survey::STATUS_SURVEY_CLOSED
+	                           ]);
 
                 return $result;
             }catch (\Exception $e) {
@@ -107,9 +118,11 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
      */
     public function getNameSurvey($survey_id)
     {
-        $result = $this->_model->select('name')
-            ->where('id', $survey_id)
-            ->get()->toArray();
+        $result = $this->_model
+	                   ->select('name')
+                       ->where('id', $survey_id)
+                       ->get()
+	                   ->toArray();
 
         return $result[0]['name'];
     }
@@ -127,7 +140,9 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
     public function updateStatusDownloadedForSurvey($survey_id)
     {
     	if ($survey_id) {
-		    $this->_model->where('id', $survey_id)->update(['downloaded' => Survey::STATUS_SURVEY_DOWNLOADED]);
+		    $this->_model
+			     ->where('id', $survey_id)
+			     ->update(['downloaded' => Survey::STATUS_SURVEY_DOWNLOADED]);
 	    }
     }
 
@@ -137,9 +152,10 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
      */
     public function checkStatusSurveyIsDownloaded($survey_id)
     {
-	    $result = $this->_model->select('downloaded')
-		    ->where('id',$survey_id)
-		    ->first();
+	    $result = $this->_model
+		               ->select('downloaded')
+		               ->where('id',$survey_id)
+		               ->first();
 	    
 	    return $result ? $result->toArray() : [];
     }
@@ -150,9 +166,10 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
      */
     public function getStatusSurvey($survey_id)
     {
-	    $result = $this->_model->select('status')
-		    ->where('id',$survey_id)
-		    ->first();
+	    $result = $this->_model
+		               ->select('status')
+		               ->where('id',$survey_id)
+		               ->first();
 	
 	    return $result ? $result->toArray() : [];
     }

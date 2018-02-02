@@ -23,8 +23,8 @@ Route::prefix('survey')->group(function () {
     Route::get('/duplicate/{id?}', 'SurveyController@duplicate')->name(\App\Survey::NAME_URL_DUPLICATE_SURVEY);
     Route::get('/new', 'SurveyController@edit')->name(\App\Survey::NAME_URL_CREATE_SURVEY);
     Route::post('/save', 'SurveyController@save')->name(\App\Models\Survey::NAME_URL_SAVE_SURVEY);
-    Route::get('/editing/preview', 'SurveyController@editingPreview')->name(\App\Models\Survey::NAME_URL_EDITING_PREVIEW);
-    Route::post('/editing/preview', 'SurveyController@postEditingPreview')->name(\App\Models\Survey::NAME_URL_EDITING_PREVIEW);
+    Route::get('/editing/preview', 'SurveyController@loadPagePreviewSurvey')->name(\App\Models\Survey::NAME_URL_EDITING_PREVIEW);
+    Route::post('/editing/preview', 'SurveyController@getDataForPagePreviewSurvey')->name(\App\Models\Survey::NAME_URL_EDITING_PREVIEW);
 	Route::get('/preview/{id?}', 'SurveyController@preview')->name(\App\Survey::NAME_URL_PREVIEW);
 });
 
@@ -45,8 +45,8 @@ Route::get('/404', function (){
     return view('admin::errors.404');
 })->name('404');
 
-Route::get('/setup-lang', 'HomeController@setupLanguage');
-Route::get('/image/{image_path?}/{image_name?}', 'HomeController@showImage')->name(\App\Survey::NAME_URL_SHOW_IMAGE);
+Route::get('/setup-lang', 'DatatableController@setupLanguage');
+Route::get('/image/{image_path?}/{image_name?}', 'DatatableController@showImage')->name(\App\Survey::NAME_URL_SHOW_IMAGE);
 
 Route::get('/', 'Auth\LoginController@showLoginForm');
 
