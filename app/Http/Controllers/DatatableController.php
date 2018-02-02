@@ -15,18 +15,12 @@ use Config;
  * Class HomeController
  * @package App\Http\Controllers
  */
-class HomeController extends Controller
+class DatatableController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-//        $this->middleware('auth');
-    }
-
+	/**
+	 * setting language for tools in datatable
+	 * @return string
+	 */
     public function setupLanguage()
     {
         $language = trans('adminlte_lang::datatable');

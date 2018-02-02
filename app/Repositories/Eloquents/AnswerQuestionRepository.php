@@ -27,8 +27,11 @@ class AnswerQuestionRepository extends \EloquentRepository implements AnswerQues
      */
     public function getAnswersByAnswerId($answer_id)
     {
-        $answers = $this->_model->select("*")
-                            ->where('answer_id', $answer_id)->get()->toArray();
+        $answers = $this->_model
+	                    ->select("*")
+	                    ->where('answer_id', $answer_id)
+	                    ->get()
+	                    ->toArray();
 
         return $answers;
     }
@@ -39,7 +42,9 @@ class AnswerQuestionRepository extends \EloquentRepository implements AnswerQues
      */
     public function clearDataByAnswerId($answer_id)
     {
-        return $this->_model->where('answer_id', $answer_id)->delete();
+        return $this->_model
+	                ->where('answer_id', $answer_id)
+                    ->delete();
     }
 
     /**
@@ -48,13 +53,14 @@ class AnswerQuestionRepository extends \EloquentRepository implements AnswerQues
      */
     public function save($data)
     {
-	    return $this->_model->insert(
-		    [
-		    	'answer_id'   => $data['answer_id'],
-			    'question_id' => $data['question_id'],
-			    'text'        => $data['text'],
-			    'created_at'  => date("Y-m-d h:i:s"),
-		    ]
-	    );
+	    return $this->_model
+				    ->insert(
+				    [
+				        'answer_id'   => $data['answer_id'],
+					    'question_id' => $data['question_id'],
+					    'text'        => $data['text'],
+					    'created_at'  => date("Y-m-d h:i:s"),
+				    ]
+			    );
     }
 }

@@ -117,8 +117,8 @@ class SurveyController extends Controller
 	    $surveys = array_reverse($surveys);
 
         return view('admin::datatable', array(
-            'settings' => $table_settings,
-            'data' => $surveys,
+            'settings'         => $table_settings,
+            'data'             => $surveys,
             'datatable_script' => 'admin::layouts.partials.script_datatable_survey_list'
         ));
     }
@@ -209,8 +209,8 @@ class SurveyController extends Controller
         $surveys = $this->getDataSurveyForShowing($surveys);
 
         return view('admin::datatable', array(
-            'settings' => $table_settings,
-            'data' => $surveys,
+            'settings'         => $table_settings,
+            'data'             => $surveys,
             'datatable_script' => 'admin::layouts.partials.script_datatable_download_list'
         ));
     }
@@ -271,9 +271,10 @@ class SurveyController extends Controller
         );
 
         return view('admin::datatable', array(
-            'settings' => $table_settings,
-            'data' => $answer_data,'survey_id' => $id,
-            'survey_status' => $status_survey['status'],
+            'settings'         => $table_settings,
+            'data'             => $answer_data,
+	        'survey_id'        => $id,
+            'survey_status'    => $status_survey['status'],
             'datatable_script' => 'admin::layouts.partials.script_datatable_download_page'
         ));
     }
@@ -303,7 +304,7 @@ class SurveyController extends Controller
         $headers = [
             'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0',
 	        'Content-type'        => 'text/csv',
-	        'Content-Disposition' => 'attachment; filename='.time().'.csv',
+	        'Content-Disposition' => 'attachment; filename=survey-'. $id .'_'.date("Y-m-d_H-i-s").'.csv',
 	        'Expires'             => '0',
 	        'Pragma'              => 'public',
 	        'Content-Encoding'    => 'UTF-8',
@@ -370,7 +371,7 @@ class SurveyController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id = null) {
-        $layout = 'admin.survey.edit.page';
+        $layout         = 'admin.survey.edit.page';
         $question_types = Question::getQuestionTypes();
 
         if (!$id) {
@@ -409,7 +410,7 @@ class SurveyController extends Controller
             return view('admin::errors.404');
         }
 
-        $layout = 'admin.survey.edit.page';
+        $layout         = 'admin.survey.edit.page';
         $question_types = Question::getQuestionTypes();
 
         $survey = $this->surveyRepository->getSurveyById($id);
@@ -437,7 +438,7 @@ class SurveyController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function editingPreview(Request $request) {
+    public function loadPagePreviewSurvey(Request $request) {
         $survey    = $request->session()->get('preview_survey');
         $questions = $request->session()->get('preview_questions');
 
@@ -446,19 +447,19 @@ class SurveyController extends Controller
         }
 
         foreach ($questions as $key => $question) {
-            $survey['questions'][$key]['id'] = 0 - $key;
+            $survey['questions'][$key]['id']        = 0 - $key;
             $survey['questions'][$key]['survey_id'] = $survey['id'];
-            $survey['questions'][$key]['text'] = $question['text'];
-            $survey['questions'][$key]['type'] = $question['type'];
-            $survey['questions'][$key]['category'] = $question['category'];
-            $survey['questions'][$key]['require'] = empty($question['required']) ? Question::REQUIRE_QUESTION_NO : Question::REQUIRE_QUESTION_YES;
+            $survey['questions'][$key]['text']      = $question['text'];
+            $survey['questions'][$key]['type']      = $question['type'];
+            $survey['questions'][$key]['category']  = $question['category'];
+            $survey['questions'][$key]['require']   = empty($question['required']) ? Question::REQUIRE_QUESTION_NO : Question::REQUIRE_QUESTION_YES;
 
             $question_choices = empty($question['choice']) ? [] : $question['choice'];
             if (count($question_choices) > 0) {
                 $choices = [];
                 foreach ($question_choices as $choice_key => $question_choice) {
                     $choices[] = [
-                        'id' => 0 - $choice_key,
+                        'id'   => 0 - $choice_key,
                         'text' => $question_choice
                     ];
                 }
@@ -494,7 +495,7 @@ class SurveyController extends Controller
      * @param Request $request
      * @return mixed
      */
-    public function postEditingPreview(Request $request) {
+    public function getDataForPagePreviewSurvey(Request $request) {
         $input = Input::all();
         $valid = true;
 
@@ -580,32 +581,32 @@ class SurveyController extends Controller
         $i = 0;
         foreach ($new_questions as $new_question) {
             $i++;
-            $question = $this->questionRepository->createEmptyObject();
+            $question            = $this->questionRepository->createEmptyObject();
             $question->survey_id = $survey->id;
             $question->text      = $new_question['text'];
             $question->type      = $new_question['type'];
             $question->require   = empty($new_question['required']) ? Question::REQUIRE_QUESTION_NO : Question::REQUIRE_QUESTION_YES;
             $question->category  = $new_question['category'];
             $question->no        = $i;
-            $question = $this->questionRepository->save($question);
+            $question            = $this->questionRepository->save($question);
 
             if ($question->type == Question::TYPE_SINGLE_CHOICE
                 || $question->type == Question::TYPE_MULTI_CHOICE
             ) {
                 foreach ($new_question['choice'] as $choice) {
-                    $question_choice = $this->questionChoiceRepository->createEmptyObject();
+                    $question_choice              = $this->questionChoiceRepository->createEmptyObject();
                     $question_choice->question_id = $question->id;
                     $question_choice->text        = $choice;
                     $this->questionChoiceRepository->save($question_choice);
                 }
             } elseif ($question->type == Question::TYPE_CONFIRMATION) {
-                $confirm_content = $this->confirmContentRepository->createEmptyObject();
+                $confirm_content              = $this->confirmContentRepository->createEmptyObject();
                 $confirm_content->question_id = $question->id;
                 $confirm_content->text        = $new_question['confirmation_text'];
                 $this->confirmContentRepository->save($confirm_content);
 
                 if ($question->require == Question::REQUIRE_QUESTION_YES && !empty($new_question['agree_text'])) {
-                    $question_choice = $this->questionChoiceRepository->createEmptyObject();
+                    $question_choice              = $this->questionChoiceRepository->createEmptyObject();
                     $question_choice->question_id = $question->id;
                     $question_choice->text        = $new_question['agree_text'];
                     $this->questionChoiceRepository->save($question_choice);
@@ -635,11 +636,10 @@ class SurveyController extends Controller
             }
 
             // remove all survey questions
-            $filter = ['survey_id' => $survey->id];
+            $filter           = ['survey_id' => $survey->id];
             $survey_questions = $this->questionRepository->finds($filter);
             foreach ($survey_questions as $question) {
                 $this->questionRepository->remove($question);
-
                 $confirmation = $this->confirmContentRepository->find(['question_id' => $question->id]);
                 if ($confirmation) {
                     $this->confirmContentRepository->remove($confirmation);
@@ -661,22 +661,23 @@ class SurveyController extends Controller
             $file_name        = $file->getClientOriginalName();
             $destination_path = Config::get('config.upload_file_path');
             try {
-                $path = $destination_path. '/' . time();
+                $path               = $destination_path. '/' . time();
                 File::makeDirectory($path, $mode = 0777, true, true);
                 $file->move($path, $file_name);
-                $image_path = $path . '/' .$file_name;
+                $image_path         = $path . '/' .$file_name;
                 $survey->image_path = $image_path;
             } catch (\Exception $e) {
                 var_dump($e->getMessage());
                 return view('admin::errors.500');
             }
         } elseif (!empty($input['duplicate_id'])) {
-            $duplicate_survey = $this->surveyRepository->getSurveyById($input['duplicate_id']);
+            $duplicate_survey   = $this->surveyRepository->getSurveyById($input['duplicate_id']);
             $survey->image_path = $duplicate_survey['image_path'];
         }
+        
         $survey->description = $input['survey_description'];
-        $survey->status = empty($input['survey_status']) ? Survey::STATUS_SURVEY_DRAF : $input['survey_status'] ;
-        $survey = $this->surveyRepository->save($survey);
+        $survey->status      = empty($input['survey_status']) ? Survey::STATUS_SURVEY_DRAF : $input['survey_status'] ;
+        $survey              = $this->surveyRepository->save($survey);
 
         return $survey;
     }
@@ -690,7 +691,7 @@ class SurveyController extends Controller
 	    $survey                   = $this->surveyRepository->getSurveyById($id);
         $survey                   = $this->surveyService->getDataAnswerForSurvey($survey);
         $survey['encryption_url'] = $this->encryptionService->encrypt($id);
-        
+	    
         return view('admin::preview', array('survey' => $survey, 'name_url' => $request->route()->getName()));
     }
 

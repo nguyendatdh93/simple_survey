@@ -105,13 +105,12 @@ abstract class EloquentRepository implements Repositories\InterfaceRepository
      */
     public function finds($filter) {
         $model = $this->_model;
-
         foreach ($filter as $key => $value) {
             $model = $model->where($key, $value);
         }
 
         return $model->where('del_flg', 0)
-            ->get();
+                     ->get();
     }
 
     /**

@@ -88,7 +88,7 @@ class SurveyService
 		return $survey;
 	}
 	
-	function convertTextWithXSSSafe($text,$encoding='UTF-8')
+	function convertTextWithXssSafe($text,$encoding='UTF-8')
 	{
 		return htmlspecialchars($text,ENT_QUOTES | ENT_HTML401,$encoding);
 	}

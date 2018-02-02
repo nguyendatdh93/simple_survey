@@ -290,8 +290,8 @@ class AdminLTE
     public function duskEnvironment()
     {
         return [
-            ADMINLTETEMPLATE_PATH.'/.env.dusk.local'        => base_path('.env.dusk.local'),
-            ADMINLTETEMPLATE_PATH.'/.env.dusk.testing'      => base_path('.env.dusk.testing'),
+            ADMINLTETEMPLATE_PATH.'/.env.dusk.local'   => base_path('.env.dusk.local'),
+            ADMINLTETEMPLATE_PATH.'/.env.dusk.testing' => base_path('.env.dusk.testing'),
         ];
     }
 
@@ -303,7 +303,7 @@ class AdminLTE
     public function databaseConfig()
     {
         return [
-            ADMINLTETEMPLATE_PATH.'/config/database.php'    => config_path('database.php'),
+            ADMINLTETEMPLATE_PATH.'/config/database.php' => config_path('database.php'),
         ];
     }
 }
