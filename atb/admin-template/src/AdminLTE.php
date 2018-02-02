@@ -94,6 +94,8 @@ class AdminLTE
         return [
             ADMINLTETEMPLATE_PATH.'/resources/views/errors'            =>
                 resource_path('views/errors'),
+	        ADMINLTETEMPLATE_PATH.'/resources/views/user'            =>
+		        resource_path('views/user'),
             ADMINLTETEMPLATE_PATH.'/resources/views/welcome.blade.php' =>
                 resource_path('views/welcome.blade.php'),
             ADMINLTETEMPLATE_PATH.'/resources/views/layouts/partials/sidebar.blade.php' =>
@@ -132,6 +134,8 @@ class AdminLTE
                 resource_path('views/admin/home.blade.php'),
             ADMINLTETEMPLATE_PATH.'/resources/views/welcome.blade.php' =>
                 resource_path('views/welcome.blade.php'),
+	        ADMINLTETEMPLATE_PATH.'/resources/views/user'              =>
+		        resource_path('views/user'),
         ];
     }
 
@@ -156,8 +160,8 @@ class AdminLTE
     public function resourceAssets()
     {
         return [
-            ADMINLTETEMPLATE_PATH.'/resources/assets/css' => resource_path('assets/css'),
-            ADMINLTETEMPLATE_PATH.'/resources/assets/img' => resource_path('assets/img'),
+            ADMINLTETEMPLATE_PATH.'/resources/assets/css'  => resource_path('assets/css'),
+            ADMINLTETEMPLATE_PATH.'/resources/assets/img'  => resource_path('assets/img'),
             ADMINLTETEMPLATE_PATH.'/resources/assets/less' => resource_path('assets/less'),
             ADMINLTETEMPLATE_PATH.'/resources/assets/sass' => resource_path('assets/sass'),
             ADMINLTETEMPLATE_PATH.'/resources/assets/js'   => resource_path('assets/js'),
