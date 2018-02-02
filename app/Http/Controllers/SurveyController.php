@@ -303,7 +303,7 @@ class SurveyController extends Controller
         $headers = [
             'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0',
 	        'Content-type'        => 'text/csv',
-	        'Content-Disposition' => 'attachment; filename='.time().'.csv',
+	        'Content-Disposition' => 'attachment; filename=survey-'. $id .'_'.date("Y-m-d_H-i-s").'.csv',
 	        'Expires'             => '0',
 	        'Pragma'              => 'public',
 	        'Content-Encoding'    => 'UTF-8',
