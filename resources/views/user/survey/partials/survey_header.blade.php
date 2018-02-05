@@ -19,5 +19,5 @@
     @endif
 @show
 
-@section('preview_script')
+@section('preview-script')
 @show

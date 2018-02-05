@@ -75,7 +75,7 @@ class AnswerSurveyController extends Controller
 			$survey                = $surveyService->getDataAnswerForSurvey($survey, isset($answer['questions']) ? $answer['questions'] : array());
 			$survey['encrypt_url'] = $encrypt;
 			
-			return view('admin::answer', array('survey' => $survey));
+			return view('user::survey.answer.fill', array('survey' => $survey));
 		} catch (\Exception $e) {
 			return redirect('404');
 		}
@@ -124,7 +124,7 @@ class AnswerSurveyController extends Controller
 			$survey['encrypt_url'] = $encrypt;
 			$request->session()->put('answer' . $id, $survey);
 			
-			return view('admin::answer_confirm', array('survey' => $survey));
+			return view('user.survey.answer.confirm', array('survey' => $survey));
 		} catch (\Exception $e) {
 			return redirect('404');
 		}
@@ -184,6 +184,6 @@ class AnswerSurveyController extends Controller
 	
 	public function showThankPage()
 	{
-		return view('admin::answer_thank');
+		return view('user.survey.answer.thank');
 	}
 }

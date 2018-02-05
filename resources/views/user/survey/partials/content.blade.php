@@ -4,9 +4,9 @@
             <!-- ▼変更可能エリア※table（formTable）は固定なので変更しないでください -->
             {{ csrf_field() }}
 
-            @include('admin::survey.partials.survey_content')
-            @include('admin::survey.partials.survey_confirm')
-            @include('admin::survey.partials.button_control')
+            @include('user::survey.partials.survey_content')
+            @include('user::survey.partials.survey_confirm')
+            @include('user::survey.partials.button_control')
 
         </form>
     <!-- /.formArea --></div>

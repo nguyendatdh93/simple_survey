@@ -41,11 +41,10 @@
                 <input type="hidden" name="duplicate_id" value="{{ $survey['duplicate_id'] }}">
             @endif
 
-            @include('admin::survey.edit_survey_question_template')
-
-            @include('admin::survey.edit_survey_header')
-            @include('admin::survey.edit_survey_content')
-            @include('admin::survey.edit_survey_footer')
+            @include('admin::survey.edit.survey_question_template')
+            @include('admin::survey.edit.survey_header')
+            @include('admin::survey.edit.survey_content')
+            @include('admin::survey.edit.survey_footer')
 		</form>
 
         <div class="row">
@@ -101,5 +100,5 @@
 
 @section('scripts')
     @parent
-    @include('admin::survey.edit_script')
+    @include('admin::survey.edit.script')
 @endsection
