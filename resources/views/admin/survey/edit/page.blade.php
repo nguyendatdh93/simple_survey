@@ -73,7 +73,7 @@
                 data-toggle="tooltip"
                 title="{{ trans('survey.button_preview') }}"
                 class="btn fly-button jsPreview">
-            <i class="glyphicon glyphicon-eye-open" style="font-size: xx-large;"></i>
+            <i class="glyphicon glyphicon-search" style="font-size: xx-large;"></i>
         </button>
     </div>
 

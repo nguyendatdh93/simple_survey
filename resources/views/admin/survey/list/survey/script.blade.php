@@ -50,13 +50,3 @@
     surveyService.showTrTagAfterLoadCompletedData();
 
 </script>
-
-<style>
-    #survey-table tr td:not(.tbl-name) {
-        text-align: center;
-    }
-
-    #survey-table td.tbl-control {
-        text-align: unset !important;
-    }
-</style>
