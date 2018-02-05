@@ -36,9 +36,3 @@
 
     surveyService.showTrTagAfterLoadCompletedData();
 </script>
-
-<style>
-    #download-table tr td:not(.tbl-name) {
-        text-align: center;
-    }
-</style>

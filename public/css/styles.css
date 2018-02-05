@@ -8,6 +8,26 @@ img.img-datatable {
     padding-top: 15px !important;
 }
 
+#survey-table tr td:not(.tbl-name) {
+    text-align: center;
+}
+
+#survey-table td.tbl-control {
+    text-align: unset !important;
+}
+
+#download-page-table_wrapper {
+    display: block;
+    overflow-x: auto;
+}
+table#download-page-table th {
+    white-space: nowrap;
+}
+
+#download-table tr td:not(.tbl-name) {
+    text-align: center;
+}
+
 #download-table tr td:not(.tbl-image_path):not(.tbl-control) {
     padding-top: 15px !important;
 }
