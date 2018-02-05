@@ -134,8 +134,8 @@ class AdminLTETemplateServiceProvider extends ServiceProvider
      */
     private function publishViews()
     {
-
-        $this->loadViewsFrom(resource_path('views'), 'admin');
+        $this->loadViewsFrom(resource_path('views/admin'), 'admin');
+	    $this->loadViewsFrom(resource_path('views/user'), 'user');
 
         $this->publishes(AdminLTE::views(), 'admin');
     }

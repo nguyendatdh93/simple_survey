@@ -94,6 +94,8 @@ class AdminLTE
         return [
             ADMINLTETEMPLATE_PATH.'/resources/views/errors'            =>
                 resource_path('views/errors'),
+	        ADMINLTETEMPLATE_PATH.'/resources/views/user'            =>
+		        resource_path('views/user'),
             ADMINLTETEMPLATE_PATH.'/resources/views/welcome.blade.php' =>
                 resource_path('views/welcome.blade.php'),
             ADMINLTETEMPLATE_PATH.'/resources/views/layouts/partials/sidebar.blade.php' =>
@@ -132,6 +134,8 @@ class AdminLTE
                 resource_path('views/admin/home.blade.php'),
             ADMINLTETEMPLATE_PATH.'/resources/views/welcome.blade.php' =>
                 resource_path('views/welcome.blade.php'),
+	        ADMINLTETEMPLATE_PATH.'/resources/views/user'              =>
+		        resource_path('views/user'),
         ];
     }
 

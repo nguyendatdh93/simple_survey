@@ -1,7 +1,9 @@
 <script>
+    var image_error = false;
+
 	$( document ).ready(function() {
-	    var survey_status = {{ empty($survey['status']) ? \App\Survey::STATUS_SURVEY_DRAF : $survey['status'] }};
-        if (survey_status == {{ \App\Survey::STATUS_SURVEY_PUBLISHED }}) {
+	    var survey_status = {{ empty($survey['status']) ? \App\Models\Survey::STATUS_SURVEY_DRAF : $survey['status'] }};
+        if (survey_status == {{ \App\Models\Survey::STATUS_SURVEY_PUBLISHED }}) {
             $('input').attr('disabled', 'disabled');
             $('select').attr('disabled', 'disabled');
             $('button.jsAddQuestion').hide();
@@ -15,7 +17,6 @@
 
 		CKEDITOR.on("instanceCreated", function(event) {
 			event.editor.on("change", function () {
-//			event.editor.on("blur", function () {
 				event.editor.updateElement();
 
 				var textarea_name = event.editor.name;
@@ -252,9 +253,9 @@
                 input = $("<input>").attr("type", "hidden").attr("name", 'survey_status').val(survey_status);
 
             survey_form.append($(input));
-            if (survey_status == '{{ \App\Survey::STATUS_SURVEY_DRAF }}') {
+            if (survey_status == '{{ \App\Models\Survey::STATUS_SURVEY_DRAF }}') {
                 survey_form.submit();
-            } else if (survey_status == {{ \App\Survey::STATUS_SURVEY_PUBLISHED }}) {
+            } else if (survey_status == {{ \App\Models\Survey::STATUS_SURVEY_PUBLISHED }}) {
                 showConfirmBox('', '{{ trans('survey.confirm_publish_survey_content') }}', '{{ trans('survey.save_publish_survey') }}', '{{ trans('survey.cancel_publish_survey') }}', "$('#survey_form').submit();");
             }
         } else {
@@ -268,7 +269,7 @@
                 '{{ trans('survey.confirm_close_survey_content') }}',
                 '{{ trans('survey.confirm_button_close') }}',
                 '{{ trans('survey.cancel_publish_survey') }}',
-                'window.open("{{ route(\App\Survey::NAME_URL_CLOSE_SURVEY,['id' => empty($survey['id']) ? '' : $survey['id']]) }}", "_self");'
+                'window.open("{{ route(\App\Models\Survey::NAME_URL_CLOSE_SURVEY,['id' => empty($survey['id']) ? '' : $survey['id']]) }}", "_self");'
         );
     });
 
@@ -325,7 +326,7 @@
         }
 
         var survey_thumbnail = $('input[name=survey_thumbnail]')[0];
-        if (!validateFile(survey_thumbnail)) {
+        if (!validateFile(survey_thumbnail, false) || image_error) {
             $(survey_thumbnail).focus();
             return false;
         }
@@ -432,9 +433,13 @@
         return true;
     }
 
-	function validateFile(target) {
-            var input_file = $(target)[0].files[0],
-			error = $(target).parent().children('.jsError');
+	function validateFile(target, on_change) {
+	    if (typeof on_change == 'undefined') {
+            on_change = true;
+        }
+
+        var input_file = $(target)[0].files[0],
+            error = $(target).parent().children('.jsError');
 
 		error.hide();
 
@@ -450,6 +455,24 @@
 				error.show();
 				return false;
 			}
+
+			if (on_change) {
+                var _URL = window.URL || window.webkitURL;
+                var image = new Image();
+                image.src = _URL.createObjectURL(input_file);
+                image.onload = function() {
+                    console.log("The image width is " +this.width + " and image height is " + this.height);
+                    if (this.width != {{ \App\Models\Survey::THUMBNAIL_DIMENSION_WIDTH }}
+                        || this.height != {{ \App\Models\Survey::THUMBNAIL_DIMENSION_HEIGHT }}
+                    ) {
+                        error.html('{{ trans('survey.error_incorrect_dimension') }}');
+                        error.show();
+                        image_error = true;
+                    } else {
+                        image_error = false;
+                    }
+                };
+            }
 		}
 
 		return true;

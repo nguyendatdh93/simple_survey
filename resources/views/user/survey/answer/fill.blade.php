@@ -1,7 +1,7 @@
-@extends('admin::survey.form_survey')
+@extends('user::layouts.survey')
 
 @section('htmlheader_title')
-    {{ trans('adminlte_lang::survey.htmlheader_title_answer_survey') }}
+    {{ trans('survey.htmlheader_title_answer_survey') }}
 @endsection
 
 @section('control')

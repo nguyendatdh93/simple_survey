@@ -21,7 +21,7 @@ class Survey
 		$paramAttributes['class'] = $paramAttributes['class'] . $indentify;
 		$paramAttributes['name']  = $question['id'];
 		
-		return view('admin::survey.single_text', array('question' => $question, 'data_attributes' => $paramAttributes));
+		return view('admin::survey.partials.single_text', array('question' => $question, 'data_attributes' => $paramAttributes));
 	}
 	
 	/**
@@ -35,7 +35,7 @@ class Survey
 		$paramAttributes['class'] = $paramAttributes['class'] . $indentify;
 		$paramAttributes['name']  = $question['id'];
 		
-		return view('admin::survey.multi_text', array('question' => $question, 'data_attributes' => $paramAttributes));
+		return view('admin::survey.partials.multi_text', array('question' => $question, 'data_attributes' => $paramAttributes));
 	}
 	
 	/**
@@ -48,7 +48,7 @@ class Survey
 	{
 		$paramAttributes['name'] = $question['id'];
 		
-		return view('admin::survey.single_choice', array('question' => $question, 'choices' => $choices, 'data_attributes' => $paramAttributes));
+		return view('admin::survey.partials.single_choice', array('question' => $question, 'choices' => $choices, 'data_attributes' => $paramAttributes));
 	}
 	
 	/**
@@ -61,12 +61,12 @@ class Survey
 	{
 		$paramAttributes['name'] = $question['id']."[]";
 		
-		return view('admin::survey.multi_choice', array('question' => $question, 'choices' => $choices, 'data_attributes' => $paramAttributes));
+		return view('admin::survey.partials.multi_choice', array('question' => $question, 'choices' => $choices, 'data_attributes' => $paramAttributes));
 	}
 	
 	public static function termConfirm($question, $confirms, $choices, $paramAttributes = array())
 	{
-		return view('admin::survey.confirm_condition', array('question' => $question, 'confirms' => $confirms, 'choices' => $choices, 'data_attributes' => $paramAttributes));
+		return view('admin::survey.partials.confirm_condition', array('question' => $question, 'confirms' => $confirms, 'choices' => $choices, 'data_attributes' => $paramAttributes));
 	}
 	
 	/**
@@ -75,6 +75,6 @@ class Survey
 	 */
 	public static function formAnswerPattern($surveyContents)
 	{
-		return view('admin::survey.form_answer_pattern', array('survey_contents' => $surveyContents));
+		return view('admin::survey.partials.form_answer_pattern', array('survey_contents' => $surveyContents));
 	}
 }

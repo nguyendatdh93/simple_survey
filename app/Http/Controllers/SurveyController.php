@@ -116,10 +116,10 @@ class SurveyController extends Controller
         $surveys = $this->getDataSurveyForShowing($surveys);
 	    $surveys = array_reverse($surveys);
 
-        return view('admin::datatable', array(
+        return view('admin::survey.list.datatable', array(
             'settings'         => $table_settings,
             'data'             => $surveys,
-            'datatable_script' => 'admin::layouts.partials.script_datatable_survey_list'
+            'datatable_script' => 'admin::survey.list.survey.script'
         ));
     }
 
@@ -208,10 +208,10 @@ class SurveyController extends Controller
         $surveys = $this->getSurveyForShowingDownloadList($surveys);
         $surveys = $this->getDataSurveyForShowing($surveys);
 
-        return view('admin::datatable', array(
+        return view('admin::survey.list.datatable', array(
             'settings'         => $table_settings,
             'data'             => $surveys,
-            'datatable_script' => 'admin::layouts.partials.script_datatable_download_list'
+            'datatable_script' => 'admin::survey.list.download.script'
         ));
     }
 
@@ -270,12 +270,12 @@ class SurveyController extends Controller
             'buttons'         => $buttons
         );
 
-        return view('admin::datatable', array(
+        return view('admin::survey.list.datatable', array(
             'settings'         => $table_settings,
             'data'             => $answer_data,
 	        'survey_id'        => $id,
             'survey_status'    => $status_survey['status'],
-            'datatable_script' => 'admin::layouts.partials.script_datatable_download_page'
+            'datatable_script' => 'admin::survey.list.answer.script'
         ));
     }
 
@@ -371,7 +371,7 @@ class SurveyController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id = null) {
-        $layout         = 'admin.survey.edit';
+        $layout         = 'admin.survey.edit.page';
         $question_types = Question::getQuestionTypes();
 
         if (!$id) {
@@ -410,7 +410,7 @@ class SurveyController extends Controller
             return view('admin::errors.404');
         }
 
-        $layout         = 'admin.survey.edit';
+        $layout         = 'admin.survey.edit.page';
         $question_types = Question::getQuestionTypes();
 
         $survey = $this->surveyRepository->getSurveyById($id);
@@ -443,7 +443,7 @@ class SurveyController extends Controller
         $questions = $request->session()->get('preview_questions');
 
         if (empty($questions)) {
-            return view('admin::preview', ['survey' => $survey]);
+            return view('admin::survey.preview.page', ['survey' => $survey]);
         }
 
         foreach ($questions as $key => $question) {
@@ -488,7 +488,7 @@ class SurveyController extends Controller
 
         $survey['questions'] = $group_question_survey;
 
-        return view('admin::preview', ['survey' => $survey]);
+        return view('admin::survey.preview.page', ['survey' => $survey]);
     }
 
     /**
@@ -692,7 +692,7 @@ class SurveyController extends Controller
         $survey                   = $this->surveyService->getDataAnswerForSurvey($survey);
         $survey['encryption_url'] = $this->encryptionService->encrypt($id);
 	    
-        return view('admin::preview', array('survey' => $survey, 'name_url' => $request->route()->getName()));
+        return view('admin::survey.preview.page', array('survey' => $survey, 'name_url' => $request->route()->getName()));
     }
 
     /**
