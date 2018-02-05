@@ -97,6 +97,7 @@ return [
     'alert_fail_create_survey'  => 'アンケード作成が失敗しました。',
 	'message_repquire'  => '必ず選択してください',
 	'message_confirm_condition' => '規約に承諾してください',
+	'error_incorrect_dimension' => 'Only allow image 960 x 300',
 	
 	
 	'column_csv_created_at' => '回答日時',
