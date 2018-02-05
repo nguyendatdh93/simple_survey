@@ -443,7 +443,7 @@ class SurveyController extends Controller
         $questions = $request->session()->get('preview_questions');
 
         if (empty($questions)) {
-            return view('admin::preview', ['survey' => $survey]);
+            return view('admin::survey.preview.page', ['survey' => $survey]);
         }
 
         foreach ($questions as $key => $question) {
@@ -488,7 +488,7 @@ class SurveyController extends Controller
 
         $survey['questions'] = $group_question_survey;
 
-        return view('admin::preview', ['survey' => $survey]);
+        return view('admin::survey.preview.page', ['survey' => $survey]);
     }
 
     /**
@@ -692,7 +692,7 @@ class SurveyController extends Controller
         $survey                   = $this->surveyService->getDataAnswerForSurvey($survey);
         $survey['encryption_url'] = $this->encryptionService->encrypt($id);
 	    
-        return view('admin::preview', array('survey' => $survey, 'name_url' => $request->route()->getName()));
+        return view('admin::survey.preview.page', array('survey' => $survey, 'name_url' => $request->route()->getName()));
     }
 
     /**

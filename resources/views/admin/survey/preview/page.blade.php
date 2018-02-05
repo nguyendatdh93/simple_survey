@@ -1,10 +1,10 @@
-@extends('admin::layouts.form_survey')
+@extends('user::layouts.survey')
 
 @section('htmlheader_title')
-    {{ trans('adminlte_lang::survey.htmlheader_title_preview') }}
+    {{ trans('survey.htmlheader_title_preview') }}
 @endsection
 
-@section('preview_script')
+@section('preview-script')
     <script>
         var current_url = window.location.href,
                 pattern = /editing\/preview/;
