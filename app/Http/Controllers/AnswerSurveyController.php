@@ -60,12 +60,13 @@ class AnswerSurveyController extends Controller
 	public function showQuestionSurvey(Request $request, $encrypt)
 	{
 		try {
-			$id             = $this->getIdSurveyFromEncryptCode($encrypt);
-			$surveyService  = new SurveyService();
-			$answer         = array();
+			$id            = $this->getIdSurveyFromEncryptCode($encrypt);
+			$surveyService = new SurveyService();
+			$answer        = array();
 			if ($request->session()->get('answer'. $id) != null) {
 				if ($request->session()->get('answered'. $id) != null) {
 					$request->session()->forget('answer' . $id);
+					$request->session()->forget('answered' . $id);
 				} else {
 					$answer = $request->session()->get('answer' . $id);
 				}

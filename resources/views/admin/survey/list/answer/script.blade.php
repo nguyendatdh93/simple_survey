@@ -81,13 +81,3 @@
     });
 
 </script>
-
-<style>
-    #download-page-table_wrapper {
-        display: block;
-        overflow-x: auto;
-    }
-    table#download-page-table th {
-        white-space: nowrap;
-    }
-</style>

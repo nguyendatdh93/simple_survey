@@ -34,9 +34,10 @@ class QuestionRepository extends \EloquentRepository implements QuestionReposito
 	                   ->select('*')
 	                   ->where('survey_id',$survey_id)
 	                   ->where('del_flg', '!=', Question::DELETE_FLG)
+	                   ->orderBy('no', 'ASC')
 	                   ->get()
 	                   ->toArray();
-
+        
         return $result;
     }
 
