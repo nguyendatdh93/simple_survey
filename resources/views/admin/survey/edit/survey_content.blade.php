@@ -82,7 +82,7 @@
 												<div class="col-md-12">
 													<textarea id="question_{{ $question_number }}_confirmation_text"
 															  name="question_{{ $question_number }}_confirmation_text"
-															  class="form-control jsQuestionConfirmationText required jsInputLimit5000"
+															  class="form-control jsQuestionConfirmationText required"
 															  rows="10">{{ empty($question['confirm_text']) ? '' : $question['confirm_text'] }}</textarea>
 													<p class="help-block">{{ trans('survey.confirmation_help_block') }}</p>
 													<p class="jsError" style="color: red; display: none;"></p>
