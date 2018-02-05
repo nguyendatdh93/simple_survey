@@ -796,7 +796,7 @@ class SurveyController extends Controller
             }
 
             if ($question['type'] == Question::TYPE_CONFIRMATION) {
-                if (!$this->surveyValidator->validateText($question['confirmation_text'], true, 5000)) {
+                if (!$this->surveyValidator->validateText($question['confirmation_text'], true, 65000)) {
                     return false;
                 }
 
