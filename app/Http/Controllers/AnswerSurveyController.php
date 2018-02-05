@@ -64,7 +64,11 @@ class AnswerSurveyController extends Controller
 			$surveyService  = new SurveyService();
 			$answer         = array();
 			if ($request->session()->get('answer'. $id) != null) {
-				$answer = $request->session()->get('answer' . $id);
+				if ($request->session()->get('answered'. $id) != null) {
+					$request->session()->forget('answer' . $id);
+				} else {
+					$answer = $request->session()->get('answer' . $id);
+				}
 			}
 			
 			$survey = $this->surveyRepository->getSurveyPublishedById($id);
@@ -162,7 +166,7 @@ class AnswerSurveyController extends Controller
 				$this->answerQuestionRepository->save($data);
 			}
 			
-			$request->session()->forget('answer' . $id);
+			$request->session()->put('answered' . $id, true);
 			
 			return redirect()->route(Survey::NAME_URL_THANK_PAGE);
 		} catch (\Exception $e) {
