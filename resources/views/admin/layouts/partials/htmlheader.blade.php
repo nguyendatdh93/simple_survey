@@ -38,19 +38,5 @@
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     {{ Html::style('css/styles.css') }}
-    <style>
-        img.img-datatable {
-            width: 80px !important;
-            margin: 0px auto;
-            display: block;
-            height: 37px;
-        }
-        #survey-table tr td:not(.tbl-image_path):not(.tbl-control) {
-            padding-top: 15px !important;
-        }
-
-        #download-table tr td:not(.tbl-image_path):not(.tbl-control) {
-            padding-top: 15px !important;
-        }
-    </style>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 </head>

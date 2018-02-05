@@ -12,6 +12,15 @@
 */
 
 /**
+ * Route for error page and setting datatable
+ */
+Route::get('/404', function (){
+	return view('admin::errors.404');
+})->name('404');
+Route::get('/setup-lang', 'DatatableController@setupLanguage');
+Route::get('/image/{image_path?}/{image_name?}', 'DatatableController@showImage')->name(\App\Survey::NAME_URL_SHOW_IMAGE);
+
+/**
  * Route for authentication
  */
 Route::get('/login', 'Auth\LoginController@showLoginForm')->name(\App\Survey::NAME_URL_LOGIN_PAGE);
@@ -52,11 +61,3 @@ Route::prefix('/')->group(function () {
 	Route::get('/answer/{encrypt?}', 'AnswerSurveyController@answerSurvey')->name(\App\Survey::NAME_URL_SUBMIT_CONFIRM);
 });
 
-/**
- * Route for error page and setting datatable
- */
-Route::get('/404', function (){
-	return view('admin::errors.404');
-})->name('404');
-Route::get('/setup-lang', 'DatatableController@setupLanguage');
-Route::get('/image/{image_path?}/{image_name?}', 'DatatableController@showImage')->name(\App\Survey::NAME_URL_SHOW_IMAGE);
