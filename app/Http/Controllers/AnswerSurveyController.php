@@ -66,6 +66,7 @@ class AnswerSurveyController extends Controller
 			if ($request->session()->get('answer'. $id) != null) {
 				if ($request->session()->get('answered'. $id) != null) {
 					$request->session()->forget('answer' . $id);
+					$request->session()->forget('answered' . $id);
 				} else {
 					$answer = $request->session()->get('answer' . $id);
 				}
