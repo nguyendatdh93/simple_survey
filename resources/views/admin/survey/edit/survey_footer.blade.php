@@ -1,4 +1,9 @@
 {{-- Survey Footer Box --}}
+@if(isset($survey['status'])
+&& $survey['status'] == \App\Models\Survey::STATUS_SURVEY_PUBLISHED
+&& empty($questions['footer']))
+	<div class="row"></div>
+@else
 <div class="row">
 	<div class="col-md-8 col-md-offset-2">
 		<div class="box">
@@ -190,3 +195,4 @@
 		</div>
 	</div>
 </div>
+@endif
