@@ -19,8 +19,10 @@ class AuthService extends Controller
             if (strpos($range, '/') == false) {
                 $range .= '/32';
             }
+            
             // $range is in IP/CIDR format eg 127.0.0.1/24
             list($range, $netmask) = explode('/', $range, 2);
+            
             $ip_decimal       = ip2long($ip);
             $range_decimal    = ip2long($range);
             $wildcard_decimal = pow(2, (32 - $netmask)) - 1;
