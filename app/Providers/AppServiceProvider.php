@@ -82,11 +82,11 @@ class AppServiceProvider extends ServiceProvider
             AnswerQuestionRepository::class
         );
 
-//        $this->app->instance('log', new \Illuminate\Log\Writer(
-//                (new Logger(
-//                    $this->app->environment()
-//                ))->pushHandler(new StreamHandler(env('CONFIG_LOG_PATH').'/log-'.date('Y-m-d')))
-//            )
-//        );
+        $this->app->instance('log', new \Illuminate\Log\Writer(
+                (new Logger(
+                    $this->app->environment()
+                ))->pushHandler(new StreamHandler(env('CONFIG_LOG_PATH').'/log-'.date('Y-m-d')))
+            )
+        );
     }
 }

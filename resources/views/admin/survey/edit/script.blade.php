@@ -1,4 +1,6 @@
 <script>
+    var image_error = false;
+
 	$( document ).ready(function() {
 	    var survey_status = {{ empty($survey['status']) ? \App\Models\Survey::STATUS_SURVEY_DRAF : $survey['status'] }};
         if (survey_status == {{ \App\Models\Survey::STATUS_SURVEY_PUBLISHED }}) {
@@ -324,7 +326,7 @@
         }
 
         var survey_thumbnail = $('input[name=survey_thumbnail]')[0];
-        if (!validateFile(survey_thumbnail)) {
+        if (!validateFile(survey_thumbnail, false) || image_error) {
             $(survey_thumbnail).focus();
             return false;
         }
@@ -431,9 +433,13 @@
         return true;
     }
 
-	function validateFile(target) {
-            var input_file = $(target)[0].files[0],
-			error = $(target).parent().children('.jsError');
+	function validateFile(target, on_change) {
+	    if (typeof on_change == 'undefined') {
+            on_change = true;
+        }
+
+        var input_file = $(target)[0].files[0],
+            error = $(target).parent().children('.jsError');
 
 		error.hide();
 
@@ -449,6 +455,24 @@
 				error.show();
 				return false;
 			}
+
+			if (on_change) {
+                var _URL = window.URL || window.webkitURL;
+                var image = new Image();
+                image.src = _URL.createObjectURL(input_file);
+                image.onload = function() {
+                    console.log("The image width is " +this.width + " and image height is " + this.height);
+                    if (this.width != {{ \App\Models\Survey::THUMBNAIL_DIMENSION_WIDTH }}
+                        || this.height != {{ \App\Models\Survey::THUMBNAIL_DIMENSION_HEIGHT }}
+                    ) {
+                        error.html('{{ trans('survey.error_incorrect_dimension') }}');
+                        error.show();
+                        image_error = true;
+                    } else {
+                        image_error = false;
+                    }
+                };
+            }
 		}
 
 		return true;
