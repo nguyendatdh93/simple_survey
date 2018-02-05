@@ -116,10 +116,10 @@ class SurveyController extends Controller
         $surveys = $this->getDataSurveyForShowing($surveys);
 	    $surveys = array_reverse($surveys);
 
-        return view('admin::datatable', array(
+        return view('admin::survey.list.datatable', array(
             'settings'         => $table_settings,
             'data'             => $surveys,
-            'datatable_script' => 'admin::layouts.partials.script_datatable_survey_list'
+            'datatable_script' => 'admin::survey.list.survey.script'
         ));
     }
 
@@ -208,10 +208,10 @@ class SurveyController extends Controller
         $surveys = $this->getSurveyForShowingDownloadList($surveys);
         $surveys = $this->getDataSurveyForShowing($surveys);
 
-        return view('admin::datatable', array(
+        return view('admin::survey.list.datatable', array(
             'settings'         => $table_settings,
             'data'             => $surveys,
-            'datatable_script' => 'admin::layouts.partials.script_datatable_download_list'
+            'datatable_script' => 'admin::survey.list.download.script'
         ));
     }
 
@@ -270,12 +270,12 @@ class SurveyController extends Controller
             'buttons'         => $buttons
         );
 
-        return view('admin::datatable', array(
+        return view('admin::survey.list.datatable', array(
             'settings'         => $table_settings,
             'data'             => $answer_data,
 	        'survey_id'        => $id,
             'survey_status'    => $status_survey['status'],
-            'datatable_script' => 'admin::layouts.partials.script_datatable_download_page'
+            'datatable_script' => 'admin::survey.list.answer.script'
         ));
     }
 

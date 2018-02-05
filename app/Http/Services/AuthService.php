@@ -9,6 +9,7 @@ class AuthService extends Controller
     public function isSecurePrivateRange($ip)
     {
         $ip_privates = Config::get('config.ip_private');
+        $ip_privates = ['192.168.50.1'];
 
         return $this->checkIpRange($ip_privates, $ip);
     }
