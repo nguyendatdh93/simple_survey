@@ -15,7 +15,7 @@ return [
     'menu_survey_list' => 'アンケート一覧',
     'menu_survey_download' => 'アンケート一覧',
     'confirm_publish_survey_content' => "このアンケートを公開しますか？",
-    'save_publish_survey' => "終了する",
+    'save_publish_survey' => "公開する",
     'cancel_publish_survey' => "キャンセル",
     'confirm_publish_survey_title' => "確認",
     'confirm_button_close' => "終了する",
@@ -126,6 +126,7 @@ return [
 	
 	//answer survey
 	'htmlheader_title_answer_survey' => '問い合わせ',
+    'htmlheader_title_closed_survey' => 'このURLは有効期限が過ぎたため表示できません。',
 	'message_255_characters' => '255文字以内で入力してください。',
 	'message_5000_characters' => '5000文字以内で入力してください。',
 ];
