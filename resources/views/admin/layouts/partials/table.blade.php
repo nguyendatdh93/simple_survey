@@ -56,7 +56,7 @@
                                 <td class="tbl-{{$key_column['column']}}" style="display: none"> {{ $item[$key_column['column']] }} </td>
                             @endif
                         @else
-                            <td class="tbl-{{$key_column}}">{{ isset($item[$key_column]) ? $item[$key_column] : "-" }}</td>
+                            <td class="tbl-{{$key_column}}">{!! isset($item[$key_column]) ? $item[$key_column] : "-" !!}</td>
                         @endif
                     @endforeach
                     @if(isset($settings['controls']) && $settings['controls'] == true)

@@ -31,9 +31,9 @@
             "columnDefs": [
                 {
                     targets: 2,
-                    render: function (data, type, full, meta) {
-                        return surveyService.cutLineText(data,['{{ trans('adminlte_lang::survey.button_more') }}' , '{{ trans('adminlte_lang::survey.button_less') }}']);
-                    }
+                    {{--render: function (data, type, full, meta) {--}}
+                        {{--return surveyService.cutLineText(data,['{{ trans('adminlte_lang::survey.button_more') }}' , '{{ trans('adminlte_lang::survey.button_less') }}']);--}}
+                    {{--}--}}
                 },
                 { "targets": 3, "orderable" : false},
                 { "targets": 4, "orderable" : true},
