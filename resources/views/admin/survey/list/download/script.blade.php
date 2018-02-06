@@ -11,9 +11,10 @@
             'lengthMenu'  : [ {!! implode(',', \App\BaseWidget\Form::SETTING_LENGHT_MENU_DATATABLE)  !!}],
             'autoWidth'   : true,
             'createdRow' : function( row, data, dataIndex ) {
-                $(row).children(".tbl-control").html(surveyService.addControlsForDownloadList(data,["{{ route(\App\Survey::NAME_URL_DOWNLOAD_PAGE_SURVEY) }}"], ["{{ trans('adminlte_lang::survey.go_download_button') }}"]));
+                $(row).children(".tbl-control").html(surveyService.addControlsForDownloadList(row, data,["{{ route(\App\Survey::NAME_URL_DOWNLOAD_PAGE_SURVEY) }}"], ["{{ trans('adminlte_lang::survey.go_download_button') }}"]));
                 $(row).children(".tbl-status").html(surveyService.addButtonForStatus(data, ["{{ trans('adminlte_lang::survey.draf') }}", "{{ trans('adminlte_lang::survey.published') }}"]));
                 $(row).children(".tbl-image_path").html(surveyService.addImageSurvey(data));
+                $(row).addClass(surveyService.changeColorRowDownloadList(row));
             },
             "columnDefs": [
                 {
