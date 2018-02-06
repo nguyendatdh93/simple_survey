@@ -167,7 +167,7 @@ class SurveyController extends Controller
     public function getSurveyForShowingDownloadList($surveys)
     {
 	    foreach ($surveys as $key => $survey) {
-		    if ($this->answerRepository->getNumberAnswersBySurveyId($survey['id']) > 0) {
+		    if ($this->answerRepository->getNumberAnswersBySurveyId($survey['id']) > 0 || $survey['del_flg'] == Survey::DELETE_FLG) {
 			    $surveys[$key]['number_answers'] = $this->answerRepository->getNumberAnswersBySurveyId($survey['id']);
 		    } else {
 			    unset($surveys[$key]);
@@ -724,6 +724,7 @@ class SurveyController extends Controller
                 }
 
                 $this->answerRepository->clearDataAnswersBySurveyId($id);
+	            $this->surveyRepository->updateDelFlgForClearData($id);
 
                 return redirect()->route(Survey::NAME_URL_DOWNLOAD_LIST)->with('alert_success', trans('adminlte_lang::survey.message_clear_data_success'));
             }catch (\Exception $e) {

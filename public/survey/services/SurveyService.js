@@ -25,7 +25,7 @@ SurveyService.prototype.addImageSurvey = function(data) {
 }
 
 SurveyService.prototype.addButtonForStatus = function(data, status) {
-    var html            = '',
+    var html                = '',
         class_button_status = '';
 
     if(data.indexOf(status[0]) >= 0) {
@@ -53,13 +53,15 @@ SurveyService.prototype.cutLineText = function(data, texts) {
 }
 
 
-SurveyService.prototype.addControlsForDownloadList = function(data, router, names) {
+SurveyService.prototype.addControlsForDownloadList = function(row, data, router, names) {
     var html                = '',
         url_redirect_detail = '';
 
-    url_redirect_detail = router[0] + "/" + data[0];
+    if (row.querySelectorAll( ".tbl-number_answers" )[0].innerText.trim() != '-') {
+        url_redirect_detail = router[0] + "/" + data[0];
 
-    html += '<a href="'+ url_redirect_detail +'" class="btn btn-default bg-olive jsbtn-controll" data-toggle="tooltip" title="'+ names[0] +'"><i class="glyphicon glyphicon-download-alt"></i></a>';
+        html += '<a href="'+ url_redirect_detail +'" class="btn btn-default bg-olive jsbtn-controll" data-toggle="tooltip" title="'+ names[0] +'"><i class="glyphicon glyphicon-download-alt"></i></a>';
+    }
 
     return html;
 }
@@ -89,6 +91,14 @@ SurveyService.prototype.addControlsForSurveyList = function(data, routers, names
     }
 
     return html;
+}
+
+SurveyService.prototype.changeColorRowDownloadList = function(row) {
+    if (row.querySelectorAll( ".tbl-number_answers" )[0].innerText.trim() == '-') {
+        return "row-deleted";
+    }
+
+    return '';
 }
 
 $(document).on('click', 'a.more' , function(event){
