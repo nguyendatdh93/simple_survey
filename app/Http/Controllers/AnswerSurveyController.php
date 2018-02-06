@@ -168,7 +168,8 @@ class AnswerSurveyController extends Controller
 			}
 			
 			$request->session()->put('answered' . $id, true);
-			
+			$request->session()->put('survey_id', $id);
+
 			return redirect()->route(Survey::NAME_URL_THANK_PAGE);
 		} catch (\Exception $e) {
 			return redirect('404');
@@ -187,8 +188,11 @@ class AnswerSurveyController extends Controller
 		}
 	}
 	
-	public function showThankPage()
+	public function showThankPage(Request $request)
 	{
+	    $id = $request->session()->pull('survey_id');
+        $request->session()->forget('answer' . $id);
+
 		return view('user.survey.answer.thank');
 	}
 }

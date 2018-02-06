@@ -52,8 +52,8 @@
                 <div class="panel panel-default">
                     <div class="box-header"></div>
                     <div class="box-body" style="padding: 5px; text-align: center;">
-                        @if(empty($survey['status']) || $survey['status'] == \App\Models\Survey::STATUS_SURVEY_DRAF)
-                            {!! FormSimple::button(trans('survey.label_choice_survey_draft_status'), ['data-status' => \App\Models\Survey::STATUS_SURVEY_DRAF, 'class' => 'btn btn-info jsSaveSurvey', 'icon' => 'glyphicon glyphicon-floppy-disk']) !!}
+                        @if(empty($survey['status']) || $survey['status'] == \App\Models\Survey::STATUS_SURVEY_DRAFT)
+                            {!! FormSimple::button(trans('survey.label_choice_survey_draft_status'), ['data-status' => \App\Models\Survey::STATUS_SURVEY_DRAFT, 'class' => 'btn btn-info jsSaveSurvey', 'icon' => 'glyphicon glyphicon-floppy-disk']) !!}
                             {!! FormSimple::button(trans('survey.label_choice_survey_publish_status'), ['data-status' => \App\Models\Survey::STATUS_SURVEY_PUBLISHED, 'class' => 'btn btn-warning jsSaveSurvey', 'icon' => 'glyphicon glyphicon-cloud-upload']) !!}
                         @endif
 
@@ -68,14 +68,16 @@
 
 	</div>
 
-    <div style="position: fixed; right: 50px; bottom: 100px; z-index: 99;">
-        <button onclick="preview('{{ empty($survey['preview_url']) ? '' : $survey['preview_url'] }}'); return false;"
-                data-toggle="tooltip"
-                title="{{ trans('survey.button_preview') }}"
-                class="btn fly-button jsPreview">
-            <i class="glyphicon glyphicon-search" style="font-size: xx-large;"></i>
-        </button>
-    </div>
+    @if(empty($survey['status']) || $survey['status'] == \App\Models\Survey::STATUS_SURVEY_DRAFT)
+        <div style="position: fixed; right: 50px; bottom: 100px; z-index: 99;">
+            <button onclick="preview('{{ empty($survey['preview_url']) ? '' : $survey['preview_url'] }}'); return false;"
+                    data-toggle="tooltip"
+                    title="{{ trans('survey.button_preview') }}"
+                    class="btn fly-button jsPreview">
+                <i class="glyphicon glyphicon-search" style="font-size: xx-large;"></i>
+            </button>
+        </div>
+    @endif
 
     <div class="modal fade" id="modal-confirm-box" style="display: none;">
         <div class="modal-dialog">
