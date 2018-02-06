@@ -222,6 +222,7 @@ class SurveyController extends Controller
      */
     public function showDownloadPageSurveyBySurveyId(Request $request, $id)
     {
+    	$survey         = $this->surveyRepository->getSurveyById($id);
         $list_questions = $this->questionRepository->getListQuestionBySurveyId($id);
         $answer_data    = $this->getAnswerForSurveyBySurveyID($id, $list_questions);
 
@@ -264,6 +265,7 @@ class SurveyController extends Controller
 
         $table_settings = array(
             'title'           => trans('adminlte_lang::survey.answer_download_table'),
+	        'table_title'     => $survey['name'],
             'id'              => 'download-page-table',
             'headers_columns' => $headers_columns,
             'controls'        => false,
