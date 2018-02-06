@@ -472,6 +472,11 @@
                         image_error = false;
                     }
                 };
+            } else {
+                if (image_error) {
+                    error.html('{{ trans('survey.error_incorrect_dimension') }}');
+                    error.show();
+                }
             }
 		}
 
