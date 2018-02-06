@@ -2,7 +2,7 @@
     var image_error = false;
 
 	$( document ).ready(function() {
-	    var survey_status = {{ empty($survey['status']) ? \App\Models\Survey::STATUS_SURVEY_DRAF : $survey['status'] }};
+	    var survey_status = {{ empty($survey['status']) ? \App\Models\Survey::STATUS_SURVEY_DRAFT : $survey['status'] }};
         if (survey_status == {{ \App\Models\Survey::STATUS_SURVEY_PUBLISHED }}) {
             $('input').attr('disabled', 'disabled');
             $('select').attr('disabled', 'disabled');
@@ -253,7 +253,7 @@
                 input = $("<input>").attr("type", "hidden").attr("name", 'survey_status').val(survey_status);
 
             survey_form.append($(input));
-            if (survey_status == '{{ \App\Models\Survey::STATUS_SURVEY_DRAF }}') {
+            if (survey_status == '{{ \App\Models\Survey::STATUS_SURVEY_DRAFT }}') {
                 survey_form.submit();
             } else if (survey_status == {{ \App\Models\Survey::STATUS_SURVEY_PUBLISHED }}) {
                 showConfirmBox('', '{{ trans('survey.confirm_publish_survey_content') }}', '{{ trans('survey.save_publish_survey') }}', '{{ trans('survey.cancel_publish_survey') }}', "$('#survey_form').submit();");

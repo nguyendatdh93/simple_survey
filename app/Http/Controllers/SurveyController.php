@@ -7,10 +7,9 @@ use App\Http\Middleware\SecureDownloadSurvey;
 use App\Http\Requests;
 use App\Http\Services\EncryptionService;
 use App\Http\Services\SurveyService;
-use App\Question;
+use App\Models\Survey;
+use App\Models\Question;
 use App\Repositories\Contracts\AnswerQuestionRepositoryInterface;
-use App\Repositories\Contracts\ConfirmContentRepositoryInterface;
-use App\Survey;
 use Illuminate\Http\Request;
 use App\Repositories\Contracts\SurveyRepositoryInterface;
 use App\Repositories\Contracts\QuestionRepositoryInterface;
@@ -143,7 +142,7 @@ class SurveyController extends Controller
     public function getDataSurveyForShowing($surveys)
     {
         foreach ($surveys as $key => $survey) {
-            if ($survey['status'] == Survey::STATUS_SURVEY_DRAF) {
+            if ($survey['status'] == Survey::STATUS_SURVEY_DRAFT) {
                 $surveys[$key]['status'] = trans('adminlte_lang::survey.draf');
             } elseif ($survey['status'] == Survey::STATUS_SURVEY_PUBLISHED) {
                 $surveys[$key]['status'] = trans('adminlte_lang::survey.published');
@@ -521,7 +520,7 @@ class SurveyController extends Controller
                 'name'        => $input['survey_name'],
                 'image_path'  => '',
                 'description' => $input['survey_description'],
-                'status'      => Survey::STATUS_SURVEY_DRAF
+                'status'      => Survey::STATUS_SURVEY_DRAFT
             ];
 
             $request->session()->put('preview_survey', $survey);
@@ -676,8 +675,12 @@ class SurveyController extends Controller
         }
         
         $survey->description = $input['survey_description'];
-        $survey->status      = empty($input['survey_status']) ? Survey::STATUS_SURVEY_DRAF : $input['survey_status'] ;
-        $survey              = $this->surveyRepository->save($survey);
+        $survey->status      = empty($input['survey_status']) ? Survey::STATUS_SURVEY_DRAFT : $input['survey_status'] ;
+        if ($survey->status == Survey::STATUS_SURVEY_PUBLISHED) {
+            $survey->published_at = date("Y-m-d h:i:s");
+        }
+
+        $survey = $this->surveyRepository->save($survey);
 
         return $survey;
     }

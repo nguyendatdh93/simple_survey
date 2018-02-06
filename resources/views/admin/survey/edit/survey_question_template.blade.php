@@ -24,12 +24,14 @@
 				<div class="form-group jsQuestion jsQuestionSimpleText row">
 					<div class="col-md-10">
 						<input type="text" class="form-control" placeholder="{{ trans('survey.single_text_placeholder') }}" disabled="disabled">
+						<p class="help-block">{{ trans('survey.survey_single_text_answer_limit_help_block') }}</p>
 					</div>
 				</div>
 
 				<div class="form-group jsQuestion jsQuestionLongAnswer row" style="display: none;">
 					<div class="col-md-10">
 						<textarea id="long_answer" class="form-control" rows="4" disabled="disabled" placeholder="{{ trans('survey.multi_text_placeholder') }}">{{ trans('survey.multi_text_placeholder') }}</textarea>
+						<p class="help-block">{{ trans('survey.survey_multi_text_answer_limit_help_block') }}</p>
 					</div>
 				</div>
 
@@ -45,6 +47,7 @@
 						</div>
 						<div class="col-md-10">
 							<input type="text" class="form-control jsQuestionConfirmationAgreeText jsInputLimit255" placeholder="{{ trans('survey.agree_text_placeholder') }}">
+							<p class="help-block">{{ trans('survey.agree_text_help_block') }}</p>
 							<p class="jsError" style="color: red; display: none;"></p>
 						</div>
 					</div>
