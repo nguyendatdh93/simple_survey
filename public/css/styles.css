@@ -39,3 +39,7 @@ a.jsLogout:hover {
  .jsbtn-controll {
      padding: 2px 6px;
  }
+
+ .row-deleted {
+     background-color: #e0e0e0 !important;
+ }

@@ -31,7 +31,6 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
         $result = $this->_model
 	                   ->select('*')
 	                   ->where('user_id', Auth::id())
-                       ->where('del_flg', 0)
                        ->get()
 	                   ->toArray();
 
@@ -46,8 +45,7 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
         $result = $this->_model
 	                   ->select('*')
                        ->where('user_id', Auth::id())
-                       ->where('status', '!=', Survey::STATUS_SURVEY_DRAFT)
-                       ->where('del_flg', 0)
+                       ->where('status', '!=', Survey::STATUS_SURVEY_DRAF)
 	                   ->orderBy('id','desc')
                        ->get()
 	                   ->toArray();
@@ -172,5 +170,14 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
 		               ->first();
 	
 	    return $result ? $result->toArray() : [];
+    }
+    
+    public function updateDelFlgForClearData($survey_id)
+    {
+	    if ($survey_id) {
+		    $this->_model
+			    ->where('id', $survey_id)
+			    ->update(['del_flg' => Survey::DELETE_FLG]);
+	    }
     }
 }
