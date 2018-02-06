@@ -35,7 +35,7 @@
 
 				<div class="form-group jsQuestion jsQuestionConfirmation row" style="display: none;">
 					<div class="col-md-12">
-						<textarea id="confirmation" class="form-control jsQuestionConfirmationText required jsInputLimit5000" rows="10"></textarea>
+						<textarea id="confirmation" class="form-control jsQuestionConfirmationText required" rows="10"></textarea>
 						<p class="help-block">{{ trans('survey.confirmation_help_block') }}</p>
 						<p class="jsError" style="color: red; display: none;"></p>
 					</div>

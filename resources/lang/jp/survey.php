@@ -49,7 +49,7 @@ return [
 	'time_created' => '回答日時',
 	
     'button_more' => 'もっと',
-    'button_less' => 'Less',
+    'button_less' => '閉じる',
     'answer_download_table' => "アンケート一覧",
     'button_download_csv' => 'CSVダウンロード',
     'button_clear_data' => 'データ削除',
@@ -66,7 +66,7 @@ return [
 	'survey_name_title' => 'アンケート名',
     'survey_name_help_block' => '* 最大255文字数',
     'survey_thumbnail_title' => 'ヘッダー画像',
-    'survey_thumbnail_help_block' => '※アップロードファイルを指定してください。サイズは5MBまでアップロードが可能です',
+    'survey_thumbnail_help_block' => '※アップロードファイルを指定してください。サイズは5MBまでアップロードが可能です (960 x 300ピクセル)',
     'survey_description_title' => '説明',
     'survey_description_help_block' => '※アップロードファイルの説明を記載することができます。（5,000文字まで）',
     'survey_header_box_title' => 'ヘッダー設定',
@@ -97,7 +97,7 @@ return [
     'alert_fail_create_survey'  => 'アンケード作成が失敗しました。',
 	'message_repquire'  => '必ず選択してください',
 	'message_confirm_condition' => '規約に承諾してください',
-	'error_incorrect_dimension' => 'Only allow image 960 x 300',
+	'error_incorrect_dimension' => '正しい形式で入力して下さい',
 	
 	
 	'column_csv_created_at' => '回答日時',

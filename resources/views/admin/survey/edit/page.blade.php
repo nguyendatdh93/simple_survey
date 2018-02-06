@@ -18,14 +18,14 @@
             @if (!empty($survey['id']))
                 <input type="hidden" name="survey_id" value="{{ $survey['id'] }}">
 
-                @if ($survey['status'] == \App\Survey::STATUS_SURVEY_PUBLISHED)
+                @if ($survey['status'] == \App\Models\Survey::STATUS_SURVEY_PUBLISHED)
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2">
                             <div class="box box-primary">
                                 <div class="box-body" style="padding-left: 30px; padding-right: 30px;">
                                     <div class="navbar-form navbar-right jsCopyUrlForm">
                                         <div class="form-group" style="float: left">
-                                            <label class="jsUrlDomainCopy">{{ route(\App\Survey::NAME_URL_ANSWER_SURVEY) }}/</label>
+                                            <label class="jsUrlDomainCopy">{{ route(\App\Models\Survey::NAME_URL_ANSWER_SURVEY) }}/</label>
                                             <input type="text" class="form-control jsUrlEncrypt" style="cursor: copy;" value="{{ $survey['encryption_url'] }}" placeholder="Search">
                                         </div>
                                         <a style="float: left; margin-left: 5px;color: #0072ef;cursor: pointer;" class="btn btn-link" style="color: dodgerblue" onclick="copyClipbroad()">{{ trans('adminlte_lang::survey.button_coppy_url') }}</a>
@@ -52,13 +52,13 @@
                 <div class="panel panel-default">
                     <div class="box-header"></div>
                     <div class="box-body" style="padding: 5px; text-align: center;">
-                        @if(empty($survey['status']) || $survey['status'] == \App\Survey::STATUS_SURVEY_DRAF)
-                            {!! FormSimple::button(trans('survey.label_choice_survey_draft_status'), ['data-status' => \App\Survey::STATUS_SURVEY_DRAF, 'class' => 'btn btn-info jsSaveSurvey', 'icon' => 'glyphicon glyphicon-floppy-disk']) !!}
-                            {!! FormSimple::button(trans('survey.label_choice_survey_publish_status'), ['data-status' => \App\Survey::STATUS_SURVEY_PUBLISHED, 'class' => 'btn btn-warning jsSaveSurvey', 'icon' => 'glyphicon glyphicon-cloud-upload']) !!}
+                        @if(empty($survey['status']) || $survey['status'] == \App\Models\Survey::STATUS_SURVEY_DRAF)
+                            {!! FormSimple::button(trans('survey.label_choice_survey_draft_status'), ['data-status' => \App\Models\Survey::STATUS_SURVEY_DRAF, 'class' => 'btn btn-info jsSaveSurvey', 'icon' => 'glyphicon glyphicon-floppy-disk']) !!}
+                            {!! FormSimple::button(trans('survey.label_choice_survey_publish_status'), ['data-status' => \App\Models\Survey::STATUS_SURVEY_PUBLISHED, 'class' => 'btn btn-warning jsSaveSurvey', 'icon' => 'glyphicon glyphicon-cloud-upload']) !!}
                         @endif
 
-                        @if(isset($survey['status']) && $survey['status'] == \App\Survey::STATUS_SURVEY_PUBLISHED)
-                            {!! FormSimple::button(trans('survey.label_choice_survey_close_status'), ['data-status' => \App\Survey::STATUS_SURVEY_CLOSED, 'class' => 'btn btn-danger jsCloseSurvey']) !!}
+                        @if(isset($survey['status']) && $survey['status'] == \App\Models\Survey::STATUS_SURVEY_PUBLISHED)
+                            {!! FormSimple::button(trans('survey.label_choice_survey_close_status'), ['data-status' => \App\Models\Survey::STATUS_SURVEY_CLOSED, 'class' => 'btn btn-danger jsCloseSurvey']) !!}
                         @endif
                     </div>
                     <div class="box-footer" style="border: none;"></div>
