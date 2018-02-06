@@ -13,45 +13,46 @@
 			<div class="box-body" style="padding-left: 30px; padding-right: 30px;">
 				<div class="form-group row">
 					<div class="col-md-3">
-						{!! FormSimple::label(trans('survey.survey_name_title'), ['for' => 'survey_name']) !!}
-						<span class="jsValidate">※必須</span>
+						<label for="survey_name">{{ trans('survey.survey_name_title') }}</label>
+						<span class="jsValidate">{{ trans('survey.require_text') }}</span>
 					</div>
 					<div class="col-md-9">
-						{!! FormSimple::input([
-							'type' => 'text',
-							'name' => 'survey_name',
-							'id' => 'survey_name',
-							'class' => 'form-control required jsInputLimit255',
-							'value' => empty($survey['name']) ? '' : $survey['name'],
-							'help-block' => trans('survey.survey_name_help_block')
-						]) !!}
+						<input type="text"
+							   name="survey_name"
+							   id="survey_name"
+							   value="{{ empty($survey['name']) ? '' : $survey['name'] }}"
+							   class="form-control required jsInputLimit255">
+						<p class="help-block">{{ trans('survey.survey_name_help_block') }}</p>
 						<p class="jsError" style="color: red; display: none;"></p>
 					</div>
 				</div>
 				<div class="form-group row">
 					<div class="col-md-3">
-						{!! FormSimple::label(trans('survey.survey_thumbnail_title'), ['for'=> 'survey_thumbnail']) !!}
+						<label for="survey_thumbnail">{{ trans('survey.survey_thumbnail_title') }}</label>
 					</div>
 					<div class="col-md-9">
 						<div class="jsSurveyThumbnailPreviewBox" style="width: 100%; margin-bottom: 5px; @if(empty($survey['image_path'])) display: none; @endif">
 							<img class="jsSurveyThumbnailPreview" src="{{ empty($survey['image_path']) ? 'no-image' : $survey['image_path'] }}" style="max-height: 200px; max-width: 200px;">
 						</div>
-						{!! FormSimple::input(['type' => 'file', 'name' => 'survey_thumbnail', 'id' => 'survey_thumbnail', 'class' => 'form-control', 'help-block' => trans('survey.survey_thumbnail_help_block')]) !!}
+						<input type="file"
+							   name="survey_thumbnail"
+							   id="survey_thumbnail"
+							   class="form-control">
+						<p class="help-block">{{ trans('survey.survey_thumbnail_help_block') }}</p>
 						<p class="jsError" style="color: red; display: none;"></p>
 					</div>
 				</div>
 				<div class="form-group row">
 					<div class="col-md-3">
-						{!! FormSimple::label(trans('survey.survey_description_title'), ['for'=> 'survey_description']) !!}
+						<label for="survey_description">{{ trans('survey.survey_description_title') }}</label>
 					</div>
 					<div class="col-md-9">
-						{!! FormSimple::textarea([
-							'name' => 'survey_description',
-							'id'=>'survey_description',
-							'class'=> 'form-control jsInputLimit5000',
-							'value' => empty($survey['description']) ? '' : $survey['description'],
-							'help-block' => trans('survey.survey_description_help_block')
-						]) !!}
+						<textarea id="survey_description"
+								  name="survey_description"
+								  class="form-control jsInputLimit5000">
+							{{ empty($survey['description']) ? '' : $survey['description'] }}
+						</textarea>
+						<p class="help-block">{{ trans('survey.survey_description_help_block') }}</p>
 						<p class="jsError" style="color: red; display: none;"></p>
 					</div>
 				</div>

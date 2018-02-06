@@ -8,7 +8,7 @@ class Survey extends Model
 {
     protected $table = "surveys";
 
-    const STATUS_SURVEY_DRAF       = 0;
+    const STATUS_SURVEY_DRAFT      = 0;
     const STATUS_SURVEY_PUBLISHED  = 1;
     const STATUS_SURVEY_CLOSED     = 2;
 	const STATUS_SURVEY_DOWNLOADED = 1;

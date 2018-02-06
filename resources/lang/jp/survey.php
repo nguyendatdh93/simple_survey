@@ -2,7 +2,7 @@
 
 return [
 	//login page
-	'signGoogle' => 'アンケート管理システム',
+	'signGoogle' => 'アカウントでログイン',
 	'error_sign_google' => 'アカウント（Gsuite）でログインしてください。',
 	
 	//header
@@ -81,6 +81,7 @@ return [
     'question_type_multi_choice' => '選択回答（チェック）',
     'question_type_confirmation' => '利用規約（等）',
     'require_toggle' => '必須',
+    'require_text' => '※必須',
 	'error_input_wrong_create_survey' => 'エラーが発生しました。',
 	'error_length_255_characters' => '最大255文字',
 	'error_length_5000_characters' => '最大5000文字',
@@ -93,13 +94,15 @@ return [
     'multi_text_placeholder' => '回答者の入力欄',
     'confirmation_help_block' => '',
     'agree_text_placeholder' => '利用規約の内容を入力してください',
+    'agree_text_help_block' => '※ Example: "上記の規約に同意します"',
     'alert_success_create_survey'  => 'アンケートを設定しました。',
     'alert_fail_create_survey'  => 'アンケード作成が失敗しました。',
 	'message_repquire'  => '必ず選択してください',
 	'message_confirm_condition' => '規約に承諾してください',
 	'error_incorrect_dimension' => '正しい形式で入力して下さい',
-	
-	
+	'survey_single_text_answer_limit_help_block' => '※ 255文字まで',
+	'survey_multi_text_answer_limit_help_block' => '※ 5,000文字まで',
+
 	'column_csv_created_at' => '回答日時',
 	'label_choice_survey_draft_status' => '下書き',
 	'label_choice_survey_publish_status' => '公開する',
