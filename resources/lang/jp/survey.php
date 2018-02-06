@@ -64,11 +64,11 @@ return [
     
 //	create/edit survey screen
 	'survey_name_title' => 'アンケート名',
-    'survey_name_help_block' => '* 最大255文字数',
+    'survey_name_help_block' => '※ 最大255文字数',
     'survey_thumbnail_title' => 'ヘッダー画像',
-    'survey_thumbnail_help_block' => '※アップロードファイルを指定してください。サイズは5MBまでアップロードが可能です (960 x 300ピクセル)',
+    'survey_thumbnail_help_block' => '※ アップロードファイルを指定してください。サイズは5MBまでアップロードが可能です (960 x 300ピクセル)',
     'survey_description_title' => '説明',
-    'survey_description_help_block' => '※アップロードファイルの説明を記載することができます。（5,000文字まで）',
+    'survey_description_help_block' => '※ アップロードファイルの説明を記載することができます。（5,000文字まで）',
     'survey_header_box_title' => 'ヘッダー設定',
     'survey_content_box_title' => 'アンケート設定',
     'survey_footer_box_title' => 'フッター設定',
