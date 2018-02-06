@@ -47,6 +47,7 @@ return [
 	
     'go_download_button' => 'ダウンロード画面へ',
 	'time_created' => '回答日時',
+	'status_deleted' => 'deleted',
 	
     'button_more' => 'もっと',
     'button_less' => '閉じる',

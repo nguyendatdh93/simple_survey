@@ -1,6 +1,7 @@
 function SurveyService() {
 }
 
+var surveyService = new SurveyService();
 SurveyService.prototype.showTrTagAfterLoadCompletedData = function() {
     $(document).on('change', '.dataTables_length select', function () {
         $('tr').show();
@@ -88,12 +89,18 @@ SurveyService.prototype.addControlsForSurveyList = function(data, routers, names
     return html;
 };
 
-SurveyService.prototype.changeColorRowDownloadList = function(row) {
+SurveyService.prototype.changeColorRowDownloadList = function(row, name) {
     if (row.querySelectorAll( ".tbl-number_answers" )[0].innerText.trim() == '-') {
+        surveyService.changeStatusSurveyToCleared(row, name);
+
         return "row-deleted";
     }
 
     return '';
+}
+
+SurveyService.prototype.changeStatusSurveyToCleared = function(row, name) {
+    row.querySelectorAll( ".tbl-status" )[0].querySelectorAll('span')[0].innerText = name;
 }
 
 $(document).on('click', 'a.more' , function(event){
