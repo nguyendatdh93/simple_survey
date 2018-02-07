@@ -7,7 +7,7 @@
 
 				<div class="box-tools pull-right">
 					<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-						<i class="fa fa-minus"></i></button>
+						<i class="glyphicon glyphicon-minus"></i></button>
 				</div>
 			</div>
 			<div class="box-body" style="padding-left: 30px; padding-right: 30px;">
