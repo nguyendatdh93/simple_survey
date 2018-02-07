@@ -197,6 +197,7 @@ class AnswerSurveyController extends Controller
 	{
 	    $id = $request->session()->pull('survey_id');
         $request->session()->forget('answer' . $id);
+		$request->session()->forget('answered' . $id);
 
 		return view('user.survey.answer.thank');
 	}
