@@ -130,6 +130,7 @@ class AnswerSurveyController extends Controller
 				}
 			}
 			
+            $survey['image_path']  = route(Survey::NAME_URL_SHOW_IMAGE).'/'.$this->surveyService->getImageName($survey['image_path']);
 			$survey['encrypt_url'] = $encrypt;
 			$request->session()->put('answer' . $id, $survey);
 			

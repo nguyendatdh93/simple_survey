@@ -90,6 +90,7 @@ class SurveyController extends Controller
                 ),
                 trans('adminlte_lang::survey.survey_list_table_header_column_status')       => 'status',
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_name')  => 'name',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_note')  => 'note',
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_image') => array(
                     'column' => 'image_path',
                     'type'   => 'image'
@@ -193,6 +194,7 @@ class SurveyController extends Controller
                 ),
                 trans('adminlte_lang::survey.survey_list_table_header_column_status')       => 'status',
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_name')  => 'name',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_note')  => 'note',
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_image') => array(
                     'column' => 'image_path',
                     'type'   => 'image'
@@ -564,6 +566,10 @@ class SurveyController extends Controller
             return view('admin::errors.404');
         }
 
+        if (!$this->surveyValidator->validateText($input['survey_note'], false)) {
+            return view('admin::errors.404');
+        }
+
         // validate survey header input
         if (!$this->surveyValidator->validateText($input['survey_name'])) {
             return view('admin::errors.404');
@@ -671,6 +677,7 @@ class SurveyController extends Controller
         }
 
         $survey->name    = $input['survey_name'];
+        $survey->note    = $input['survey_note'];
         $survey->user_id = $user_id;
         if ($file) {
             // upload file

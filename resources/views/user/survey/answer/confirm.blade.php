@@ -5,11 +5,15 @@
 @endsection
 
 @section('survey-header')
-    <h1 class="headline1"></h1>
+    @parent
 
     <!-- ▼変更可能エリア※div（headFreeArea）は固定なので変更しないで下さい -->
     <div class="headFreeArea">内容をご確認のうえ、「送信する」ボタンを押してください。</div>
 @endsection
+
+@section('survey-description')
+
+@stop
 
 @section("content")
     <form action="{{ route(\App\Survey::NAME_URL_SUBMIT_CONFIRM, ['encrypt' => isset($survey['encrypt_url']) ? $survey['encrypt_url'] : ""]) }}" method="GET" name="join_form">

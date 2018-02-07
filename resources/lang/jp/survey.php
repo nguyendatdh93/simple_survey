@@ -13,7 +13,7 @@ return [
     'published' => '公開中',
     'closed' => '終了',
     'menu_survey_list' => 'アンケート一覧',
-    'menu_survey_download' => 'Download survey list',
+    'menu_survey_download' => 'ダウンロード一覧',
     'confirm_publish_survey_content' => "このアンケートを公開しますか？",
     'save_publish_survey' => "公開する",
     'cancel_publish_survey' => "キャンセル",
@@ -66,6 +66,7 @@ return [
 //	create/edit survey screen
 	'survey_name_title' => 'アンケート名',
     'survey_name_help_block' => '※ 最大255文字数',
+    'survey_note_help_block' => '※ 最大255文字数',
     'survey_thumbnail_title' => 'ヘッダー画像',
     'survey_thumbnail_help_block' => '※ アップロードファイルを指定してください。サイズは5MBまでアップロードが可能です (960 x 300ピクセル)',
     'survey_description_title' => '説明',

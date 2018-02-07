@@ -15,9 +15,9 @@ SurveyService.prototype.showTrTagAfterLoadCompletedData = function() {
 SurveyService.prototype.addImageSurvey = function(data) {
     var html = '<div style="min-height: 35px;">';
 
-    if ($(data[3]).html() != '')
+    if ($(data[4]).html() != '')
     {
-        html += '<img style="height: 35px;" src="'+$(data[3]).html()+'" alt="Image" />';
+        html += '<img style="height: 35px;" src="'+$(data[4]).html()+'" alt="Image" />';
     }
 
     html += '</div>';

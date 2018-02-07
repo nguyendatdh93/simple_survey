@@ -469,10 +469,7 @@
                 var image = new Image();
                 image.src = _URL.createObjectURL(input_file);
                 image.onload = function() {
-                    console.log("The image width is " +this.width + " and image height is " + this.height);
-                    if (this.width != {{ \App\Models\Survey::THUMBNAIL_DIMENSION_WIDTH }}
-                        || this.height != {{ \App\Models\Survey::THUMBNAIL_DIMENSION_HEIGHT }}
-                    ) {
+                    if (this.width != {{ \App\Models\Survey::THUMBNAIL_DIMENSION_WIDTH }}) {
                         error.html('{{ trans('survey.error_incorrect_dimension') }}');
                         error.show();
                         image_error = true;

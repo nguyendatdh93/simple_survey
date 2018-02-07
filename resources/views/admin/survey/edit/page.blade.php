@@ -42,6 +42,7 @@
             @endif
 
             @include('admin::survey.edit.survey_question_template')
+            @include('admin::survey.edit.survey_note')
             @include('admin::survey.edit.survey_header')
             @include('admin::survey.edit.survey_content')
             @include('admin::survey.edit.survey_footer')
