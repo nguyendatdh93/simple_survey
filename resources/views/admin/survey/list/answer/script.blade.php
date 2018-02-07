@@ -42,12 +42,17 @@
             ],
             "language": {
                 "url" : "/setup-lang"
+            },
+            "drawCallback": function(settings) {
+                var pagination = $(this).closest('.dataTables_wrapper').find('.dataTables_paginate');
+                pagination.toggle(this.api().page.info().pages > 1);
             }
         });
 
         $(".jsButtonDownload").click(function () {
             var survey_status = '{{ isset($survey_status) ? $survey_status : -1 }}';
-            if ($('.jsButtonClearData').length == 0 && survey_status == '{{ \App\Models\Survey::STATUS_SURVEY_CLOSED }}') {
+            if ($('.jsButtonClearData').hasClass('jsbtn-disabled') && survey_status == '{{ \App\Models\Survey::STATUS_SURVEY_CLOSED }}') {
+                console.log('a');
                 timer();
             }
         });

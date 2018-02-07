@@ -43,3 +43,8 @@ a.jsLogout:hover {
  .row-deleted {
      background-color: #e0e0e0 !important;
  }
+
+ .jsbtn-disabled {
+     cursor: not-allowed;
+     opacity: 0.3 !important;
+ }

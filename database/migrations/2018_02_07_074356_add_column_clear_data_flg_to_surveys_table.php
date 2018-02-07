@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnDownloadedToSurveysTable extends Migration
+class AddColumnClearDataFlgToSurveysTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddColumnDownloadedToSurveysTable extends Migration
     public function up()
     {
 	    Schema::table('surveys', function (Blueprint $table) {
-		    $table->integer('downloaded')->default(0)->after('status');
+		    $table->integer('clear_data_flg')->default(0)->after('status');
 	    });
     }
 
@@ -26,7 +26,7 @@ class AddColumnDownloadedToSurveysTable extends Migration
     public function down()
     {
 	    Schema::table('surveys', function ($table) {
-		    $table->dropColumn('downloaded');
+		    $table->dropColumn('clear_data_flg');
 	    });
     }
 }
