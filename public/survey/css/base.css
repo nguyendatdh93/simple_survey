@@ -10,7 +10,7 @@
 
 /* 1 initialize
 ******************************************/
-body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td {
+body {
   margin: 0;
   padding: 0;
 }
@@ -29,9 +29,9 @@ address, caption, cite, code, dfn, th, var {
   font-weight: normal;
 }
 
-ol, ul {
-  list-style: none;
-}
+/*ol, ul {*/
+  /*list-style: none;*/
+/*}*/
 
 caption, th {
   text-align: left;
