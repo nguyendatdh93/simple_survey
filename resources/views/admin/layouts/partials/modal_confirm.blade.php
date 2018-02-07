@@ -1,15 +1,15 @@
 <div class="modal fade" id="{{ $settings['id'] }}" tabindex='-1'>
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" style="border: none; padding: 5px;">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">{{ $settings['title'] }}</h4>
+                {{--<h4 class="modal-title">{{ $settings['title'] }}</h4>--}}
             </div>
             <div class="modal-body">
                 <p>{{ $settings['content'] }}</p>
             </div>
-            <div class="modal-footer" style="text-align: center">
+            <div class="modal-footer" style="border: none; padding-top: 5px; padding-bottom: 15px; text-align: center;">
                 @foreach($settings['buttons'] as $button)
                     @if(\App\BaseWidget\Validator::checkIsButtonTag($button))
                         {!! \App\BaseWidget\Form::button($button['text'], $button['attributes']) !!}

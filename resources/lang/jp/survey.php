@@ -13,7 +13,7 @@ return [
     'published' => '公開中',
     'closed' => '終了',
     'menu_survey_list' => 'アンケート一覧',
-    'menu_survey_download' => 'アンケート一覧',
+    'menu_survey_download' => 'Download survey list',
     'confirm_publish_survey_content' => "このアンケートを公開しますか？",
     'save_publish_survey' => "公開する",
     'cancel_publish_survey' => "キャンセル",
@@ -24,7 +24,7 @@ return [
     'confirm_close_survey_title' => "確認",
     'confirm_close_survey_button_close' => "終了する",
     'confirm_close_survey_button_publish' => "Publish",
-	'confirm_button_cancel' => "キャンセール",
+	'confirm_button_cancel' => "キャンセル",
 	
     'survey_list_table_title' => "アンケート一覧",
 	'survey_list_table_download_title' => "アンケート一覧",
