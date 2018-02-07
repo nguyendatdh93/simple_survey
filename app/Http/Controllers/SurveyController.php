@@ -90,6 +90,7 @@ class SurveyController extends Controller
                 ),
                 trans('adminlte_lang::survey.survey_list_table_header_column_status')       => 'status',
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_name')  => 'name',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_note')  => 'note',
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_image') => array(
                     'column' => 'image_path',
                     'type'   => 'image'
@@ -167,7 +168,7 @@ class SurveyController extends Controller
     public function getSurveyForShowingDownloadList($surveys)
     {
 	    foreach ($surveys as $key => $survey) {
-		    if ($this->answerRepository->getNumberAnswersBySurveyId($survey['id']) > 0 || $survey['del_flg'] == Survey::DELETE_FLG) {
+		    if ($this->answerRepository->getNumberAnswersBySurveyId($survey['id']) > 0) {
 			    $surveys[$key]['number_answers'] = $this->answerRepository->getNumberAnswersBySurveyId($survey['id']);
 		    } else {
 			    unset($surveys[$key]);
@@ -193,6 +194,7 @@ class SurveyController extends Controller
                 ),
                 trans('adminlte_lang::survey.survey_list_table_header_column_status')       => 'status',
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_name')  => 'name',
+                trans('adminlte_lang::survey.survey_list_table_header_column_survey_note')  => 'note',
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_image') => array(
                     'column' => 'image_path',
                     'type'   => 'image'
@@ -250,17 +252,24 @@ class SurveyController extends Controller
             
 			$survey_is_downloaded = $this->surveyRepository->checkStatusSurveyIsDownloaded($id);
 			$status_survey        = $this->surveyRepository->getStatusSurvey($id);
-			if ($survey_is_downloaded['downloaded'] == Survey::STATUS_SURVEY_DOWNLOADED && $status_survey['status'] == Survey::STATUS_SURVEY_CLOSED) {
-				$buttons[] = array(
-					'text' => trans('adminlte_lang::survey.button_clear_data'),
-					'attributes' => array(
-						'class'       => 'btn bg-orange margin jsButtonClearData',
-						'icon'        => 'glyphicon glyphicon-trash',
-						'data-toggle' => "modal",
-						'data-target' => "#modal-confirm-clear-data-survey"
-					)
-				);
-			}
+	
+	        $class_disable_button_clear_data = '';
+	        $data_target_button_clear_data   = '';
+	        if ($survey_is_downloaded['downloaded'] != Survey::STATUS_SURVEY_DOWNLOADED) {
+		        $class_disable_button_clear_data = "jsbtn-disabled";
+	        } else {
+		        $data_target_button_clear_data = '#modal-confirm-clear-data-survey';
+	        }
+	        
+			$buttons[] = array(
+				'text' => trans('adminlte_lang::survey.button_clear_data'),
+				'attributes' => array(
+					'class'       => 'btn bg-orange margin jsButtonClearData '. $class_disable_button_clear_data,
+					'icon'        => 'glyphicon glyphicon-trash',
+					'data-toggle' => "modal",
+					'data-target' => $data_target_button_clear_data
+				)
+			);
         }
 
         $table_settings = array(
@@ -564,6 +573,10 @@ class SurveyController extends Controller
             return view('admin::errors.404');
         }
 
+        if (!$this->surveyValidator->validateText($input['survey_note'], false)) {
+            return view('admin::errors.404');
+        }
+
         // validate survey header input
         if (!$this->surveyValidator->validateText($input['survey_name'])) {
             return view('admin::errors.404');
@@ -671,6 +684,7 @@ class SurveyController extends Controller
         }
 
         $survey->name    = $input['survey_name'];
+        $survey->note    = $input['survey_note'];
         $survey->user_id = $user_id;
         if ($file) {
             // upload file
@@ -744,7 +758,7 @@ class SurveyController extends Controller
                 }
 
                 $this->answerRepository->clearDataAnswersBySurveyId($id);
-	            $this->surveyRepository->updateDelFlgForClearData($id);
+	            $this->surveyRepository->updateClearDataFlg($id);
 
                 return redirect()->route(Survey::NAME_URL_DOWNLOAD_LIST)->with('alert_success', trans('adminlte_lang::survey.message_clear_data_success'));
             }catch (\Exception $e) {

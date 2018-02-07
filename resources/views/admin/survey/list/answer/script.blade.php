@@ -6,7 +6,7 @@
                 array(
                     'text'  => trans('adminlte_lang::survey.confirm_button_cancel'),
                     'attributes' => array(
-                        'class'        => 'btn btn-danger',
+                        'class'        => 'btn btn-default',
                         'data-dismiss' => "modal",
                         'aria-label'   => "Close",
                     )
@@ -15,7 +15,7 @@
                     'text'  => trans('adminlte_lang::survey.confirm_button_clear_data'),
                     'href'  => route(\App\Survey::NAME_URL_CLEAR_DATA_SURVEY).'/'. (isset($survey_id) ? $survey_id : ''),
                     'attributes' => array(
-                        'class' => 'btn btn-success',
+                        'class' => 'btn bg-orange'
                     )
                 )
              )
@@ -42,12 +42,17 @@
             ],
             "language": {
                 "url" : "/setup-lang"
+            },
+            "drawCallback": function(settings) {
+                var pagination = $(this).closest('.dataTables_wrapper').find('.dataTables_paginate');
+                pagination.toggle(this.api().page.info().pages > 1);
             }
         });
 
         $(".jsButtonDownload").click(function () {
             var survey_status = '{{ isset($survey_status) ? $survey_status : -1 }}';
-            if ($('.jsButtonClearData').length == 0 && survey_status == '{{ \App\Models\Survey::STATUS_SURVEY_CLOSED }}') {
+            if ($('.jsButtonClearData').hasClass('jsbtn-disabled') && survey_status == '{{ \App\Models\Survey::STATUS_SURVEY_CLOSED }}') {
+                console.log('a');
                 timer();
             }
         });

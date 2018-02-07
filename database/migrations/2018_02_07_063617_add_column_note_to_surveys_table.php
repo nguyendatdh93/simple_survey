@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnDownloadedToSurveysTable extends Migration
+class AddColumnNoteToSurveysTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AddColumnDownloadedToSurveysTable extends Migration
      */
     public function up()
     {
-	    Schema::table('surveys', function (Blueprint $table) {
-		    $table->integer('downloaded')->default(0)->after('status');
-	    });
+        Schema::table('surveys', function (Blueprint $table) {
+            $table->string('note')->nullable()->after('name');
+        });
     }
 
     /**
@@ -25,8 +25,8 @@ class AddColumnDownloadedToSurveysTable extends Migration
      */
     public function down()
     {
-	    Schema::table('surveys', function ($table) {
-		    $table->dropColumn('downloaded');
-	    });
+        Schema::table('surveys', function ($table) {
+            $table->dropColumn('note');
+        });
     }
 }

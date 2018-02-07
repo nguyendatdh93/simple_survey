@@ -42,6 +42,7 @@
             @endif
 
             @include('admin::survey.edit.survey_question_template')
+            @include('admin::survey.edit.survey_note')
             @include('admin::survey.edit.survey_header')
             @include('admin::survey.edit.survey_content')
             @include('admin::survey.edit.survey_footer')
@@ -92,7 +93,7 @@
                 </div>
                 <div class="modal-footer" style="border: none; padding-top: 5px; padding-bottom: 15px; text-align: center;">
                     <button type="button" id="modal-confirm-box-btn-no" class="btn btn-default" data-dismiss="modal"></button>
-                    <button type="button" id="modal-confirm-box-btn-yes" class="btn btn-primary"></button>
+                    <button type="button" id="modal-confirm-box-btn-yes" class="btn"></button>
                 </div>
             </div>
         </div>

@@ -13,9 +13,9 @@ return [
     'published' => '公開中',
     'closed' => '終了',
     'menu_survey_list' => 'アンケート一覧',
-    'menu_survey_download' => 'アンケート一覧',
+    'menu_survey_download' => 'ダウンロード一覧',
     'confirm_publish_survey_content' => "このアンケートを公開しますか？",
-    'save_publish_survey' => "終了する",
+    'save_publish_survey' => "公開する",
     'cancel_publish_survey' => "キャンセル",
     'confirm_publish_survey_title' => "確認",
     'confirm_button_close' => "終了する",
@@ -24,7 +24,7 @@ return [
     'confirm_close_survey_title' => "確認",
     'confirm_close_survey_button_close' => "終了する",
     'confirm_close_survey_button_publish' => "Publish",
-	'confirm_button_cancel' => "キャンセール",
+	'confirm_button_cancel' => "キャンセル",
 	
     'survey_list_table_title' => "アンケート一覧",
 	'survey_list_table_download_title' => "アンケート一覧",
@@ -66,6 +66,7 @@ return [
 //	create/edit survey screen
 	'survey_name_title' => 'アンケート名',
     'survey_name_help_block' => '※ 最大255文字数',
+    'survey_note_help_block' => '※ 最大255文字数',
     'survey_thumbnail_title' => 'ヘッダー画像',
     'survey_thumbnail_help_block' => '※ アップロードファイルを指定してください。サイズは5MBまでアップロードが可能です (960 x 300ピクセル)',
     'survey_description_title' => '説明',
@@ -127,6 +128,7 @@ return [
 	
 	//answer survey
 	'htmlheader_title_answer_survey' => '問い合わせ',
+    'htmlheader_title_closed_survey' => 'このURLは有効期限が過ぎたため表示できません。',
 	'message_255_characters' => '255文字以内で入力してください。',
 	'message_5000_characters' => '5000文字以内で入力してください。',
 ];

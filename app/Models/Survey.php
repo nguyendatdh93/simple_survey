@@ -34,7 +34,8 @@ class Survey extends Model
     const NAME_URL_DOWNLOAD_PAGE_SURVEY = 'download-page-survey';
     const NAME_URL_CLEAR_DATA_SURVEY    = 'clear-data-survey';
 
-    const DELETE_FLG = 1;
+    const DELETE_FLG     = 1;
+	const CLEAR_DATA_FLG = 1;
 
     const THUMBNAIL_DIMENSION_WIDTH  = 960;
     const THUMBNAIL_DIMENSION_HEIGHT = 300;

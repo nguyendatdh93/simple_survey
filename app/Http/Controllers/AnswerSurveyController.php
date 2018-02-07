@@ -60,7 +60,11 @@ class AnswerSurveyController extends Controller
 	public function showQuestionSurvey(Request $request, $encrypt)
 	{
 		try {
-			$id            = $this->getIdSurveyFromEncryptCode($encrypt);
+			$id = $this->getIdSurveyFromEncryptCode($encrypt);
+            if (!$id) {
+                return view('admin::errors.404');
+            }
+
 			$surveyService = new SurveyService();
 			$answer        = array();
 			if ($request->session()->get('answer'. $id) != null) {
@@ -74,7 +78,7 @@ class AnswerSurveyController extends Controller
 			
 			$survey = $this->surveyRepository->getSurveyPublishedById($id);
 			if ($survey == false) {
-				return redirect('404');
+                return view('user::survey.answer.closed_page');
 			}
 			
 			$survey                = $surveyService->getDataAnswerForSurvey($survey, isset($answer['questions']) ? $answer['questions'] : array());
@@ -126,6 +130,7 @@ class AnswerSurveyController extends Controller
 				}
 			}
 			
+            $survey['image_path']  = route(Survey::NAME_URL_SHOW_IMAGE).'/'.$this->surveyService->getImageName($survey['image_path']);
 			$survey['encrypt_url'] = $encrypt;
 			$request->session()->put('answer' . $id, $survey);
 			
