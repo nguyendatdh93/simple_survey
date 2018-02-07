@@ -29,17 +29,8 @@
                 $(row).children(".tbl-image_path").html(surveyService.addImageSurvey(data));
             },
             "columnDefs": [
-                {
-                    targets: 2,
-                    {{--render: function (data, type, full, meta) {--}}
-                        {{--return surveyService.cutLineText(data,['{{ trans('adminlte_lang::survey.button_more') }}' , '{{ trans('adminlte_lang::survey.button_less') }}']);--}}
-                    {{--}--}}
-                },
-                { "targets": 3, "orderable" : false},
-                { "targets": 4, "orderable" : true},
-                { "targets": 5, "orderable" : true},
-                { "targets": 6, "orderable" : true},
-                { "targets": 7,"orderable" : false, "width": "70px"},
+                { "targets": 4, "orderable" : false},
+                { "targets": 8, "orderable" : false, "width": "70px"},
             ],
             "language": {
                 "url" : "/setup-lang"
