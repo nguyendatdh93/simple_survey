@@ -39,7 +39,7 @@
                 { "targets": 4, "orderable" : true},
                 { "targets": 5, "orderable" : true},
                 { "targets": 6, "orderable" : true},
-                { "targets": 7,"orderable" : false, "width": "95px"},
+                { "targets": 7,"orderable" : false, "width": "70px"},
             ],
             "language": {
                 "url" : "/setup-lang"
