@@ -15,8 +15,5 @@
     <!-- /.pagetop --></div>
 @show
 
-@section('preview-box')
-
-@show
 </body>
 </html>
