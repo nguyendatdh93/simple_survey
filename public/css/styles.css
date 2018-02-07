@@ -48,3 +48,13 @@ a.jsLogout:hover {
      cursor: not-allowed;
      opacity: 0.3 !important;
  }
+
+span.go-to-bottom {
+    font-size: 43px;
+    opacity: 0.3;
+    display: block;
+}
+
+span.go-to-bottom:hover {
+    opacity: 1;
+}

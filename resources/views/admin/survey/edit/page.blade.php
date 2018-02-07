@@ -80,6 +80,10 @@
         </div>
     @endif
 
+    <div style="position: fixed; right: 67px; top: 100px; z-index: 99;">
+        <span class="glyphicon glyphicon-circle-arrow-down go-to-bottom" data-toggle="tooltip" title="{{ trans('survey.go_to_bottom') }}"></span>
+    </div>
+
     <div class="modal fade" id="modal-confirm-box" style="display: none;">
         <div class="modal-dialog">
             <div class="modal-content">

@@ -116,4 +116,22 @@ $(document).on('click', 'a.less' , function(event){
     $(this).parent().hide().prev().show().prev().show();
 });
 
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+    var top = document.body.scrollTop > document.documentElement.scrollTop ? document.body.scrollTop : document.documentElement.scrollTop;
+
+    if (top < $('body').height() -$(window).height()) {
+        document.getElementsByClassName("go-to-bottom")[0].style.display = "block";
+    } else {
+        document.getElementsByClassName("go-to-bottom")[0].style.display = "none";
+    }
+}
+
+$('.go-to-bottom').click(function(){
+    $('html, body').animate({
+        scrollTop: $('body').height()
+    }, 1000);
+});
+
 
