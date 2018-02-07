@@ -146,10 +146,11 @@ class SurveyController extends Controller
                 $surveys[$key]['status'] = trans('adminlte_lang::survey.draf');
             } elseif ($survey['status'] == Survey::STATUS_SURVEY_PUBLISHED) {
                 $surveys[$key]['status'] = trans('adminlte_lang::survey.published');
+	            $surveys[$key]['name']   = '<a target = "_blank" href="'.route(\App\Models\Survey::NAME_URL_ANSWER_SURVEY).'/'.$this->encryptionService->encrypt($survey['id']).'"> '. $survey['name'] .'</a>';
             } else {
                 $surveys[$key]['status'] = trans('adminlte_lang::survey.closed');
             }
-
+	
             $surveys[$key]['number_answers'] = $this->showNumberAnswers($survey);
             if ($survey['image_path'] != null) {
 	            $surveys[$key]['image_path'] = \route(Survey::NAME_URL_SHOW_IMAGE).'/'.$this->surveyService->getImageName($survey['image_path']);
@@ -221,6 +222,7 @@ class SurveyController extends Controller
      */
     public function showDownloadPageSurveyBySurveyId(Request $request, $id)
     {
+    	$survey         = $this->surveyRepository->getSurveyById($id);
         $list_questions = $this->questionRepository->getListQuestionBySurveyId($id);
         $answer_data    = $this->getAnswerForSurveyBySurveyID($id, $list_questions);
 
@@ -263,6 +265,7 @@ class SurveyController extends Controller
 
         $table_settings = array(
             'title'           => trans('adminlte_lang::survey.answer_download_table'),
+	        'table_title'     => $survey['name'],
             'id'              => 'download-page-table',
             'headers_columns' => $headers_columns,
             'controls'        => false,
