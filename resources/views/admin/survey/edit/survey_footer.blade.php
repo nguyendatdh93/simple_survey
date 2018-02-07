@@ -11,7 +11,7 @@
 				<h3 class="box-title">{{ trans('survey.survey_footer_box_title') }}</h3>
 				<div class="box-tools pull-right">
 					<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-						<i class="fa fa-minus"></i></button>
+						<i class="glyphicon glyphicon-minus"></i></button>
 				</div>
 			</div>
 			<div class="box-body">

@@ -319,7 +319,7 @@ class SurveyController extends Controller
 		$survey_name_header = array();
 	    foreach ($headers_columns as $key => $column) {
 		    if ($key == 0) {
-			    $survey_name_header[$key] = $survey['name'];
+			    $survey_name_header[$key] = 'アンケート名 : ' . $survey['name'];
 		    } else {
 			    $survey_name_header[$key] = '';
 		    }
