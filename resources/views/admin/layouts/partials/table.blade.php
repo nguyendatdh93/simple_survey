@@ -1,7 +1,7 @@
 @include('admin::layouts.partials.alert_message')
 <div class="box">
     <div class="box-header">
-        {{--<h3 class="box-title">{{ isset($settings['title']) ? $settings['title'] : "" }}</h3>--}}
+        <h3 class="box-title">{{ isset($settings['table_title']) ? $settings['table_title'] : "" }}</h3>
         <div class="pull-right">
             @if(isset($settings['buttons']))
                 @foreach($settings['buttons'] as $button)
@@ -56,7 +56,7 @@
                                 <td class="tbl-{{$key_column['column']}}" style="display: none"> {{ $item[$key_column['column']] }} </td>
                             @endif
                         @else
-                            <td class="tbl-{{$key_column}}">{{ isset($item[$key_column]) ? $item[$key_column] : "-" }}</td>
+                            <td class="tbl-{{$key_column}}">{!! isset($item[$key_column]) ? $item[$key_column] : "-" !!}</td>
                         @endif
                     @endforeach
                     @if(isset($settings['controls']) && $settings['controls'] == true)

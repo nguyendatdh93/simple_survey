@@ -146,10 +146,11 @@ class SurveyController extends Controller
                 $surveys[$key]['status'] = trans('adminlte_lang::survey.draf');
             } elseif ($survey['status'] == Survey::STATUS_SURVEY_PUBLISHED) {
                 $surveys[$key]['status'] = trans('adminlte_lang::survey.published');
+	            $surveys[$key]['name']   = '<a target = "_blank" href="'.route(\App\Models\Survey::NAME_URL_ANSWER_SURVEY).'/'.$this->encryptionService->encrypt($survey['id']).'"> '. $survey['name'] .'</a>';
             } else {
                 $surveys[$key]['status'] = trans('adminlte_lang::survey.closed');
             }
-
+	
             $surveys[$key]['number_answers'] = $this->showNumberAnswers($survey);
             if ($survey['image_path'] != null) {
 	            $surveys[$key]['image_path'] = \route(Survey::NAME_URL_SHOW_IMAGE).'/'.$this->surveyService->getImageName($survey['image_path']);
@@ -221,6 +222,7 @@ class SurveyController extends Controller
      */
     public function showDownloadPageSurveyBySurveyId(Request $request, $id)
     {
+    	$survey         = $this->surveyRepository->getSurveyById($id);
         $list_questions = $this->questionRepository->getListQuestionBySurveyId($id);
         $answer_data    = $this->getAnswerForSurveyBySurveyID($id, $list_questions);
 
@@ -263,6 +265,7 @@ class SurveyController extends Controller
 
         $table_settings = array(
             'title'           => trans('adminlte_lang::survey.answer_download_table'),
+	        'table_title'     => $survey['name'],
             'id'              => 'download-page-table',
             'headers_columns' => $headers_columns,
             'controls'        => false,
@@ -284,6 +287,7 @@ class SurveyController extends Controller
      */
     public function downloadSurveyCSVFile($id)
     {
+    	$survey            = $this->surveyRepository->getSurveyById($id);
 	    $list_questions    = $this->questionRepository->getListQuestionBySurveyId($id);
 	    $headers_columns   = array_column($list_questions, 'text');
 	    $headers_columns[] = "created_at";
@@ -291,14 +295,26 @@ class SurveyController extends Controller
 		foreach ($headers_columns as $column) {
 			foreach ($answer_data as $key_answer => $answer) {
 				if (!in_array($column, array_keys($answer))) {
-					$answer_data[$key_answer][$column] = '';
+					$answer_data[$key_answer][$column] = '-';
 				}
 			}
 		}
-		
-		foreach ($answer_data as $key_answer => $answer) {
-			$answer_data[$key_answer] = array_merge(array_flip(array_values($headers_columns)), $answer);
+	
+	    $answer_data_ordered = array();
+		foreach ($answer_data as $key => $answer) {
+			foreach ($headers_columns as $column) {
+				$answer_data_ordered[$key][$column] = $answer[$column];
+			}
 		}
+		
+		$survey_name_header = array();
+	    foreach ($headers_columns as $key => $column) {
+		    if ($key == 0) {
+			    $survey_name_header[$key] = $survey['name'];
+		    } else {
+			    $survey_name_header[$key] = '';
+		    }
+	    }
 	    
         $headers = [
             'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0',
@@ -311,12 +327,13 @@ class SurveyController extends Controller
         ];
 		
 	    $headers_columns[array_search('created_at', $headers_columns)] = trans('adminlte_lang::survey.column_csv_created_at');
-        array_unshift($answer_data, $headers_columns);
-		
-        $callback = function() use ($answer_data)
+        array_unshift($answer_data_ordered, $headers_columns);
+		array_unshift($answer_data_ordered, $survey_name_header);
+        
+        $callback = function() use ($answer_data_ordered)
         {
             $FH = fopen('php://output', 'w');
-            foreach ($answer_data as $key => $row) {
+            foreach ($answer_data_ordered as $key => $row) {
                 fputcsv($FH, $row);
             }
             

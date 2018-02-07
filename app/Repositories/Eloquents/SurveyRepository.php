@@ -45,7 +45,7 @@ class SurveyRepository extends \EloquentRepository implements SurveyRepositoryIn
         $result = $this->_model
 	                   ->select('*')
                        ->where('user_id', Auth::id())
-                       ->where('status', '!=', Survey::STATUS_SURVEY_DRAF)
+                       ->where('status', '!=', Survey::STATUS_SURVEY_DRAFT)
 	                   ->orderBy('id','desc')
                        ->get()
 	                   ->toArray();

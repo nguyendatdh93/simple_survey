@@ -14,14 +14,14 @@
                 $(row).children(".tbl-control").html(surveyService.addControlsForDownloadList(row, data,["{{ route(\App\Survey::NAME_URL_DOWNLOAD_PAGE_SURVEY) }}"], ["{{ trans('adminlte_lang::survey.go_download_button') }}"]));
                 $(row).children(".tbl-status").html(surveyService.addButtonForStatus(data, ["{{ trans('adminlte_lang::survey.draf') }}", "{{ trans('adminlte_lang::survey.published') }}"]));
                 $(row).children(".tbl-image_path").html(surveyService.addImageSurvey(data));
-                $(row).addClass(surveyService.changeColorRowDownloadList(row));
+                $(row).addClass(surveyService.changeColorRowDownloadList(row,'{{ trans('adminlte_lang::survey.status_deleted') }}'));
             },
             "columnDefs": [
                 {
                     targets: 2,
-                    render: function (data, type, full, meta) {
-                        return surveyService.cutLineText(data,['{{ trans('adminlte_lang::survey.button_more') }}' , '{{ trans('adminlte_lang::survey.button_less') }}']);
-                    }
+                    {{--render: function (data, type, full, meta) {--}}
+                        {{--return surveyService.cutLineText(data,['{{ trans('adminlte_lang::survey.button_more') }}' , '{{ trans('adminlte_lang::survey.button_less') }}']);--}}
+                    {{--}--}}
                 },
                 { "targets": 3, "orderable" : false},
                 { "targets": 4, "orderable" : true},
