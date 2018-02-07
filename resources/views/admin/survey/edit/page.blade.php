@@ -92,7 +92,7 @@
                 </div>
                 <div class="modal-footer" style="border: none; padding-top: 5px; padding-bottom: 15px; text-align: center;">
                     <button type="button" id="modal-confirm-box-btn-no" class="btn btn-default" data-dismiss="modal"></button>
-                    <button type="button" id="modal-confirm-box-btn-yes" class="btn btn-primary"></button>
+                    <button type="button" id="modal-confirm-box-btn-yes" class="btn"></button>
                 </div>
             </div>
         </div>

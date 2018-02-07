@@ -256,7 +256,14 @@
             if (survey_status == '{{ \App\Models\Survey::STATUS_SURVEY_DRAFT }}') {
                 survey_form.submit();
             } else if (survey_status == {{ \App\Models\Survey::STATUS_SURVEY_PUBLISHED }}) {
-                showConfirmBox('', '{{ trans('survey.confirm_publish_survey_content') }}', '{{ trans('survey.save_publish_survey') }}', '{{ trans('survey.cancel_publish_survey') }}', "$('#survey_form').submit();");
+                showConfirmBox(
+                        '',
+                        '{{ trans('survey.confirm_publish_survey_content') }}',
+                        '{{ trans('survey.save_publish_survey') }}',
+                        '{{ trans('survey.cancel_publish_survey') }}',
+                        "$('#survey_form').submit();",
+                        'btn-warning'
+                );
             }
         } else {
             showConfirmBox('', '{{ trans('survey.error_input_wrong_create_survey') }}');
@@ -269,7 +276,8 @@
                 '{{ trans('survey.confirm_close_survey_content') }}',
                 '{{ trans('survey.confirm_button_close') }}',
                 '{{ trans('survey.cancel_publish_survey') }}',
-                'window.open("{{ route(\App\Models\Survey::NAME_URL_CLOSE_SURVEY,['id' => empty($survey['id']) ? '' : $survey['id']]) }}", "_self");'
+                'window.open("{{ route(\App\Models\Survey::NAME_URL_CLOSE_SURVEY,['id' => empty($survey['id']) ? '' : $survey['id']]) }}", "_self");',
+                'btn-danger'
         );
     });
 
@@ -497,12 +505,13 @@
         $('.jsSurveyThumbnailPreviewBox').show();
     }
 
-    function showConfirmBox(title, content, btn_yes_text, btn_no_text, btn_yes_action) {
+    function showConfirmBox(title, content, btn_yes_text, btn_no_text, btn_yes_action, btn_yes_class) {
     	title = title || '';
     	content = content || '';
 		btn_yes_text = btn_yes_text || '';
 		btn_no_text = btn_no_text || '';
 		btn_yes_action = btn_yes_action || '';
+        btn_yes_class = btn_yes_class || 'btn-primary';
 
     	var modal = $('#modal-confirm-box');
 		modal.find('.modal-title').html(title);
@@ -518,6 +527,7 @@
 				modal.find('#modal-confirm-box-btn-yes').attr('onclick', btn_yes_action);
 			}
 
+            modal.find('#modal-confirm-box-btn-yes').addClass(btn_yes_class);
 			modal.find('#modal-confirm-box-btn-yes').html(btn_yes_text);
 			modal.find('#modal-confirm-box-btn-yes').show();
 		}
