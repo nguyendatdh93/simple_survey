@@ -15,5 +15,8 @@
     <!-- /.pagetop --></div>
 @show
 
+@section('addition-script')
+@show
+
 </body>
 </html>
