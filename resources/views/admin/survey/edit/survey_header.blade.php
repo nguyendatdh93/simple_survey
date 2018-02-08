@@ -6,7 +6,7 @@
 				<h3 class="box-title">{{ trans('survey.survey_header_box_title') }}</h3>
 
 				<div class="box-tools pull-right">
-					<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+					<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="">
 						<i class="glyphicon glyphicon-minus"></i></button>
 				</div>
 			</div>
@@ -38,7 +38,7 @@
 							   name="survey_thumbnail"
 							   id="survey_thumbnail"
 							   class="form-control">
-						<p class="help-block">{{ trans('survey.survey_thumbnail_help_block') }}</p>
+						<p class="help-block">{!!  trans('survey.survey_thumbnail_help_block') !!}</p>
 						<p class="jsError" style="color: red; display: none;"></p>
 					</div>
 				</div>
