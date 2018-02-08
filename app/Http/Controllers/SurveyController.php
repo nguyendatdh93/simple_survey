@@ -89,8 +89,8 @@ class SurveyController extends Controller
 	                'type'   => 'hidden'
                 ),
                 trans('adminlte_lang::survey.survey_list_table_header_column_status')       => 'status',
+	            trans('adminlte_lang::survey.survey_list_table_header_column_survey_note')  => 'note',
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_name')  => 'name',
-                trans('adminlte_lang::survey.survey_list_table_header_column_survey_note')  => 'note',
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_image') => array(
                     'column' => 'image_path',
                     'type'   => 'image'
@@ -193,8 +193,8 @@ class SurveyController extends Controller
 	                'type'   => 'hidden'
                 ),
                 trans('adminlte_lang::survey.survey_list_table_header_column_status')       => 'status',
-                trans('adminlte_lang::survey.survey_list_table_header_column_survey_name')  => 'name',
-                trans('adminlte_lang::survey.survey_list_table_header_column_survey_note')  => 'note',
+	            trans('adminlte_lang::survey.survey_list_table_header_column_survey_note')  => 'note',
+	            trans('adminlte_lang::survey.survey_list_table_header_column_survey_name')  => 'name',
                 trans('adminlte_lang::survey.survey_list_table_header_column_survey_image') => array(
                     'column' => 'image_path',
                     'type'   => 'image'
