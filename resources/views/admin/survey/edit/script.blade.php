@@ -568,4 +568,26 @@
             }
         }
     }
+
+    window.onscroll = function() {scrollFunction()};
+
+    function scrollFunction() {
+        var top = document.body.scrollTop > document.documentElement.scrollTop ? document.body.scrollTop : document.documentElement.scrollTop;
+
+        if (top < $('body').height() -$(window).height()) {
+            if (document.getElementsByClassName("go-to-bottom")[0]) {
+                document.getElementsByClassName("go-to-bottom")[0].style.display = "block";
+            }
+        } else {
+            if (document.getElementsByClassName("go-to-bottom")[0]) {
+                document.getElementsByClassName("go-to-bottom")[0].style.display = "none";
+            }
+        }
+    }
+
+    $('.go-to-bottom').click(function(){
+        $('html, body').animate({
+            scrollTop: $('body').height()
+        }, 1000);
+    });
 </script>

@@ -105,7 +105,7 @@ return [
 	'error_incorrect_dimension' => '正しい形式で入力して下さい',
 	'survey_single_text_answer_limit_help_block' => '※ 255文字まで',
 	'survey_multi_text_answer_limit_help_block' => '※ 5,000文字まで',
-	'go_to_bottom' => "Go to bottom",
+	'go_to_bottom' => "",
 	'survey_note_box_title' => '管理用の設定',
 	'survey_note_title' => 'メモ',
 
