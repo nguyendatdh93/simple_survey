@@ -13,7 +13,8 @@
             $('.jsQuestionBox').find('span.btn-box-tool').hide();
             $('.jsQuestionBox').find('.box-footer').attr('style', 'padding: 0px 5px;');
             $('textarea').attr('disabled', 'disabled');
-            $('span.slider').css('cursor', 'not-allowed').css('opacity', '0.5')
+            $('span.slider').css('cursor', 'not-allowed').css('opacity', '0.5');
+            $('.jsRemoveSurveyThumbnail').hide();
         }
 
 		CKEDITOR.on("instanceCreated", function(event) {
