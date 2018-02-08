@@ -61,13 +61,11 @@ class SurveyValidator
 	}
 
     public function validateText($text, $require = true, $limit = 255) {
-        $filter = 'max:' . $limit;
-        if ($require) {
-            $filter = 'required|' . $filter;
+        if ($require && !$text) {
+            return false;
         }
 
-        $validator = Validator::make([$text], [$filter]);
-        if ($validator->fails()) {
+        if (mb_strlen($text) > $limit) {
             return false;
         }
 
