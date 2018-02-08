@@ -13,7 +13,7 @@
 			<div class="box-body" style="padding-left: 30px; padding-right: 30px;">
 				<div class="form-group row">
 					<div class="col-md-3">
-						<label for="survey_name">{{ trans('survey.survey_note_title') }}</label>
+						<label for="survey_note">{{ trans('survey.survey_note_title') }}</label>
 					</div>
 					<div class="col-md-9">
 						<input type="text"
