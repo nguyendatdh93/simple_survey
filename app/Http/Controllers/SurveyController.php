@@ -700,7 +700,7 @@ class SurveyController extends Controller
                 var_dump($e->getMessage());
                 return view('admin::errors.500');
             }
-        } elseif (!empty($input['duplicate_id'])) {
+        } elseif (!empty($input['duplicate_id']) && !empty($input['use_duplicating_survey_image'])) {
             $duplicate_survey   = $this->surveyRepository->getSurveyById($input['duplicate_id']);
             $survey->image_path = $duplicate_survey['image_path'];
         }

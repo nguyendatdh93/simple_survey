@@ -51,8 +51,8 @@
 														   name="question_{{ $question_number }}_text"
 														   class="form-control jsQuestionText required jsInputLimit255"
 														   value="{{ $question['text'] }}"
-														   placeholder="{{ trans('survey.survey_question_default_text') }}">
-													<p class="help-block">{{ trans('survey.survey_question_help_block_text') }}</p>
+														   placeholder="{{ trans('survey.survey_confirmation_default_text') }}">
+													<p class="help-block">{{ trans('survey.survey_confirmation_help_block_text') }}</p>
 													<p class="jsError" style="color: red; display: none;"></p>
 												</div>
 												<div class="col-md-3">
