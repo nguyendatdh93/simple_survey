@@ -31,8 +31,16 @@
 						<label for="survey_thumbnail">{{ trans('survey.survey_thumbnail_title') }}</label>
 					</div>
 					<div class="col-md-9">
-						<div class="jsSurveyThumbnailPreviewBox" style="width: 100%; margin-bottom: 5px; @if(empty($survey['image_path'])) display: none; @endif">
-							<img class="jsSurveyThumbnailPreview" src="{{ empty($survey['image_path']) ? 'no-image' : $survey['image_path'] }}" style="max-height: 200px; max-width: 200px;">
+						<div class="jsSurveyThumbnailPreviewBox"
+							 style="width: 100%; margin-bottom: 5px; position: relative;
+							 @if(empty($survey['image_path'])) display: none; @endif">
+							<img class="jsSurveyThumbnailPreview"
+								 src="{{ empty($survey['image_path']) ? 'no-image' : $survey['image_path'] }}"
+								 style="max-height: 200px; max-width: 200px;">
+							<span data-toggle="tooltip"
+								  data-original-title="削除"
+								  class="jsRemoveSurveyThumbnail glyphicon glyphicon-remove"
+								  style="position: absolute; top: 0; left: 205px;"></span>
 						</div>
 						<input type="file"
 							   name="survey_thumbnail"
