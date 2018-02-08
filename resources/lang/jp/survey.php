@@ -106,6 +106,8 @@ return [
 	'survey_single_text_answer_limit_help_block' => '※ 255文字まで',
 	'survey_multi_text_answer_limit_help_block' => '※ 5,000文字まで',
 	'go_to_bottom' => "Go to bottom",
+	'survey_note_box_title' => 'Memo',
+	'survey_note_title' => 'Survey note',
 
 	'column_csv_created_at' => '回答日時',
 	'label_choice_survey_draft_status' => '下書き',
