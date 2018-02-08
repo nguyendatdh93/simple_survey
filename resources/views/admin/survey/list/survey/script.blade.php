@@ -44,10 +44,12 @@
             "drawCallback": function(settings) {
                 var pagination = $(this).closest('.dataTables_wrapper').find('.dataTables_paginate');
                 pagination.toggle(this.api().page.info().pages > 1);
+            },
+            "initComplete": function(settings, json) {
+                $('.dataTables_filter').find('label').contents().first().replaceWith("検索(メモ,アンケート名) : ");
             }
         });
     });
 
     surveyService.showTrTagAfterLoadCompletedData();
-
 </script>
