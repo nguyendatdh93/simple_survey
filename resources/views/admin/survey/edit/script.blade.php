@@ -13,6 +13,7 @@
             $('.jsQuestionBox').find('span.btn-box-tool').hide();
             $('.jsQuestionBox').find('.box-footer').attr('style', 'padding: 0px 5px;');
             $('textarea').attr('disabled', 'disabled');
+            $('span.slider').css('cursor', 'not-allowed').css('opacity', '0.5')
         }
 
 		CKEDITOR.on("instanceCreated", function(event) {
@@ -69,22 +70,22 @@
 
 		question_box.children('.jsQuestion').hide();
 
-		if (question_type == 1) {
+		if (question_type == {{ \App\Models\Question::TYPE_SINGLE_TEXT }}) {
 			question_box.children(".jsQuestionSimpleText").show();
-		} else if (question_type == 2) {
+		} else if (question_type == {{ \App\Models\Question::TYPE_MULTI_TEXT }}) {
 			question_box.children(".jsQuestionLongAnswer").show();
-		} else if (question_type == 3 || question_type == 4) {
+		} else if (question_type == {{ \App\Models\Question::TYPE_SINGLE_CHOICE }} || question_type == {{ \App\Models\Question::TYPE_MULTI_CHOICE }}) {
 			var question_choices = question_box.children(".jsQuestionChoices");
 			question_choices.show();
 
-			if (question_type == 3) {
+			if (question_type == {{ \App\Models\Question::TYPE_SINGLE_CHOICE }}) {
 				question_choices.find('.jsQuestionChoice').hide();
 				question_choices.find('.jsQuestionSingleChoice').show();
-			} else if (question_type == 4) {
+			} else if (question_type == {{ \App\Models\Question::TYPE_MULTI_CHOICE }}) {
 				question_choices.find('.jsQuestionChoice').hide();
 				question_choices.find('.jsQuestionMultiSelect').show();
 			}
-		} else if (question_type == 5) {
+		} else if (question_type == {{ \App\Models\Question::TYPE_CONFIRMATION }}) {
 			question_box.children(".jsQuestionConfirmation").show();
 		}
 	});
@@ -190,15 +191,15 @@
 			$(this).find('.jsQuestionChoiceText').attr('name', 'question_' + max_number + '_choice_' + question_choice_number + '_text');
         });
 
-		if (question_category_value == {{ \App\Question::CATEGORY_CONTENT }}) {
+		if (question_category_value == {{ \App\Models\Question::CATEGORY_CONTENT }}) {
 			$(question_type).find('option').each(function () {
-				if ($(this).val() == {{ \App\Question::TYPE_CONFIRMATION }}) {
+				if ($(this).val() == {{ \App\Models\Question::TYPE_CONFIRMATION }}) {
 					$(this).remove();
 				}
 			});
-		} else if (question_category_value == {{ \App\Question::CATEGORY_FOOTER }}) {
+		} else if (question_category_value == {{ \App\Models\Question::CATEGORY_FOOTER }}) {
 			$(question_type).find('option').each(function () {
-				if ($(this).val() != {{ \App\Question::TYPE_CONFIRMATION }}) {
+				if ($(this).val() != {{ \App\Models\Question::TYPE_CONFIRMATION }}) {
 					$(this).remove();
 				}
 			});
@@ -357,7 +358,7 @@
             }
 
             var question_type = $($(this).find('.jsQuestionType')[0]).val();
-            if (question_type == 3 || question_type == 4) {
+            if (question_type == {{ \App\Models\Question::TYPE_SINGLE_CHOICE }} || question_type == {{ \App\Models\Question::TYPE_MULTI_CHOICE }}) {
                 if($(this).find('.jsQuestionChoiceBox').length == 0) {
                     question_valid = false;
                     var question_box_body = $(this).find('.box-body')[0];
@@ -375,7 +376,7 @@
                         return false;
                     }
                 });
-            } else if (question_type == 5) {
+            } else if (question_type == {{ \App\Models\Question::TYPE_CONFIRMATION }}) {
                 var question_confirmation_text = $(this).find('.jsQuestionConfirmationText')[0];
                 if (!validateText(question_confirmation_text)) {
                     question_valid = false;
@@ -452,12 +453,6 @@
 		error.hide();
 
 		if (input_file) {
-			if (input_file.size > 1024*1024*5) {
-				error.html('{{ trans('adminlte_lang::survey.error_limit_5mb') }}');
-				error.show();
-				return false;
-			}
-
 			if (input_file.type.split('/')[0] != 'image') {
 				error.html('{{ trans('adminlte_lang::survey.error_only_allow_file') }}');
 				error.show();
@@ -482,6 +477,12 @@
                     error.html('{{ trans('survey.error_incorrect_dimension') }}');
                     error.show();
                 }
+            }
+
+            if (input_file.size > 1024*1024*5) {
+                error.html('{{ trans('adminlte_lang::survey.error_limit_5mb') }}');
+                error.show();
+                return false;
             }
 		}
 
