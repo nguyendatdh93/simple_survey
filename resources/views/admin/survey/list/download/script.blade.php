@@ -17,8 +17,13 @@
                 $(row).addClass(surveyService.changeColorRowDownloadList(row,'{{ trans('adminlte_lang::survey.status_deleted') }}'));
             },
             "columnDefs": [
+                { "searchable": false, "targets": 0 },
+                { "searchable": false, "targets": 1 },
                 { "targets": 3, "width": "400px"},
-                { "targets": 4, "orderable" : false},
+                { "searchable": false, "targets": 4, "orderable" : false },
+                { "searchable": false, "targets": 5 },
+                { "searchable": false, "targets": 6 },
+                { "searchable": false, "targets": 7 },
                 { "targets": 8,"orderable" : false, "width": "50px"},
             ],
             "language": {
@@ -27,6 +32,9 @@
             "drawCallback": function(settings) {
                 var pagination = $(this).closest('.dataTables_wrapper').find('.dataTables_paginate');
                 pagination.toggle(this.api().page.info().pages > 1);
+            },
+            "initComplete": function(settings, json) {
+                $('.dataTables_filter').find('label').contents().first().replaceWith("検索(メモ,アンケート名) : ");
             }
         });
     });

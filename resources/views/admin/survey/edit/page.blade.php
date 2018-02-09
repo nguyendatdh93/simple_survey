@@ -39,6 +39,7 @@
 
             @if (!empty($survey['duplicate_id']))
                 <input type="hidden" name="duplicate_id" value="{{ $survey['duplicate_id'] }}">
+                <input type="hidden" name="use_duplicating_survey_image" value="1">
             @endif
 
             @include('admin::survey.edit.survey_question_template')

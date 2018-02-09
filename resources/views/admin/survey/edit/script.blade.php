@@ -204,6 +204,8 @@
 				}
 			});
 
+            new_question.find('.jsQuestionText').attr('placeholder', "{{ trans('survey.survey_confirmation_default_text') }}");
+            new_question.find('.jsQuestionText').parent().find('.help-block').html("{{ trans('survey.survey_confirmation_help_block_text') }}");
 			new_question.find('.jsQuestion').hide();
 			new_question.find('.jsQuestionConfirmation').show();
 			new_question.find('.jsQuestionRequiredBox').hide();
@@ -280,6 +282,19 @@
                 'window.open("{{ route(\App\Models\Survey::NAME_URL_CLOSE_SURVEY,['id' => empty($survey['id']) ? '' : $survey['id']]) }}", "_self");',
                 'btn-danger'
         );
+    });
+
+    $(document).on('click', '.jsRemoveSurveyThumbnail', function () {
+        $(this).parent().parent().find('input[name=survey_thumbnail]').val('');
+        $(this).parent().parent().find('.jsError').hide();
+        $(this).parent().hide();
+
+        if ($('input[name=use_duplicating_survey_image]').length) {
+            $('input[name=use_duplicating_survey_image]').val(0);
+        }
+
+        image_error = false;
+        sessionStorage.preview_image = 'no-image';
     });
 
     function preview(preview_url) {
@@ -484,7 +499,9 @@
                 error.show();
                 return false;
             }
-		}
+		} else {
+            image_error = false;
+        }
 
 		return true;
 	}
@@ -568,4 +585,26 @@
             }
         }
     }
+
+    window.onscroll = function() {scrollFunction()};
+
+    function scrollFunction() {
+        var top = document.body.scrollTop > document.documentElement.scrollTop ? document.body.scrollTop : document.documentElement.scrollTop;
+
+        if (top < $('body').height() -$(window).height()) {
+            if (document.getElementsByClassName("go-to-bottom")[0]) {
+                document.getElementsByClassName("go-to-bottom")[0].style.display = "block";
+            }
+        } else {
+            if (document.getElementsByClassName("go-to-bottom")[0]) {
+                document.getElementsByClassName("go-to-bottom")[0].style.display = "none";
+            }
+        }
+    }
+
+    $('.go-to-bottom').click(function(){
+        $('html, body').animate({
+            scrollTop: $('body').height()
+        }, 1000);
+    });
 </script>
