@@ -121,7 +121,7 @@ return [
     'tooltip_remove_question' => '削除する',
     'tooltip_remove_question_choice' => '選択肢を削除する',
     'tooltip_add_question_choice' => '選択肢を追加する',
-	'search_by' => '検索(メモ, アンケート名) :',
+	'search_by' => '検索（メモ、アンケート名）：',
 	
 	//preview page
 	'htmlheader_title_preview_draf' => 'プレビュー画面',

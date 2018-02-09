@@ -241,25 +241,32 @@ class SurveyController extends Controller
         $buttons = array();
         if ($this->answerRepository->getNumberAnswersBySurveyId($id) > 0)
         {
-            $buttons[] = array(
-                'text'  => trans('adminlte_lang::survey.button_download_csv'),
-                'href'  => \route(Survey::NAME_URL_DOWNLOAD_SURVEY).'/'.$id,
-                'attributes' => array(
-                    'class' => 'btn btn-primary jsButtonDownload',
-                    'icon'  => 'glyphicon glyphicon-cloud-download'
-                )
-            );
-            
 			$survey_is_downloaded = $this->surveyRepository->checkStatusSurveyIsDownloaded($id);
 			$status_survey        = $this->surveyRepository->getStatusSurvey($id);
 	
-	        $class_disable_button_clear_data = '';
-	        $data_target_button_clear_data   = '';
-	        if ($survey_is_downloaded['downloaded'] != Survey::STATUS_SURVEY_DOWNLOADED) {
+	        $class_disable_button_clear_data    = '';
+	        $data_target_button_clear_data      = '';
+	        $class_disable_button_download_data = '';
+	        $url_href_download_data             = \route(Survey::NAME_URL_DOWNLOAD_SURVEY).'/'.$id;
+	        
+	        if ($survey['status'] == Survey::STATUS_SURVEY_PUBLISHED || ($this->answerRepository->getNumberAnswersBySurveyId($id) == 0 && $survey['status'] == Survey::STATUS_SURVEY_CLOSED)) {
+		        $class_disable_button_download_data = "jsbtn-disabled";
+		        $class_disable_button_clear_data    = "jsbtn-disabled";
+		        $url_href_download_data             = '#';
+	        } elseif ($survey['status'] == Survey::STATUS_SURVEY_CLOSED && $survey_is_downloaded['downloaded'] != Survey::STATUS_SURVEY_DOWNLOADED) {
 		        $class_disable_button_clear_data = "jsbtn-disabled";
 	        } else {
 		        $data_target_button_clear_data = '#modal-confirm-clear-data-survey';
 	        }
+	        
+	        $buttons[] = array(
+		        'text'  => trans('adminlte_lang::survey.button_download_csv'),
+		        'href'  => $url_href_download_data,
+		        'attributes' => array(
+			        'class' => 'btn btn-primary jsButtonDownload ' . $class_disable_button_download_data,
+			        'icon'  => 'glyphicon glyphicon-cloud-download'
+		        )
+	        );
 	        
 			$buttons[] = array(
 				'text' => trans('adminlte_lang::survey.button_clear_data'),
@@ -447,11 +454,14 @@ class SurveyController extends Controller
 
         $survey['duplicate_id'] = $survey['id'];
         unset($survey['id']);
+        unset($survey['image_path']);
+	    unset($survey['description']);
+	    unset($survey['name']);
+	    unset($survey['note']);
         unset($survey['status']);
-        if ($survey['image_path']) {
-            $survey['image_path'] = \route('show-image'). '/' . $this->surveyService->getImageName($survey['image_path']);
-        }
-
+	    unset($survey['clear_data_flg']);
+	    unset($survey['downloaded_flg']);
+	    
         return view($layout, [
             'survey'         => $survey,
             'questions'      => $questions,
