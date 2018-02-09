@@ -34,7 +34,7 @@ return [
     'survey_list_table_header_column_id' => "Id",
     'survey_list_table_header_column_status' => "ステータス",
     'survey_list_table_header_column_survey_name' => "アンケート名",
-    'survey_list_table_header_column_survey_image' => "ヘッダー画像",
+    'survey_list_table_header_column_survey_image' => "メイン画像",
     'survey_list_table_header_column_survey_published_at' => "公開日",
     'survey_list_table_header_column_survey_closed_at' => "終了日",
     'survey_list_table_header_column_survey_number_answers' => "回答人数",
@@ -63,6 +63,7 @@ return [
     'button_preview' => 'プレビュー',
     'confirm_clear_data_title' => '確認',
     'confirm_clear_data_content' => 'このアンケートのデータを削除しますか？',
+	'status_deleted' => '削除済',
     
 //	create/edit survey screen
 	'survey_name_title' => 'アンケート名',
@@ -95,9 +96,9 @@ return [
 	'error_limit_5mb' => '最大5MB',
 	'error_no_choice' => '選択肢を設定ください',
     'choice_default_text' => '選択肢を入力してください ',
-    'single_text_placeholder' => '自由に回答してください',
-    'multi_text_placeholder' => '自由に回答してください',
-    'confirmation_help_block' => '利用規約の内容を入力してください。',
+    'single_text_placeholder' => '',
+    'multi_text_placeholder' => 'コメントをご記入下さい',
+    'confirmation_help_block' => '※利用規約を設定する入力欄です。',
     'agree_text_placeholder' => '利用規約に同意しますというチェックボックラベルを入力してください。',
     'agree_text_help_block' => '※例：「上記の規約に同意します。」',
     'alert_success_create_survey'  => 'アンケートを設定しました。',
@@ -121,7 +122,7 @@ return [
     'tooltip_remove_question' => '削除する',
     'tooltip_remove_question_choice' => '選択肢を削除する',
     'tooltip_add_question_choice' => '選択肢を追加する',
-	'search_by' => '検索(メモ,アンケート名):',
+	'search_by' => '検索（メモ、アンケート名）：',
 	
 	//preview page
 	'htmlheader_title_preview_draf' => 'プレビュー画面',

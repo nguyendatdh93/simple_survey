@@ -44,6 +44,8 @@ SurveyService.prototype.addButtonForStatus = function(data, status) {
         class_button_status = "label-info";
     } else if(data.indexOf(status[1]) >= 0) {
         class_button_status = "label-warning";
+    } else if(data.indexOf(status[2]) >= 0) {
+        class_button_status = "label-deleted";
     } else {
         class_button_status = "label-default";
     }
@@ -65,32 +67,25 @@ SurveyService.prototype.cutLineText = function(data, texts) {
     return html;
 };
 
+SurveyService.prototype.setWitdthColumn = function(row, className, maxWidth, minWidth) {
+    var nodeData = row.querySelectorAll( '.'+className )[0].innerHTML;
+    if (maxWidth != '') {
+        nodeData = '<div style="max-width: '+ maxWidth +'">'+ nodeData +'</div>';
+    }
 
-SurveyService.prototype.setMaxWitdthForSurveyName = function(row) {
-    var survey_name = row.querySelectorAll( ".tbl-name" )[0].innerHTML;
+    if (minWidth != '') {
+        nodeData = '<div style="min-width: '+ minWidth +'">'+ nodeData +'</div>';
+    }
 
-    survey_name = '<div style="max-width: 300px">'+ survey_name +'</div>'
-
-    return survey_name;
-};
-
-SurveyService.prototype.setMaxWitdthForSurveyNote = function(row) {
-    var survey_note = row.querySelectorAll( ".tbl-note" )[0].innerHTML;
-
-    survey_note = '<div style="max-width: 250px">'+ survey_note +'</div>'
-
-    return survey_note;
+    return nodeData;
 };
 
 SurveyService.prototype.addControlsForDownloadList = function(row, data, router, names) {
     var html                = '',
         url_redirect_detail = '';
 
-    if (row.querySelectorAll( ".tbl-number_answers" )[0].innerText.trim() != '-') {
-        url_redirect_detail = router[0] + "/" + data[0];
-
-        html += '<a href="'+ url_redirect_detail +'" class="btn btn-default bg-olive jsbtn-controll" data-toggle="tooltip" title="'+ names[0] +'"><i class="glyphicon glyphicon-download-alt"></i></a>';
-    }
+    url_redirect_detail = router[0] + "/" + data[0];
+    html += '<a href="'+ url_redirect_detail +'" class="btn btn-default bg-olive jsbtn-controll" data-toggle="tooltip" title="'+ names[0] +'"><i class="glyphicon glyphicon-download-alt"></i></a>';
 
     return html;
 };

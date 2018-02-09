@@ -58,3 +58,7 @@ span.go-to-bottom {
 span.go-to-bottom:hover {
     opacity: 1;
 }
+.label-deleted {
+    background-color: #7d7d7d;
+    color: #444;
+}
