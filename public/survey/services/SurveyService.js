@@ -55,6 +55,14 @@ SurveyService.prototype.cutLineText = function(data, texts) {
 };
 
 
+SurveyService.prototype.setMaxWitdthForSurveyName = function(row) {
+    var survey_name = row.querySelectorAll( ".tbl-name" )[0].innerText.trim();
+
+    survey_name = '<div style="max-width: 300px">'+ survey_name +'</div>'
+
+    return survey_name;
+};
+
 SurveyService.prototype.addControlsForDownloadList = function(row, data, router, names) {
     var html                = '',
         url_redirect_detail = '';
