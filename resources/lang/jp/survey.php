@@ -41,7 +41,7 @@ return [
 	'survey_list_table_header_column_survey_note' => 'メモ',
 	'detail' => 'プレビュー',
 	'copy_survey' => 'コピー',
-	'edit_survey'  => '削除済',
+	'edit_survey'  => '設定',
 	'go_to_edit' => '編集画面へ',
 	'go_to_edit_survey'  => '編集画面へ',
 	'button_coppy_url'  => 'URLコピー',
