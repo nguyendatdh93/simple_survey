@@ -5,12 +5,20 @@ var surveyService = new SurveyService();
 SurveyService.prototype.showTrTagAfterLoadCompletedData = function() {
     $(document).on('change', '.dataTables_length select', function () {
         $('tr').show();
+        setMaxWidthColumnTable();
     }).on('keyup', 'div.dataTables_filter :input', function () {
         $('tr').show();
+        setMaxWidthColumnTable();
     }).on('click', '.paginate_button', function () {
         $('tr').show();
+        setMaxWidthColumnTable();
     });
 };
+
+function setMaxWidthColumnTable() {
+    $('.tbl-name div').css('max-width', $('.tbl-name').width());
+    $('.tbl-note div').css('max-width', $('.tbl-note').width());
+}
 
 SurveyService.prototype.addImageSurvey = function(data) {
     var html = '<div style="min-height: 35px;">';
@@ -54,6 +62,22 @@ SurveyService.prototype.cutLineText = function(data, texts) {
     return html;
 };
 
+
+SurveyService.prototype.setMaxWitdthForSurveyName = function(row) {
+    var survey_name = row.querySelectorAll( ".tbl-name" )[0].innerHTML;
+
+    survey_name = '<div style="max-width: 300px">'+ survey_name +'</div>'
+
+    return survey_name;
+};
+
+SurveyService.prototype.setMaxWitdthForSurveyNote = function(row) {
+    var survey_note = row.querySelectorAll( ".tbl-note" )[0].innerHTML;
+
+    survey_note = '<div style="max-width: 250px">'+ survey_note +'</div>'
+
+    return survey_note;
+};
 
 SurveyService.prototype.addControlsForDownloadList = function(row, data, router, names) {
     var html                = '',

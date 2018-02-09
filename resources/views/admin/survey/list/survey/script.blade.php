@@ -27,16 +27,18 @@
                 $(row).children(".tbl-control").html(surveyService.addControlsForSurveyList(data, routers, names));
                 $(row).children(".tbl-status").html(surveyService.addButtonForStatus(data, ["{{ trans('adminlte_lang::survey.draf') }}", "{{ trans('adminlte_lang::survey.published') }}"]));
                 $(row).children(".tbl-image_path").html(surveyService.addImageSurvey(data));
+                $(row).children(".tbl-note").html(surveyService.setMaxWitdthForSurveyNote(row));
+                $(row).children(".tbl-name").html(surveyService.setMaxWitdthForSurveyName(row));
             },
             "columnDefs": [
                 { "searchable": false, "targets": 0 },
                 { "searchable": false, "targets": 1 },
-                { "searchable": false, "targets": 4 },
+//                { "targets": 3, "width": "400px"},
+                { "searchable": false, "targets": 4, "orderable" : false },
                 { "searchable": false, "targets": 5 },
                 { "searchable": false, "targets": 6 },
                 { "searchable": false, "targets": 7 },
-                { "targets": 4, "orderable" : false},
-                { "targets": 8, "orderable" : false, "width": "70px"},
+                { "targets": 8, "orderable" : false},
             ],
             "language": {
                 "url" : "/setup-lang"
@@ -46,7 +48,9 @@
                 pagination.toggle(this.api().page.info().pages > 1);
             },
             "initComplete": function(settings, json) {
-                $('.dataTables_filter').find('label').contents().first().replaceWith("検索(メモ,アンケート名) : ");
+                $('.dataTables_filter').find('label').contents().first().replaceWith('{{ trans('adminlte_lang::survey.search_by') }}');
+                $('.tbl-name div').css('max-width', $('.tbl-name').width());
+                $('.tbl-note div').css('max-width', $('.tbl-note').width());
             }
         });
     });
