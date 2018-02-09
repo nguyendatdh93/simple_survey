@@ -56,7 +56,7 @@ SurveyService.prototype.cutLineText = function(data, texts) {
 
 
 SurveyService.prototype.setMaxWitdthForSurveyName = function(row) {
-    var survey_name = row.querySelectorAll( ".tbl-name" )[0].innerText.trim();
+    var survey_name = row.querySelectorAll( ".tbl-name" )[0].innerHTML;
 
     survey_name = '<div style="max-width: 300px">'+ survey_name +'</div>'
 
