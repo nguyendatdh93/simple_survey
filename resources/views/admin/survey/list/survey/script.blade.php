@@ -27,6 +27,7 @@
                 $(row).children(".tbl-control").html(surveyService.addControlsForSurveyList(data, routers, names));
                 $(row).children(".tbl-status").html(surveyService.addButtonForStatus(data, ["{{ trans('adminlte_lang::survey.draf') }}", "{{ trans('adminlte_lang::survey.published') }}"]));
                 $(row).children(".tbl-image_path").html(surveyService.addImageSurvey(data));
+                $(row).children(".tbl-note").html(surveyService.setMaxWitdthForSurveyNote(row));
                 $(row).children(".tbl-name").html(surveyService.setMaxWitdthForSurveyName(row));
             },
             "columnDefs": [
@@ -49,6 +50,7 @@
             "initComplete": function(settings, json) {
                 $('.dataTables_filter').find('label').contents().first().replaceWith('{{ trans('adminlte_lang::survey.search_by') }}');
                 $('.tbl-name div').css('max-width', $('.tbl-name').width());
+                $('.tbl-note div').css('max-width', $('.tbl-note').width());
             }
         });
     });
