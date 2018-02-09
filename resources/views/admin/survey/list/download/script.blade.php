@@ -14,8 +14,9 @@
                 $(row).children(".tbl-control").html(surveyService.addControlsForDownloadList(row, data,["{{ route(\App\Survey::NAME_URL_DOWNLOAD_PAGE_SURVEY) }}"], ["{{ trans('adminlte_lang::survey.go_download_button') }}"]));
                 $(row).children(".tbl-status").html(surveyService.addButtonForStatus(data, ["{{ trans('adminlte_lang::survey.draf') }}", "{{ trans('adminlte_lang::survey.published') }}"]));
                 $(row).children(".tbl-image_path").html(surveyService.addImageSurvey(data));
-                $(row).addClass(surveyService.changeColorRowDownloadList(row,'{{ trans('adminlte_lang::survey.status_deleted') }}'));
-                $(row).children(".tbl-name").html(surveyService.setMaxWitdthForSurveyName(row));
+                $(row).children(".tbl-note").html(surveyService.setWitdthColumn(row, 'tbl-note', '250px',''));
+                $(row).children(".tbl-name").html(surveyService.setWitdthColumn(row, 'tbl-name', '300px',''));
+                $(row).children(".tbl-control").html(surveyService.setWitdthColumn(row, 'tbl-control', '', '50px'));
             },
             "columnDefs": [
                 { "searchable": false, "targets": 0 },

@@ -34,7 +34,7 @@ return [
     'survey_list_table_header_column_id' => "Id",
     'survey_list_table_header_column_status' => "ステータス",
     'survey_list_table_header_column_survey_name' => "アンケート名",
-    'survey_list_table_header_column_survey_image' => "ヘッダー画像",
+    'survey_list_table_header_column_survey_image' => "メイン画像",
     'survey_list_table_header_column_survey_published_at' => "公開日",
     'survey_list_table_header_column_survey_closed_at' => "終了日",
     'survey_list_table_header_column_survey_number_answers' => "回答人数",
@@ -121,7 +121,7 @@ return [
     'tooltip_remove_question' => '削除する',
     'tooltip_remove_question_choice' => '選択肢を削除する',
     'tooltip_add_question_choice' => '選択肢を追加する',
-	'search_by' => '検索(メモ,アンケート名):',
+	'search_by' => '検索(メモ, アンケート名) :',
 	
 	//preview page
 	'htmlheader_title_preview_draf' => 'プレビュー画面',

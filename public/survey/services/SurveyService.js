@@ -65,21 +65,17 @@ SurveyService.prototype.cutLineText = function(data, texts) {
     return html;
 };
 
+SurveyService.prototype.setWitdthColumn = function(row, className, maxWidth, minWidth) {
+    var nodeData = row.querySelectorAll( '.'+className )[0].innerHTML;
+    if (maxWidth != '') {
+        nodeData = '<div style="max-width: '+ maxWidth +'">'+ nodeData +'</div>';
+    }
 
-SurveyService.prototype.setMaxWitdthForSurveyName = function(row) {
-    var survey_name = row.querySelectorAll( ".tbl-name" )[0].innerHTML;
+    if (minWidth != '') {
+        nodeData = '<div style="min-width: '+ minWidth +'">'+ nodeData +'</div>';
+    }
 
-    survey_name = '<div style="max-width: 300px">'+ survey_name +'</div>'
-
-    return survey_name;
-};
-
-SurveyService.prototype.setMaxWitdthForSurveyNote = function(row) {
-    var survey_note = row.querySelectorAll( ".tbl-note" )[0].innerHTML;
-
-    survey_note = '<div style="max-width: 250px">'+ survey_note +'</div>'
-
-    return survey_note;
+    return nodeData;
 };
 
 SurveyService.prototype.addControlsForDownloadList = function(row, data, router, names) {
