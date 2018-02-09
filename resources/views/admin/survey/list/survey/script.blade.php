@@ -37,7 +37,7 @@
                 { "searchable": false, "targets": 5 },
                 { "searchable": false, "targets": 6 },
                 { "searchable": false, "targets": 7 },
-                { "targets": 8, "orderable" : false, "width": "50px"},
+                { "targets": 8, "orderable" : false},
             ],
             "language": {
                 "url" : "/setup-lang"
