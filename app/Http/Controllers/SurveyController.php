@@ -151,7 +151,11 @@ class SurveyController extends Controller
             } else {
                 $surveys[$key]['status'] = trans('adminlte_lang::survey.closed');
             }
-	
+	        
+            if ($survey['clear_data_flg'] == Survey::CLEAR_DATA_FLG) {
+	            $surveys[$key]['status'] = trans('adminlte_lang::survey.status_deleted');
+            }
+            
             $surveys[$key]['number_answers'] = $this->showNumberAnswers($survey);
             if ($survey['image_path'] != null) {
 	            $surveys[$key]['image_path'] = \route(Survey::NAME_URL_SHOW_IMAGE).'/'.$this->surveyService->getImageName($survey['image_path']);

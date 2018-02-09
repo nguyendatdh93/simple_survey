@@ -25,7 +25,7 @@
             'lengthMenu'  : [ {!! implode(',', \App\BaseWidget\Form::SETTING_LENGHT_MENU_DATATABLE)  !!}],
             'createdRow' : function( row, data, dataIndex ) {
                 $(row).children(".tbl-control").html(surveyService.addControlsForSurveyList(data, routers, names));
-                $(row).children(".tbl-status").html(surveyService.addButtonForStatus(data, ["{{ trans('adminlte_lang::survey.draf') }}", "{{ trans('adminlte_lang::survey.published') }}"]));
+                $(row).children(".tbl-status").html(surveyService.addButtonForStatus(data, ["{{ trans('adminlte_lang::survey.draf') }}", "{{ trans('adminlte_lang::survey.published') }}", "{{ trans('adminlte_lang::survey.status_deleted') }}"]));
                 $(row).children(".tbl-image_path").html(surveyService.addImageSurvey(data));
                 $(row).children(".tbl-note").html(surveyService.setWitdthColumn(row, 'tbl-note', '250px',''));
                 $(row).children(".tbl-name").html(surveyService.setWitdthColumn(row, 'tbl-name', '300px',''));

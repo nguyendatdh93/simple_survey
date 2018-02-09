@@ -63,6 +63,7 @@ return [
     'button_preview' => 'プレビュー',
     'confirm_clear_data_title' => '確認',
     'confirm_clear_data_content' => 'このアンケートのデータを削除しますか？',
+	'status_deleted' => '削除済',
     
 //	create/edit survey screen
 	'survey_name_title' => 'アンケート名',

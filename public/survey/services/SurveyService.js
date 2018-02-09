@@ -44,6 +44,8 @@ SurveyService.prototype.addButtonForStatus = function(data, status) {
         class_button_status = "label-info";
     } else if(data.indexOf(status[1]) >= 0) {
         class_button_status = "label-warning";
+    } else if(data.indexOf(status[2]) >= 0) {
+        class_button_status = "label-deleted";
     } else {
         class_button_status = "label-default";
     }
