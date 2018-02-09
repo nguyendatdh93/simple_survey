@@ -29,6 +29,7 @@
                 $(row).children(".tbl-image_path").html(surveyService.addImageSurvey(data));
             },
             "columnDefs": [
+                { "targets": 3, "width": "400px"},
                 { "targets": 4, "orderable" : false},
                 { "targets": 8, "orderable" : false, "width": "70px"},
             ],

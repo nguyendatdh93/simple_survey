@@ -17,6 +17,7 @@
                 $(row).addClass(surveyService.changeColorRowDownloadList(row,'{{ trans('adminlte_lang::survey.status_deleted') }}'));
             },
             "columnDefs": [
+                { "targets": 3, "width": "400px"},
                 { "targets": 4, "orderable" : false},
                 { "targets": 8,"orderable" : false, "width": "50px"},
             ],
