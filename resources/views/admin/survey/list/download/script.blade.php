@@ -19,13 +19,11 @@
             "columnDefs": [
                 { "searchable": false, "targets": 0 },
                 { "searchable": false, "targets": 1 },
-                { "searchable": false, "targets": 4 },
+                { "targets": 3, "width": "400px"},
+                { "searchable": false, "targets": 4, "orderable" : false },
                 { "searchable": false, "targets": 5 },
                 { "searchable": false, "targets": 6 },
                 { "searchable": false, "targets": 7 },
-                { "targets": 4, "orderable" : false},
-                { "targets": 4, "orderable" : false},
-                { "targets": 4, "orderable" : false},
                 { "targets": 8,"orderable" : false, "width": "50px"},
             ],
             "language": {

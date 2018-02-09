@@ -1,6 +1,21 @@
 <?php
 
 return [
+	//login page
+	'signGoogle' => 'Login by account company',
+	'error_sign_google' => 'Please login by account company',
+	
+	//header
+	'logout' => 'Logout',
+	'survey_list_table_header_column_survey_note' => 'Survey note',
+	'label_choice_survey_draft_status' => 'Draft',
+	'label_choice_survey_publish_status' => 'Publish',
+	'cancel_publish_survey' => "Cancel",
+	'save_publish_survey' => "Publish",
+	'label_choice_survey_close_status' => 'Close',
+	'survey_note_box_title' => 'Survey note',
+	'survey_note_title' => 'Note',
+	'require_text' => '※ require',
     'draf' => 'Draf',
     'published' => 'Published',
     'closed' => 'Closed',
