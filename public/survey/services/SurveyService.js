@@ -84,11 +84,8 @@ SurveyService.prototype.addControlsForDownloadList = function(row, data, router,
     var html                = '',
         url_redirect_detail = '';
 
-    if (row.querySelectorAll( ".tbl-number_answers" )[0].innerText.trim() != '-') {
-        url_redirect_detail = router[0] + "/" + data[0];
-
-        html += '<a href="'+ url_redirect_detail +'" class="btn btn-default bg-olive jsbtn-controll" data-toggle="tooltip" title="'+ names[0] +'"><i class="glyphicon glyphicon-download-alt"></i></a>';
-    }
+    url_redirect_detail = router[0] + "/" + data[0];
+    html += '<a href="'+ url_redirect_detail +'" class="btn btn-default bg-olive jsbtn-controll" data-toggle="tooltip" title="'+ names[0] +'"><i class="glyphicon glyphicon-download-alt"></i></a>';
 
     return html;
 };
