@@ -12,6 +12,9 @@ SurveyService.prototype.showTrTagAfterLoadCompletedData = function() {
     }).on('click', '.paginate_button', function () {
         $('tr').show();
         setMaxWidthColumnTable();
+    }).on('click', 'table th', function () {
+        $('tr').show();
+        setMaxWidthColumnTable();
     });
 };
 
