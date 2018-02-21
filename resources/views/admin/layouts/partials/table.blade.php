@@ -55,6 +55,8 @@
                             @if($key_column['type'] == \App\BaseWidget\Validator::TYPE_HIDDEN)
                                 <td class="tbl-{{$key_column['column']}}" style="display: none"> {{ $item[$key_column['column']] }} </td>
                             @endif
+                        @elseif($key_column == 'note')
+                            <td class="tbl-{{$key_column}}">{!! isset($item[$key_column]) ? $item[$key_column] : "" !!}</td>
                         @else
                             <td class="tbl-{{$key_column}}">{!! isset($item[$key_column]) ? $item[$key_column] : "-" !!}</td>
                         @endif
