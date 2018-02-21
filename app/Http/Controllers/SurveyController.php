@@ -132,6 +132,10 @@ class SurveyController extends Controller
         if ($this->answerRepository->getNumberAnswersBySurveyId($survey['id']) > 0) {
             return $this->answerRepository->getNumberAnswersBySurveyId($survey['id']);
         }
+	
+	    if ($survey['status'] == Survey::STATUS_SURVEY_PUBLISHED || ($survey['status'] == Survey::STATUS_SURVEY_CLOSED && $survey['clear_data_flg'] != Survey::CLEAR_DATA_FLG)) {
+		    return '0';
+	    }
 
         return '-';
     }
