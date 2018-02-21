@@ -78,6 +78,20 @@ input:checked + .slider:before {
 :-moz-placeholder { /* Firefox 18- */
     font-size: 10px;
 }
+.form-control[disabled], fieldset[disabled] .form-control::-webkit-input-placeholder {
+    font-size: 10px !important;
+    color:#bbb6b6;
+}
+
+.form-control[disabled], fieldset[disabled] .form-control:-moz-placeholder { /* Firefox 18- */
+    font-size: 10px !important;
+    color:#bbb6b6;
+}
+
+.form-control[disabled], fieldset[disabled] .form-control::-moz-placeholder {  /* Firefox 19+ */
+    font-size: 10px !important;
+    color:#bbb6b6;
+}
 
 .jsQuestionBox {
     margin-top: 30px;

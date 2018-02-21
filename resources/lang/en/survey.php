@@ -13,6 +13,7 @@ return [
 	'cancel_publish_survey' => "Cancel",
 	'save_publish_survey' => "Publish",
 	'label_choice_survey_close_status' => 'Close',
+	'search_by' => 'Search(Survey note, Survey name):',
 	'survey_note_box_title' => 'Survey note',
 	'survey_note_title' => 'Note',
 	'require_text' => '※ require',

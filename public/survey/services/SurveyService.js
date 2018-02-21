@@ -5,12 +5,23 @@ var surveyService = new SurveyService();
 SurveyService.prototype.showTrTagAfterLoadCompletedData = function() {
     $(document).on('change', '.dataTables_length select', function () {
         $('tr').show();
+        setMaxWidthColumnTable();
     }).on('keyup', 'div.dataTables_filter :input', function () {
         $('tr').show();
+        setMaxWidthColumnTable();
     }).on('click', '.paginate_button', function () {
         $('tr').show();
+        setMaxWidthColumnTable();
+    }).on('click', 'table th', function () {
+        $('tr').show();
+        setMaxWidthColumnTable();
     });
 };
+
+function setMaxWidthColumnTable() {
+    $('.tbl-name div').css('max-width', $('.tbl-name').width());
+    $('.tbl-note div').css('max-width', $('.tbl-note').width());
+}
 
 SurveyService.prototype.addImageSurvey = function(data) {
     var html = '<div style="min-height: 35px;">';
@@ -33,6 +44,8 @@ SurveyService.prototype.addButtonForStatus = function(data, status) {
         class_button_status = "label-info";
     } else if(data.indexOf(status[1]) >= 0) {
         class_button_status = "label-warning";
+    } else if(data.indexOf(status[2]) >= 0) {
+        class_button_status = "label-deleted";
     } else {
         class_button_status = "label-default";
     }
@@ -54,16 +67,25 @@ SurveyService.prototype.cutLineText = function(data, texts) {
     return html;
 };
 
+SurveyService.prototype.setWitdthColumn = function(row, className, maxWidth, minWidth) {
+    var nodeData = row.querySelectorAll( '.'+className )[0].innerHTML;
+    if (maxWidth != '') {
+        nodeData = '<div style="max-width: '+ maxWidth +'">'+ nodeData +'</div>';
+    }
+
+    if (minWidth != '') {
+        nodeData = '<div style="min-width: '+ minWidth +'">'+ nodeData +'</div>';
+    }
+
+    return nodeData;
+};
 
 SurveyService.prototype.addControlsForDownloadList = function(row, data, router, names) {
     var html                = '',
         url_redirect_detail = '';
 
-    if (row.querySelectorAll( ".tbl-number_answers" )[0].innerText.trim() != '-') {
-        url_redirect_detail = router[0] + "/" + data[0];
-
-        html += '<a href="'+ url_redirect_detail +'" class="btn btn-default bg-olive jsbtn-controll" data-toggle="tooltip" title="'+ names[0] +'"><i class="glyphicon glyphicon-download-alt"></i></a>';
-    }
+    url_redirect_detail = router[0] + "/" + data[0];
+    html += '<a href="'+ url_redirect_detail +'" class="btn btn-default bg-olive jsbtn-controll" data-toggle="tooltip" title="'+ names[0] +'"><i class="glyphicon glyphicon-download-alt"></i></a>';
 
     return html;
 };
