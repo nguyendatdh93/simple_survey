@@ -61,7 +61,7 @@
 		* Answer Pages																
 	* Specification										
 		* Any one can access survey if they got URL (encode URL )									
-		* Below message will be displayed if survey finished or deleted									
+		* Below message will be displayed if survey finished or deleted <br>									
 			このURLは有効期限が過ぎたため表示できません。								
 											
 3. **Data Download**											
@@ -72,4 +72,12 @@
 	* Specification										
 		- This function will be used only by Secure Computer (IP address limit)									
 		- Authenticate by G Suite									
-		- Operation can use only Download Data of Survey List									
+		- Operation can use only Download Data of Survey List
+
+## Database
+
+  see [Database](https://docs.google.com/spreadsheets/d/1KZBQCwq3FLdunpxjGNZlLA58ZovPQ_9wuOiBkCXG2Os/edit#gid=1208666288)
+
+## Desgin
+
+  see [Desgin](https://docs.google.com/spreadsheets/d/1KZBQCwq3FLdunpxjGNZlLA58ZovPQ_9wuOiBkCXG2Os/edit#gid=1949756848)    									
