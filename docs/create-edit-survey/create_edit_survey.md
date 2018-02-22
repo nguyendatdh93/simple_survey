@@ -47,7 +47,7 @@ The survey set consists of 4 parts :
   * edit : Edit survey
                
     
-          Path : app/Http/Controllers/SurveyController.php
+        Path : app/Http/Controllers/SurveyController.php
     
 ## Script references: 
     

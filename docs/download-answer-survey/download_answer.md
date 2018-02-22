@@ -9,11 +9,11 @@ created   | 2018-22-02
 
 ## Overview
   
-- Display all question and answer of survey.<br>
+- Display all questions and answers of survey.<br>
 - Operator can download answers as CSV file 
 - Operator can clear data of survey when downloaded at least once time.
 - For survey published : 
-  * Disable all 2 button : "Download CSV" and "Clear data".
+  * Disable all 2 buttons : "Download CSV" and "Clear data".
 - For survey closed : 
   * Disable button "Clear data" if the previous operator didn't download the answer data of survey  
    

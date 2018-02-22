@@ -9,7 +9,7 @@ created   | 2018-22-02
 
 ## Overview
   
-Display all surveys have status : Published, Closed. Operator only access from secure machine. (a few machine have IP private).
+Display all surveys own of operator with status : Published, Closed. Operator only access from secure machine. (a few machine have IP private).
 
 ## Table columns
    * Status
