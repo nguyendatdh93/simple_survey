@@ -18,24 +18,25 @@ Answer survey => Confirm answer survey => Thanks page.
 ## Functional references : 
 
 * showQuestionSurvey : Show form answer survey.
-    
-
-    Path : app/Http/Controllers/AnswerSurveyController.php
+        
+        
+        
+        Path : app/Http/Controllers/AnswerSurveyController.php
     
 * answerSurvey : Get the answer data to display on the confirm form
 
     
-    Path : app/Http/Controllers/AnswerSurveyController.php
+        Path : app/Http/Controllers/AnswerSurveyController.php
     
 * showFormConfirmAnswerSurvey : show form confirm answer.
     
 
-    Path : app/Http/Controllers/AnswerSurveyController.php
+        Path : app/Http/Controllers/AnswerSurveyController.php
     
 * showThankPage 
     
-    
-    Path : app/Http/Controllers/AnswerSurveyController.php
+        
+        Path : app/Http/Controllers/AnswerSurveyController.php
     
 ## Script references : 
     
