@@ -90,10 +90,10 @@
    **Notes :**
    * app/BaseWidget : Contains the core for system (datatable, form,...)
    * atb/admin-template : The package adminlte template
-   * app/Http/Services : Contains
+   * app/Http/Services : Contains the task common implementation.
    * app/Http/Validator : Contains the validating.
    * resources/lang : Definded language for system.
    * resources/views/admin : Contains template for admin site (survey list, download list,...)
    * resources/views/admin : Contains template for user site (answer survey site, confirm survey site,...) 
-   * .env 
+   * .env : Contains the configration for enviroment
         									
