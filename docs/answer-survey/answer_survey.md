@@ -14,6 +14,8 @@ Answer survey => Confirm answer survey => Thanks page.
  
 - URL to be encrypt by id.
 - A user could answer many time/survey.
+- if survey finished or deleted that will be show message :
+        このURLは有効期限が過ぎたため表示できません。
 
 ## Functional references : 
 
