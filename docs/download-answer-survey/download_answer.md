@@ -1,4 +1,4 @@
-#Download answer survey
+# Download answer survey
 
 Attribute | value
 --------- |---------
@@ -7,7 +7,7 @@ creator   | nguyen.van.dat@alliedtechbase.com
 created   | 2018-22-02
 
 
-##Overview
+## Overview
   
 - Display all question and answer of survey.<br>
 - Operator can download answers as CSV file 
@@ -24,9 +24,11 @@ created   | 2018-22-02
     Path : app/Http/Controllers/SurveyController.php
     
 ## Script references: 
-    Path : resources/views/admin/survey/list/answer/script.blade.php
+    
+    
+        Path : resources/views/admin/survey/list/answer/script.blade.php
         
-##Database table related
+## Database table related
 * surveys
 * answers (For get number answers of survey).
 * questions (Get all survey's question to display as table header)

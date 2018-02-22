@@ -1,4 +1,4 @@
-#Download list managerment
+# Download list managerment
 
 Attribute | value
 --------- |---------
@@ -7,7 +7,7 @@ creator   | nguyen.van.dat@alliedtechbase.com
 created   | 2018-22-02
 
 
-##Overview
+## Overview
   
 Display all surveys have status : Published, Closed. Operator only access from secure machine. (a few machine have IP private).
 
@@ -31,9 +31,11 @@ Display all surveys have status : Published, Closed. Operator only access from s
         Path : app/Http/Controllers/SurveyController.php
             
 ## Script references: 
-    Path : resources/views/admin/survey/list/download/script.blade.php
     
-##Database table related
+    
+        Path : resources/views/admin/survey/list/download/script.blade.php
+    
+## Database table related
 * surveys
 * answers (For get number answers of survey).
     

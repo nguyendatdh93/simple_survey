@@ -1,4 +1,4 @@
-#Login workflow
+# Login workflow
 
 Attribute | value
 --------- |---------
@@ -9,13 +9,13 @@ created   | 2018-22-02
 ![LoginWorkFlow](https://lh4.googleusercontent.com/PZfELWfsXzbGgqP7nBCayDbYqqpPcRNQSbUFJ_HH4S7wJK55S9WSkyWyd4U8UbxcsOuRfJ4kJwcjMTVZX6oyeKTTrMQIAwqjvxSEeGxZoftzOfN4ueDW2ljafTzWOhvQoogvfcy6zg)
 
 
-##Requirement
+## Requirement
 
 * Only allow login with account company (Email has domain of company : aainc.co.jp).
 * If operator wants to download then it is required to login on a secure machine (only a few machine have IP private address is entitled to download).
 * Account will be create auto if it is not exist on system.
 
-##Impact
+## Impact
 
 * All functions are required to login (without function answers survey).
 
@@ -24,6 +24,7 @@ created   | 2018-22-02
 
 * loginWithGoogle : 
 
+        
         Path : app/Http/Controllers/Auth/LoginController.php 
 
 * isSecurePrivateRange: 
