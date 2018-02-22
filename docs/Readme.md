@@ -1,7 +1,7 @@
 
 # Simple survey project
 
-##Background
+## Background
     
    The operators implemented some twitter campaign presentations, selecting winners, and sending messages to them.
     Direct Message of twitter, Message content is usually congratulations won + url has form fill out personal information to send gifts to the winner
@@ -10,12 +10,12 @@
     ... and many other steps.
    * The above processes cost a lot of team resources + the possibility of high errors + less security ... So the desire to have a solution to solve the problem.
 
-##Expected System Overview :
+## Expected System Overview :
 
 ![Image](https://lh3.googleusercontent.com/5sBMEi75Utn3AVc2Em_To6hN0xfOKiQLW4HOArZtQXv3DHoF5jLEUnS9aQ7Z-rD0p_b5qfCfDZdHtXG7VCY_-yhMkyxpLR_XuIljKOlos_zl_r9mw414dUu-sR6-3ImKWjuy1vx0kQ)
 
 
-##Survey System Operation Flow :
+## Survey System Operation Flow :
 
 * Operator								
   * Login to Survey System							
@@ -32,7 +32,7 @@
   * Display all of survey (survey be created by the operator)							
   * Download data of survey	
   
-##Survey System Specification
+## Survey System Specification
 
 1. **Operator**																
 	* Pages and Functions															
