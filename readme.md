@@ -41,8 +41,7 @@
 	  * Create Survey, Edit Survey Page, Save Draft														
 	  * Copy Survey Function (copy as a survey)														
 	  * Delete Survey Function														
-	  * Publish Survey and Close Survey Function														
-																
+	  * Publish Survey and Close Survey Function																										
 	* Specification															
 		* Only Allied Architects Employee can use this system(account has domain of company)						
 		* User G Suite for authenticate														
@@ -59,8 +58,7 @@
 		* Survey list will show only themself survey																				
 2. **Users**											
 	* Pages and Functions										
-		* Answer Pages									
-											
+		* Answer Pages																
 	* Specification										
 		* Any one can access survey if they got URL (encode URL )									
 		* Below message will be displayed if survey finished or deleted									
@@ -70,8 +68,7 @@
 	* Pages and Functions										
 		- Login Page									
 		- Survey List Page									
-		- Survey Data Download Function (only Public, Closed Survey)									
-											
+		- Survey Data Download Function (only Public, Closed Survey)																	
 	* Specification										
 		- This function will be used only by Secure Computer (IP address limit)									
 		- Authenticate by G Suite									
