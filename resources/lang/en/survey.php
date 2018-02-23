@@ -57,7 +57,7 @@ return [
     'survey_create_page_title' => 'Create new survey',
     'survey_name_title' => 'Survey name',
     'survey_name_help_block' => '* You can write survey name. (Up to 255 characters)',
-    'survey_thumbnail_title' => 'Survey image header',
+    'survey_thumbnail_title' => 'Image',
     'survey_thumbnail_help_block' => '* Please specify the upload file. Uploading is possible up to 5MB in size.',
     'survey_description_title' => 'Survey description',
     'survey_description_help_block' => '* You can list the description of the survey. (Up to 5,000 characters)',
@@ -67,8 +67,8 @@ return [
     'survey_add_question_button' => 'Add question',
     'survey_question_default_text' => 'Question',
     'survey_question_help_block_text' => '* Explain more about question text.',
-    'question_type_single_text' => 'Singe Text',
-    'question_type_multi_text' => 'Multi Text',
+    'question_type_single_text' => 'Singe line',
+    'question_type_multi_text' => 'Multi lines',
     'question_type_single_choice' => 'Single Choice',
     'question_type_multi_choice' => 'Multi Choice',
     'question_type_confirmation' => 'Confirmation',
@@ -92,4 +92,5 @@ return [
 	'radio_label_choice_survey_draft_status' => 'Draft',
 	'radio_label_choice_survey_publish_status' => 'Publish',
 	'tooltip_remove_question' => 'Remove question',
+	'status_deleted' => "Deleted"
 ];
