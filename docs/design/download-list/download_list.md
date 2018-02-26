@@ -39,3 +39,6 @@ Display all surveys own of operator with status : Published, Closed. Operator on
 * surveys
 * answers (For get number answers of survey).
     
+## Document reference
+
+   see ![Document](https://docs.google.com/spreadsheets/d/1KZBQCwq3FLdunpxjGNZlLA58ZovPQ_9wuOiBkCXG2Os/edit#gid=1917074744)
