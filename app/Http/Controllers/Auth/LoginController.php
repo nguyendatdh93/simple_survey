@@ -100,6 +100,7 @@ class LoginController extends AuthService
     */
     public function loginWithGoogle(Request $request) {
         session_save_path(config('session.files'));
+
         $code          = $request->get('code');
         $googleService = \OAuth::consumer('Google');
         if (!is_null($code)) {
