@@ -172,6 +172,10 @@ class LoginController extends AuthService
             return redirect('/login')->with('error', trans("adminlte_lang::survey.error_ip_not_matching"));
         }
 
+        if ($request->get('code') && $request->get('code') == 403) {
+            return redirect('/login')->with('error', trans("adminlte_lang::survey.error_permission_use_app"));
+        }
+
         $http = new \GuzzleHttp\Client;
         try {
             $response = $http->post(Config::get('config.domain_auth').'/oauth/token', [

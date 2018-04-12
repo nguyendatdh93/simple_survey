@@ -6,6 +6,7 @@ return [
 	'error_sign_google' => 'アカウント（Gsuite）でログインしてください。',
     'error_sign_employee' => 'Login is not success',
     'error_ip_not_matching' => 'Your IP address is not allowed',
+    'error_permission_use_app' => "You don't have the permission to login",
 	
 	//header
 	'logout' => 'ログアウト',
