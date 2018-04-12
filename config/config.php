@@ -16,4 +16,7 @@ return  [
 	'copyright_text_in_footer' => env('COPYRIGHT_TEXT_IN_FOOTER'),
 	'url_sign_out_google'      => env('URL_SIGN_OUT_GOOGLE', 'https://accounts.google.com/o/oauth2/revoke?token'),
 	'key_secret_encrypt_url'   => env('KEY_SECRET_ENCRYPT_URL', 'MTVzaW1wbGVfc3VydmV5X2tleV9zY3JldGU'),
+    'domain_auth'              => env('CONFIG_DOMAIN_AUTH'),
+    'client_id'                => env('CONFIG_CLIENT_ID'),
+    'client_secret'            => env('CONFIG_CLIENT_SECRET'),
 ];

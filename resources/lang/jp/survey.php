@@ -4,6 +4,8 @@ return [
 	//login page
 	'signGoogle' => 'アカウントでログイン',
 	'error_sign_google' => 'アカウント（Gsuite）でログインしてください。',
+    'error_sign_employee' => 'Login is not success',
+    'error_ip_not_matching' => 'Your IP address is not allowed',
 	
 	//header
 	'logout' => 'ログアウト',

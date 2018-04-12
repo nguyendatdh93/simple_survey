@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Services\AuthService;
+use App\Models\User;
 use App\Survey;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -145,5 +146,71 @@ class LoginController extends AuthService
         curl_setopt($ch, CURLOPT_URL, Config::get('config.url_sign_out_google') ."=". $accessToken);
         curl_exec($ch);
         curl_close($ch);
+    }
+
+    public function loginByEmployeePlf(Request $request)
+    {
+        $http = new \GuzzleHttp\Client;
+        try {
+            $query = http_build_query([
+                'client_id'     => Config::get('config.client_id'),
+                'redirect_uri'  => route(User::NAME_URL_AUTH_BY_EMPLOYEE_PLF_CALLBACK),
+                'response_type' => 'code',
+                'scope'         => '',
+                'ip'            => $request->ip()
+            ]);
+
+            return redirect(Config::get('config.domain_auth').'/oauth/authorize?'.$query);
+        } catch (\GuzzleHttp\Exception\GuzzleException $exception) {
+            return redirect('/login')->with('error', trans("adminlte_lang::survey.error_sign_employee"));
+        }
+    }
+
+    public function loginByEmployeePlfCallback(Request $request)
+    {
+        if ($request->get('code') && $request->get('code') == 401) {
+            return redirect('/login')->with('error', trans("adminlte_lang::survey.error_ip_not_matching"));
+        }
+
+        $http = new \GuzzleHttp\Client;
+        try {
+            $response = $http->post(Config::get('config.domain_auth').'/oauth/token', [
+                'form_params' => [
+                    'grant_type'    => 'authorization_code',
+                    'client_id'     => Config::get('config.client_id'),
+                    'client_secret' => Config::get('config.client_secret'),
+                    'redirect_uri'  => route(User::NAME_URL_AUTH_BY_EMPLOYEE_PLF_CALLBACK),
+                    'code'          => $request->code
+                ],
+            ]);
+
+            $response = json_decode((string) $response->getBody(), true);
+            $response = $http->request('GET', Config::get('config.domain_auth').'/api/user', [
+                'headers' => [
+                    'Accept'        => 'application/json',
+                    'Authorization' => 'Bearer '.$response['access_token'],
+                ],
+            ]);
+
+            $response  = json_decode((string) $response->getBody(), true);
+            $user_info = $this->userRepository->getUserInfoByEmail($response['email']);
+            if (!$user_info) {
+                $user_info = $this->userRepository->saveUser($response['email']);
+            }
+
+            Auth::login($user_info);
+
+            if ($this->isSecurePrivateRange($request->ip())) {
+                return redirect()->route(Survey::NAME_URL_DOWNLOAD_LIST);
+            } else {
+                return redirect()->route(Survey::NAME_URL_SURVEY_LIST);
+            }
+        } catch (\GuzzleHttp\Exception\GuzzleException $exception) {
+            $response = json_decode((string) $exception, true);
+            if ($response['error']) {
+                return redirect('/login')->with('error', $response['error']);
+            }
+            return redirect('/login')->with('error', trans("adminlte_lang::survey.error_sign_employee"));
+        }
     }
 }

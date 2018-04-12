@@ -26,4 +26,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    const NAME_URL_AUTH_BY_EMPLOYEE_PLF          = 'auth-by-employee-plf';
+    const NAME_URL_AUTH_BY_EMPLOYEE_PLF_CALLBACK = 'auth-by-employee-plf-callback';
 }

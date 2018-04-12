@@ -4,7 +4,8 @@ return [
 	//login page
 	'signGoogle' => 'Login by account company',
 	'error_sign_google' => 'Please login by account company',
-	
+    'error_sign_employee' => 'Login is not success',
+    'error_ip_not_matching' => 'Your IP address is not allowed',
 	//header
 	'logout' => 'Logout',
 	'survey_list_table_header_column_survey_note' => 'Survey note',
