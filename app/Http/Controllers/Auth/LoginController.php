@@ -14,6 +14,9 @@ use Auth;
 
 class LoginController extends AuthService
 {
+    const ERROR_IP         = 'error_ip';
+    const ERROR_PERMISSION = 'error_permission';
+    const ERROR_ACCOUNT    = 'error_account';
     /*
     |--------------------------------------------------------------------------
     | Login Controller
@@ -168,12 +171,18 @@ class LoginController extends AuthService
 
     public function loginByEmployeePlfCallback(Request $request)
     {
-        if ($request->get('code') && $request->get('code') == 401) {
-            return redirect('/login')->with('error', trans("adminlte_lang::survey.error_ip_not_matching"));
-        }
-
         if ($request->get('code') && $request->get('code') == 403) {
-            return redirect('/login')->with('error', trans("adminlte_lang::survey.error_permission_use_app"));
+            if ($request->get('state') == Self::ERROR_IP) {
+                return redirect('/login')->with('error', trans("adminlte_lang::survey.error_ip_not_matching"));
+            }
+
+            if ($request->get('state') == Self::ERROR_PERMISSION) {
+                return redirect('/login')->with('error', trans("adminlte_lang::survey.error_permission_use_app"));
+            }
+
+            if ($request->get('state') == Self::ERROR_ACCOUNT) {
+                return redirect('/login')->with('error', trans("adminlte_lang::survey.error_account"));
+            }
         }
 
         $http = new \GuzzleHttp\Client;
