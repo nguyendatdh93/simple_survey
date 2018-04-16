@@ -16,7 +16,6 @@ class LoginController extends AuthService
 {
     const ERROR_IP         = 'error_ip';
     const ERROR_PERMISSION = 'error_permission';
-    const ERROR_ACCOUNT    = 'error_account';
     /*
     |--------------------------------------------------------------------------
     | Login Controller
@@ -153,7 +152,6 @@ class LoginController extends AuthService
 
     public function loginByEmployeePlf(Request $request)
     {
-        $http = new \GuzzleHttp\Client;
         try {
             $query = http_build_query([
                 'client_id'     => Config::get('config.client_id'),
@@ -178,10 +176,6 @@ class LoginController extends AuthService
 
             if ($request->get('state') == Self::ERROR_PERMISSION) {
                 return redirect('/login')->with('error', trans("adminlte_lang::survey.error_permission_use_app"));
-            }
-
-            if ($request->get('state') == Self::ERROR_ACCOUNT) {
-                return redirect('/login')->with('error', trans("adminlte_lang::survey.error_account"));
             }
         }
 
