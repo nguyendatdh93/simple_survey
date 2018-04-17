@@ -164,8 +164,8 @@ class LoginController extends AuthService
             ]);
 
             return redirect(Config::get('config.domain_auth').'/oauth/authorize?'.$query);
-        } catch (\GuzzleHttp\Exception\GuzzleException $exception) {
-            return redirect('/login')->with('error', trans("adminlte_lang::survey.error_sign_employee"));
+        } catch (\Exception $exception) {
+            return redirect('/login')->with('error', $exception->getMessage());
         }
     }
 
@@ -220,12 +220,8 @@ class LoginController extends AuthService
             } else {
                 return redirect()->route(Survey::NAME_URL_SURVEY_LIST);
             }
-        } catch (\GuzzleHttp\Exception\GuzzleException $exception) {
-            $response = json_decode((string) $exception, true);
-            if ($response['error']) {
-                return redirect('/login')->with('error', $response['error']);
-            }
-            return redirect('/login')->with('error', trans("adminlte_lang::survey.error_sign_employee"));
+        } catch (\Exception $exception) {
+            return redirect('/login')->with('error', $exception->getMessage());
         }
     }
 }
