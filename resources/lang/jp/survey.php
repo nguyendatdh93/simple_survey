@@ -8,6 +8,7 @@ return [
     'error_ip_not_matching' => 'Your IP address is not allowed',
     'error_permission_use_app' => "You don't have the permission to login",
     'error_account' => "Your account can not access system",
+    'error_unauthorized' => 'Login not success. The reason is the configruation client app not correct',
 	
 	//header
 	'logout' => 'ログアウト',

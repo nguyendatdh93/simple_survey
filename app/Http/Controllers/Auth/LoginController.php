@@ -14,8 +14,9 @@ use Auth;
 
 class LoginController extends AuthService
 {
-    const ERROR_IP         = 'error_ip';
-    const ERROR_PERMISSION = 'error_permission';
+    const ERROR_IP           = 'error_ip';
+    const ERROR_PERMISSION   = 'error_permission';
+    const ERROR_UNAUTHORIZED = 'error_unauthorized';
     /*
     |--------------------------------------------------------------------------
     | Login Controller
@@ -176,6 +177,12 @@ class LoginController extends AuthService
 
             if ($request->get('state') == Self::ERROR_PERMISSION) {
                 return redirect('/login')->with('error', trans("adminlte_lang::survey.error_permission_use_app"));
+            }
+        }
+
+        if ($request->get('code') && $request->get('code') == 401) {
+            if ($request->get('state') == Self::ERROR_UNAUTHORIZED) {
+                return redirect('/login')->with('error', trans("adminlte_lang::survey.error_unauthorized"));
             }
         }
 
