@@ -156,6 +156,7 @@ class LoginController extends AuthService
         try {
             $query = http_build_query([
                 'client_id'     => Config::get('config.client_id'),
+                'client_secret' => Config::get('config.client_secret'),
                 'redirect_uri'  => route(User::NAME_URL_AUTH_BY_EMPLOYEE_PLF_CALLBACK),
                 'response_type' => 'code',
                 'scope'         => '',
