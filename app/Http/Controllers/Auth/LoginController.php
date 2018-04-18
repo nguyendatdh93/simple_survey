@@ -159,8 +159,7 @@ class LoginController extends AuthService
                 'client_secret' => Config::get('config.client_secret'),
                 'redirect_uri'  => route(User::NAME_URL_AUTH_BY_EMPLOYEE_PLF_CALLBACK),
                 'response_type' => 'code',
-                'scope'         => '',
-                'ip'            => $request->ip()
+                'scope'         => ''
             ]);
 
             return redirect(Config::get('config.domain_auth').'/oauth/authorize?'.$query);
