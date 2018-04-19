@@ -137,6 +137,8 @@ class LoginController extends AuthService
             if ($request->get('state') == Self::ERROR_UNAUTHORIZED) {
                 return redirect('/login')->with('error', trans("adminlte_lang::survey.error_unauthorized"));
             }
+        } elseif ($request->code && $request->code == '') {
+            return redirect('/login')->with('error', trans("adminlte_lang::survey.error_auth_code_not_available"));
         }
 
         $http = new \GuzzleHttp\Client;
@@ -153,14 +155,16 @@ class LoginController extends AuthService
 
             $response = json_decode((string) $response->getBody(), true);
 
-            if ($response['code'] && $response['code'] == self::HTTP_CODE_UNAUTHORIZED) {
+            if (!empty($response['code']) && $response['code'] == self::HTTP_CODE_UNAUTHORIZED) {
                 if ($response['state'] == self::ERROR_UNAUTHORIZED) {
                     return redirect('/login')->with('error', trans("adminlte_lang::survey.error_unauthorized"));
                 }
-            } elseif ($response['code'] && $response['code'] == self::HTTP_CODE_FORBIDDEN) {
+            } elseif (!empty($response['code']) && $response['code'] == self::HTTP_CODE_FORBIDDEN) {
                 if ($response['state'] == self::ERROR_IP) {
-                    return redirect('/login')->with('error', trans("adminlte_lang::survey.error_ip_not_matching"));
+                    return redirect('/login')->with('error', trans("adminlte_lang::survey.error_service_not_available"));
                 }
+            } elseif (empty($response['access_token'])) {
+                return redirect('/login')->with('error', trans("adminlte_lang::survey.error_token_not_available"));
             }
 
             $response = $http->request('GET', Config::get('config.domain_auth').'/api/user', [
