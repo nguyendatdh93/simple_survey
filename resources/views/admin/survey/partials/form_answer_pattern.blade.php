@@ -6,7 +6,7 @@
             @endif
             {!! \App\BaseWidget\Survey::singleText($survey_content, array("name" => "num", "value" => (isset($value) ? $value : ""), "class" => "ipt01","maxlength" => "")) !!}
         @elseif($survey_content['type'] == \App\Question::TYPE_MULTI_TEXT)
-            {!! \App\BaseWidget\Survey::multiText($survey_content, array("id" => "comment", "class" => "txt01","value" => (isset($value) ? $value : "") , "name" => "comment", "maxlength" => "", "placeholder" => "コメントをご記入下さい")) !!}
+            {!! \App\BaseWidget\Survey::multiText($survey_content, array("id" => "comment", "class" => "txt01","value" => (isset($value) ? $value : "") , "name" => "comment", "maxlength" => "", "placeholder" => "")) !!}
         @elseif($survey_content['type'] == \App\Question::TYPE_SINGLE_CHOICE)
             {!! \App\BaseWidget\Survey::singleChoice($survey_content, $survey_content['question_choices'], array("name" => "optradio")) !!}
         @elseif($survey_content['type'] == \App\Question::TYPE_MULTI_CHOICE)

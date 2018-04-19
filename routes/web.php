@@ -27,6 +27,8 @@ Route::get('/login', 'Auth\LoginController@showLoginForm')->name(\App\Survey::NA
 Route::get('/', 'Auth\LoginController@showLoginForm');
 Route::prefix('auth')->group(function () {
     Route::get('/google', array('as' => 'auth.google', 'uses' => 'Auth\LoginController@loginWithGoogle'));
+    Route::get('/employee', array('as' => 'auth.employee', 'uses' => 'Auth\LoginController@loginByEmployeePlf'))->name(\App\Models\User::NAME_URL_AUTH_BY_EMPLOYEE_PLF);
+    Route::get('/employee/callback/{code?}', 'Auth\LoginController@loginByEmployeePlfCallback')->name(\App\Models\User::NAME_URL_AUTH_BY_EMPLOYEE_PLF_CALLBACK);
 });
 
 /**

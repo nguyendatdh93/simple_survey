@@ -4,6 +4,14 @@ return [
 	//login page
 	'signGoogle' => 'アカウントでログイン',
 	'error_sign_google' => 'アカウント（Gsuite）でログインしてください。',
+    'error_sign_employee' => 'Login is not success',
+    'error_ip_not_matching' => 'Your IP address is not allowed',
+    'error_permission_use_app' => "You don't have the permission to login",
+    'error_account' => "Your account can not access system",
+    'error_unauthorized' => 'Login not success. The reason is the configruation client app not correct',
+    'error_service_not_available' => 'Service is not available',
+    'error_token_not_available'   => 'Can not login to system because unable to get token',
+    'error_auth_code_not_available'   => 'Can not login to system because unable to get code authentication',
 	
 	//header
 	'logout' => 'ログアウト',
