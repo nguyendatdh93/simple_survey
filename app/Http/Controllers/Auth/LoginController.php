@@ -17,6 +17,9 @@ class LoginController extends AuthService
     const ERROR_IP           = 'error_ip';
     const ERROR_PERMISSION   = 'error_permission';
     const ERROR_UNAUTHORIZED = 'error_unauthorized';
+
+    const HTTP_CODE_UNAUTHORIZED = 401;
+    const HTTP_CODE_FORBIDDEN    = 403;
     /*
     |--------------------------------------------------------------------------
     | Login Controller
@@ -37,7 +40,7 @@ class LoginController extends AuthService
      *
      * @return \Illuminate\Http\Response
      */
-    public function showLoginForm()
+    public function showLoginForm(Request $request)
     {
         return view('admin::auth.login');
     }
@@ -126,17 +129,11 @@ class LoginController extends AuthService
      */
     public function loginByEmployeePlfCallback(Request $request)
     {
-        if ($request->get('code') && $request->get('code') == 403) {
-            if ($request->get('state') == Self::ERROR_IP) {
-                return redirect('/login')->with('error', trans("adminlte_lang::survey.error_ip_not_matching"));
-            }
-
+        if ($request->get('code') && $request->get('code') == self::HTTP_CODE_FORBIDDEN) {
             if ($request->get('state') == Self::ERROR_PERMISSION) {
                 return redirect('/login')->with('error', trans("adminlte_lang::survey.error_permission_use_app"));
             }
-        }
-
-        if ($request->get('code') && $request->get('code') == 401) {
+        } elseif ($request->get('code') && $request->get('code') == self::HTTP_CODE_UNAUTHORIZED) {
             if ($request->get('state') == Self::ERROR_UNAUTHORIZED) {
                 return redirect('/login')->with('error', trans("adminlte_lang::survey.error_unauthorized"));
             }
@@ -155,6 +152,17 @@ class LoginController extends AuthService
             ]);
 
             $response = json_decode((string) $response->getBody(), true);
+
+            if ($response['code'] && $response['code'] == self::HTTP_CODE_UNAUTHORIZED) {
+                if ($response['state'] == self::ERROR_UNAUTHORIZED) {
+                    return redirect('/login')->with('error', trans("adminlte_lang::survey.error_unauthorized"));
+                }
+            } elseif ($response['code'] && $response['code'] == self::HTTP_CODE_FORBIDDEN) {
+                if ($response['state'] == self::ERROR_IP) {
+                    return redirect('/login')->with('error', trans("adminlte_lang::survey.error_ip_not_matching"));
+                }
+            }
+
             $response = $http->request('GET', Config::get('config.domain_auth').'/api/user', [
                 'headers' => [
                     'Accept'        => 'application/json',
