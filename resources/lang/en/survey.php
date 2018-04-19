@@ -11,7 +11,7 @@ return [
     'error_unauthorized' => 'Login not success. The reason is the configruation client app not correct',
     'error_service_not_available' => 'Service is not available',
     'error_token_not_available'   => 'Can not login to system because unable to get token',
-    'error_auth_code_not_available'   => 'Can not login to system because unable to get token',
+    'error_auth_code_not_available'   => 'Can not login to system because unable to get code authentication',
 
 	//header
 	'logout' => 'Logout',
