@@ -40,7 +40,7 @@ class LoginController extends AuthService
      *
      * @return \Illuminate\Http\Response
      */
-    public function showLoginForm(Request $request)
+    public function showLoginForm()
     {
         return view('admin::auth.login');
     }
