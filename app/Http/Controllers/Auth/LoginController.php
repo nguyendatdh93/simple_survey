@@ -99,58 +99,10 @@ class LoginController extends AuthService
             $request->has('remember'));
     }
 
-    /*
-    * @var Request $request
-    */
-    public function loginWithGoogle(Request $request) {
-        session_save_path(config('session.files'));
-
-        $code          = $request->get('code');
-        $googleService = \OAuth::consumer('Google');
-        if (!is_null($code)) {
-            try {
-                $token  = $googleService->requestAccessToken($code);
-                $result = json_decode($googleService->request('https://www.googleapis.com/oauth2/v1/userinfo'), true);
-            } catch (Exception $e) {
-                return redirect('/login')->with('error', $e->getMessage());
-            }
-        } else {
-            return redirect((string)$googleService->getAuthorizationUri());
-        }
-
-        $domain_name = substr(strrchr($result['email'], "@"), 1);
-        if ($domain_name != Config::get('config.domain')) {
-            $this->revolkeAccessTokenGoogle($token);
-            
-            return redirect('/login')->with('error', Config::get('config.domain') .' '. trans("adminlte_lang::survey.error_sign_google"));
-        }
-
-        $user_info = $this->userRepository->getUserInfoByEmail($result['email']);
-        if (!$user_info) {
-            $user_info = $this->userRepository->saveUser($result['email']);
-        }
-
-        Auth::login($user_info);
-
-        if ($this->isSecurePrivateRange($request->ip())) {
-            return redirect()->route(Survey::NAME_URL_DOWNLOAD_LIST);
-        } else {
-            return redirect()->route(Survey::NAME_URL_SURVEY_LIST);
-        }
-    }
-
-    public function revolkeAccessTokenGoogle($token)
-    {
-        $reflector = new \ReflectionClass($token);
-        $classProperty = $reflector->getProperty('accessToken');
-        $classProperty->setAccessible(true);
-        $accessToken = $classProperty->getValue($token);
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, Config::get('config.url_sign_out_google') ."=". $accessToken);
-        curl_exec($ch);
-        curl_close($ch);
-    }
-
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function loginByEmployeePlf(Request $request)
     {
         try {
@@ -168,6 +120,10 @@ class LoginController extends AuthService
         }
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function loginByEmployeePlfCallback(Request $request)
     {
         if ($request->get('code') && $request->get('code') == 403) {
